@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
-project(CrabLife)
+project(ACrabsJourney)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(CrabLife main.cpp)
+add_executable(ACrabsJourney main.cpp)
