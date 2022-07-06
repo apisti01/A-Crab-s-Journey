@@ -7,6 +7,12 @@
 
 
 class GameCharacter {
+public:
+
+protected:
+
+private:
+
 
 };
 
