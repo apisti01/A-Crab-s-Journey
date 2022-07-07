@@ -5,11 +5,34 @@
 #ifndef MAIN_CPP_GAMECHARACTER_H
 #define MAIN_CPP_GAMECHARACTER_H
 
+#include <string>
+#include <memory>
+
+#include "Item.h"
+#include "Weapon.h"
 
 class GameCharacter {
 public:
+    //TODO add constructor and virtual destructor
+
+    //TODO add move() and changeAngle()
+
+    //TODO add useWeapon()
 
 protected:
+    //Character name
+    std::string name;
+
+    //Statistics
+    float hp, maxHp;
+    float speed, maxSpeed;
+    float armor, maxArmor;
+    float strength, maxStrength;
+
+    // Weapon wielded
+    std::unique_ptr<Weapon> weapon;
+
+    //TODO add Animated Sprite body
 
 private:
 
