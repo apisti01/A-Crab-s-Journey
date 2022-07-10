@@ -5,6 +5,9 @@
 #ifndef ACRABSJOURNEY_OBSTACLE_H
 #define ACRABSJOURNEY_OBSTACLE_H
 
+#include <memory>
+
+using namespace std;
 
 class Obstacle {
 public:
@@ -12,8 +15,9 @@ public:
 protected:
     // int posX, posY;
     float damage;
+
     // int width, height;
-    std::unique_ptr<Sprite> sprite;
+    // std::unique_ptr<Sprite> sprite;
 
 private:
 
