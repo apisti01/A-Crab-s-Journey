@@ -13,7 +13,8 @@ public:
     explicit MeleeWeapon(float damage, std::string name = " ", ItemRarity rarity = ItemRarity::Common, int price = 50);
     ~MeleeWeapon() override = default;
 
-    //TODO override useWeapon
+    // override useWeapon
+    float useWeapon() override;
 
 private:
     // Damage dealt with the attack

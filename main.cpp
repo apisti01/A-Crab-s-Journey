@@ -1,7 +1,6 @@
 #include <SFML/Graphics.hpp>
 
-int main()
-{
+int main(){
     // Creation of the window
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "SFML works!",sf::Style::Fullscreen);
 

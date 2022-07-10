@@ -7,17 +7,24 @@
 
 #include <string>
 #include <memory>
+#include <list>
 
 #include "Item.h"
 #include "Weapon.h"
+#include "MeleeWeapon.h"
+
 
 class GameCharacter {
 public:
     //TODO add constructor and virtual destructor
 
+    virtual ~GameCharacter() = default;
+
     //TODO add move() and changeAngle()
 
-    //TODO add useWeapon()
+    void receiveDamage(float damage);
+
+    float useWeapon();
 
 protected:
     //Character name

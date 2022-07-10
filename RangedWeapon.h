@@ -8,23 +8,37 @@
 #include <list>
 
 #include "Weapon.h"
+#include "Bullet.h"
 
 class RangedWeapon : public Weapon{
 public:
     // Constructor and Destructor
-    explicit RangedWeapon(float range, std::string name = " ", ItemRarity rarity = ItemRarity::Common, int price = 50);
+    explicit RangedWeapon(sf::Sprite bulletBody, float damage = 5, float speed = 5, float range = 10,
+                          bool isTracking = false,
+                          bool isShattering = false, ItemRarity rarity = ItemRarity::Common, std::string name = " ",
+                          int price = 50);
     ~RangedWeapon() override = default;
 
-    //TODO override useWeapon
+    // Create bullet and puts it on the list
+    float useWeapon() override;
 
 private:
     // TODO function that manage bullets
 
-    // Range of the weapon
-    float range;
 
     // List of the bullets shot
     std::list<Bullet> bulletList {};
+
+    // list of the attributes of the Bullet it must create
+    float damage;
+    float speed;
+    float range;
+    // Special ability
+    bool isTracking;
+    bool isShattering;
+    // SFML Sprite
+    sf::Sprite body;
+
 
 };
 

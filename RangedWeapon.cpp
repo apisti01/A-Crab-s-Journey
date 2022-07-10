@@ -4,6 +4,15 @@
 
 #include "RangedWeapon.h"
 
-RangedWeapon::RangedWeapon(float range, std::string name, ItemRarity rarity, int price) : Weapon(std::move(name), rarity, price), range(range) {
+RangedWeapon::RangedWeapon(sf::Sprite bulletBody, float damage, float speed, float range, bool isTracking,
+                           bool isShattering,
+                           ItemRarity rarity, std::string name, int price)
+                           : Weapon(std::move(name), rarity, price), range(range),
+                           body(std::move(bulletBody)), damage(damage), speed(speed), isTracking(isTracking), isShattering(isShattering){
 
+}
+
+float RangedWeapon::useWeapon() {
+    Bullet tmp(damage,speed,range,body,isTracking,isShattering);
+    bulletList.push_back(tmp);
 }

@@ -4,3 +4,14 @@
 
 
 #include "GameCharacter.h"
+
+class Enemy;
+
+float GameCharacter::useWeapon() {
+    return weapon->useWeapon() * strength;
+}
+
+
+void GameCharacter::receiveDamage(float damage) {
+    hp -= damage;
+}
