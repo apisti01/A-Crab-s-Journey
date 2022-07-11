@@ -30,13 +30,6 @@ void FloorMap::generateFloor() {
         FloorMap::generateRoom(roomIndex, sideIndex, i);
     }
 
-    for (int i = 0; i < roomList.size(); i++) {
-        cout << "Room " << i << ": position (" << roomList[i].getPosX() << ", " << roomList[i].getPosY() << ")" << endl;
-        for (int j = 0; j < 4; j++) {
-            cout << "- Door " << j << ": " << roomList[i].doors[j] << endl;
-        }
-    }
-
     // set start and end rooms
     setStartAndEndRooms();
 };
@@ -139,16 +132,17 @@ void FloorMap::setStartAndEndRooms() {
     int oldPathLength = -1;
     int newPathLength = 0;
 
-    // while back and forth searching paths gives different length
+    // while back and forth paths gives different length
     while (oldPathLength != newPathLength) {
         oldPathLength = newPathLength;
         indexStartRoom = indexEndRoom;
 
-        // from start room, visit all adjacent rooms
+        // reset path length
         setLongestPathLength(0);
+        // from start room, visit recursively all adjacent rooms
         visitAdjacentRooms(indexStartRoom);
+        // calculate new path length
         newPathLength = getLongestPathLength();
-        cout << oldPathLength << ", " << newPathLength << endl;
     }
 }
 
@@ -195,18 +189,16 @@ int FloorMap::visitAdjacentRooms(int index, int prev, int dist) {
             isTerminalRoom = false;
 
             // visit that room
-            cout << index << ", " << roomList[index].doors[i] << endl;
             visitAdjacentRooms(roomList[index].doors[i], (i + 2) % 4, dist + 1);
         }
     }
 
-    // if the room is terminal
-    if (isTerminalRoom == true) {
-        // if the path founded is longer than the previous one
-        if (dist >= getLongestPathLength()) {
-            // this room become the end room
-            indexEndRoom = index;
-            setLongestPathLength(dist);
-        }
+    // if the room is terminal and the path founded is longer than the previous one
+    if (isTerminalRoom == true && dist >= getLongestPathLength()) {
+        // this room become the end room
+        indexEndRoom = index;
+
+        // and new longest path is set
+        setLongestPathLength(dist);
     }
 }

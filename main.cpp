@@ -7,7 +7,7 @@
 int main() {
     // caricamento del font
     sf::Font Rancho;
-    if (!Rancho.loadFromFile("Font/Rancho/Rancho.ttf")) {
+    if (!Rancho.loadFromFile("../Font/Rancho/Rancho.ttf")) {
         cout << "font non caricato" << endl;
         system("pause");
     }
@@ -17,10 +17,10 @@ int main() {
 
     // load and set Game's Icon
     sf::Image icon;
-    icon.loadFromFile("Icon.png");
+    icon.loadFromFile("../Icon.png");
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
-    int level = 4;
+    int level = 20;
     std::vector<sf::RectangleShape> roomShapes;
     std::vector<sf::Text> roomTextNumbers;
     sf::CircleShape startPointer;
@@ -58,16 +58,16 @@ int main() {
         text.setPosition((floor->roomList[i].getPosX() + 8) * 100 - 10, (floor->roomList[i].getPosY() + 4.5) * 100 - 30);
         text.setFillColor(sf::Color::Black);
         roomTextNumbers.emplace_back(text);
-
-        // highlight start and end room
-        startPointer.setRadius(5);
-        startPointer.setPosition((floor->roomList[floor->indexStartRoom].getPosX() + 8) * 100 - 30, (floor->roomList[floor->indexStartRoom].getPosY() + 4.5) * 100 - 30);
-        startPointer.setFillColor(sf::Color::Green);
-
-        endPointer.setRadius(5);
-        endPointer.setPosition((floor->roomList[floor->indexEndRoom].getPosX() + 8) * 100 - 30, (floor->roomList[floor->indexEndRoom].getPosY() + 4.5) * 100 - 30);
-        endPointer.setFillColor(sf::Color::Red);
     }
+
+    // highlight start and end room
+    startPointer.setRadius(10);
+    startPointer.setPosition((floor->roomList[floor->indexStartRoom].getPosX() + 8) * 100 - 35, (floor->roomList[floor->indexStartRoom].getPosY() + 4.5) * 100 - 35);
+    startPointer.setFillColor(sf::Color::Green);
+
+    endPointer.setRadius(10);
+    endPointer.setPosition((floor->roomList[floor->indexEndRoom].getPosX() + 8) * 100 - 35, (floor->roomList[floor->indexEndRoom].getPosY() + 4.5) * 100 - 35);
+    endPointer.setFillColor(sf::Color::Red);
 
     //creation of the event
     sf::Event event;

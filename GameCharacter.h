@@ -48,7 +48,6 @@ protected:
     AnimatedSprite sprite;
 private:
 
-
 };
 
 
