@@ -22,17 +22,20 @@ public:
                   float maxArmor, float strength, float maxStrength, std::unique_ptr<Weapon> weapon);
     virtual ~GameCharacter() = default;
 
-    // TODO add move() and changeAngle()
+    // TODO: define parameters and definition
+    void move();
+    void changeAngle();
 
+    // given a value for damage, receive damage
     void receiveDamage(float damage);
 
     float useWeapon();
 
 protected:
-    //Character name
+    // character name
     std::string name;
 
-    //Statistics
+    // statistics
     float hp, maxHp;
     float speed, maxSpeed;
     float armor, maxArmor;
@@ -41,10 +44,10 @@ protected:
     // Weapon wielded
     std::unique_ptr<Weapon> weapon;
 
-    //SFML Texture of the sprite
+    // SFML Texture of the sprite
     sf::Texture texture;
 
-    //SFML Animated Sprite body
+    // SFML Animated Sprite body
     AnimatedSprite sprite;
 private:
 

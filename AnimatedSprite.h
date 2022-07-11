@@ -17,22 +17,23 @@ public:
     // move across the map
     void move(float x, float y);
 
-    // function to update the sprite and to create the animation
+    // update the sprite to create the animation
     void update(int frequency, int row);
 
+    // display the sprite on the screen
     void draw(sf::RenderWindow window);
 
 private:
     sf::Sprite sprite;
 
+    // sprite timer
     sf::Clock clock;
 
     // the rectangle shown of the Sprite, the single frame in the sprite sheet
     sf::IntRect rectangle;
 
-    // total of frames
+    // total number of frames
     int frames;
-
 };
 
 

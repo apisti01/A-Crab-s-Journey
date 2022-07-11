@@ -6,7 +6,6 @@
 
 
 void Player::attack(std::list<Enemy> enemyList) {
-
     // if ranged it delegates the creation of bullets, return the damage if melee
     auto damage = useWeapon();
 
@@ -19,7 +18,6 @@ void Player::attack(std::list<Enemy> enemyList) {
             }
         }
     }
-
 }
 
 std::unique_ptr<Wearable> Player::wearItem(std::unique_ptr<Wearable> item) {

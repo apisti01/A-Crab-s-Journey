@@ -15,18 +15,20 @@ public:
     ~Consumable() override = default;
 
     // Use the consumable  TODO specify the behavior
+    int useItem();
+
+    // eliminate the consumable from inventory
     int dropItem();
 
 private:
     // Time that the consumable last
     float time;
 
-    // Bonus to add to the player statistics
+    // Bonus added to the player statistics
     float hp;
     float speed;
     float armor;
     float strength;
-
 };
 
 

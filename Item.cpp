@@ -3,7 +3,6 @@
 //
 
 #include "Item.h"
-
 #include <utility>
 
 Item::Item(std::string name, ItemRarity rarity, int price, int quantity, int slotOccupied)

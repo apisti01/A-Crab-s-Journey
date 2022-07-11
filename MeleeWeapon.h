@@ -19,7 +19,6 @@ public:
 private:
     // Damage dealt with the attack
     float damage;
-
 };
 
 

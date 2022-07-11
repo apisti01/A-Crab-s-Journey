@@ -15,18 +15,17 @@ public:
     ~Bullet() = default;
 
 private:
-
+    // basic attributes
     float damage;
     float range;
     float speed;
 
-    // Special ability
+    // special features
     bool isTracking;
     bool isShattering;
 
     // SFML Sprite
     sf::Sprite body;
-
 };
 
 

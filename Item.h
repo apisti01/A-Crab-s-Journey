@@ -17,15 +17,13 @@ enum class ItemRarity {
 
 class Item {
 public:
-
-
     // Constructor and Destructor
     explicit Item(std::string  name, ItemRarity rarity = ItemRarity::Common, int price = 50, int quantity = 1, int slotOccupied = 1);
     virtual ~Item() = 0;
 
     // various getters and setters
     int getQuantity() const {return quantity;}
-    void setQuantity(int quantity) { Item::quantity = quantity;}
+    void setQuantity(int quantity) {Item::quantity = quantity;}
 
 protected:
     // Item name
@@ -45,7 +43,6 @@ protected:
     sf::Sprite body;
 
 private:
-
 
 };
 

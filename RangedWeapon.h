@@ -25,21 +25,20 @@ public:
 private:
     // TODO function that manage bullets
 
-
     // List of the bullets shot
     std::list<Bullet> bulletList {};
 
-    // list of the attributes of the Bullet it must create
+    // list of bullets' attributes
     float damage;
     float speed;
     float range;
-    // Special ability
+
+    // special bullets features
     bool isTracking;
     bool isShattering;
+
     // SFML Sprite
     sf::Sprite body;
-
-
 };
 
 

@@ -8,11 +8,10 @@ RangedWeapon::RangedWeapon(sf::Sprite bulletBody, float damage, float speed, flo
                            bool isShattering,
                            ItemRarity rarity, std::string name, int price)
                            : Weapon(std::move(name), rarity, price), range(range),
-                           body(std::move(bulletBody)), damage(damage), speed(speed), isTracking(isTracking), isShattering(isShattering){
-
+                           body(std::move(bulletBody)), damage(damage), speed(speed), isTracking(isTracking), isShattering(isShattering) {
 }
 
 float RangedWeapon::useWeapon() {
-    Bullet tmp(damage,speed,range,body,isTracking,isShattering);
+    Bullet tmp(damage, speed, range, body, isTracking, isShattering);
     bulletList.push_back(tmp);
 }

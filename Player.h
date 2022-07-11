@@ -29,28 +29,29 @@ public:
     // if weapon is ranged create bullet, if melee find the first in range enemy and gives it damages
     void attack(std::list<Enemy> enemyList);
 
-    // TODO
+    // TODO: write definition for the selection of hit enemy
     bool checkEnemy(const Enemy& enemy);
 
-    // Take a Wearable and puts it on, return the item wore before
+    // take a Wearable and puts it on, return the item wore before
     std::unique_ptr<Wearable> wearItem(std::unique_ptr<Wearable> item);
 
-    // TAke a Weapon and puts it on, return the weapon wielded before
+    // take a Weapon and puts it on, return the weapon wielded before
     std::unique_ptr<Weapon> changeWeapon(std::unique_ptr<Weapon> weapon1);
 
 private:
+    // name of the crab specie
     std::string namePlayer;
 
     // Specification about the starting statistics
     CrabSpecie crabSpecie;
 
+    // coin owned
     int coins;
 
-    // Wearable on the player
+    // wearable on the player
     std::unique_ptr<Wearable> hat = nullptr;
     std::unique_ptr<Wearable> shield = nullptr;
     std::unique_ptr<Wearable> shell = nullptr;
-
 };
 
 

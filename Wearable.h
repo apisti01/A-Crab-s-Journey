@@ -28,15 +28,14 @@ public:
     float getStrength() const {return strength;}
 
 private:
-    // Type of piece
+    // piece's type
     WearablePieces type;
 
-    // Bonus to add at the player statistics maximum
+    // Bonus added to the player statistics
     float hp = 0;
     float speed = 0;
     float armor = 0;
     float strength = 0;
-
 };
 
 

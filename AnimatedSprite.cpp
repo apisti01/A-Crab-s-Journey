@@ -8,13 +8,12 @@ void AnimatedSprite::move(float x, float y) {
     sprite.move(x,y);
 }
 
-AnimatedSprite::AnimatedSprite(sf::Texture &texture, sf::Vector2u imageCount) : frames(int(imageCount.x - 1) ),
-    rectangle(sf::IntRect(0,0,int(texture.getSize().x/imageCount.x),int(texture.getSize().y/imageCount.y))) {
+AnimatedSprite::AnimatedSprite(sf::Texture &texture, sf::Vector2u imageCount) : frames(int(imageCount.x - 1)),
+    rectangle(sf::IntRect(0, 0, int(texture.getSize().x / imageCount.x), int(texture.getSize().y / imageCount.y))) {
     sprite = sf::Sprite(texture,rectangle);
 }
 
 void AnimatedSprite::update(int frequency, int row) {
-
     rectangle.top = rectangle.height * row;
 
     if (clock.getElapsedTime().asMilliseconds() >= 1000/frequency){

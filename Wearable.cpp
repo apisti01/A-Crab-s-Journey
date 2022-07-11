@@ -8,6 +8,5 @@ Wearable::Wearable(std::string name, WearablePieces type, float hp, float speed,
                    ItemRarity rarity, int price, int quantity, int slotOccupied)
                    : Item(std::move(name), rarity, price, quantity, slotOccupied),
                    type(type), hp(hp), speed(speed), armor(armor), strength(strength) {
-
 }
 
