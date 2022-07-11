@@ -7,12 +7,12 @@
 int main() {
     // caricamento del font
     sf::Font Rancho;
-    if (!Rancho.loadFromFile("../Font/Rancho/Rancho.ttf")) {
+    if (!Rancho.loadFromFile("../Font/Arial/Arial.ttf")) {
         cout << "font non caricato" << endl;
         system("pause");
     }
 
-    srand(time(NULL));
+    srand(time(nullptr));
     sf::RenderWindow window(sf::VideoMode(1600, 900), "A Crab's Journey");
 
     // load and set Game's Icon

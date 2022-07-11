@@ -9,7 +9,8 @@ set(CMAKE_CXX_STANDARD 20)
 add_subdirectory(test)
 
 # add cpp and h files
-set(SOURCE_FILES GameCharacter.cpp GameCharacter.h Item.cpp Item.h Weapon.h Weapon.cpp Wearable.cpp Wearable.h Consumable.cpp Consumable.h MeleeWeapon.cpp MeleeWeapon.h RangedWeapon.cpp RangedWeapon.h Bullet.cpp Bullet.h Enemy.cpp Enemy.h Player.cpp Player.h AnimatedSprite.cpp AnimatedSprite.h FloorMap.cpp FloorMap.h Room.cpp Room.h Obstacle.cpp Obstacle.h)
+set(SOURCE_FILES GameCharacter.cpp GameCharacter.h Item.cpp Item.h Weapon.h Weapon.cpp Wearable.cpp Wearable.h Consumable.cpp Consumable.h MeleeWeapon.cpp MeleeWeapon.h RangedWeapon.cpp RangedWeapon.h Bullet.cpp Bullet.h Enemy.cpp Enemy.h
+        Player.cpp Player.h AnimatedSprite.cpp AnimatedSprite.h FloorMap.cpp FloorMap.h Room.cpp Room.h Obstacle.cpp Obstacle.h)
 # executable file
 add_executable(ACrabsJourney main.cpp)
 add_library(core ${SOURCE_FILES})
