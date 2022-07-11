@@ -11,8 +11,10 @@ class Player;
 
 class Enemy : public GameCharacter{
 public:
-    // TODO Constructor and Destructor
-
+    // Constructor and Destructor
+    Enemy(std::string name, float hp, float maxHp, float speed, float maxSpeed, float armor, float maxArmor,
+          float strength, float maxStrength, std::unique_ptr<Weapon> weapon, float xpReward, int coinsDropped,
+          int pearlsDropped);
     ~Enemy() override = default;
 
     virtual void chase(Player hero) = 0;

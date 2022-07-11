@@ -2,7 +2,7 @@
 
 int main(){
     // Creation of the window
-    sf::RenderWindow window(sf::VideoMode(1920, 1080), "SFML works!",sf::Style::Fullscreen);
+    sf::RenderWindow window(sf::VideoMode(1920, 1080), "SFML works!",sf::Style::Fullscreen | sf::Style::Close);
 
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);

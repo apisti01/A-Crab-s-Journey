@@ -12,15 +12,17 @@
 #include "Item.h"
 #include "Weapon.h"
 #include "MeleeWeapon.h"
+#include "AnimatedSprite.h"
 
 
 class GameCharacter {
 public:
-    //TODO add constructor and virtual destructor
-
+    // constructor and virtual destructor
+    GameCharacter(std::string name, float hp, float maxHp, float speed, float maxSpeed, float armor,
+                  float maxArmor, float strength, float maxStrength, std::unique_ptr<Weapon> weapon);
     virtual ~GameCharacter() = default;
 
-    //TODO add move() and changeAngle()
+    // TODO add move() and changeAngle()
 
     void receiveDamage(float damage);
 
@@ -39,8 +41,11 @@ protected:
     // Weapon wielded
     std::unique_ptr<Weapon> weapon;
 
-    //TODO add Animated Sprite body
+    //SFML Texture of the sprite
+    sf::Texture texture;
 
+    //SFML Animated Sprite body
+    AnimatedSprite sprite;
 private:
 
 

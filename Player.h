@@ -20,7 +20,11 @@ enum class CrabSpecie{
 
 class Player : public GameCharacter{
 public:
-
+    // Constructor and Destructor
+    Player(std::string name, float hp, float maxHp, float speed, float maxSpeed, float armor, float maxArmor,
+           float strength, float maxStrength, std::unique_ptr<Weapon> Weapon, std::string namePlayer,
+           CrabSpecie crabSpecie, int coins);
+    ~Player() override = default;
 
     // if weapon is ranged create bullet, if melee find the first in range enemy and gives it damages
     void attack(std::list<Enemy> enemyList);

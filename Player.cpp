@@ -46,3 +46,9 @@ std::unique_ptr<Weapon> Player::changeWeapon(std::unique_ptr<Weapon> weapon1) {
     weapon = std::move(weapon1);
     return tmp;
 }
+
+Player::Player(std::string name, float hp, float maxHp, float speed, float maxSpeed, float armor, float maxArmor,
+               float strength, float maxStrength, std::unique_ptr<Weapon> weapon, std::string namePlayer,
+               CrabSpecie crabSpecie, int coins) :
+               GameCharacter(std::move(name),hp,maxHp,speed,maxSpeed,armor,maxArmor,strength,maxStrength,std::move(weapon)),
+               namePlayer(std::move(namePlayer)),crabSpecie(crabSpecie),coins(coins) {}
