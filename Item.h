@@ -21,7 +21,7 @@ public:
 
     // Constructor and Destructor
     explicit Item(std::string  name, ItemRarity rarity = ItemRarity::Common, int price = 50, int quantity = 1, int slotOccupied = 1);
-    virtual ~Item() = 0;
+    virtual ~Item() = default;
 
     // various getters and setters
     int getQuantity() const {return quantity;}

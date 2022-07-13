@@ -20,10 +20,13 @@ public:
     ~RangedWeapon() override = default;
 
     // Create bullet and puts it on the list
-    float useWeapon() override;
+    float useWeapon(sf::Vector2f playerPosition, sf::Vector2f bulletDirections) override;
+
+    void update(int deltaTime) override;
+
+    void draw(sf::RenderWindow& window) override;
 
 private:
-    // TODO function that manage bullets
 
 
     // List of the bullets shot
@@ -37,7 +40,7 @@ private:
     bool isTracking;
     bool isShattering;
     // SFML Sprite
-    sf::Sprite body;
+    sf::Sprite sprite;
 
 
 };

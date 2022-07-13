@@ -8,7 +8,7 @@
 
 using namespace std;
 
-Room::Room(int posX, int posY) : posX(posX), posY(posY), XpReward(XpReward = 0), isCage(isCage = false), enemyCount(enemyCount = 0), isBossRoom(isBossRoom = false) {
+Room::Room(int posX, int posY) : posX(posX), posY(posY), XpReward(0), isCage(false), enemyCount(0), isBossRoom(false) {
     // doors are all initially closed
     doors = {-1, -1, -1, -1};
 

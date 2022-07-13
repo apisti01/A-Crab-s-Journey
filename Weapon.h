@@ -13,9 +13,12 @@ public:
     explicit Weapon(std::string name, ItemRarity rarity, int price);
     ~Weapon() override = default;
 
-    virtual float useWeapon() = 0;
+    virtual float useWeapon(sf::Vector2f playerPosition, sf::Vector2f bulletDirections) = 0;
 
-protected:
+    virtual void update(int deltaTime) = 0;
+
+    // overridden only to draw bullets
+    virtual void draw(sf::RenderWindow& window) = 0;
 
 };
 
