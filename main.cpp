@@ -4,21 +4,17 @@
 
 #include "ctime"
 #include "FloorMap.h"
+#include "FloorMap.cpp"
 #include "Player.h"
 #include "MeleeWeapon.h"
 
 int main() {
-
-
     // caricamento del font
     sf::Font Rancho;
     if (!Rancho.loadFromFile("../Font/Arial/Arial.ttf")) {
         cout << "font non caricato" << endl;
         system("pause");
     }
-
-
-
 
     srand(time(nullptr));
     sf::RenderWindow window(sf::VideoMode(1600, 900), "A Crab's Journey");
@@ -28,16 +24,16 @@ int main() {
     sf::Image icon;
     icon.loadFromFile("../Icon.png");
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
-    */
 
-
-    /*
     int level = 20;
     std::vector<sf::RectangleShape> roomShapes;
     std::vector<sf::Text> roomTextNumbers;
-    sf::CircleShape startPointer;
-    sf::CircleShape endPointer;
+    sf::CircleShape startPointer, endPointer, shopPointer;
 
+    // TODO: setup the game
+    Player player = new Player();
+
+    // create new floor
     FloorMap *floor = new FloorMap(level);
 
     for (int i = 0; i < floor->roomList.size(); i++) {
@@ -72,18 +68,19 @@ int main() {
         roomTextNumbers.emplace_back(text);
     }
 
-    // highlight start and end room
+    // highlight start, end and shop room
     startPointer.setRadius(10);
-    startPointer.setPosition((floor->roomList[floor->indexStartRoom].getPosX() + 8) * 100 - 35, (floor->roomList[floor->indexStartRoom].getPosY() + 4.5) * 100 - 35);
+    startPointer.setPosition((floor->roomList[floor->startRoomIndex].getPosX() + 8) * 100 - 35, (floor->roomList[floor->startRoomIndex].getPosY() + 4.5) * 100 - 35);
     startPointer.setFillColor(sf::Color::Green);
 
     endPointer.setRadius(10);
-    endPointer.setPosition((floor->roomList[floor->indexEndRoom].getPosX() + 8) * 100 - 35, (floor->roomList[floor->indexEndRoom].getPosY() + 4.5) * 100 - 35);
+    endPointer.setPosition((floor->roomList[floor->endRoomIndex].getPosX() + 8) * 100 - 35, (floor->roomList[floor->endRoomIndex].getPosY() + 4.5) * 100 - 35);
     endPointer.setFillColor(sf::Color::Red);
 
-     */
-
-
+    shopPointer.setRadius(10);
+    shopPointer.setPosition((floor->roomList[floor->shopRoomIndex].getPosX() + 8) * 100 + 15, (floor->roomList[floor->shopRoomIndex].getPosY() + 4.5) * 100 - 35);
+    shopPointer.setFillColor(sf::Color::Blue);
+    */
 
     // the following are instance to test the movement
     sf::Texture brownCrab;
@@ -93,14 +90,9 @@ int main() {
 
     auto carlo = make_unique<Player>(brownCrab, std::move(weapon), CrabSpecie::BrownCrab, "jose", 10, 10, 5);
 
-    carlo->setPosition(window.getSize().x/2, window.getSize().y/2);
+    carlo->setPosition(window.getSize().x / 2, window.getSize().y / 2);
 
-    std::list<std::unique_ptr<Enemy>> ifuckingtried {};
-
-
-
-
-
+    std::list<std::unique_ptr<Enemy>> enemyList {};
 
     //creation of the event
     sf::Event event;
@@ -112,7 +104,7 @@ int main() {
     {
         int  deltaTime = clockMain.restart().asMilliseconds();
 
-        while (window.pollEvent(event)){
+        while (window.pollEvent(event)) {
             // closing the window and ending the game
             switch (event.type) {
                 case sf::Event::Closed:
@@ -125,14 +117,12 @@ int main() {
 
         // TODO Updating the Game
 
-        carlo->update(deltaTime,ifuckingtried);
+        carlo->update(deltaTime, enemyList);
 
         // Clearing the old frame and preparing for drawing the new onr
         window.clear(sf::Color::White);
 
         carlo->draw(window);
-
-
 
         /*
         for (int i = 0; i < size(roomShapes); i++)
@@ -143,15 +133,11 @@ int main() {
         // Drawing all the objects of the game
         window.draw(startPointer); // TODO change once created the game class
         window.draw(endPointer);
-
-         */
-
-
-
+        window.draw(shopPointer);
+        */
 
         // Bring to screen and display the new frame just drawn
         window.display();
-
     }
 
     // End of the Game

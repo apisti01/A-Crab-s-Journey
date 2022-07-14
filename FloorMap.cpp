@@ -2,6 +2,7 @@
 // Created by longo on 07/07/2022.
 //
 
+
 #include "FloorMap.h"
 
 using namespace std;
@@ -25,6 +26,12 @@ void FloorMap::generateFloor() {
 
     // set start and end rooms
     setStartAndEndRooms();
+
+    // set the shop room
+    setShopRoom();
+
+    // set player in the middle of the first room
+    setupPlayer();
 };
 
 int FloorMap::pickRoom() {
@@ -120,7 +127,7 @@ void FloorMap::generateRoom(int roomIndex, int sideIndex, int newRoomIndex) {
 
 void FloorMap::setStartAndEndRooms() {
     // select one random room from all terminal rooms
-    indexEndRoom = TerminalRoomIndex();
+    endRoomIndex = TerminalRoomIndex();
 
     int oldPathLength = -1;
     int newPathLength = 0;
@@ -128,15 +135,18 @@ void FloorMap::setStartAndEndRooms() {
     // while back and forth paths gives different length
     while (oldPathLength != newPathLength) {
         oldPathLength = newPathLength;
-        indexStartRoom = indexEndRoom;
+        startRoomIndex = endRoomIndex;
 
         // reset path length
         setLongestPathLength(0);
         // from start room, visit recursively all adjacent rooms
-        visitAdjacentRooms(indexStartRoom);
+        visitAdjacentRooms(startRoomIndex);
         // calculate new path length
         newPathLength = getLongestPathLength();
     }
+
+    roomList[startRoomIndex].setStartRoom(true);
+    roomList[endRoomIndex].setBossRoom(true);
 }
 
 int FloorMap::TerminalRoomIndex() {
@@ -189,10 +199,43 @@ int FloorMap::visitAdjacentRooms(int index, int prev, int dist) {
     // if the room is terminal and the path founded is longer than the previous one
     if (isTerminalRoom && dist >= getLongestPathLength()) {
         // this room become the end room
-        indexEndRoom = index;
+        endRoomIndex = index;
 
         // and new longest path is set
         setLongestPathLength(dist);
     }
     return 0;
+}
+
+void FloorMap::setShopRoom() {
+    // there's a chance of 40% that the floor has a shop room
+    if (rand() / (RAND_MAX + 1.0) <= shopChance) {
+        // create a list of all possible
+        std::vector<int> possibleShopRoomIndexes;
+
+        // select one random room except for start and boss room
+        for (int i = 0; i < size(roomList); i++) {
+            // shop room can't be the same as the boss room
+            if (i != endRoomIndex)
+                possibleShopRoomIndexes.emplace_back(i);
+        }
+
+        // select one random room from all the possible rooms
+        shopRoomIndex = possibleShopRoomIndexes[rand() % size(possibleShopRoomIndexes)];
+        // and set its attribute true
+        roomList[shopRoomIndex].setShopRoom(true);
+    }
+}
+
+void FloorMap::setupPlayer() {
+    // set the player in the first room
+    currentRoomIndex = startRoomIndex;
+
+    // in the middle
+    // player.setPosX();
+    // player.setPosY();
+}
+
+void FloorMap::changeRoom(int i) {
+    currentRoomIndex = roomList[currentRoomIndex].doors[i];
 }

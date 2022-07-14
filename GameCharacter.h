@@ -23,8 +23,16 @@ public:
                   float armor, float maxArmor, float strength, float maxStrength, std::unique_ptr<Weapon> weapon);
     virtual ~GameCharacter() = default;
 
-
-    void setPosition(float x, float y);
+    // getter and setter for character position
+    void setPosition(float x, float y) {
+        sprite.setPosition(sf::Vector2f(x,y));
+    }
+    float getPosX() const {
+        return sprite.getPosition().x;
+    }
+    float getPosY() const {
+        return sprite.getPosition().y;
+    }
 
     // given a value for damage, receive damage
     void receiveDamage(float damage);

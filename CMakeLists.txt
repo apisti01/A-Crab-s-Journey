@@ -1,5 +1,5 @@
 # CMake Version
-cmake_minimum_required(VERSION 3.2)
+cmake_minimum_required(VERSION 3.0)
 # project name
 project(ACrabsJourney)
 # Standard C++20
@@ -9,8 +9,12 @@ set(CMAKE_CXX_STANDARD 20)
 add_subdirectory(test)
 
 # add cpp and h files
-set(SOURCE_FILES GameCharacter.cpp GameCharacter.h Item.cpp Item.h Weapon.h Weapon.cpp Wearable.cpp Wearable.h Consumable.cpp Consumable.h MeleeWeapon.cpp MeleeWeapon.h RangedWeapon.cpp RangedWeapon.h Bullet.cpp Bullet.h Enemy.cpp Enemy.h
-        Player.cpp Player.h AnimatedSprite.cpp AnimatedSprite.h Obstacle.cpp Obstacle.h StaticRangedEnemy.cpp StaticRangedEnemy.h Room.h Room.cpp FloorMap.h FloorMap.cpp)
+set(SOURCE_FILES
+        AnimatedSprite.cpp AnimatedSprite.h Bullet.cpp Bullet.h Consumable.cpp Consumable.h Enemy.cpp Enemy.h
+        FloorMap.cpp FloorMap.h GameCharacter.cpp GameCharacter.h Item.cpp Item.h MeleeWeapon.cpp MeleeWeapon.h
+        Obstacle.cpp Obstacle.h Player.cpp Player.h RangedWeapon.cpp RangedWeapon.h Room.cpp Room.h
+        StaticRangedEnemy.cpp StaticRangedEnemy.h Weapon.cpp Weapon.h Wearable.cpp Wearable.h)
+
 # executable file
 add_executable(ACrabsJourney main.cpp)
 add_library(core ${SOURCE_FILES})

@@ -12,15 +12,16 @@
 #include "Wearable.h"
 #include "StaticRangedEnemy.h"
 
-enum class CrabSpecie{
+enum class CrabSpecie {
     BrownCrab,
     AsianPaddleCrab,
     TriangleTannerCrab,
     FiddlerCrab
 };
 
-class Player : public GameCharacter{
+class Player : public GameCharacter {
 public:
+    Player();
     // Constructor and Destructor
     Player(const sf::Texture& texture, std::unique_ptr<Weapon> Weapon, CrabSpecie crabSpecie, std::string name = " ", float hp = 10,
            float maxHp = 10, float speed = 10, float maxSpeed = 10, float armor = 10, float maxArmor = 10, float strength = 10, float maxStrength = 10,
@@ -62,7 +63,6 @@ private:
     std::unique_ptr<Wearable> hat = nullptr;
     std::unique_ptr<Wearable> shield = nullptr;
     std::unique_ptr<Wearable> shell = nullptr;
-
 };
 
 

@@ -5,6 +5,14 @@
 #include "Player.h"
 
 
+Player::Player(const sf::Texture& texture, std::unique_ptr<Weapon> Weapon, CrabSpecie crabSpecie, std::string name, float hp,
+               float maxHp, float speed, float maxSpeed, float armor, float maxArmor, float strength, float maxStrength,
+               std::string namePlayer, int coins) :
+        GameCharacter(texture, std::move(name), hp, maxHp, speed, maxSpeed, armor, maxArmor, strength,
+                      maxStrength, std::move(Weapon)),
+        namePlayer(std::move(namePlayer)), crabSpecie(crabSpecie), coins(coins) {
+}
+
 void Player::attack(std::list<std::unique_ptr<Enemy>> &enemyList, sf::Vector2f coordinates) {
     // if ranged it delegates the creation of bullets, return the damage if melee
     auto damage = weapon->useWeapon(sprite.getPosition(), coordinates) * strength;
@@ -19,7 +27,6 @@ void Player::attack(std::list<std::unique_ptr<Enemy>> &enemyList, sf::Vector2f c
             }
         }
     }
-
 }
 
 std::unique_ptr<Wearable> Player::wearItem(std::unique_ptr<Wearable> item) {
@@ -45,8 +52,6 @@ std::unique_ptr<Wearable> Player::wearItem(std::unique_ptr<Wearable> item) {
     return tmp;
 }
 
-}
-
 std::unique_ptr<Weapon> Player::changeWeapon(std::unique_ptr<Weapon> weapon1) {
     auto tmp = std::move(weapon);
     // move the weapon in
@@ -54,13 +59,6 @@ std::unique_ptr<Weapon> Player::changeWeapon(std::unique_ptr<Weapon> weapon1) {
     // gives back the old weapon
     return tmp;
 }
-
-Player::Player(const sf::Texture& texture, std::unique_ptr<Weapon> Weapon, CrabSpecie crabSpecie, std::string name, float hp,
-               float maxHp, float speed, float maxSpeed, float armor, float maxArmor, float strength, float maxStrength,
-               std::string namePlayer, int coins) :
-               GameCharacter(texture, std::move(name), hp, maxHp, speed, maxSpeed, armor, maxArmor, strength,
-                             maxStrength, std::move(Weapon)),
-               namePlayer(std::move(namePlayer)),crabSpecie(crabSpecie),coins(coins) {}
 
 void Player::move(int deltaTime) {
     // start supposing the player is standing still
@@ -91,7 +89,6 @@ void Player::move(int deltaTime) {
 }
 
 void Player::mouseInput(int deltaTime, std::list<std::unique_ptr<Enemy>> &enemyList) {
-
     const float PI = 3.14159265;
 
     // coordinates of the mouse when pressed

@@ -5,12 +5,12 @@
 #ifndef ACRABSJOURNEY_FLOORMAP_H
 #define ACRABSJOURNEY_FLOORMAP_H
 
-#include <cstdlib>
-#include <cmath>
 #include <vector>
 #include <iostream>
 #include <random>
 #include <ctime>
+#include <cstdlib>
+#include <cmath>
 
 #include "Room.h"
 
@@ -20,6 +20,12 @@ class FloorMap {
 public:
     // constructor
     explicit FloorMap(int level) : level(level) {
+        // there's a 40% chance that this floor has a shop room
+        float chance = rand() / (RAND_MAX + 1.0);
+        if (chance <= 0.4)
+            hasShop = true;
+
+        // then generates the floor
         generateFloor();
     };
 
@@ -49,7 +55,7 @@ public:
 
     // list of all rooms on floor
     std::vector<Room> roomList;
-    int indexStartRoom, indexEndRoom;
+    int startRoomIndex, endRoomIndex, shopRoomIndex = -1;
 
 protected:
 
@@ -58,9 +64,11 @@ private:
     int level;
     int numRooms;
     int longestPathLength;
+    bool hasShop;
+    float shopChance = 0.4;
 
     // start, end and current room index
-    int indexCurrentRoom;
+    int currentRoomIndex;
 
     // function for randomic floor generation
     void generateFloor();
@@ -77,6 +85,14 @@ private:
     int TerminalRoomIndex();
     // given an index of a room, visits all adjacent rooms and return number of rooms in the longest path
     int visitAdjacentRooms(int index, int prev = -1, int dist = 1);
+
+    // set shop room
+    void setShopRoom();
+
+    void setupPlayer();
+
+    // move from one room to another
+    void changeRoom(int i);
 };
 
 class CoralReef : public FloorMap {

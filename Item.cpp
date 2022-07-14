@@ -5,7 +5,7 @@
 #include "Item.h"
 #include <utility>
 
-Item::Item(std::string name, ItemRarity rarity, int price, int quantity, int slotOccupied)
-: name(std::move(name)), rarity(rarity), price(price), quantity(quantity), slotOccupied(slotOccupied){
+Item::Item(std::string name, ItemRarity rarity, int price, int quantity, int slotOccupied) : name(std::move(name)),
+           rarity(rarity), price(price), quantity(quantity), slotOccupied(slotOccupied) {
 
 }

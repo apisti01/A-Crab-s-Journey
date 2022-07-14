@@ -32,7 +32,6 @@ public:
     void draw(sf::RenderWindow &window);
 
 private:
-
     sf::Sprite sprite;
 
     // time passed from the last change of frame of the animation
@@ -43,7 +42,6 @@ private:
 
     // total of frames
     int frames;
-
 };
 
 
