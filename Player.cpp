@@ -21,7 +21,7 @@ void Player::attack(std::list<std::unique_ptr<Enemy>> &enemyList, sf::Vector2f c
     if (typeid(weapon.get()) == typeid(MeleeWeapon*)) {
         // find the first available enemy
         for (auto enemy = enemyList.begin(); enemy != enemyList.end(); enemy++) {
-            if (checkEnemy(enemy->get())){
+            if (checkEnemy(enemy->get())) {
                 (*enemy)->receiveDamage(damage);
                 break;
             }
@@ -95,7 +95,9 @@ void Player::mouseInput(int deltaTime, std::list<std::unique_ptr<Enemy>> &enemyL
     auto coordinates = sf::Mouse::getPosition();
 
     // coordinates relative to the position of the player
-    sf::Vector2f relativeCoordinates {float(coordinates.x) - (sprite.getPosition().x + sprite.getWidth()), float(coordinates.y) - (sprite.getPosition().y + sprite.getHeight())};
+    sf::Vector2f relativeCoordinates {
+        float(coordinates.x) - (sprite.getPosition().x + sprite.getWidth()), float(coordinates.y) - (sprite.getPosition().y + sprite.getHeight())
+    };
 
     // total distance between the player and the mouse
     auto distance = sqrtf(powf(relativeCoordinates.x,2) + powf(relativeCoordinates.y,2));
@@ -113,7 +115,7 @@ void Player::mouseInput(int deltaTime, std::list<std::unique_ptr<Enemy>> &enemyL
     // changing the angle the sprite is facing
     sprite.changeAngle(result);
 
-    if (weapon){
+    if (weapon) {
         if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
             // delegate attack both with melee or the creation of bullet with ranged
             attack(enemyList, relativeCoordinates);

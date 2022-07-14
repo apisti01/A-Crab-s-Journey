@@ -1,8 +1,9 @@
 #include <SFML/Graphics.hpp>
+
 #include <iostream>
 #include <memory>
-
 #include "ctime"
+
 #include "FloorMap.h"
 #include "FloorMap.cpp"
 #include "Player.h"

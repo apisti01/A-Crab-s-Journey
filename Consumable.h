@@ -7,7 +7,7 @@
 
 #include "Item.h"
 
-class Consumable : public Item{
+class Consumable : public Item {
 public:
     //Constructor and Destructor
     explicit Consumable(std::string name, float time = 60, float hp = 0, float speed = 0, float armor = 0, float strength = 0,

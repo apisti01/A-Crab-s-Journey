@@ -11,7 +11,7 @@
 class Bullet {
 public:
     // Constructor and Destructor
-    Bullet(float damage, float speed, float range, const sf::Sprite &body, sf::Vector2f playerPosition,
+    Bullet(float damage, float speed, float range, const sf::Sprite &sprite, sf::Vector2f playerPosition,
            sf::Vector2f directions, bool isTracking, bool isShattering);
     ~Bullet() = default;
 
@@ -21,7 +21,6 @@ public:
     void draw(sf::RenderWindow& window);
 
 private:
-
     float damage;
     float range;
     float speed;
@@ -35,7 +34,6 @@ private:
 
     // SFML Sprite
     sf::Sprite sprite;
-
 };
 
 

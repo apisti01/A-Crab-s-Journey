@@ -23,7 +23,9 @@ GameCharacter::GameCharacter(const sf::Texture& texture, std::string name, float
 void GameCharacter::draw(sf::RenderWindow &window) {
     sprite.draw(window);
 
-    if (weapon) {// in case there are bullets to be drawn
+    // if the weapon is ranged
+    if (weapon) {
+        // draw its bullets
         weapon->draw(window);
     }
 }

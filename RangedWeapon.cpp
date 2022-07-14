@@ -5,10 +5,9 @@
 #include "RangedWeapon.h"
 
 RangedWeapon::RangedWeapon(sf::Sprite bulletBody, float damage, float speed, float range, bool isTracking,
-                           bool isShattering,
-                           ItemRarity rarity, std::string name, int price)
-                           : Weapon(std::move(name), rarity, price), range(range),
-                           sprite(std::move(bulletBody)), damage(damage), speed(speed), isTracking(isTracking), isShattering(isShattering) {
+                           bool isShattering, ItemRarity rarity, std::string name, int price)
+                           : Weapon(std::move(name), rarity, price), range(range), sprite(std::move(bulletBody)),
+                           damage(damage), speed(speed), isTracking(isTracking), isShattering(isShattering) {
 }
 
 float RangedWeapon::useWeapon(sf::Vector2f playerPosition, sf::Vector2f bulletDirections) {

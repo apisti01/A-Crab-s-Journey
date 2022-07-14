@@ -78,7 +78,7 @@ private:
 
     // obstacle and enemy lists
     std::vector<Obstacle> obstacleList;
-    std::vector<std::unique_ptr<Enemy>> enemyList;
+    // std::vector<std::unique_ptr<Enemy>> enemyList;
 
     // room state
     bool isCage;

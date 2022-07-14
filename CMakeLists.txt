@@ -1,36 +1,25 @@
-# CMake Version
-cmake_minimum_required(VERSION 3.0)
-# project name
+cmake_minimum_required(VERSION 3.16)
 project(ACrabsJourney)
-# Standard C++20
+
 set(CMAKE_CXX_STANDARD 20)
+set(BUILD_SHARED_LIBS OFF)
 
 #add the directory for the unit testing
 add_subdirectory(test)
 
-# add cpp and h files
-set(SOURCE_FILES
-        AnimatedSprite.cpp AnimatedSprite.h Bullet.cpp Bullet.h Consumable.cpp Consumable.h Enemy.cpp Enemy.h
+include(FetchContent)
+FetchContent_Declare(SFML
+        GIT_REPOSITORY "https://github.com/SFML/SFML.git"
+        GIT_TAG 2.5.1)
+FetchContent_MakeAvailable(SFML)
+
+# core library
+add_library(core AnimatedSprite.cpp AnimatedSprite.h Bullet.cpp Bullet.h Consumable.cpp Consumable.h Enemy.cpp Enemy.h
         FloorMap.cpp FloorMap.h GameCharacter.cpp GameCharacter.h Item.cpp Item.h MeleeWeapon.cpp MeleeWeapon.h
         Obstacle.cpp Obstacle.h Player.cpp Player.h RangedWeapon.cpp RangedWeapon.h Room.cpp Room.h
         StaticRangedEnemy.cpp StaticRangedEnemy.h Weapon.cpp Weapon.h Wearable.cpp Wearable.h)
+target_link_libraries(core PUBLIC sfml-graphics sfml-audio)
 
 # executable file
 add_executable(ACrabsJourney main.cpp)
-add_library(core ${SOURCE_FILES})
-target_link_libraries(ACrabsJourney core)
-
-# SFML library
-IF (WIN32)
-    # set stuff for windows
-    set(SFML_STATIC_LIBRARIES TRUE)
-    set(SFML_DIR D:/SFML/lib/cmake/SFML)
-    find_package(SFML COMPONENTS system window graphics audio)
-    include_directories(D:/SFML/include)
-ELSE()
-    # set stuff for other systems
-    set(SFML_STATIC_LIBRARIES, TRUE)
-    find_package(SFML 2.5 COMPONENTS system window graphics audio REQUIRED)
-ENDIF()
-
-target_link_libraries(ACrabsJourney sfml-system sfml-window sfml-graphics sfml-audio)
+target_link_libraries(ACrabsJourney PRIVATE core)

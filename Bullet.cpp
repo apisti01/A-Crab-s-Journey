@@ -4,9 +4,9 @@
 
 #include "Bullet.h"
 
-Bullet::Bullet(float damage, float speed, float range, const sf::Sprite &body, sf::Vector2f playerPosition,
+Bullet::Bullet(float damage, float speed, float range, const sf::Sprite &sprite, sf::Vector2f playerPosition,
                sf::Vector2f directions, bool isTracking, bool isShattering)
-                : damage(damage), speed(speed), range(range), sprite(sf::Sprite(body)), directions(directions), isShattering(isShattering), isTracking(isTracking){
+                : damage(damage), speed(speed), range(range), sprite(sf::Sprite(sprite)), directions(directions), isShattering(isShattering), isTracking(isTracking) {
     this->sprite.setOrigin(this->sprite.getGlobalBounds().width / 2, this->sprite.getGlobalBounds().height / 2);
     this->sprite.setPosition(playerPosition);
 }

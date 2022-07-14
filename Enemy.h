@@ -30,7 +30,6 @@ protected:
     float XpReward;
     int coinsDropped;
     int pearlsDropped;
-
 };
 
 
