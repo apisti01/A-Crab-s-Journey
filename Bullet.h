@@ -11,21 +11,31 @@
 class Bullet {
 public:
     // Constructor and Destructor
-    Bullet(float damage, float speed, float range, sf::Sprite body, bool isTracking, bool isShattering);
+    Bullet(float damage, float speed, float range, const sf::Sprite &body, sf::Vector2f playerPosition,
+           sf::Vector2f directions, bool isTracking, bool isShattering);
     ~Bullet() = default;
 
+    // move the bullet with his speed on its trajectory
+    void move(int deltaTime);
+
+    void draw(sf::RenderWindow& window);
+
 private:
-    // basic attributes
+
     float damage;
     float range;
     float speed;
 
-    // special features
+    // directions chosen when launched
+    sf::Vector2f directions;
+
+    // Special ability
     bool isTracking;
     bool isShattering;
 
     // SFML Sprite
-    sf::Sprite body;
+    sf::Sprite sprite;
+
 };
 
 

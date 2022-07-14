@@ -10,6 +10,7 @@
 #include "GameCharacter.h"
 #include "Enemy.h"
 #include "Wearable.h"
+#include "StaticRangedEnemy.h"
 
 enum class CrabSpecie{
     BrownCrab,
@@ -21,16 +22,25 @@ enum class CrabSpecie{
 class Player : public GameCharacter{
 public:
     // Constructor and Destructor
-    Player(std::string name, float hp, float maxHp, float speed, float maxSpeed, float armor, float maxArmor,
-           float strength, float maxStrength, std::unique_ptr<Weapon> Weapon, std::string namePlayer,
-           CrabSpecie crabSpecie, int coins);
+    Player(const sf::Texture& texture, std::unique_ptr<Weapon> Weapon, CrabSpecie crabSpecie, std::string name = " ", float hp = 10,
+           float maxHp = 10, float speed = 10, float maxSpeed = 10, float armor = 10, float maxArmor = 10, float strength = 10, float maxStrength = 10,
+           std::string namePlayer =  " ", int coins = 0);
     ~Player() override = default;
 
+    // Update player with user input
+    void update(int deltaTime, std::list<std::unique_ptr<Enemy>> &enemyList);
+
+    // move player with user input
+    void move(int deltaTime);
+
+    // change angle and attack
+    void mouseInput(int deltaTime, std::list<std::unique_ptr<Enemy>> &enemyList);
+
     // if weapon is ranged create bullet, if melee find the first in range enemy and gives it damages
-    void attack(std::list<Enemy> enemyList);
+    void attack(std::list<std::unique_ptr<Enemy>> &enemyList, sf::Vector2f coordinates);
 
     // TODO: write definition for the selection of hit enemy
-    bool checkEnemy(const Enemy& enemy);
+    bool checkEnemy(const Enemy *enemy);
 
     // take a Wearable and puts it on, return the item wore before
     std::unique_ptr<Wearable> wearItem(std::unique_ptr<Wearable> item);
@@ -52,6 +62,7 @@ private:
     std::unique_ptr<Wearable> hat = nullptr;
     std::unique_ptr<Wearable> shield = nullptr;
     std::unique_ptr<Wearable> shell = nullptr;
+
 };
 
 

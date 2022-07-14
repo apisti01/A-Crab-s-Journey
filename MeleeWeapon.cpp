@@ -8,6 +8,7 @@ MeleeWeapon::MeleeWeapon(float damage, std::string name, ItemRarity rarity, int 
 
 }
 
-float MeleeWeapon::useWeapon() {
+float MeleeWeapon::useWeapon(sf::Vector2f playerPosition, sf::Vector2f bulletDirections) {
     return damage;
 }
+

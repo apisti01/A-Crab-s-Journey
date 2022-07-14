@@ -4,7 +4,17 @@
 
 #include "Bullet.h"
 
-Bullet::Bullet(float damage, float speed, float range, sf::Sprite body, bool isTracking, bool isShattering)
-                : damage(damage), speed(speed), range(range), body(std::move(body)), isShattering(isShattering), isTracking(isTracking){
+Bullet::Bullet(float damage, float speed, float range, const sf::Sprite &body, sf::Vector2f playerPosition,
+               sf::Vector2f directions, bool isTracking, bool isShattering)
+                : damage(damage), speed(speed), range(range), sprite(sf::Sprite(body)), directions(directions), isShattering(isShattering), isTracking(isTracking){
+    this->sprite.setOrigin(this->sprite.getGlobalBounds().width / 2, this->sprite.getGlobalBounds().height / 2);
+    this->sprite.setPosition(playerPosition);
+}
 
+void Bullet::draw(sf::RenderWindow &window) {
+    window.draw(sprite);
+}
+
+void Bullet::move(int deltaTime) {
+    sprite.move(directions.x * speed * float (deltaTime), directions.y * speed * float (deltaTime));
 }

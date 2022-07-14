@@ -8,6 +8,7 @@
 #include <string>
 #include <memory>
 #include <list>
+#include <cmath>
 
 #include "Item.h"
 #include "Weapon.h"
@@ -18,18 +19,17 @@
 class GameCharacter {
 public:
     // constructor and virtual destructor
-    GameCharacter(std::string name, float hp, float maxHp, float speed, float maxSpeed, float armor,
-                  float maxArmor, float strength, float maxStrength, std::unique_ptr<Weapon> weapon);
+    GameCharacter(const sf::Texture& texture, std::string name, float hp, float maxHp, float speed, float maxSpeed,
+                  float armor, float maxArmor, float strength, float maxStrength, std::unique_ptr<Weapon> weapon);
     virtual ~GameCharacter() = default;
 
-    // TODO: define parameters and definition
-    void move();
-    void changeAngle();
+
+    void setPosition(float x, float y);
 
     // given a value for damage, receive damage
     void receiveDamage(float damage);
 
-    float useWeapon();
+    void draw(sf::RenderWindow& window);
 
 protected:
     // character name
@@ -49,6 +49,10 @@ protected:
 
     // SFML Animated Sprite body
     AnimatedSprite sprite;
+
+    // the row of the Sprite sheet, that determine the behaviour of the animation
+    int animationBehaviour = 0;
+
 private:
 
 };

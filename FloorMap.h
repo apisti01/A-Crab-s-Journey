@@ -5,7 +5,15 @@
 #ifndef ACRABSJOURNEY_FLOORMAP_H
 #define ACRABSJOURNEY_FLOORMAP_H
 
-#include "Room.cpp"
+#include <cstdlib>
+#include <cmath>
+#include <vector>
+#include <iostream>
+#include <random>
+#include <ctime>
+
+#include "Room.h"
+
 using namespace std;
 
 class FloorMap {

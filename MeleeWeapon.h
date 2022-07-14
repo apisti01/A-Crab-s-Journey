@@ -14,7 +14,11 @@ public:
     ~MeleeWeapon() override = default;
 
     // override useWeapon
-    float useWeapon() override;
+    float useWeapon(sf::Vector2f playerPosition, sf::Vector2f bulletDirections) override;
+
+    // empty because it does not have to draw bullets
+    void update(int deltaTime) override {}
+    void draw(sf::RenderWindow &window) override{}
 
 private:
     // Damage dealt with the attack

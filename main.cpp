@@ -1,10 +1,15 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <memory>
+
 #include "ctime"
 #include "FloorMap.h"
-#include "FloorMap.cpp"
+#include "Player.h"
+#include "MeleeWeapon.h"
 
 int main() {
+
+
     // caricamento del font
     sf::Font Rancho;
     if (!Rancho.loadFromFile("../Font/Arial/Arial.ttf")) {
@@ -12,14 +17,21 @@ int main() {
         system("pause");
     }
 
+
+
+
     srand(time(nullptr));
     sf::RenderWindow window(sf::VideoMode(1600, 900), "A Crab's Journey");
 
+    /*
     // load and set Game's Icon
     sf::Image icon;
     icon.loadFromFile("../Icon.png");
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+    */
 
+
+    /*
     int level = 20;
     std::vector<sf::RectangleShape> roomShapes;
     std::vector<sf::Text> roomTextNumbers;
@@ -69,15 +81,38 @@ int main() {
     endPointer.setPosition((floor->roomList[floor->indexEndRoom].getPosX() + 8) * 100 - 35, (floor->roomList[floor->indexEndRoom].getPosY() + 4.5) * 100 - 35);
     endPointer.setFillColor(sf::Color::Red);
 
+     */
+
+
+
+    // the following are instance to test the movement
+    sf::Texture brownCrab;
+    brownCrab.loadFromFile("../Textures/Brown_Crab_texture.png");
+
+    std::unique_ptr<Weapon> weapon = std::make_unique<MeleeWeapon>(10, "carlo", ItemRarity::Common, 50);
+
+    auto carlo = make_unique<Player>(brownCrab, std::move(weapon), CrabSpecie::BrownCrab, "jose", 10, 10, 5);
+
+    carlo->setPosition(window.getSize().x/2, window.getSize().y/2);
+
+    std::list<std::unique_ptr<Enemy>> ifuckingtried {};
+
+
+
+
+
+
     //creation of the event
     sf::Event event;
+
+    sf::Clock clockMain;
 
     // Game loop
     while (window.isOpen())
     {
+        int  deltaTime = clockMain.restart().asMilliseconds();
 
-        while (window.pollEvent(event))
-        {
+        while (window.pollEvent(event)){
             // closing the window and ending the game
             switch (event.type) {
                 case sf::Event::Closed:
@@ -90,10 +125,16 @@ int main() {
 
         // TODO Updating the Game
 
+        carlo->update(deltaTime,ifuckingtried);
+
         // Clearing the old frame and preparing for drawing the new onr
         window.clear(sf::Color::White);
 
+        carlo->draw(window);
 
+
+
+        /*
         for (int i = 0; i < size(roomShapes); i++)
             window.draw(roomShapes[i]);
         for (int i = 0; i < size(roomTextNumbers); i++)
@@ -103,8 +144,14 @@ int main() {
         window.draw(startPointer); // TODO change once created the game class
         window.draw(endPointer);
 
+         */
+
+
+
+
         // Bring to screen and display the new frame just drawn
         window.display();
+
     }
 
     // End of the Game

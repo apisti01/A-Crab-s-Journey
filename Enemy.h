@@ -17,6 +17,8 @@ public:
           int pearlsDropped);
     ~Enemy() override = default;
 
+    virtual void chase(const Player& hero) = 0;
+
     // move towards the player
     virtual void chase(Player hero) = 0;
 
@@ -28,6 +30,7 @@ protected:
     float XpReward;
     int coinsDropped;
     int pearlsDropped;
+
 };
 
 

@@ -2,14 +2,7 @@
 // Created by longo on 07/07/2022.
 //
 
-#include <vector>
-#include <iostream>
-#include <random>
-#include <ctime>
 #include "FloorMap.h"
-#include "Room.h"
-#include "cstdlib"
-#include "cmath"
 
 using namespace std;
 
@@ -194,11 +187,12 @@ int FloorMap::visitAdjacentRooms(int index, int prev, int dist) {
     }
 
     // if the room is terminal and the path founded is longer than the previous one
-    if (isTerminalRoom == true && dist >= getLongestPathLength()) {
+    if (isTerminalRoom && dist >= getLongestPathLength()) {
         // this room become the end room
         indexEndRoom = index;
 
         // and new longest path is set
         setLongestPathLength(dist);
     }
+    return 0;
 }
