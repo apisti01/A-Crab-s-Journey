@@ -17,10 +17,9 @@ public:
           int pearlsDropped);
     ~Enemy() override = default;
 
+    // move towards the player
     virtual void chase(const Player& hero) = 0;
 
-    // move towards the player
-    virtual void chase(Player hero) = 0;
 
     // drop items when killed
     virtual void dropItems() = 0;

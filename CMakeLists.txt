@@ -2,16 +2,27 @@ cmake_minimum_required(VERSION 3.16)
 project(ACrabsJourney)
 
 set(CMAKE_CXX_STANDARD 20)
-set(BUILD_SHARED_LIBS OFF)
 
+if(WIN32)
+set(BUILD_SHARED_LIBS OFF)
+endif()
 #add the directory for the unit testing
 add_subdirectory(test)
 
-include(FetchContent)
-FetchContent_Declare(SFML
+if (WIN32)
+    
+    include(FetchContent)
+    FetchContent_Declare(SFML
         GIT_REPOSITORY "https://github.com/SFML/SFML.git"
         GIT_TAG 2.5.1)
-FetchContent_MakeAvailable(SFML)
+    FetchContent_MakeAvailable(SFML)
+
+else()
+
+    set(SFML_STATIC_LIBRARIES, TRUE)
+    find_package(SFML 2.5 COMPONENTS system window graphics audio REQUIRED)
+
+endif()
 
 # core library
 add_library(core AnimatedSprite.cpp AnimatedSprite.h Bullet.cpp Bullet.h Consumable.cpp Consumable.h Enemy.cpp Enemy.h
