@@ -16,14 +16,13 @@ class PlayerTest : public ::testing::Test {
 protected:
     void SetUp() override {
         Test::SetUp();
-        player.setPosition(0,0);
+        player.setPosition(0, 0);
     }
-    Player player {sf::Texture(), nullptr, CrabSpecie::BrownCrab };
-
+    Player player {sf::Texture(), nullptr, CrabSpecie::BrownCrab};
 };
 
 TEST_F(PlayerTest, DefaultConstructor) {
-    ASSERT_FALSE( player.getWeapon() );
+    ASSERT_FALSE(player.getWeapon());
 
     ASSERT_EQ(player.getName(), " ");
 
@@ -43,7 +42,6 @@ TEST_F(PlayerTest, DefaultConstructor) {
 }
 
 TEST_F(PlayerTest, BasicInteractions) {
-
     // check receive coins
     player.receiveCoins(12);
     ASSERT_EQ(player.getCoins(), 12);
@@ -55,7 +53,7 @@ TEST_F(PlayerTest, BasicInteractions) {
 
 TEST_F(PlayerTest, Weapon) {
     // create new melee weapon
-    std::unique_ptr<Weapon> weapon1 = std::make_unique<MeleeWeapon>(10,"carlo");
+    std::unique_ptr<Weapon> weapon1 = std::make_unique<MeleeWeapon>(10, "carlo");
 
     // insert the new weapon, tmp should be null cause player did not have any weapon before
     auto tmp = player.changeWeapon(std::move(weapon1));
@@ -66,10 +64,10 @@ TEST_F(PlayerTest, Weapon) {
     ASSERT_TRUE(player.getWeapon());
 
     // check type of the weapon currently wielded, should be melee
-    //EXPECT_EQ(typeid(player.getWeapon()), typeid(MeleeWeapon*));
+    // EXPECT_EQ(typeid(player.getWeapon()), typeid(MeleeWeapon*));
 
     // check if the weapon correctly return the damage dealt being melee
-    ASSERT_EQ(player.getWeapon()->useWeapon(sf::Vector2f {0,0}, sf::Vector2f {0,0}), 10);
+    ASSERT_EQ(player.getWeapon()->useWeapon(sf::Vector2f {0, 0}, sf::Vector2f {0, 0}), 10);
 
     // create a new ranged weapon
     std::unique_ptr<Weapon> weapon2 = std::make_unique<RangedWeapon>(sf::Sprite());
@@ -83,9 +81,9 @@ TEST_F(PlayerTest, Weapon) {
     ASSERT_TRUE(player.getWeapon());
 
     // check type tmp
-    //EXPECT_EQ(typeid(tmp.get()), typeid(MeleeWeapon*));
-    //EXPECT_TRUE(typeid(player.getWeapon()) == typeid(Weapon*));
+    // EXPECT_EQ(typeid(tmp.get()), typeid(MeleeWeapon*));
+    // EXPECT_TRUE(typeid(player.getWeapon()) == typeid(Weapon*));
 
     // check if the weapon correctly return 0 as it create a new bullet
-    ASSERT_EQ(player.getWeapon()->useWeapon(sf::Vector2f {0,0}, sf::Vector2f {0,0}), 0);
+    ASSERT_EQ(player.getWeapon()->useWeapon(sf::Vector2f {0, 0}, sf::Vector2f {0, 0}), 0);
 }
