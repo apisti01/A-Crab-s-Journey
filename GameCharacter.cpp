@@ -10,7 +10,7 @@
 class Enemy;
 
 void GameCharacter::receiveDamage(float damage) {
-    hp -= damage;
+    hp -= damage * (1 -  armor);
 }
 
 GameCharacter::GameCharacter(const sf::Texture& texture, std::string name, float hp, float maxHp, float speed, float maxSpeed,
@@ -29,5 +29,3 @@ void GameCharacter::draw(sf::RenderWindow &window) {
         weapon->draw(window);
     }
 }
-
-

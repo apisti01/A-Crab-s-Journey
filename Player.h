@@ -21,10 +21,9 @@ enum class CrabSpecie {
 
 class Player : public GameCharacter {
 public:
-    Player();
     // Constructor and Destructor
-    Player(const sf::Texture& texture, std::unique_ptr<Weapon> Weapon, CrabSpecie crabSpecie, std::string name = " ", float hp = 10,
-           float maxHp = 10, float speed = 10, float maxSpeed = 10, float armor = 10, float maxArmor = 10, float strength = 10, float maxStrength = 10,
+    Player(const sf::Texture& texture, std::unique_ptr<Weapon> Weapon, CrabSpecie crabSpecie, std::string name = " ", float hp = 8,
+           float maxHp = 10, float speed = 2, float maxSpeed = 3, float armor = 0.2, float maxArmor = 0.5, float strength = 1.2, float maxStrength = 2,
            std::string namePlayer =  " ", int coins = 0);
     ~Player() override = default;
 
@@ -48,6 +47,12 @@ public:
 
     // take a Weapon and puts it on, return the weapon wielded before
     std::unique_ptr<Weapon> changeWeapon(std::unique_ptr<Weapon> weapon1);
+
+    // getter of the coins
+    int getCoins() const {return coins;}
+
+    // given a value increases the coins
+    void receiveCoins(int value){ Player::coins += value;}
 
 private:
     // name of the crab specie
