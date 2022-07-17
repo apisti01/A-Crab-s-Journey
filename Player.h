@@ -49,10 +49,10 @@ public:
     std::unique_ptr<Weapon> changeWeapon(std::unique_ptr<Weapon> weapon1);
 
     // getter of the coins
-    int getCoins() const {return coins;}
+    int getCoins() const { return coins; }
 
     // given a value increases the coins
-    void receiveCoins(int value){ Player::coins += value;}
+    void receiveCoins(int value){  Player::coins += value;}
 
 private:
     // name of the crab specie
