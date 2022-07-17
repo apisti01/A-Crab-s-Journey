@@ -11,14 +11,14 @@ void AnimatedSprite::move(float x, float y) {
 AnimatedSprite::AnimatedSprite(const sf::Texture& texture, sf::Vector2u imageCount) : frames(int(imageCount.x - 1)),
     rectangle(sf::IntRect(0, 0, int(texture.getSize().x / imageCount.x), int(texture.getSize().y / imageCount.y))) {
 
-    //initialize the sprite
+    // initialize the sprite
     sprite = sf::Sprite(texture, rectangle);
 
     // set the origin in the middle to correct the rotation
-    sprite.setOrigin(sprite.getGlobalBounds().width / 2,sprite.getGlobalBounds().height / 2);
+    sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
 
-    // make it small
-    sprite.setScale(0.2, 0.2);
+    // rescale it
+    sprite.setScale(0.4, 0.4);
 }
 
 void AnimatedSprite::update(int frequency, int row, int deltaTime) {
@@ -29,17 +29,17 @@ void AnimatedSprite::update(int frequency, int row, int deltaTime) {
     totalTime += deltaTime;
 
     // if it is time to switch frame
-    if (totalTime >= 1000 / frequency){
+    if (totalTime >= 1000000 / frequency) {
         // pass on the right frame or restart
-        if(rectangle.left >= rectangle.width * frames){
+        if (rectangle.left >= rectangle.width * frames) {
             rectangle.left = 0;
-        } else{
+        } else {
             rectangle.left += rectangle.width;
         }
         sprite.setTextureRect(rectangle);
 
         // reset the time passed
-        totalTime -= 1000 / frequency;
+        totalTime -= 1000000 / frequency;
     }
 }
 

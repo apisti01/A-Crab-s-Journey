@@ -22,9 +22,9 @@ enum class CrabSpecie {
 class Player : public GameCharacter {
 public:
     // Constructor and Destructor
-    Player(const sf::Texture& texture, std::unique_ptr<Weapon> Weapon, CrabSpecie crabSpecie, std::string name = " ", float hp = 8,
-           float maxHp = 10, float speed = 2, float maxSpeed = 3, float armor = 0.2, float maxArmor = 0.5, float strength = 1.2, float maxStrength = 2,
-           std::string namePlayer =  " ", int coins = 0);
+    Player(const sf::Texture& texture, std::unique_ptr<Weapon> Weapon, CrabSpecie crabSpecie, std::string name = " ",
+           float hp = 8, float maxHp = 10, float speed = 2, float maxSpeed = 3, float armor = 0.2, float maxArmor = 0.5,
+           float strength = 1.2, float maxStrength = 2, std::string namePlayer =  " ", int coins = 0);
     ~Player() override = default;
 
     // Update player with user input
@@ -49,10 +49,10 @@ public:
     std::unique_ptr<Weapon> changeWeapon(std::unique_ptr<Weapon> weapon1);
 
     // getter of the coins
-    int getCoins() const {return coins;}
+    int getCoins() const { return coins; }
 
     // given a value increases the coins
-    void receiveCoins(int value){ Player::coins += value;}
+    void receiveCoins(int value) { Player::coins += value; }
 
 private:
     // name of the crab specie
@@ -63,6 +63,7 @@ private:
 
     // coin owned
     int coins;
+    int fps = 8;
 
     // wearable on the player
     std::unique_ptr<Wearable> hat = nullptr;

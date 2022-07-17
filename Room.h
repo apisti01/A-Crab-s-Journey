@@ -66,6 +66,13 @@ public:
         Room::isShopRoom = isShopRoom;
     }
 
+    int getXpReward() const {
+        return XpReward;
+    }
+    void setXpReward(int xpReward) {
+        XpReward = xpReward;
+    }
+
 protected:
 
 private:

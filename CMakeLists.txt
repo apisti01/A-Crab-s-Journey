@@ -4,24 +4,24 @@ project(ACrabsJourney)
 set(CMAKE_CXX_STANDARD 20)
 
 if(WIN32)
-set(BUILD_SHARED_LIBS OFF)
+    set(BUILD_SHARED_LIBS OFF)
 endif()
-#add the directory for the unit testing
+
+# add the directory for the unit testing
 add_subdirectory(test)
 
-if (WIN32)
-    
+# set SFML library
+if(WIN32)
+    # for Windows
     include(FetchContent)
     FetchContent_Declare(SFML
         GIT_REPOSITORY "https://github.com/SFML/SFML.git"
         GIT_TAG 2.5.1)
     FetchContent_MakeAvailable(SFML)
-
 else()
-
+    # for other OS
     set(SFML_STATIC_LIBRARIES, TRUE)
     find_package(SFML 2.5 COMPONENTS system window graphics audio REQUIRED)
-
 endif()
 
 # core library

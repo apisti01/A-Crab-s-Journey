@@ -18,7 +18,7 @@ int main() {
     }
 
     srand(time(nullptr));
-    sf::RenderWindow window(sf::VideoMode(1600, 900), "A Crab's Journey");
+    sf::RenderWindow window(sf::VideoMode(), "A Crab's Journey", sf::Style::Fullscreen);
 
     /*
     // load and set Game's Icon
@@ -85,17 +85,19 @@ int main() {
 
     // the following are instance to test the movement
     sf::Texture brownCrab;
-    brownCrab.loadFromFile("../Textures/Brown_Crab_texture.png");
+    brownCrab.loadFromFile("../Textures/Brown_Crab_Texture_Blank.png");
+    sf::Texture coralReef;
+    coralReef.loadFromFile("../Map/Coral Reef/Coral Reef.png");
 
     std::unique_ptr<Weapon> weapon = std::make_unique<MeleeWeapon>(10, "carlo", ItemRarity::Common, 50);
 
-    auto carlo = make_unique<Player>(brownCrab, std::move(weapon), CrabSpecie::BrownCrab, "jose", 10, 10, 5);
+    auto carlo = make_unique<Player>(brownCrab, std::move(weapon), CrabSpecie::BrownCrab, "jose", 10, 10, 1, 1, 10, 10, 10, 10);
 
     carlo->setPosition(window.getSize().x / 2, window.getSize().y / 2);
 
     std::list<std::unique_ptr<Enemy>> enemyList {};
 
-    //creation of the event
+    // creation of the event
     sf::Event event;
 
     sf::Clock clockMain;
@@ -103,7 +105,7 @@ int main() {
     // Game loop
     while (window.isOpen())
     {
-        int  deltaTime = clockMain.restart().asMilliseconds();
+        int deltaTime = clockMain.restart().asMicroseconds();
 
         while (window.pollEvent(event)) {
             // closing the window and ending the game
@@ -117,7 +119,6 @@ int main() {
         }
 
         // TODO Updating the Game
-
         carlo->update(deltaTime, enemyList);
 
         // Clearing the old frame and preparing for drawing the new onr
