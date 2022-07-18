@@ -33,8 +33,8 @@ public:
     // move player with user input
     void move(int deltaTime);
 
-    // change angle and attack
-    void mouseInput(int deltaTime, std::list<std::unique_ptr<Enemy>> &enemyList);
+    // change angle
+    void rotate(int deltaTime);
 
     // if weapon is ranged create bullet, if melee find the first in range enemy and gives it damages
     void attack(std::list<std::unique_ptr<Enemy>> &enemyList, sf::Vector2f coordinates);
@@ -63,7 +63,7 @@ private:
 
     // coin owned
     int coins;
-    int fps = 8;
+    int fps = 10;
 
     // wearable on the player
     std::unique_ptr<Wearable> hat = nullptr;

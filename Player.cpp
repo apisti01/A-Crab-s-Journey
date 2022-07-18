@@ -12,11 +12,9 @@ Player::Player(const sf::Texture& texture, std::unique_ptr<Weapon> Weapon, CrabS
 }
 
 void Player::update(int deltaTime, std::list<std::unique_ptr<Enemy>> &enemyList) {
-    // first get the input for directions, facing and shooting from the mouse
-    mouseInput(deltaTime, enemyList);
-
-    // the get the input from the keyboard to move the entity
+    // get keyboard and mouse inputs to move and rotate the player
     move(deltaTime);
+    rotate(deltaTime);
 
     // update the animation
     sprite.update(fps, animationBehaviour, deltaTime);
@@ -26,54 +24,6 @@ void Player::update(int deltaTime, std::list<std::unique_ptr<Enemy>> &enemyList)
         // move the bullets
         weapon->update(deltaTime);
     }
-}
-
-void Player::mouseInput(int deltaTime, std::list<std::unique_ptr<Enemy>> &enemyList) {
-    const float PI = 3.14159265;
-
-    // coordinates of the mouse when pressed
-    auto coordinates = sf::Mouse::getPosition();
-
-    // coordinates relative to the position of the player
-    sf::Vector2f relativeCoordinates {
-            float(coordinates.x) - sprite.getPosition().x, float(coordinates.y) - sprite.getPosition().y
-    };
-
-    // angle in degrees of the position of the mouse relative to the player
-    auto result = float(atan2(-relativeCoordinates.y, relativeCoordinates.x) * 180 / PI);
-
-    // result corrected for the rotated and inverted plane of SFML
-    result = 90 - result;
-
-    // changing the angle the sprite is facing
-    sprite.changeAngle(result);
-
-    if (weapon) {
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
-            // delegate attack both with melee or the creation of bullet with ranged
-            attack(enemyList, relativeCoordinates);
-        }
-    }
-}
-
-void Player::attack(std::list<std::unique_ptr<Enemy>> &enemyList, sf::Vector2f coordinates) {
-    // if ranged it delegates the creation of bullets, return the damage if melee
-    auto damage = weapon->useWeapon(sprite.getPosition(), coordinates) * strength;
-
-    // if melee then it searches for the first enemy in range and gives it damage
-    if (typeid(weapon.get()) == typeid(MeleeWeapon*)) {
-        // find the first available enemy
-        for (auto enemy = enemyList.begin(); enemy != enemyList.end(); enemy++) {
-            if (checkEnemy(enemy->get())) {
-                (*enemy)->receiveDamage(damage);
-                break;
-            }
-        }
-    }
-}
-
-bool Player::checkEnemy(const Enemy *enemy) {
-    return false;
 }
 
 void Player::move(int deltaTime) {
@@ -98,14 +48,68 @@ void Player::move(int deltaTime) {
     deltaPos.x = deltaPos.x * speed * sprite.getWidth() * deltaTime / 1000000;
     deltaPos.y = deltaPos.y * speed * sprite.getHeight() * deltaTime / 1000000;
 
-    // selection of animation: supposing the player is standing still
+    // suppose the player is standing still
     animationBehaviour = 0;
-    // TODO: selection based of its angle and movement direction
-    if (deltaPos.x != 0 || deltaPos.y != 0)
-        animationBehaviour = 1;
+    // if player is moving
+    if (deltaPos.x != 0 || deltaPos.y != 0) {
+        // calculate the two angles
+        float velocityAngle = atan2f(deltaPos.y, deltaPos.x);
+        float facingAngle = sprite.getAngle();
+        float diff = fabsf(velocityAngle - facingAngle);
+
+        // determine the animation based on the angle difference
+        if (sinf(diff) > sqrtf(2) / 2 || sinf(diff) < -sqrtf(2) / 2) {
+            // horizontal movement
+            animationBehaviour = 1;
+        } else {
+            // vertical movement
+            animationBehaviour = 2;
+        }
+    }
 
     // move the sprite
     sprite.move(deltaPos.x, deltaPos.y);
+}
+
+void Player::rotate(int deltaTime) {
+    const float PI = 3.14159265;
+
+    // coordinates of the mouse when pressed
+    auto coordinates = sf::Mouse::getPosition();
+
+    // coordinates relative to the position of the player
+    sf::Vector2f relativeCoordinates {
+            float(coordinates.x) - sprite.getPosition().x, float(coordinates.y) - sprite.getPosition().y
+    };
+
+    // angle in radians of the position of the mouse relative to the player
+    float facingAngle = atan2f(relativeCoordinates.y, relativeCoordinates.x);
+
+    // changing the angle the sprite is facing
+    sprite.setAngle(facingAngle);
+}
+
+void Player::attack(std::list<std::unique_ptr<Enemy>> &enemyList, sf::Vector2f coordinates) {
+    // if player has a weapon and left mouse button is pressed
+    if (weapon && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+        // if ranged it delegates the creation of bullets, return the damage if melee
+        auto damage = weapon->useWeapon(sprite.getPosition(), coordinates) * strength;
+
+        // if melee then it searches for the first enemy in range and gives it damage
+        if (typeid(weapon.get()) == typeid(MeleeWeapon*)) {
+            // find the first available enemy
+            for (auto enemy = enemyList.begin(); enemy != enemyList.end(); enemy++) {
+                if (checkEnemy(enemy->get())) {
+                    (*enemy)->receiveDamage(damage);
+                    break;
+                }
+            }
+        }
+    }
+}
+
+bool Player::checkEnemy(const Enemy *enemy) {
+    return false;
 }
 
 std::unique_ptr<Wearable> Player::wearItem(std::unique_ptr<Wearable> item) {

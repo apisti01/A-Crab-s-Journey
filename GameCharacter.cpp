@@ -16,7 +16,7 @@ void GameCharacter::receiveDamage(float damage) {
 GameCharacter::GameCharacter(const sf::Texture& texture, std::string name, float hp, float maxHp, float speed, float maxSpeed,
                              float armor, float maxArmor, float strength, float maxStrength,
                              std::unique_ptr<Weapon> weapon)
-        : sprite(texture, sf::Vector2u(6, 2)), texture(texture), name(std::move(name)), hp(hp), maxHp(maxHp), speed(speed),
+        : sprite(texture, sf::Vector2u(6, 3)), texture(texture), name(std::move(name)), hp(hp), maxHp(maxHp), speed(speed),
         maxSpeed(maxSpeed), armor(armor), maxArmor(maxArmor), strength(strength), maxStrength(maxStrength), weapon(std::move(weapon)) {
 }
 
