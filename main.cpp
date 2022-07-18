@@ -20,7 +20,6 @@ int main() {
     srand(time(nullptr));
     sf::RenderWindow window(sf::VideoMode(), "A Crab's Journey", sf::Style::Fullscreen);
 
-    /*
     // load and set Game's Icon
     sf::Image icon;
     icon.loadFromFile("../Icon.png");
@@ -30,9 +29,6 @@ int main() {
     std::vector<sf::RectangleShape> roomShapes;
     std::vector<sf::Text> roomTextNumbers;
     sf::CircleShape startPointer, endPointer, shopPointer;
-
-    // TODO: setup the game
-    Player player = new Player();
 
     // create new floor
     FloorMap *floor = new FloorMap(level);
@@ -81,19 +77,18 @@ int main() {
     shopPointer.setRadius(10);
     shopPointer.setPosition((floor->roomList[floor->shopRoomIndex].getPosX() + 8) * 100 + 15, (floor->roomList[floor->shopRoomIndex].getPosY() + 4.5) * 100 - 35);
     shopPointer.setFillColor(sf::Color::Blue);
-    */
 
     // the following are instance to test the movement
-    sf::Texture brownCrab;
-    brownCrab.loadFromFile("../Textures/Brown_Crab_Texture_Blank.png");
+    sf::Texture brownCrabTexture;
+    brownCrabTexture.loadFromFile("../Textures/Brown_Crab_Texture_Blank.png");
     sf::Texture coralReef;
     coralReef.loadFromFile("../Map/Coral Reef/Coral Reef.png");
 
-    std::unique_ptr<Weapon> weapon = std::make_unique<MeleeWeapon>(10, "carlo", ItemRarity::Common, 50);
+    std::unique_ptr<Weapon> weapon = std::make_unique<MeleeWeapon>(10, "player", ItemRarity::Common, 50);
 
-    auto carlo = make_unique<Player>(brownCrab, std::move(weapon), CrabSpecie::BrownCrab, "jose", 10, 10, 1, 1, 10, 10, 10, 10);
+    auto player = make_unique<Player>(brownCrabTexture, std::move(weapon), CrabSpecie::BrownCrab, "jose", 10, 10, 1, 1, 10, 10, 10, 10);
 
-    carlo->setPosition(window.getSize().x / 2, window.getSize().y / 2);
+    player->setPosition(window.getSize().x / 2, window.getSize().y / 2);
 
     std::list<std::unique_ptr<Enemy>> enemyList {};
 
@@ -118,25 +113,31 @@ int main() {
             }
         }
 
-        // TODO Updating the Game
-        carlo->update(deltaTime, enemyList);
+        // if M key is pressed
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)) {
+            // reset canvas
+            window.clear(sf::Color::White);
 
-        // Clearing the old frame and preparing for drawing the new onr
-        window.clear(sf::Color::White);
+            // and draw the map
+            for (int i = 0; i < size(roomShapes); i++)
+                window.draw(roomShapes[i]);
+            for (int i = 0; i < size(roomTextNumbers); i++)
+                window.draw(roomTextNumbers[i]);
 
-        carlo->draw(window);
+            // Drawing all the objects of the game
+            window.draw(startPointer);
+            window.draw(endPointer);
+            window.draw(shopPointer);
+        } else {
+            // Clearing the old frame and preparing for drawing the new onr
+            window.clear(sf::Color::White);
 
-        /*
-        for (int i = 0; i < size(roomShapes); i++)
-            window.draw(roomShapes[i]);
-        for (int i = 0; i < size(roomTextNumbers); i++)
-            window.draw(roomTextNumbers[i]);
+            // update and draw the player
+            player->update(deltaTime, enemyList);
+            player->draw(window);
 
-        // Drawing all the objects of the game
-        window.draw(startPointer); // TODO change once created the game class
-        window.draw(endPointer);
-        window.draw(shopPointer);
-        */
+            // TODO Updating the Game
+        }
 
         // Bring to screen and display the new frame just drawn
         window.display();
