@@ -9,19 +9,21 @@
 
 class Enemy;
 
+GameCharacter::GameCharacter(std::string name, const sf::Texture &texture, Collider collider, std::unique_ptr<Weapon> weapon,
+                             float hp, float maxHp, float speed, float maxSpeed, float armor, float maxArmor, float strength,
+                             float maxStrength)
+        : name(std::move(name)), sprite(texture, sf::Vector2u(6, 3)), texture(texture), collider(collider),
+        weapon(std::move(weapon)), hp(hp), maxHp(maxHp), speed(speed), maxSpeed(maxSpeed), armor(armor),
+        maxArmor(maxArmor), strength(strength), maxStrength(maxStrength) {
+}
+
 void GameCharacter::receiveDamage(float damage) {
     hp -= damage * (1 -  armor);
 }
 
-GameCharacter::GameCharacter(const sf::Texture& texture, std::string name, float hp, float maxHp, float speed, float maxSpeed,
-                             float armor, float maxArmor, float strength, float maxStrength,
-                             std::unique_ptr<Weapon> weapon)
-        : sprite(texture, sf::Vector2u(6, 3)), texture(texture), name(std::move(name)), hp(hp), maxHp(maxHp), speed(speed),
-        maxSpeed(maxSpeed), armor(armor), maxArmor(maxArmor), strength(strength), maxStrength(maxStrength), weapon(std::move(weapon)) {
-}
-
 void GameCharacter::draw(sf::RenderWindow &window) {
     sprite.draw(window);
+    collider.draw(window);
 
     // if the weapon is ranged
     if (weapon) {

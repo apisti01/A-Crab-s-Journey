@@ -211,10 +211,10 @@ function(cxx_executable_with_flags name cxx_flags libs)
     endforeach ()
 endfunction()
 
-# cxx_executable(name dir lib srcs...)
+# cxx_executable(name angle lib srcs...)
 #
 # creates a named target that depends on the given libs and is built
-# from the given source files.  dir/name.cc is implicitly included in
+# from the given source files.  angle/name.cc is implicitly included in
 # the source file list.
 function(cxx_executable name dir libs)
     cxx_executable_with_flags(

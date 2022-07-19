@@ -1,23 +1,24 @@
 #include <SFML/Graphics.hpp>
 
-#include <iostream>
 #include <memory>
-#include "ctime"
+#include <ctime>
+#include <iostream>
 
 #include "FloorMap.h"
-#include "FloorMap.cpp"
 #include "Player.h"
 #include "MeleeWeapon.h"
 
 int main() {
-    // caricamento del font
+    srand(time(nullptr));
+
+    // font load
     sf::Font Rancho;
     if (!Rancho.loadFromFile("../Font/Arial/Arial.ttf")) {
         cout << "font non caricato" << endl;
         system("pause");
     }
 
-    srand(time(nullptr));
+    // load window
     sf::RenderWindow window(sf::VideoMode(), "A Crab's Journey", sf::Style::Fullscreen);
 
     // load and set Game's Icon
@@ -25,13 +26,18 @@ int main() {
     icon.loadFromFile("../Icon.png");
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
-    int level = 20;
+    // load coral reef texture as room background
+    sf::Texture coralReef;
+    coralReef.loadFromFile("../Map/Coral Reef/Coral Reef.png");
+    sf::Sprite backgroundSprite(coralReef, sf::IntRect(0, 0, window.getSize().x, window.getSize().y));
+
+    int level = 1;
     std::vector<sf::RectangleShape> roomShapes;
     std::vector<sf::Text> roomTextNumbers;
-    sf::CircleShape startPointer, endPointer, shopPointer;
+    sf::CircleShape startPointer, endPointer, shopPointer, currentPointer;
 
     // create new floor
-    FloorMap *floor = new FloorMap(level);
+    FloorMap *floor = new FloorMap(level, window.getSize().x, window.getSize().y);
 
     for (int i = 0; i < floor->roomList.size(); i++) {
         // room
@@ -76,21 +82,25 @@ int main() {
 
     shopPointer.setRadius(10);
     shopPointer.setPosition((floor->roomList[floor->shopRoomIndex].getPosX() + 8) * 100 + 15, (floor->roomList[floor->shopRoomIndex].getPosY() + 4.5) * 100 - 35);
-    shopPointer.setFillColor(sf::Color::Blue);
+    shopPointer.setFillColor(sf::Color::Yellow);
 
-    // the following are instance to test the movement
+    currentPointer.setRadius(10);
+    currentPointer.setFillColor(sf::Color::Blue);
+
+    // load brown crab's texture for movement animation
     sf::Texture brownCrabTexture;
-    brownCrabTexture.loadFromFile("../Textures/Brown_Crab_Texture_Blank.png");
-    sf::Texture coralReef;
-    coralReef.loadFromFile("../Map/Coral Reef/Coral Reef.png");
+    brownCrabTexture.loadFromFile("../GameCharacter/Player/Brown Crab/Animations/Texture.png");
 
+    // give him a melee weapon
     std::unique_ptr<Weapon> weapon = std::make_unique<MeleeWeapon>(10, "player", ItemRarity::Common, 50);
-
-    auto player = make_unique<Player>(brownCrabTexture, std::move(weapon), CrabSpecie::BrownCrab, "jose", 10, 10, 1, 1, 10, 10, 10, 10);
-
+    // and a collider
+    Collider collider(window.getSize().x / 2, window.getSize().y / 2,
+                      brownCrabTexture.getSize().x / 6 * 0.4 * 0.6,
+                      brownCrabTexture.getSize().y / 3 * 0.4 * 0.8, 0);
+    // create the player
+    auto player = make_unique<Player>("Crab", CrabSpecie::BrownCrab, brownCrabTexture, collider, std::move(weapon), 10, 10, 1, 1, 10, 10, 10, 10);
+    // and set his position at the center of the map
     player->setPosition(window.getSize().x / 2, window.getSize().y / 2);
-
-    std::list<std::unique_ptr<Enemy>> enemyList {};
 
     // creation of the event
     sf::Event event;
@@ -128,15 +138,22 @@ int main() {
             window.draw(startPointer);
             window.draw(endPointer);
             window.draw(shopPointer);
+            window.draw(currentPointer);
         } else {
-            // Clearing the old frame and preparing for drawing the new onr
+            // Clearing the old frame and preparing for drawing the new one
             window.clear(sf::Color::White);
 
+            // draw the current room
+            window.draw(backgroundSprite);
+            floor->draw(window);
+
             // update and draw the player
-            player->update(deltaTime, enemyList);
+            player->update(deltaTime, floor);
             player->draw(window);
 
-            // TODO Updating the Game
+            currentPointer.setPosition((floor->roomList[floor->currentRoomIndex].getPosX() + 8) * 100 + 15, (floor->roomList[floor->currentRoomIndex].getPosY() + 4.5) * 100 + 15);
+
+            // TODO Updating the rest of the game
         }
 
         // Bring to screen and display the new frame just drawn

@@ -7,7 +7,7 @@
 
 #include "Item.h"
 
-class Weapon : public Item{
+class Weapon : public Item {
 public:
     // Constructor and Destructor
     explicit Weapon(std::string name, ItemRarity rarity, int price);

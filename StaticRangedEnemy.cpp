@@ -12,6 +12,6 @@ void StaticRangedEnemy::dropItems() {
 
 }
 
-StaticRangedEnemy::StaticRangedEnemy() : Enemy(" ", 10, 10, 10, 10, 10, 10, 10, 10, nullptr, 10, 10, 10) {
+StaticRangedEnemy::StaticRangedEnemy() : Enemy(" ", nullptr, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10) {
 
 }

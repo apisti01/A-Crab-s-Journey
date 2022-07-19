@@ -81,17 +81,17 @@ namespace testing {
             // Returns the current working directory, or "" if unsuccessful.
             static FilePath GetCurrentDir();
 
-            // Given directory = "dir", base_name = "test", number = 0,
-            // extension = "xml", returns "dir/test.xml". If number is greater
-            // than zero (e.g., 12), returns "dir/test_12.xml".
+            // Given directory = "angle", base_name = "test", number = 0,
+            // extension = "xml", returns "angle/test.xml". If number is greater
+            // than zero (e.g., 12), returns "angle/test_12.xml".
             // On Windows platform, uses \ as the separator rather than /.
             static FilePath MakeFileName(const FilePath &directory,
                                          const FilePath &base_name,
                                          int number,
                                          const char *extension);
 
-            // Given directory = "dir", relative_path = "test.xml",
-            // returns "dir/test.xml".
+            // Given directory = "angle", relative_path = "test.xml",
+            // returns "angle/test.xml".
             // On Windows, uses \ as the separator rather than /.
             static FilePath ConcatPaths(const FilePath &directory,
                                         const FilePath &relative_path);
@@ -101,7 +101,7 @@ namespace testing {
             // directory/base_name_<number>.extension if directory/base_name.extension
             // already exists. The number will be incremented until a pathname is found
             // that does not already exist.
-            // Examples: 'dir/foo_test.xml' or 'dir/foo_test_1.xml'.
+            // Examples: 'angle/foo_test.xml' or 'angle/foo_test_1.xml'.
             // There could be a race condition if two or more processes are calling this
             // function at the same time -- they could both pick the same filename.
             static FilePath GenerateUniqueFileName(const FilePath &directory,
@@ -128,13 +128,13 @@ namespace testing {
             // Example: FilePath("path/to/file").RemoveFileName() returns "path/to/".
             // If the FilePath is "a_file" or "/a_file", RemoveFileName returns
             // FilePath("./") or, on Windows, FilePath(".\\"). If the filepath does
-            // not have a file, like "just/a/dir/", it returns the FilePath unmodified.
+            // not have a file, like "just/a/angle/", it returns the FilePath unmodified.
             // On Windows platform, '\' is the path separator, otherwise it is '/'.
             FilePath RemoveFileName() const;
 
             // Returns a copy of the FilePath with the case-insensitive extension removed.
-            // Example: FilePath("dir/file.exe").RemoveExtension("EXE") returns
-            // FilePath("dir/file"). If a case-insensitive extension is not
+            // Example: FilePath("angle/file.exe").RemoveExtension("EXE") returns
+            // FilePath("angle/file"). If a case-insensitive extension is not
             // found, returns a copy of the original FilePath.
             FilePath RemoveExtension(const char *extension) const;
 

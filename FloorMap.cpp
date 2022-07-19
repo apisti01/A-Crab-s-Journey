@@ -5,11 +5,19 @@
 
 #include "FloorMap.h"
 
-using namespace std;
+FloorMap::FloorMap(int level, int roomWidth, int roomHeight) : level(level), roomWidth(roomWidth), roomHeight(roomHeight) {
+    // there's a 40% chance that this floor has a shop room
+    float chance = rand() / (RAND_MAX + 1.0);
+    if (chance <= 0.4)
+        hasShop = true;
+
+    // then generates the floor
+    generateFloor();
+}
 
 void FloorMap::generateFloor() {
     // add first room in the middle of the grid (position 0, 0)
-    roomList.push_back(*new Room(0, 0));
+    roomList.push_back(*new Room(0, 0, roomWidth, roomHeight));
 
     // calculate number of rooms in the floor
     numRooms = round(10 - exp(1.8 - level / 4));
@@ -118,7 +126,7 @@ void FloorMap::generateRoom(int roomIndex, int sideIndex, int newRoomIndex) {
     int otherSideX = roomList[roomIndex].getPosX() + round(sin(sideIndex * M_PI / 2));
     int otherSideY = roomList[roomIndex].getPosY() - round(cos(sideIndex * M_PI / 2));
 
-    roomList.push_back(*new Room(otherSideX, otherSideY));
+    roomList.push_back(*new Room(otherSideX, otherSideY, roomWidth, roomHeight));
 
     // assign adjacent room index to start and new room
     roomList[roomIndex].doors[sideIndex] = newRoomIndex;
@@ -236,6 +244,6 @@ void FloorMap::setupPlayer() {
     // player.setPosY();
 }
 
-void FloorMap::changeRoom(int i) {
-    currentRoomIndex = roomList[currentRoomIndex].doors[i];
+void FloorMap::draw(sf::RenderWindow &window) {
+    roomList[currentRoomIndex].draw(window);
 }
