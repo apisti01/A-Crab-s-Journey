@@ -42,7 +42,7 @@ public:
     std::vector<Room> roomList;
     int currentRoomIndex, startRoomIndex, endRoomIndex, shopRoomIndex = -1;
 
-    void draw(sf::RenderWindow &window);
+    void draw(sf::RenderWindow &Twindow);
 protected:
 
 private:

@@ -8,8 +8,13 @@
 
 class Collider {
 public:
-    Collider(float posX, float posY, float width, float height, float angle = 0) : posX(posX), posY(posY), width(width),
-    height(height), angle(angle), isColliding(false) {};
+    Collider(float posX, float posY, float width, float height, float angle = 0)
+    : posX(posX), posY(posY), width(width), height(height), angle(angle), isColliding(false) {
+        colliderBox = sf::RectangleShape(sf::Vector2f(width, height));
+        colliderBox.setOrigin(width / 2, height / 2);
+        colliderBox.setOutlineThickness(3);
+        colliderBox.setFillColor(sf::Color::Transparent);
+    };
 
     // getters and setters
     float getAngle() const {
@@ -58,11 +63,9 @@ public:
 protected:
 
 private:
+    float posX, posY;
+    float width, height;
     float angle;
-    float posX;
-    float posY;
-    float width;
-    float height;
 };
 
 

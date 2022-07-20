@@ -31,13 +31,13 @@ void Player::move(int deltaTime, FloorMap *floor) {
 
     // take user input and memorize the movement
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-        deltaPos.y = -1;
+        deltaPos.y -= 1;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-        deltaPos.x = -1;
+        deltaPos.x -= 1;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-        deltaPos.y = 1;
+        deltaPos.y += 1;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-        deltaPos.x = 1;
+        deltaPos.x += 1;
 
     // normalization
     float norm = sqrtf(powf(deltaPos.x, 2) + powf(deltaPos.y, 2));
@@ -100,6 +100,18 @@ void Player::move(int deltaTime, FloorMap *floor) {
     for (int i = 0; i < size(floor->roomList[floor->currentRoomIndex].obstacleList); i++) {
         floor->roomList[floor->currentRoomIndex].obstacleList[i].collider.isColliding = false;
         collider.isCollidingWith(floor->roomList[floor->currentRoomIndex].obstacleList[i].collider);
+    }
+
+    // check collision with walls
+    for (int i = 0; i < size(floor->roomList[floor->currentRoomIndex].walls); i++) {
+        floor->roomList[floor->currentRoomIndex].walls[i].isColliding = false;
+        collider.isCollidingWith(floor->roomList[floor->currentRoomIndex].walls[i]);
+    }
+
+    if (collider.isColliding) {
+        // move the sprite back
+        sprite.move(-deltaPos.x, -deltaPos.y);
+        collider.move(-deltaPos.x, -deltaPos.y);
     }
 }
 

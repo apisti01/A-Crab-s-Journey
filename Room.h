@@ -93,6 +93,13 @@ public:
     // obstacle and enemy lists
     std::vector<Obstacle> obstacleList;
 
+    // collider for the walls
+    std::vector<Collider> walls;
+
+    void generateWalls();
+
+    void generateObstacles();
+
 protected:
 
 private:
@@ -102,8 +109,6 @@ private:
     // room measures
     int width, height;
     int wallDepth;
-
-    void generateObstacles();
 
     // std::vector<std::unique_ptr<Enemy>> enemyList;
 

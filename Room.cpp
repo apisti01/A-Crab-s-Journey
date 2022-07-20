@@ -11,9 +11,6 @@ wallDepth(wallDepth = 0) {
     // doors are all initially closed
     doors = {-1, -1, -1, -1};
 
-    // TODO: create list of obstacles
-    generateObstacles();
-
     // TODO: if it isn't the start room, create list of enemies
     if (!getStartRoom()) {
 
@@ -29,8 +26,8 @@ void Room::generateObstacles() {
         // TODO: choose one random obstacles
 
         // get random coordinates
-        float posx = (rand() % 14 + 1) * 120;
-        float posy = (rand() % 7 + 1) * 120;
+        float posx = (rand() % 14 + 1) * 120 + 60;
+        float posy = (rand() % 7 + 1) * 120 + 60;
 
         // prepare sprite
         sf::Texture rockTexture;
@@ -42,6 +39,32 @@ void Room::generateObstacles() {
         // add the obstacle just created to the list
         obstacleList.push_back(*new Obstacle(rockTexture, collider, posx, posy, 120, 120));
     }
+}
+
+void Room::generateWalls() {
+    // walls
+    for (int i = 0; i < 16; i++) {
+        if (i != 7 && i != 8) {
+            walls.emplace_back(*new Collider(i * 120 + 60, 60, 120, 120));
+            walls.emplace_back(*new Collider(i * 120 + 60, height - 60, 120, 120));
+        }
+    }
+    for (int i = 1; i < 8; i++) {
+        if (i != 3 && i != 4) {
+            walls.emplace_back(*new Collider(60, i * 120 + 60, 120, 120));
+            walls.emplace_back(*new Collider(width - 60, i * 120 + 60, 120, 120));
+        }
+    }
+
+    // closed doors
+    if (doors[0] == -1)
+        walls.emplace_back(*new Collider(120 * 8, 60, 240, 120));
+    if (doors[1] == -1)
+        walls.emplace_back(*new Collider(width - 60, 120 * 4, 120, 240));
+    if (doors[2] == -1)
+        walls.emplace_back(*new Collider(120 * 8, height - 60, 240, 120));
+    if (doors[3] == -1)
+        walls.emplace_back(*new Collider(60, 120 * 4, 120, 240));
 }
 
 /*
@@ -61,7 +84,10 @@ void Room::exitCageMode() {
 */
 
 void Room::draw(sf::RenderWindow &window) {
-
+    // draw walls
+    for (int i = 0; i < size(walls); i++) {
+        walls[i].draw(window);
+    }
 
     // draw the obstacles in the room
     for (int i = 0; i < size(obstacleList); i++) {
