@@ -5,7 +5,11 @@
 #ifndef MAIN_CPP_WEAPON_H
 #define MAIN_CPP_WEAPON_H
 
+#include <list>
+
 #include "Item.h"
+
+class Enemy;
 
 class Weapon : public Item{
 public:
@@ -13,7 +17,9 @@ public:
     explicit Weapon(std::string name, ItemRarity rarity, int price);
     ~Weapon() override = default;
 
-    virtual float useWeapon(sf::Vector2f playerPosition, sf::Vector2f bulletDirections) = 0;
+    // overridden in derived classes to attack the nearest enemy or to create a bullet
+    virtual void useWeapon(sf::Vector2f playerPosition, sf::Vector2f bulletDirections,
+                           std::list<std::unique_ptr<Enemy>> &enemyList, float strength) = 0;
 
     virtual void update(int deltaTime) = 0;
 

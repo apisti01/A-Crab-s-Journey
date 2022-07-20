@@ -11,6 +11,9 @@
 #include "Enemy.h"
 #include "Wearable.h"
 #include "StaticRangedEnemy.h"
+#include "Weapon.h"
+
+
 
 enum class CrabSpecie {
     BrownCrab,
@@ -34,13 +37,10 @@ public:
     void move(int deltaTime);
 
     // change angle
-    void rotate(int deltaTime);
+    sf::Vector2f rotate(int deltaTime);
 
-    // if weapon is ranged create bullet, if melee find the first in range enemy and gives it damages
-    void attack(std::list<std::unique_ptr<Enemy>> &enemyList, sf::Vector2f coordinates);
-
-    // TODO: write definition for the selection of hit enemy
-    bool checkEnemy(const Enemy *enemy);
+    // if left mouse button clicked, delegate to weapon the use
+    void attack(std::list<std::unique_ptr<Enemy>> &enemyList, sf::Vector2f bulletCoordinates);
 
     // take a Wearable and puts it on, return the item wore before
     std::unique_ptr<Wearable> wearItem(std::unique_ptr<Wearable> item);

@@ -67,7 +67,7 @@ TEST_F(PlayerTest, Weapon) {
     // EXPECT_EQ(typeid(player.getWeapon()), typeid(MeleeWeapon*));
 
     // check if the weapon correctly return the damage dealt being melee
-    ASSERT_EQ(player.getWeapon()->useWeapon(sf::Vector2f {0, 0}, sf::Vector2f {0, 0}), 10);
+    ASSERT_EQ(player.getWeapon()->useWeapon(sf::Vector2f{0, 0}, sf::Vector2f{0, 0}, <#initializer#>, 0), 10);
 
     // create a new ranged weapon
     std::unique_ptr<Weapon> weapon2 = std::make_unique<RangedWeapon>(sf::Sprite());
@@ -85,5 +85,5 @@ TEST_F(PlayerTest, Weapon) {
     // EXPECT_TRUE(typeid(player.getWeapon()) == typeid(Weapon*));
 
     // check if the weapon correctly return 0 as it create a new bullet
-    ASSERT_EQ(player.getWeapon()->useWeapon(sf::Vector2f {0, 0}, sf::Vector2f {0, 0}), 0);
+    ASSERT_EQ(player.getWeapon()->useWeapon(sf::Vector2f{0, 0}, sf::Vector2f{0, 0}, <#initializer#>, 0), 0);
 }

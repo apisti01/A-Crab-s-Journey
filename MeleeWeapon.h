@@ -6,6 +6,7 @@
 #define MAIN_CPP_MELEEWEAPON_H
 
 #include "Weapon.h"
+#include "Enemy.h"
 
 class MeleeWeapon : public Weapon{
 public:
@@ -13,12 +14,17 @@ public:
     explicit MeleeWeapon(float damage, std::string name = " ", ItemRarity rarity = ItemRarity::Common, int price = 50);
     ~MeleeWeapon() override = default;
 
-    // override useWeapon
-    float useWeapon(sf::Vector2f playerPosition, sf::Vector2f bulletDirections) override;
+    // attack the nearest available enemy
+    void useWeapon(sf::Vector2f playerPosition, sf::Vector2f bulletDirections,
+                    std::list<std::unique_ptr<Enemy>> &enemyList, float strength) override;
 
     // empty because it does not have to draw bullets
     void update(int deltaTime) override {}
     void draw(sf::RenderWindow &window) override{}
+
+
+    // TODO: write definition for the selection of hit enemy
+    bool checkEnemy(const Enemy *enemy);
 
 private:
     // Damage dealt with the attack
