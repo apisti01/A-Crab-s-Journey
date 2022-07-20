@@ -4,15 +4,17 @@
 
 #include "Player.h"
 
-Player::Player(const sf::Texture& texture, std::unique_ptr<Weapon> Weapon, CrabSpecie crabSpecie, std::string name,
+Player::Player(std::string name, CrabSpecie crabSpecie, const sf::Texture& texture, Collider collider, std::unique_ptr<Weapon> Weapon,
                float hp, float maxHp, float speed, float maxSpeed, float armor, float maxArmor, float strength,
-               float maxStrength, std::string namePlayer, int coins) :
-        GameCharacter(texture, std::move(name), hp, maxHp, speed, maxSpeed, armor, maxArmor, strength, maxStrength,
-                      std::move(Weapon)), namePlayer(std::move(namePlayer)), crabSpecie(crabSpecie), coins(coins) {
+               float maxStrength, int coins) :
+        GameCharacter(std::move(name), texture, collider, std::move(Weapon), hp, maxHp, speed, maxSpeed, armor,
+                      maxArmor, strength, maxStrength), crabSpecie(crabSpecie), coins(coins) {
 }
 
-void Player::update(int deltaTime, std::list<std::unique_ptr<Enemy>> &enemyList) {
+void Player::update(int deltaTime, FloorMap *floor, std::list<std::unique_ptr<Enemy>> &enemyList) {
     // get keyboard and mouse inputs to move and rotate the player
+    move(deltaTime, floor);
+    rotate(deltaTime);
     move(deltaTime);
     auto direction = rotate(deltaTime);
 
@@ -28,7 +30,7 @@ void Player::update(int deltaTime, std::list<std::unique_ptr<Enemy>> &enemyList)
     }
 }
 
-void Player::move(int deltaTime) {
+void Player::move(int deltaTime, FloorMap *floor) {
     sf::Vector2f deltaPos {0, 0};
 
     // take user input and memorize the movement
@@ -71,6 +73,38 @@ void Player::move(int deltaTime) {
 
     // move the sprite
     sprite.move(deltaPos.x, deltaPos.y);
+    collider.move(deltaPos.x, deltaPos.y);
+
+    // move across map through doors
+    // right door
+    if (sprite.getPosition().x > floor->roomList[floor->currentRoomIndex].getWidth() && floor->roomList[floor->currentRoomIndex].doors[1] != -1) {
+        floor->currentRoomIndex = floor->roomList[floor->currentRoomIndex].doors[1];
+        sprite.setPosition({ 5, sprite.getPosition().y });
+    }
+    // left door
+    if (sprite.getPosition().x < 0 && floor->roomList[floor->currentRoomIndex].doors[3] != -1) {
+        floor->currentRoomIndex = floor->roomList[floor->currentRoomIndex].doors[3];
+        sprite.setPosition({ static_cast<float>(floor->roomList[floor->currentRoomIndex].getWidth() - 5), sprite.getPosition().y });
+    }
+    // bottom door
+    if (sprite.getPosition().y > floor->roomList[floor->currentRoomIndex].getHeight() && floor->roomList[floor->currentRoomIndex].doors[2] != -1) {
+        floor->currentRoomIndex = floor->roomList[floor->currentRoomIndex].doors[2];
+        sprite.setPosition({ sprite.getPosition().x, 5 });
+    }
+    // upper door
+    if (sprite.getPosition().y < 0 && floor->roomList[floor->currentRoomIndex].doors[0] != -1) {
+        floor->currentRoomIndex = floor->roomList[floor->currentRoomIndex].doors[0];
+        sprite.setPosition({ sprite.getPosition().x, static_cast<float>(floor->roomList[floor->currentRoomIndex].getHeight() - 5) });
+    }
+    collider.setPosX(sprite.getPosition().x);
+    collider.setPosY(sprite.getPosition().y);
+
+    // check collision with obstacles
+    collider.isColliding = false;
+    for (int i = 0; i < size(floor->roomList[floor->currentRoomIndex].obstacleList); i++) {
+        floor->roomList[floor->currentRoomIndex].obstacleList[i].collider.isColliding = false;
+        collider.isCollidingWith(floor->roomList[floor->currentRoomIndex].obstacleList[i].collider);
+    }
 }
 
 sf::Vector2f Player::rotate(int deltaTime) {
@@ -87,6 +121,7 @@ sf::Vector2f Player::rotate(int deltaTime) {
 
     // changing the angle the sprite is facing
     sprite.setAngle(facingAngle);
+    collider.setAngle(facingAngle);
 
     // total distance between the player and the mouse
     auto distance = sqrtf(powf(relativeCoordinates.x,2) + powf(relativeCoordinates.y,2));

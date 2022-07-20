@@ -2545,7 +2545,7 @@ namespace testing {
 
             inline char *StrDup(const char *src) { return strdup(src); }
 
-            inline int RmDir(const char *dir) { return rmdir(dir); }
+            inline int RmDir(const char *angle) { return rmdir(angle); }
 
             inline bool IsDir(const StatStruct &st) { return S_ISDIR(st.st_mode); }
 

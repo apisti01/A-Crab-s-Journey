@@ -12,7 +12,7 @@
 #include "Wearable.h"
 #include "StaticRangedEnemy.h"
 #include "Weapon.h"
-
+#include "FloorMap.h"
 
 
 enum class CrabSpecie {
@@ -25,18 +25,18 @@ enum class CrabSpecie {
 class Player : public GameCharacter {
 public:
     // Constructor and Destructor
-    Player(const sf::Texture& texture, std::unique_ptr<Weapon> Weapon, CrabSpecie crabSpecie, std::string name = " ",
-           float hp = 8, float maxHp = 10, float speed = 2, float maxSpeed = 3, float armor = 0.2, float maxArmor = 0.5,
-           float strength = 1.2, float maxStrength = 2, std::string namePlayer =  " ", int coins = 0);
+    Player(std::string name, CrabSpecie crabSpecie, const sf::Texture& texture, Collider collider, std::unique_ptr<Weapon> Weapon,
+           float hp = 8, float maxHp = 10, float speed = 2, float maxSpeed = 3, float armor = 0.2,
+           float maxArmor = 0.5, float strength = 1.2, float maxStrength = 2, int coins = 0);
     ~Player() override = default;
 
     // Update player with user input
-    void update(int deltaTime, std::list<std::unique_ptr<Enemy>> &enemyList);
+    void update(int deltaTime, FloorMap *floor, std::list<std::unique_ptr<Enemy>> &enemyList);
 
     // move player with user input
-    void move(int deltaTime);
+    void move(int deltaTime, FloorMap *floor);
 
-    // change angle
+    // change angle of the player based on mouse movement
     sf::Vector2f rotate(int deltaTime);
 
     // if left mouse button clicked, delegate to weapon the use

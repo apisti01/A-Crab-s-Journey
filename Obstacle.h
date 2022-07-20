@@ -6,35 +6,40 @@
 #define ACRABSJOURNEY_OBSTACLE_H
 
 #include <memory>
+#include <utility>
+#include <SFML/Graphics.hpp>
+
+#include "Collider.h"
 
 using namespace std;
 
 class Obstacle {
 public:
-    explicit Obstacle(int posX, int posY, int width, int height) : posX(posX), posY(posY), width(width), height(height), damage(damage = 0) {};
+    explicit Obstacle(const sf::Texture &texture, Collider collider, float posX, float posY, float width, float height, float damage = 0) :
+    texture(texture), collider(collider), posX(posX), posY(posY), width(width), height(height), damage(damage) {};
 
-    int getPosX() const {
+    float getPosX() const {
         return posX;
     }
     void setPosX(int posX) {
         Obstacle::posX = posX;
     }
 
-    int getPosY() const {
+    float getPosY() const {
         return posY;
     }
     void setPosY(int posY) {
         Obstacle::posY = posY;
     }
 
-    int getWidth() const {
+    float getWidth() const {
         return width;
     }
     void setWidth(int width) {
         Obstacle::width = width;
     }
 
-    int getHeight() const {
+    float getHeight() const {
         return height;
     }
     void setHeight(int height) {
@@ -48,18 +53,24 @@ public:
         Obstacle::damage = damage;
     }
 
+    // collider
+    Collider collider;
+
+    void draw(sf::RenderWindow &window);
+
 protected:
 
 private:
     // info about position and dimensions
-    int posX, posY;
-    int width, height;
+    float posX, posY;
+    float width, height;
 
     // damage
     float damage;
 
-    // sprite
-    // std::unique_ptr<Sprite> sprite;
+    // sprite and texture
+    sf::Sprite sprite;
+    sf::Texture texture;
 };
 
 #endif //ACRABSJOURNEY_OBSTACLE_H

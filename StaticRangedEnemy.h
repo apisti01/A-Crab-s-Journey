@@ -7,7 +7,7 @@
 
 #include "Enemy.h"
 
-class StaticRangedEnemy : Enemy{
+class StaticRangedEnemy : Enemy {
 public:
     StaticRangedEnemy();
     ~StaticRangedEnemy() override = default;

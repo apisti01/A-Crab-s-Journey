@@ -9,12 +9,13 @@
 
 #include "Obstacle.h"
 #include "Enemy.h"
-#include "Player.h"
+
+class Player;
 
 class Room {
 public:
     // constructor and destructor
-    explicit Room(int posX, int posY);
+    explicit Room(int posX, int posY, int width, int height);
     // ~Room();
 
     // doors list:
@@ -73,6 +74,25 @@ public:
         XpReward = xpReward;
     }
 
+    int getWidth() const {
+        return width;
+    }
+    void setWidth(int width) {
+        Room::width = width;
+    }
+
+    int getHeight() const {
+        return height;
+    }
+    void setHeight(int height) {
+        Room::height = height;
+    }
+
+    void draw(sf::RenderWindow &window);
+
+    // obstacle and enemy lists
+    std::vector<Obstacle> obstacleList;
+
 protected:
 
 private:
@@ -80,11 +100,11 @@ private:
     int posX, posY;
 
     // room measures
-    int roomWidth, roomHeight;
+    int width, height;
     int wallDepth;
 
-    // obstacle and enemy lists
-    std::vector<Obstacle> obstacleList;
+    void generateObstacles();
+
     // std::vector<std::unique_ptr<Enemy>> enemyList;
 
     // room state

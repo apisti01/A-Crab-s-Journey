@@ -28,7 +28,8 @@ endif()
 add_library(core AnimatedSprite.cpp AnimatedSprite.h Bullet.cpp Bullet.h Consumable.cpp Consumable.h Enemy.cpp Enemy.h
         FloorMap.cpp FloorMap.h GameCharacter.cpp GameCharacter.h Item.cpp Item.h MeleeWeapon.cpp MeleeWeapon.h
         Obstacle.cpp Obstacle.h Player.cpp Player.h RangedWeapon.cpp RangedWeapon.h Room.cpp Room.h
-        StaticRangedEnemy.cpp StaticRangedEnemy.h Weapon.cpp Weapon.h Wearable.cpp Wearable.h Game.cpp Game.h State.cpp State.h)
+        StaticRangedEnemy.cpp StaticRangedEnemy.h Weapon.cpp Weapon.h Wearable.cpp Wearable.h Game.cpp Game.h State.cpp State.h
+        Collider.cpp Collider.h)
 target_link_libraries(core PUBLIC sfml-graphics sfml-audio)
 
 # executable file

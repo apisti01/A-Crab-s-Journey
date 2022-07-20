@@ -13,15 +13,16 @@
 #include "Item.h"
 #include "AnimatedSprite.h"
 #include "Weapon.h"
+#include "Collider.h"
 
 class MeleeWeapon;
-
 
 class GameCharacter {
 public:
     // constructor and virtual destructor
-    GameCharacter(const sf::Texture& texture, std::string name, float hp, float maxHp, float speed, float maxSpeed,
-                  float armor, float maxArmor, float strength, float maxStrength, std::unique_ptr<Weapon> weapon);
+    GameCharacter(std::string name, const sf::Texture &texture, Collider collider, std::unique_ptr<Weapon> weapon,
+                  float hp, float maxHp, float speed, float maxSpeed, float armor, float maxArmor, float strength,
+                  float maxStrength);
     virtual ~GameCharacter() = default;
 
     // getter and setter for character position
@@ -69,7 +70,9 @@ public:
     // given a value for damage, receive damage
     void receiveDamage(float damage);
 
-    void draw(sf::RenderWindow& window);
+    void draw(sf::RenderWindow &window);
+
+    Collider collider;
 
 protected:
     // character name
