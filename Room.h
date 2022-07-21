@@ -109,6 +109,10 @@ private:
     // room measures
     int width, height;
     int wallDepth;
+    bool roomGrid[14][7];
+
+    void setupGrid();
+    sf::Vector2i pickFreeGridSpot();
 
     // std::vector<std::unique_ptr<Enemy>> enemyList;
 

@@ -6,7 +6,6 @@
 
 #include "FloorMap.h"
 #include "Player.h"
-#include "MeleeWeapon.h"
 
 int main() {
     srand(time(nullptr));

@@ -60,5 +60,5 @@ void Collider::draw(sf::RenderWindow &window) {
     colliderBox.setPosition(posX, posY);
     colliderBox.setRotation(angle * 180 / M_PI);
 
-    window.draw(colliderBox);
+    // window.draw(colliderBox);
 }

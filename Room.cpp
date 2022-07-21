@@ -2,6 +2,8 @@
 // Created by longo on 07/07/2022.
 //
 
+#include <iostream>
+
 #include "Room.h"
 #include "Obstacle.h"
 
@@ -11,11 +13,39 @@ wallDepth(wallDepth = 0) {
     // doors are all initially closed
     doors = {-1, -1, -1, -1};
 
+    // initialize all room grid cells to false
+    setupGrid();
+
     // TODO: if it isn't the start room, create list of enemies
     if (!getStartRoom()) {
 
     }
 };
+
+void Room::setupGrid() {
+    // all cells start with false
+    for (int i = 0; i < size(roomGrid); i++) {
+        for (int j = 0; j < size(roomGrid[i]); j++) {
+            roomGrid[i][j] = false;
+        }
+    }
+
+    // obstacles can't be in front of doors:
+    // left and right door
+    for (int i = 0; i <= 1; i++) {
+        for (int j = 2; j <= 4; j++) {
+            roomGrid[i][j] = true;
+            roomGrid[size(roomGrid) - 1 - i][j] = true;
+        }
+    }
+    // up and bottom door
+    for (int i = 5; i <= 8; i++) {
+        for (int j = 0; j <= 1; j++) {
+            roomGrid[i][j] = true;
+            roomGrid[i][size(roomGrid[i]) - 1 - j] = true;
+        }
+    }
+}
 
 void Room::generateObstacles() {
     // in every room could appear from 1 to 4 obstacles
@@ -25,19 +55,33 @@ void Room::generateObstacles() {
     for (int i = 0; i < numObstacles; i++) {
         // TODO: choose one random obstacles
 
-        // get random coordinates
-        float posx = (rand() % 14 + 1) * 120 + 60;
-        float posy = (rand() % 7 + 1) * 120 + 60;
+        // get one free spot on room grid coordinates
+        sf::Vector2i pos = pickFreeGridSpot();
 
         // prepare sprite
         sf::Texture rockTexture;
-        rockTexture.loadFromFile("../Obstacle/rock.png");
+
+        // TODO: implementare l'utilizzo di una lista di oggetti per la generazione randomica
+        std::string obstacleTypes[4] = {"rock", "algae", "flipflop", "bottle"};
+        rockTexture.loadFromFile("../Obstacle/" + obstacleTypes[rand() % 4] + ".png");
 
         // prepare collider
-        Collider collider(posx, posy, 120, 120);
+        Collider collider(pos.x, pos.y, 120, 120);
 
         // add the obstacle just created to the list
-        obstacleList.push_back(*new Obstacle(rockTexture, collider, posx, posy, 120, 120));
+        obstacleList.push_back(*new Obstacle(rockTexture, collider, pos.x, pos.y, 120, 120));
+    }
+}
+
+sf::Vector2i Room::pickFreeGridSpot() {
+    int posx = rand() % 14;
+    int posy = rand() % 7;
+
+    if (!roomGrid[posx][posy]) {
+        roomGrid[posx][posy] = true;
+        return sf::Vector2i { (posx + 1) * 120 + 60, (posy + 1) * 120 + 60};
+    } else {
+        return pickFreeGridSpot();
     }
 }
 
@@ -50,21 +94,25 @@ void Room::generateWalls() {
         }
     }
     for (int i = 1; i < 8; i++) {
-        if (i != 3 && i != 4) {
+        if (i != 3 && i != 4 && i != 5) {
             walls.emplace_back(*new Collider(60, i * 120 + 60, 120, 120));
             walls.emplace_back(*new Collider(width - 60, i * 120 + 60, 120, 120));
         }
     }
+    walls.emplace_back(*new Collider(60, 3.25 * 120, 120, 60));
+    walls.emplace_back(*new Collider(width - 60, 3.25 * 120, 120, 60));
+    walls.emplace_back(*new Collider(60, 5.75 * 120, 120, 60));
+    walls.emplace_back(*new Collider(width - 60, 5.75 * 120, 120, 60));
 
     // closed doors
     if (doors[0] == -1)
         walls.emplace_back(*new Collider(120 * 8, 60, 240, 120));
     if (doors[1] == -1)
-        walls.emplace_back(*new Collider(width - 60, 120 * 4, 120, 240));
+        walls.emplace_back(*new Collider(width - 60, 120 * 4.5, 120, 240));
     if (doors[2] == -1)
         walls.emplace_back(*new Collider(120 * 8, height - 60, 240, 120));
     if (doors[3] == -1)
-        walls.emplace_back(*new Collider(60, 120 * 4, 120, 240));
+        walls.emplace_back(*new Collider(60, 120 * 4.5, 120, 240));
 }
 
 /*
