@@ -36,71 +36,35 @@ public:
     }
 
     // Getter and Setters for statistics
-    const std::string &getName() const {
-        return name;
-    }
-    void setName(std::string name) {
-        GameCharacter::name = std::move(name);
-    }
+    const std::string &getName() const { return name; }
+    void setName(std::string name) { GameCharacter::name = std::move(name); }
 
-    float getHp() const {
-        return hp;
-    }
-    void setHp(float hp) {
-        GameCharacter::hp = hp;
-    }
+    float getHp() const { return hp; }
+    void setHp(float hp) { GameCharacter::hp = hp; }
 
-    float getMaxHp() const {
-        return maxHp;
-    }
-    void setMaxHp(float maxHp) {
-        GameCharacter::maxHp = maxHp;
-    }
+    float getMaxHp() const { return maxHp; }
+    void setMaxHp(float maxHp) { GameCharacter::maxHp = maxHp; }
 
-    float getSpeed() const {
-        return speed;
-    }
-    void setSpeed(float speed) {
-        GameCharacter::speed = speed;
-    }
+    float getSpeed() const { return speed; }
+    void setSpeed(float speed) { GameCharacter::speed = speed; }
 
-    float getMaxSpeed() const {
-        return maxSpeed;
-    }
-    void setMaxSpeed(float maxSpeed) {
-        GameCharacter::maxSpeed = maxSpeed;
-    }
+    float getMaxSpeed() const { return maxSpeed; }
+    void setMaxSpeed(float maxSpeed) { GameCharacter::maxSpeed = maxSpeed; }
 
-    float getArmor() const {
-        return armor;
-    }
-    void setArmor(float armor) {
-        GameCharacter::armor = armor;
-    }
+    float getArmor() const { return armor; }
+    void setArmor(float armor) { GameCharacter::armor = armor; }
 
-    float getMaxArmor() const {
-        return maxArmor;
-    }
-    void setMaxArmor(float maxArmor) {
-        GameCharacter::maxArmor = maxArmor;
-    }
+    float getMaxArmor() const { return maxArmor; }
+    void setMaxArmor(float maxArmor) { GameCharacter::maxArmor = maxArmor; }
 
-    float getStrength() const {
-        return strength;
-    }
-    void setStrength(float strength) {
-        GameCharacter::strength = strength;
-    }
+    float getStrength() const { return strength; }
+    void setStrength(float strength) { GameCharacter::strength = strength; }
 
-    float getMaxStrength() const {
-        return maxStrength;
-    }
-    void setMaxStrength(float maxStrength) {
-        GameCharacter::maxStrength = maxStrength;
-    }
+    float getMaxStrength() const { return maxStrength; }
+    void setMaxStrength(float maxStrength) { GameCharacter::maxStrength = maxStrength; }
 
     // getter of weapon address
-    Weapon* getWeapon(){ return weapon.get();}
+    Weapon* getWeapon(){ return weapon.get(); }
 
     // given a value for damage, receive damage
     void receiveDamage(float damage);

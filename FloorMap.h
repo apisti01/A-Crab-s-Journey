@@ -15,35 +15,22 @@ public:
     explicit FloorMap(int level, int roomWidth, int roomHeight);
 
     // getter and setter for level attribute
-    int getLevel() const {
-        return level;
-    }
-    void setLevel(int level) {
-        FloorMap::level = level;
-    }
+    int getLevel() const { return level; }
+    void setLevel(int level) { FloorMap::level = level; }
 
     // getter and setter for number of rooms
-    int getNumRooms() const {
-        return numRooms;
-    }
-    void setNumRooms(int numRooms) {
-        FloorMap::numRooms = numRooms;
-    }
+    int getNumRooms() const { return numRooms; }
+    void setNumRooms(int numRooms) { FloorMap::numRooms = numRooms; }
 
     // getter and setter for number of rooms
-    int getLongestPathLength() const {
-        return longestPathLength;
-    }
-    void setLongestPathLength(int longestPathLength) {
-        FloorMap::longestPathLength = longestPathLength;
-    }
+    int getLongestPathLength() const { return longestPathLength; }
+    void setLongestPathLength(int longestPathLength) { FloorMap::longestPathLength = longestPathLength; }
 
     // list of all rooms on floor
     std::vector<Room> roomList;
     int currentRoomIndex, startRoomIndex, endRoomIndex, shopRoomIndex = -1;
 
     void draw(sf::RenderWindow &Twindow);
-protected:
 
 private:
     // level and number of rooms

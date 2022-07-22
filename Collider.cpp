@@ -17,7 +17,7 @@ void Collider::isCollidingWith(Collider other) {
 
         sf::Vector2f pt(posX + pow(-1, x[0]) * width / 2 * cosf(angle) + pow(-1, x[1]) * height / 2 * sinf(angle),
                         posY + pow(-1, y[0]) * width / 2 * sinf(angle) + pow(-1, y[1]) * height / 2 * cosf(angle));
-        float teta = angle - atan2f(pt.y - other.posY, pt.x - other.posX);
+        float teta = other.angle - atan2f(pt.y - other.posY, pt.x - other.posX);
         float dist = sqrtf(powf(pt.x - other.posX, 2) + powf(pt.y - other.posY, 2));
 
         // check if the vertex is in the other collider
@@ -35,7 +35,7 @@ void Collider::isCollidingWith(Collider other) {
 
         sf::Vector2f pt(other.posX + pow(-1, x[0]) * other.width / 2 * cosf(other.angle) + pow(-1, x[1]) * other.height / 2 * sinf(other.angle),
                         other.posY + pow(-1, y[0]) * other.width / 2 * sinf(other.angle) + pow(-1, y[1]) * other.height / 2 * cosf(other.angle));
-        float teta = other.angle - atan2f(pt.y - posY, pt.x - posX);
+        float teta = angle - atan2f(pt.y - posY, pt.x - posX);
         float dist = sqrtf(powf(pt.x - posX, 2) + powf(pt.y - posY, 2));
 
         // check if the vertex is in this collider

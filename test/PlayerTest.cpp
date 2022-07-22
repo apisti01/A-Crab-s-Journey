@@ -18,13 +18,15 @@ protected:
         Test::SetUp();
         player.setPosition(0, 0);
     }
-    Player player {sf::Texture(), nullptr, CrabSpecie::BrownCrab};
+
+    Collider collider;
+    Player player {"", CrabSpecie::BrownCrab, sf::Texture(), collider, nullptr};
 };
 
 TEST_F(PlayerTest, DefaultConstructor) {
     ASSERT_FALSE(player.getWeapon());
 
-    ASSERT_EQ(player.getName(), " ");
+    ASSERT_EQ(player.getName(), "");
 
     ASSERT_EQ(player.getCoins(), 0);
 

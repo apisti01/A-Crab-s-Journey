@@ -6,6 +6,7 @@
 
 #include "../Obstacle.h"
 #include "../Obstacle.cpp"
+#include "../Collider.h"
 
 class ObstacleTest : public ::testing::Test {
 protected:
@@ -13,7 +14,9 @@ protected:
         Test::SetUp();
     }
 
-    Obstacle obstacle {0, 0, 50, 50};
+    sf::Texture texture;
+    Collider collider;
+    Obstacle obstacle {texture, collider, 0, 0, 50, 50};
 };
 
 TEST_F(ObstacleTest, DefaultConstructor) {

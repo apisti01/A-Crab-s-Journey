@@ -20,6 +20,19 @@ public:
     // eliminate the consumable from inventory
     int dropItem();
 
+    // getters and setters
+    float getHp() const { return hp; }
+    void setHp(float hp) { Consumable::hp = hp; }
+
+    float getSpeed() const { return speed; }
+    void setSpeed(float speed) { Consumable::speed = speed; }
+
+    float getArmor() const { return armor; }
+    void setArmor(float armor) { Consumable::armor = armor; }
+
+    float getStrength() const { return strength; }
+    void setStrength(float strength) { Consumable::strength = strength; }
+
 private:
     // Time that the consumable last
     float time;

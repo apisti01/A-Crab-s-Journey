@@ -8,6 +8,7 @@
 
 class Collider {
 public:
+    Collider() {};
     Collider(float posX, float posY, float width, float height, float angle = 0)
     : posX(posX), posY(posY), width(width), height(height), angle(angle), isColliding(false) {
         colliderBox = sf::RectangleShape(sf::Vector2f(width, height));
