@@ -7,6 +7,8 @@
 #include "FloorMap.h"
 #include "Player.h"
 #include "MeleeWeapon.h"
+#include "RangedWeapon.h"
+#include "Game.h"
 
 int main() {
     srand(time(nullptr));
@@ -93,6 +95,15 @@ int main() {
     sf::Texture brownCrabTexture;
     brownCrabTexture.loadFromFile("../GameCharacter/Player/Brown Crab/Animations/Texture.png");
 
+    // bullet for ranged weapon
+    sf::Texture bulletTexture;
+    bulletTexture.loadFromFile("../others/bullet_rock.png");
+    sf::Sprite bullet {bulletTexture};
+    bullet.setScale(0.02,0.02);
+
+    // Ranged weapon
+    std::unique_ptr<Weapon> rangedWeapon = std::make_unique<RangedWeapon>(bullet);
+
     // give him a melee weapon
     std::unique_ptr<Weapon> weapon = std::make_unique<MeleeWeapon>(10, "player", ItemRarity::Common, 50);
     // and a collider
@@ -100,19 +111,27 @@ int main() {
                       brownCrabTexture.getSize().x / 6 * 0.4 * 0.6,
                       brownCrabTexture.getSize().y / 3 * 0.4 * 0.8, 0);
     // create the player
-    auto player = make_unique<Player>("Crab", CrabSpecie::BrownCrab, brownCrabTexture, collider, std::move(weapon), 10, 10, 1, 1, 10, 10, 10, 10);
+    auto player = make_unique<Player>("Crab", CrabSpecie::BrownCrab, brownCrabTexture, collider, std::move(rangedWeapon), 10, 10, 1, 1, 10, 10, 10, 10);
     // and set his position at the center of the map
     player->setPosition(window.getSize().x / 2, window.getSize().y / 2);
+
+    // create an enemy list
+    std::list<std::unique_ptr<Enemy>> enemyList {};
 
     // creation of the event
     sf::Event event;
 
     sf::Clock clockMain;
 
+    // finally let's create the game
+    auto game = Game::getInstance();
+
+
+
     // Game loop
     while (window.isOpen())
     {
-        int deltaTime = clockMain.restart().asMicroseconds();
+        int deltaTime = clockMain.restart().asMicroseconds(); // TODO remove once we use the gameclock
 
         while (window.pollEvent(event)) {
             // closing the window and ending the game
@@ -123,8 +142,12 @@ int main() {
                     if (event.key.code == sf::Keyboard::Escape)
                         window.close();
             }
+            // handles the event of the current state, like changing state or other actions
+            game->eventHandling(event);
         }
 
+
+        /*
         // if M key is pressed
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)) {
             // reset canvas
@@ -150,17 +173,30 @@ int main() {
             floor->draw(window);
 
             // update and draw the player
-            player->update(deltaTime, floor);
+            player->update(deltaTime, floor, enemyList);
             player->draw(window);
 
             currentPointer.setPosition((floor->roomList[floor->currentRoomIndex].getPosX() + 8) * 100 + 15, (floor->roomList[floor->currentRoomIndex].getPosY() + 4.5) * 100 + 15);
 
             // TODO Updating the rest of the game
         }
+        */
+
+        window.clear(sf::Color::Green);
+
+        game->update();
+
+        game->draw(window);
+
 
         // Bring to screen and display the new frame just drawn
         window.display();
+
+        game->restartClock(); // TODO keep only this clock
     }
+
+    // clean
+    delete game;
 
     // End of the Game
     return 0;

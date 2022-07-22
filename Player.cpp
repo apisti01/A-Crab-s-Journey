@@ -15,7 +15,7 @@ void Player::update(int deltaTime, FloorMap *floor, std::list<std::unique_ptr<En
     // get keyboard and mouse inputs to move and rotate the player
     move(deltaTime, floor);
     rotate(deltaTime);
-    move(deltaTime);
+    move(deltaTime, floor);
     auto direction = rotate(deltaTime);
 
     attack(enemyList, direction );
@@ -23,7 +23,7 @@ void Player::update(int deltaTime, FloorMap *floor, std::list<std::unique_ptr<En
     // update the animation
     sprite.update(fps, animationBehaviour, deltaTime);
 
-    // if the weapon is ranged
+    // if there is a weapon
     if (weapon) {
         // move the bullets
         weapon->update(deltaTime);

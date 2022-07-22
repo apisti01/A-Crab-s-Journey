@@ -79,29 +79,4 @@ private:
     void setupPlayer();
 };
 
-class CoralReef : public FloorMap {
-
-};
-
-class MangroveForest : public FloorMap {
-
-};
-
-class PosidoniaMeadow : public FloorMap {
-
-};
-
-class TemperateReef : public FloorMap {
-
-};
-
-class KelpForest : public FloorMap {
-
-};
-
-class IceFloe : public FloorMap {
-
-};
-
-
 #endif //ACRABSJOURNEY_FLOORMAP_H

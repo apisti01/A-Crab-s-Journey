@@ -93,19 +93,19 @@ public:
     // obstacle and enemy lists
     std::vector<Obstacle> obstacleList;
 
-protected:
+    //std::list<std::unique_ptr<Enemy>> enemyList;
 
+protected:
 private:
+
     // grid position attributes
     int posX, posY;
-
     // room measures
     int width, height;
+
     int wallDepth;
 
     void generateObstacles();
-
-    // std::vector<std::unique_ptr<Enemy>> enemyList;
 
     // room state
     bool isCage;
@@ -121,6 +121,10 @@ private:
     // change room status
     // void enterCageMode(Player &player);
     // void exitCageMode();
+
+    sf::Texture backgroundTexture;
+    sf::Sprite background {backgroundTexture, sf::IntRect {0,0,1920,1080}};
+
 };
 
 #endif //ACRABSJOURNEY_ROOM_H

@@ -61,10 +61,18 @@ void Room::exitCageMode() {
 */
 
 void Room::draw(sf::RenderWindow &window) {
-
+    // first draw background
+    window.draw(background);
 
     // draw the obstacles in the room
     for (int i = 0; i < size(obstacleList); i++) {
         obstacleList[i].draw(window);
     }
+
+    /*
+    // draw all the enemies present
+    for (auto & enemy : enemyList) {
+        enemy->draw(window);
+    }
+     */
 }

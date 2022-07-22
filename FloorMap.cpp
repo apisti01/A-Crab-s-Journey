@@ -17,7 +17,7 @@ FloorMap::FloorMap(int level, int roomWidth, int roomHeight) : level(level), roo
 
 void FloorMap::generateFloor() {
     // add first room in the middle of the grid (position 0, 0)
-    roomList.push_back(*new Room(0, 0, roomWidth, roomHeight));
+    roomList.emplace_back(0, 0, roomWidth, roomHeight);
 
     // calculate number of rooms in the floor
     numRooms = round(10 - exp(1.8 - level / 4));
@@ -126,7 +126,7 @@ void FloorMap::generateRoom(int roomIndex, int sideIndex, int newRoomIndex) {
     int otherSideX = roomList[roomIndex].getPosX() + round(sin(sideIndex * M_PI / 2));
     int otherSideY = roomList[roomIndex].getPosY() - round(cos(sideIndex * M_PI / 2));
 
-    roomList.push_back(*new Room(otherSideX, otherSideY, roomWidth, roomHeight));
+    roomList.emplace_back(otherSideX, otherSideY, roomWidth, roomHeight);
 
     // assign adjacent room index to start and new room
     roomList[roomIndex].doors[sideIndex] = newRoomIndex;
