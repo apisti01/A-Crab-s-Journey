@@ -15,6 +15,16 @@ public:
            sf::Vector2f directions, bool isTracking, bool isShattering);
     ~Bullet() = default;
 
+    // getters and setters
+    float getDamage() const { return damage; }
+    void setDamage(float damage) { Bullet::damage = damage; }
+
+    float getRange() const { return range; }
+    void setRange(float range) { Bullet::range = range; }
+
+    float getSpeed() const { return speed; }
+    void setSpeed(float speed) { Bullet::speed = speed; }
+
     // move the bullet with his speed on its trajectory
     void move(int deltaTime);
 

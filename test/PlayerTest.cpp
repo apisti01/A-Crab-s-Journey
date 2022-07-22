@@ -18,7 +18,9 @@ protected:
         Test::SetUp();
         player.setPosition(0, 0);
     }
-    Player player {" ", CrabSpecie::BrownCrab, sf::Texture(), Collider(0,0,120,120), nullptr};
+
+    Collider collider;
+    Player player {"", CrabSpecie::BrownCrab, sf::Texture(), collider, nullptr};
 };
 
 TEST_F(PlayerTest, DefaultConstructor) {

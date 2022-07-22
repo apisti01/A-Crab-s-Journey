@@ -6,6 +6,7 @@
 
 #include "../Obstacle.h"
 #include "../Obstacle.cpp"
+#include "../Collider.h"
 
 class ObstacleTest : public ::testing::Test {
 protected:
@@ -13,14 +14,16 @@ protected:
         Test::SetUp();
     }
 
-    Obstacle obstacle {sf::Texture(), Collider{0,0,120,120},0,0,120,120};
+    sf::Texture texture;
+    Collider collider;
+    Obstacle obstacle {texture, collider, 0, 0, 50, 50};
 };
 
 TEST_F(ObstacleTest, DefaultConstructor) {
     ASSERT_EQ(obstacle.getPosX(), 0);
     ASSERT_EQ(obstacle.getPosY(), 0);
-    ASSERT_EQ(obstacle.getWidth(), 120);
-    ASSERT_EQ(obstacle.getHeight(), 120);
+    ASSERT_EQ(obstacle.getWidth(), 50);
+    ASSERT_EQ(obstacle.getHeight(), 50);
 
     ASSERT_EQ(obstacle.getDamage(), 0);
 }

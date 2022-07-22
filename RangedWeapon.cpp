@@ -20,7 +20,6 @@ void RangedWeapon::useWeapon(sf::Vector2f playerPosition, sf::Vector2f bulletDir
 }
 
 void RangedWeapon::draw(sf::RenderWindow &window) {
-
     // draw the bullets on their positions
     for (auto bullet : bulletList) {
         bullet.draw(window);
@@ -28,7 +27,6 @@ void RangedWeapon::draw(sf::RenderWindow &window) {
 }
 
 void RangedWeapon::update(int deltaTime) {
-
     // move the bullets on their trajectory
     for (auto bullet : bulletList) {
         bullet.move(deltaTime);

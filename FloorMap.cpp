@@ -3,6 +3,7 @@
 //
 
 
+#include <iostream>
 #include "FloorMap.h"
 
 FloorMap::FloorMap(int level, int roomWidth, int roomHeight) : level(level), roomWidth(roomWidth), roomHeight(roomHeight) {
@@ -34,6 +35,19 @@ void FloorMap::generateFloor() {
 
     // set start and end rooms
     setStartAndEndRooms();
+
+    // then add room's door colliders
+    for (int i = 0; i < size(roomList); i++) {
+        // add walls to the room
+        roomList[i].generateWalls();
+
+        // if the room isn't the boss room, generate obstacles
+        if (!roomList[i].getBossRoom()) {
+            roomList[i].generateObstacles();
+        }
+
+        roomList[i].closeDoors();
+    }
 
     // set the shop room
     setShopRoom();

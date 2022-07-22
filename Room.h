@@ -18,75 +18,37 @@ public:
     explicit Room(int posX, int posY, int width, int height);
     // ~Room();
 
-    // doors list:
-    // - -1 for closed
-    // - n if connected to nth room
+    // doors list: -1 for closed, n if connected to nth room
     std::vector<int> doors;
 
     // getter and setter for position attributes
-    int getPosX() const {
-        return posX;
-    }
-    void setPosX(int posx) {
-        posX = posx;
-    }
+    int getPosX() const { return posX; }
+    void setPosX(int posx) { posX = posx; }
 
-    int getPosY() const {
-        return posY;
-    }
-    void setPosY(int posy) {
-        posY = posy;
-    }
+    int getPosY() const { return posY; }
+    void setPosY(int posy) { posY = posy;}
 
     // getter and setter for special room's attributes
-    bool getCage() const {
-        return isCage;
-    }
-    void setCage(bool isCage) {
-        Room::isCage = isCage;
-    }
+    bool getCage() const { return isCage; }
+    void setCage(bool isCage) { Room::isCage = isCage; }
 
-    bool getStartRoom() const {
-        return isStartRoom;
-    }
-    void setStartRoom(bool isStartRoom) {
-        Room::isStartRoom = isStartRoom;
-    }
+    bool getStartRoom() const { return isStartRoom; }
+    void setStartRoom(bool isStartRoom) { Room::isStartRoom = isStartRoom;}
 
-    bool getBossRoom() const {
-        return isBossRoom;
-    }
-    void setBossRoom(bool isBossRoom) {
-        Room::isBossRoom = isBossRoom;
-    }
+    bool getBossRoom() const { return isBossRoom; }
+    void setBossRoom(bool isBossRoom) { Room::isBossRoom = isBossRoom; }
 
-    bool getShopRoom() const {
-        return isShopRoom;
-    }
-    void setShopRoom(bool isShopRoom) {
-        Room::isShopRoom = isShopRoom;
-    }
+    bool getShopRoom() const { return isShopRoom; }
+    void setShopRoom(bool isShopRoom) { Room::isShopRoom = isShopRoom; }
 
-    int getXpReward() const {
-        return XpReward;
-    }
-    void setXpReward(int xpReward) {
-        XpReward = xpReward;
-    }
+    int getXpReward() const { return XpReward; }
+    void setXpReward(int xpReward) { XpReward = xpReward; }
 
-    int getWidth() const {
-        return width;
-    }
-    void setWidth(int width) {
-        Room::width = width;
-    }
+    int getWidth() const { return width; }
+    void setWidth(int width) { Room::width = width; }
 
-    int getHeight() const {
-        return height;
-    }
-    void setHeight(int height) {
-        Room::height = height;
-    }
+    int getHeight() const { return height; }
+    void setHeight(int height) { Room::height = height; }
 
     void draw(sf::RenderWindow &window);
 
@@ -95,17 +57,28 @@ public:
 
     //std::list<std::unique_ptr<Enemy>> enemyList;
 
-protected:
-private:
+    // collider for the walls
+    std::vector<Collider> walls;
 
-    // grid position attributes
-    int posX, posY;
-    // room measures
-    int width, height;
-
-    int wallDepth;
+    void generateWalls();
 
     void generateObstacles();
+
+    void closeDoors();
+
+protected:
+
+private:
+    // grid position attributes
+    int posX, posY;
+
+    // room measures
+    int width, height;
+    int wallDepth;
+    bool roomGrid[14][7];
+
+    void setupGrid();
+    sf::Vector2i pickFreeGridSpot();
 
     // room state
     bool isCage;
@@ -121,10 +94,6 @@ private:
     // change room status
     // void enterCageMode(Player &player);
     // void exitCageMode();
-
-    sf::Texture backgroundTexture;
-    sf::Sprite background {backgroundTexture, sf::IntRect {0,0,1920,1080}};
-
 };
 
 #endif //ACRABSJOURNEY_ROOM_H

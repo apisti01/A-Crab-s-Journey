@@ -13,7 +13,7 @@ protected:
         Test::SetUp();
     }
 
-    FloorMap floorMap {1,1920,1080};
+    FloorMap floorMap {1, 1920, 1080};
 };
 
 TEST_F(FloorMapTest, DefaultConstructor) {
