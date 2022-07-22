@@ -45,6 +45,8 @@ void FloorMap::generateFloor() {
         if (!roomList[i].getBossRoom()) {
             roomList[i].generateObstacles();
         }
+
+        roomList[i].closeDoors();
     }
 
     // set the shop room

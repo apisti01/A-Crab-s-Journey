@@ -13,8 +13,15 @@ Player::Player(std::string name, CrabSpecie crabSpecie, const sf::Texture& textu
 
 void Player::update(int deltaTime, FloorMap *floor) {
     // get keyboard and mouse inputs to move and rotate the player
-    move(deltaTime, floor);
-    rotate(deltaTime);
+    sf::Vector2f deltaPos = getKeyboardInput(deltaTime, floor);
+    float deltaAngle = getMouseInput(deltaTime);
+
+    deltaPos = updateSpriteAndCollider(deltaPos, deltaAngle, floor);
+
+    selectAnimation(deltaPos);
+
+    // if the player goes through doors, then change room
+    changeRoom(floor);
 
     // update the animation
     sprite.update(fps, animationBehaviour, deltaTime);
@@ -26,7 +33,7 @@ void Player::update(int deltaTime, FloorMap *floor) {
     }
 }
 
-void Player::move(int deltaTime, FloorMap *floor) {
+sf::Vector2f Player::getKeyboardInput(int deltaTime, FloorMap *floor) {
     sf::Vector2f deltaPos {0, 0};
 
     // take user input and memorize the movement
@@ -48,6 +55,66 @@ void Player::move(int deltaTime, FloorMap *floor) {
     deltaPos.x = deltaPos.x * speed * sprite.getWidth() * deltaTime / 1000000;
     deltaPos.y = deltaPos.y * speed * sprite.getHeight() * deltaTime / 1000000;
 
+    return deltaPos;
+}
+
+float Player::getMouseInput(int deltaTime) {
+    // coordinates of the mouse when pressed
+    auto coordinates = sf::Mouse::getPosition();
+
+    // coordinates relative to the position of the player
+    sf::Vector2f relativeCoordinates {
+            float(coordinates.x) - sprite.getPosition().x, float(coordinates.y) - sprite.getPosition().y
+    };
+
+    // angle in radians of the position of the mouse relative to the player
+    float facingAngle = atan2f(relativeCoordinates.y, relativeCoordinates.x);
+
+    return facingAngle - sprite.getAngle();
+}
+
+sf::Vector2f Player::updateSpriteAndCollider(sf::Vector2f deltaPos, float deltaAngle, FloorMap *floor) {
+    // update the sprite with the just calculated values
+    sprite.setPosition({ sprite.getPosition().x + deltaPos.x, sprite.getPosition().y + deltaPos.y} );
+    collider.setPosX(sprite.getPosition().x);
+    collider.setPosY(sprite.getPosition().y);
+    sprite.setAngle(sprite.getAngle() + deltaAngle);
+    collider.setAngle(sprite.getAngle());
+
+    // check if the next position and rotation is valid
+    if (!isValidPosition(floor)) {
+        sprite.setPosition({ sprite.getPosition().x - deltaPos.x, sprite.getPosition().y - deltaPos.y });
+        sprite.setAngle(sprite.getAngle() - deltaAngle);
+
+        deltaPos = {0, 0};
+    }
+
+    // update the collider
+    collider.setPosX(sprite.getPosition().x);
+    collider.setPosY(sprite.getPosition().y);
+    collider.setAngle(sprite.getAngle());
+
+    return deltaPos;
+}
+
+bool Player::isValidPosition(FloorMap *floor) {
+    // check collision with obstacles
+    collider.isColliding = false;
+    for (int i = 0; i < size(floor->roomList[floor->currentRoomIndex].obstacleList); i++) {
+        floor->roomList[floor->currentRoomIndex].obstacleList[i].collider.isColliding = false;
+        collider.isCollidingWith(floor->roomList[floor->currentRoomIndex].obstacleList[i].collider);
+    }
+
+    // check collision with walls
+    for (int i = 0; i < size(floor->roomList[floor->currentRoomIndex].walls); i++) {
+        floor->roomList[floor->currentRoomIndex].walls[i].isColliding = false;
+        collider.isCollidingWith(floor->roomList[floor->currentRoomIndex].walls[i]);
+    }
+
+    return !collider.isColliding;
+}
+
+void Player::selectAnimation(sf::Vector2f deltaPos) {
     // suppose the player is standing still
     animationBehaviour = 0;
     // if player is moving
@@ -66,11 +133,9 @@ void Player::move(int deltaTime, FloorMap *floor) {
             animationBehaviour = 2;
         }
     }
+}
 
-    // move the sprite
-    sprite.move(deltaPos.x, deltaPos.y);
-    collider.move(deltaPos.x, deltaPos.y);
-
+void Player::changeRoom(FloorMap *floor) {
     // move across map through doors
     // right door
     if (sprite.getPosition().x > floor->roomList[floor->currentRoomIndex].getWidth() && floor->roomList[floor->currentRoomIndex].doors[1] != -1) {
@@ -94,44 +159,6 @@ void Player::move(int deltaTime, FloorMap *floor) {
     }
     collider.setPosX(sprite.getPosition().x);
     collider.setPosY(sprite.getPosition().y);
-
-    // check collision with obstacles
-    collider.isColliding = false;
-    for (int i = 0; i < size(floor->roomList[floor->currentRoomIndex].obstacleList); i++) {
-        floor->roomList[floor->currentRoomIndex].obstacleList[i].collider.isColliding = false;
-        collider.isCollidingWith(floor->roomList[floor->currentRoomIndex].obstacleList[i].collider);
-    }
-
-    // check collision with walls
-    for (int i = 0; i < size(floor->roomList[floor->currentRoomIndex].walls); i++) {
-        floor->roomList[floor->currentRoomIndex].walls[i].isColliding = false;
-        collider.isCollidingWith(floor->roomList[floor->currentRoomIndex].walls[i]);
-    }
-
-    if (collider.isColliding) {
-        // move the sprite back
-        sprite.move(-deltaPos.x, -deltaPos.y);
-        collider.move(-deltaPos.x, -deltaPos.y);
-    }
-}
-
-void Player::rotate(int deltaTime) {
-    const float PI = 3.14159265;
-
-    // coordinates of the mouse when pressed
-    auto coordinates = sf::Mouse::getPosition();
-
-    // coordinates relative to the position of the player
-    sf::Vector2f relativeCoordinates {
-            float(coordinates.x) - sprite.getPosition().x, float(coordinates.y) - sprite.getPosition().y
-    };
-
-    // angle in radians of the position of the mouse relative to the player
-    float facingAngle = atan2f(relativeCoordinates.y, relativeCoordinates.x);
-
-    // changing the angle the sprite is facing
-    sprite.setAngle(facingAngle);
-    collider.setAngle(facingAngle);
 }
 
 void Player::attack(std::list<std::unique_ptr<Enemy>> &enemyList, sf::Vector2f coordinates) {

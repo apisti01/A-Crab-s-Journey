@@ -100,6 +100,8 @@ public:
 
     void generateObstacles();
 
+    void closeDoors();
+
 protected:
 
 private:

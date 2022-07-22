@@ -47,44 +47,6 @@ void Room::setupGrid() {
     }
 }
 
-void Room::generateObstacles() {
-    // in every room could appear from 1 to 4 obstacles
-    int numObstacles = rand() % 4 + 1;
-
-    // for every obstacle
-    for (int i = 0; i < numObstacles; i++) {
-        // TODO: choose one random obstacles
-
-        // get one free spot on room grid coordinates
-        sf::Vector2i pos = pickFreeGridSpot();
-
-        // prepare sprite
-        sf::Texture rockTexture;
-
-        // TODO: implementare l'utilizzo di una lista di oggetti per la generazione randomica
-        std::string obstacleTypes[4] = {"rock", "algae", "flipflop", "bottle"};
-        rockTexture.loadFromFile("../Obstacle/" + obstacleTypes[rand() % 4] + ".png");
-
-        // prepare collider
-        Collider collider(pos.x, pos.y, 120, 120);
-
-        // add the obstacle just created to the list
-        obstacleList.push_back(*new Obstacle(rockTexture, collider, pos.x, pos.y, 120, 120));
-    }
-}
-
-sf::Vector2i Room::pickFreeGridSpot() {
-    int posx = rand() % 14;
-    int posy = rand() % 7;
-
-    if (!roomGrid[posx][posy]) {
-        roomGrid[posx][posy] = true;
-        return sf::Vector2i { (posx + 1) * 120 + 60, (posy + 1) * 120 + 60};
-    } else {
-        return pickFreeGridSpot();
-    }
-}
-
 void Room::generateWalls() {
     // walls
     for (int i = 0; i < 16; i++) {
@@ -103,16 +65,69 @@ void Room::generateWalls() {
     walls.emplace_back(*new Collider(width - 60, 3.25 * 120, 120, 60));
     walls.emplace_back(*new Collider(60, 5.75 * 120, 120, 60));
     walls.emplace_back(*new Collider(width - 60, 5.75 * 120, 120, 60));
+}
 
-    // closed doors
-    if (doors[0] == -1)
-        walls.emplace_back(*new Collider(120 * 8, 60, 240, 120));
-    if (doors[1] == -1)
-        walls.emplace_back(*new Collider(width - 60, 120 * 4.5, 120, 240));
-    if (doors[2] == -1)
-        walls.emplace_back(*new Collider(120 * 8, height - 60, 240, 120));
-    if (doors[3] == -1)
-        walls.emplace_back(*new Collider(60, 120 * 4.5, 120, 240));
+void Room::generateObstacles() {
+    // in every room could appear from 1 to 4 obstacles
+    int numObstacles = rand() % 4 + 1;
+
+    sf::Texture obstacleTexture;
+
+    // TODO: implementare l'utilizzo di una lista di oggetti per la generazione randomica
+    std::string obstacleTypes[] = {"rock", "algae", "flipflop", "bottle"};
+
+    // for every obstacle
+    for (int i = 0; i < numObstacles; i++) {
+        // get one free spot on room grid coordinates
+        sf::Vector2i pos = pickFreeGridSpot();
+
+        // prepare collider and texture
+        Collider collider(pos.x, pos.y, 120, 120);
+        obstacleTexture.loadFromFile("../Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
+
+        // add the obstacle just created to the list
+        obstacleList.push_back(*new Obstacle(obstacleTexture, collider, pos.x, pos.y, 120, 120));
+    }
+}
+
+sf::Vector2i Room::pickFreeGridSpot() {
+    int posx = rand() % 14;
+    int posy = rand() % 7;
+
+    if (!roomGrid[posx][posy]) {
+        roomGrid[posx][posy] = true;
+        return sf::Vector2i { (posx + 1) * 120 + 60, (posy + 1) * 120 + 60};
+    } else {
+        return pickFreeGridSpot();
+    }
+}
+
+void Room::closeDoors() {
+    sf::Texture obstacleTexture;
+
+    // TODO: implementare l'utilizzo di una lista di oggetti per la generazione randomica
+    std::string obstacleTypes[] = {"rock", "algae", "flipflop", "bottle"};
+
+    if (doors[0] == -1) {
+        obstacleTexture.loadFromFile("../Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
+        Collider collider(120 * 8, 60, 120, 120);
+        obstacleList.push_back(*new Obstacle(obstacleTexture, collider, 120 * 8, 60, 120, 120));
+    }
+    if (doors[1] == -1) {
+        obstacleTexture.loadFromFile("../Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
+        Collider collider(width - 60, 120 * 4.5, 120, 120);
+        obstacleList.push_back(*new Obstacle(obstacleTexture, collider, width - 60, 120 * 4.5, 120, 120));
+    }
+    if (doors[2] == -1) {
+        obstacleTexture.loadFromFile("../Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
+        Collider collider(120 * 8, height - 60, 120, 120);
+        obstacleList.push_back(*new Obstacle(obstacleTexture, collider, 120 * 8, height - 60, 120, 120));
+    }
+    if (doors[3] == -1) {
+        obstacleTexture.loadFromFile("../Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
+        Collider collider(60, 120 * 4.5, 120, 120);
+        obstacleList.push_back(*new Obstacle(obstacleTexture, collider, 60, 120 * 4.5, 120, 120));
+    }
 }
 
 /*

@@ -31,12 +31,6 @@ public:
     // Update player with user input
     void update(int deltaTime, FloorMap *floor);
 
-    // move player with user input
-    void move(int deltaTime, FloorMap *floor);
-
-    // change angle of the player based on mouse movement
-    void rotate(int deltaTime);
-
     // if weapon is ranged create bullet, if melee find the first in range enemy and gives it damages
     void attack(std::list<std::unique_ptr<Enemy>> &enemyList, sf::Vector2f coordinates);
 
@@ -70,6 +64,24 @@ private:
     std::unique_ptr<Wearable> hat = nullptr;
     std::unique_ptr<Wearable> shield = nullptr;
     std::unique_ptr<Wearable> shell = nullptr;
+
+    // move player with user input
+    sf::Vector2f getKeyboardInput(int deltaTime, FloorMap *floor);
+
+    // change angle of the player based on mouse movement
+    float getMouseInput(int deltaTime);
+
+    // check if the new position is valid
+    bool isValidPosition(FloorMap *floor);
+
+    // update sprite and collider position and rotation values
+    sf::Vector2f updateSpriteAndCollider(sf::Vector2f deltaPos, float deltaAngle, FloorMap *floor);
+
+    // select movement animation based on movement direction and facing angle
+    void selectAnimation(sf::Vector2f deltaPos);
+
+    // change room if a door is walked
+    void changeRoom(FloorMap *floor);
 };
 
 
