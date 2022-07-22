@@ -12,7 +12,7 @@ class Bullet {
 public:
     // Constructor and Destructor
     Bullet(float damage, float speed, float range, const sf::Sprite &sprite, sf::Vector2f playerPosition,
-           sf::Vector2f directions, bool isTracking, bool isShattering);
+           float direction, bool isTracking, bool isShattering);
     ~Bullet() = default;
 
     // getters and setters
@@ -36,7 +36,7 @@ private:
     float speed;
 
     // directions chosen when launched
-    sf::Vector2f directions;
+    float direction;
 
     // Special ability
     bool isTracking;

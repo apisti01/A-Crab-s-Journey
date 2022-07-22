@@ -33,7 +33,7 @@ public:
     void update(int deltaTime, FloorMap *floor, std::list<std::unique_ptr<Enemy>> &enemyList);
 
     // if weapon is ranged create bullet, if melee find the first in range enemy and gives it damages
-    void attack(std::list<std::unique_ptr<Enemy>> &enemyList, sf::Vector2f coordinates);
+    void attack(std::list<std::unique_ptr<Enemy>> &enemyList, float bulletAngle);
 
     // take a Wearable and puts it on, return the item wore before
     std::unique_ptr<Wearable> wearItem(std::unique_ptr<Wearable> item);

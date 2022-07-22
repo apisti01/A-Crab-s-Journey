@@ -10,10 +10,10 @@ RangedWeapon::RangedWeapon(sf::Sprite bulletBody, float damage, float speed, flo
                            damage(damage), speed(speed), isTracking(isTracking), isShattering(isShattering) {
 }
 
-void RangedWeapon::useWeapon(sf::Vector2f playerPosition, sf::Vector2f bulletDirections,
+void RangedWeapon::useWeapon(sf::Vector2f playerPosition, float bulletAngle,
                              std::list<std::unique_ptr<Enemy>> &enemyList, float strength) {
     // create new bullet with the weapon specifications
-    Bullet tmp(damage, speed, range, sprite, playerPosition, bulletDirections, isTracking, isShattering);
+    Bullet tmp(damage, speed, range, sprite, playerPosition, bulletAngle, isTracking, isShattering);
 
     // insert the new bullet on the list
     bulletList.push_back(tmp);

@@ -20,8 +20,8 @@ public:
     ~RangedWeapon() override = default;
 
     // Create bullet and puts it on the list
-    void useWeapon(sf::Vector2f playerPosition, sf::Vector2f bulletDirections,
-                    std::list<std::unique_ptr<Enemy>> &enemyList, float strength) override;
+    void useWeapon(sf::Vector2f playerPosition, float bulletAngle,
+                   std::list<std::unique_ptr<Enemy>> &enemyList, float strength) override;
 
     void update(int deltaTime) override;
 

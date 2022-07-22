@@ -11,6 +11,8 @@
 #include "Game.h"
 
 int main() {
+
+    // initialize the randomic generation
     srand(time(nullptr));
 
     // font load
@@ -147,7 +149,7 @@ int main() {
         }
 
 
-        /*
+
         // if M key is pressed
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)) {
             // reset canvas
@@ -180,13 +182,13 @@ int main() {
 
             // TODO Updating the rest of the game
         }
-        */
 
-        window.clear(sf::Color::Green);
 
-        game->update();
+        //window.clear(sf::Color::Green);
 
-        game->draw(window);
+        //game->update();
+
+        //game->draw(window);
 
 
         // Bring to screen and display the new frame just drawn

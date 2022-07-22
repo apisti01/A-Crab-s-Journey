@@ -15,8 +15,8 @@ public:
     ~MeleeWeapon() override = default;
 
     // attack the nearest available enemy
-    void useWeapon(sf::Vector2f playerPosition, sf::Vector2f bulletDirections,
-                    std::list<std::unique_ptr<Enemy>> &enemyList, float strength) override;
+    void useWeapon(sf::Vector2f playerPosition, float bulletAngle,
+                   std::list<std::unique_ptr<Enemy>> &enemyList, float strength) override;
 
     // empty because it does not have to draw bullets
     void update(int deltaTime) override {}

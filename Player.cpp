@@ -164,11 +164,11 @@ void Player::changeRoom(FloorMap *floor) {
     collider.setPosY(sprite.getPosition().y);
 }
 
-void Player::attack(std::list<std::unique_ptr<Enemy>> &enemyList, sf::Vector2f bulletCoordinates) {
+void Player::attack(std::list<std::unique_ptr<Enemy>> &enemyList, float bulletAngle) {
     // if player has a weapon and left mouse button is pressed
     if (weapon && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
         // if ranged it delegates the creation of bullets, return the damage if melee
-        weapon->useWeapon(sprite.getPosition(), bulletCoordinates, enemyList, strength);
+        weapon->useWeapon(sprite.getPosition(), bulletAngle, enemyList, strength);
     }
 }
 

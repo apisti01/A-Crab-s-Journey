@@ -18,7 +18,7 @@ public:
     ~Weapon() override = default;
 
     // overridden in derived classes to attack the nearest enemy or to create a bullet
-    virtual void useWeapon(sf::Vector2f playerPosition, sf::Vector2f bulletDirections,
+    virtual void useWeapon(sf::Vector2f playerPosition, float bulletAngle,
                            std::list<std::unique_ptr<Enemy>> &enemyList, float strength) = 0;
 
     virtual void update(int deltaTime) = 0;
