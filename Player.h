@@ -29,11 +29,9 @@ public:
            float maxArmor = 0.5, float strength = 1.2, float maxStrength = 2, int coins = 0);
     ~Player() override = default;
 
-    // Update player with user input
-    void update(int deltaTime, FloorMap *floor, std::list<std::unique_ptr<Enemy>> &enemyList);
+    void update(int deltaTime, FloorMap *floor) override;
 
-    // if weapon is ranged create bullet, if melee find the first in range enemy and gives it damages
-    void attack(std::list<std::unique_ptr<Enemy>> &enemyList, float bulletAngle);
+    void attack(FloorMap *floor, float bulletAngle) override;
 
     // take a Wearable and puts it on, return the item wore before
     std::unique_ptr<Wearable> wearItem(std::unique_ptr<Wearable> item);
@@ -41,22 +39,12 @@ public:
     // take a Weapon and puts it on, return the weapon wielded before
     std::unique_ptr<Weapon> changeWeapon(std::unique_ptr<Weapon> weapon1);
 
-    // getter of the coins
-    int getCoins() const { return coins; }
-
-    // given a value increases the coins
-    void receiveCoins(int value) { Player::coins += value; }
-
 private:
     // name of the crab specie
     std::string namePlayer;
 
     // Specification about the starting statistics
     CrabSpecie crabSpecie;
-
-    // coin owned
-    int coins;
-    int fps = 10;
 
     // wearable on the player
     std::unique_ptr<Wearable> hat = nullptr;
@@ -68,15 +56,6 @@ private:
 
     // change angle of the player based on mouse movement
     float getMouseInput(int deltaTime);
-
-    // check if the new position is valid
-    bool isValidPosition(FloorMap *floor);
-
-    // update sprite and collider position and rotation values
-    sf::Vector2f updateSpriteAndCollider(sf::Vector2f deltaPos, float deltaAngle, FloorMap *floor);
-
-    // select movement animation based on movement direction and facing angle
-    void selectAnimation(sf::Vector2f deltaPos);
 
     // change room if a door is walked
     void changeRoom(FloorMap *floor);

@@ -16,8 +16,12 @@ public:
           float armor, float maxArmor, float strength, float maxStrength, float xpReward, int coinsDropped, int pearlsDropped);
     ~Enemy() override = default;
 
+    void update(int deltaTime, FloorMap *floor) override;
+
     // move towards the player
     virtual void chase(const Player& hero) = 0;
+
+    void attack(FloorMap *floor, float bulletAngle) override;
 
     // drop items when killed
     virtual void dropItems() = 0;

@@ -8,10 +8,10 @@ Player::Player(std::string name, CrabSpecie crabSpecie, const sf::Texture& textu
                float hp, float maxHp, float speed, float maxSpeed, float armor, float maxArmor, float strength,
                float maxStrength, int coins) :
         GameCharacter(std::move(name), texture, collider, std::move(Weapon), hp, maxHp, speed, maxSpeed, armor,
-                      maxArmor, strength, maxStrength), crabSpecie(crabSpecie), coins(coins) {
+                      maxArmor, strength, maxStrength), crabSpecie(crabSpecie) {
 }
 
-void Player::update(int deltaTime, FloorMap *floor, std::list<std::unique_ptr<Enemy>> &enemyList) {
+void Player::update(int deltaTime, FloorMap *floor) {
     // get keyboard and mouse inputs to move and rotate the player
     sf::Vector2f deltaPos = getKeyboardInput(deltaTime, floor);
     float deltaAngle = getMouseInput(deltaTime);
@@ -24,7 +24,7 @@ void Player::update(int deltaTime, FloorMap *floor, std::list<std::unique_ptr<En
     changeRoom(floor);
 
     // TODO angle
-    attack(enemyList, sprite.getAngle());
+    attack(floor->roomList[floor->currentRoomIndex].enemyList, sprite.getAngle());
 
     // update the animation
     sprite.update(fps, animationBehaviour, deltaTime);
@@ -76,68 +76,6 @@ float Player::getMouseInput(int deltaTime) {
     return facingAngle - sprite.getAngle();
 }
 
-sf::Vector2f Player::updateSpriteAndCollider(sf::Vector2f deltaPos, float deltaAngle, FloorMap *floor) {
-    // update the sprite with the just calculated values
-    sprite.setPosition({ sprite.getPosition().x + deltaPos.x, sprite.getPosition().y + deltaPos.y} );
-    collider.setPosX(sprite.getPosition().x);
-    collider.setPosY(sprite.getPosition().y);
-    sprite.setAngle(sprite.getAngle() + deltaAngle);
-    collider.setAngle(sprite.getAngle());
-
-    // check if the next position and rotation is valid
-    if (!isValidPosition(floor)) {
-        sprite.setPosition({ sprite.getPosition().x - deltaPos.x, sprite.getPosition().y - deltaPos.y });
-        sprite.setAngle(sprite.getAngle() - deltaAngle);
-
-        deltaPos = {0, 0};
-    }
-
-    // update the collider
-    collider.setPosX(sprite.getPosition().x);
-    collider.setPosY(sprite.getPosition().y);
-    collider.setAngle(sprite.getAngle());
-
-    return deltaPos;
-}
-
-bool Player::isValidPosition(FloorMap *floor) {
-    // check collision with obstacles
-    collider.isColliding = false;
-    for (int i = 0; i < size(floor->roomList[floor->currentRoomIndex].obstacleList); i++) {
-        floor->roomList[floor->currentRoomIndex].obstacleList[i].collider.isColliding = false;
-        collider.isCollidingWith(floor->roomList[floor->currentRoomIndex].obstacleList[i].collider);
-    }
-
-    // check collision with walls
-    for (int i = 0; i < size(floor->roomList[floor->currentRoomIndex].walls); i++) {
-        floor->roomList[floor->currentRoomIndex].walls[i].isColliding = false;
-        collider.isCollidingWith(floor->roomList[floor->currentRoomIndex].walls[i]);
-    }
-
-    return !collider.isColliding;
-}
-
-void Player::selectAnimation(sf::Vector2f deltaPos) {
-    // suppose the player is standing still
-    animationBehaviour = 0;
-    // if player is moving
-    if (deltaPos.x != 0 || deltaPos.y != 0) {
-        // calculate the two angles
-        float velocityAngle = atan2f(deltaPos.y, deltaPos.x);
-        float facingAngle = sprite.getAngle();
-        float diff = fabsf(velocityAngle - facingAngle);
-
-        // determine the animation based on the angle difference
-        if (sinf(diff) > sqrtf(2) / 2 || sinf(diff) < -sqrtf(2) / 2) {
-            // horizontal movement
-            animationBehaviour = 1;
-        } else {
-            // vertical movement
-            animationBehaviour = 2;
-        }
-    }
-}
-
 void Player::changeRoom(FloorMap *floor) {
     // move across map through doors
     // right door
@@ -164,11 +102,11 @@ void Player::changeRoom(FloorMap *floor) {
     collider.setPosY(sprite.getPosition().y);
 }
 
-void Player::attack(std::list<std::unique_ptr<Enemy>> &enemyList, float bulletAngle) {
+void Player::attack(FloorMap *floor, float bulletAngle) {
     // if player has a weapon and left mouse button is pressed
     if (weapon && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
         // if ranged it delegates the creation of bullets, return the damage if melee
-        weapon->useWeapon(sprite.getPosition(), bulletAngle, enemyList, strength);
+        weapon->useWeapon(sprite.getPosition(), bulletAngle, floor->roomList[floor->currentRoomIndex].enemyList, strength);
     }
 }
 

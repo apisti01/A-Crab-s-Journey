@@ -55,7 +55,7 @@ public:
     // obstacle and enemy lists
     std::vector<Obstacle> obstacleList;
 
-    //std::list<std::unique_ptr<Enemy>> enemyList;
+    std::list<std::unique_ptr<Enemy>> enemyList;
 
     // collider for the walls
     std::vector<Collider> walls;

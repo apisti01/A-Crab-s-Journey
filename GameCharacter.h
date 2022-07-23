@@ -17,6 +17,8 @@
 
 class MeleeWeapon;
 
+class FloorMap;
+
 class GameCharacter {
 public:
     // constructor and virtual destructor
@@ -26,15 +28,9 @@ public:
     virtual ~GameCharacter() = default;
 
     // getter and setter for character position
-    void setPosition(float x, float y) {
-        sprite.setPosition(sf::Vector2f(x,y));
-    }
-    float getPosX() const {
-        return sprite.getPosition().x;
-    }
-    float getPosY() const {
-        return sprite.getPosition().y;
-    }
+    void setPosition(float x, float y) { sprite.setPosition(sf::Vector2f(x,y)); }
+    float getPosX() const { return sprite.getPosition().x; }
+    float getPosY() const { return sprite.getPosition().y; }
 
     // Getter and Setters for statistics
     const std::string &getName() const { return name;}
@@ -70,7 +66,18 @@ public:
     // given a value for damage, receive damage
     void receiveDamage(float damage);
 
+    // update game character
+    virtual void update(int deltaTime, FloorMap *floor) = 0;
+
+    // if weapon is ranged create bullet, if melee find the first in range enemy and gives it damages
+    virtual void attack(FloorMap *floor, float bulletAngle) = 0;
+
     void draw(sf::RenderWindow &window);
+
+    // getter of the coins
+    int getCoins() const { return coins; }
+    // given a value increases the coins
+    void receiveCoins(int value) { coins += value; }
 
     Collider collider;
 
@@ -87,14 +94,25 @@ protected:
     // Weapon wielded
     std::unique_ptr<Weapon> weapon;
 
-    // SFML Texture of the sprite
+    // SFML Texture and Animated sprite
     sf::Texture texture;
-
-    // SFML Animated Sprite body
     AnimatedSprite sprite;
+    int fps = 10;
+
+    // check if the new position is valid
+    bool isValidPosition(FloorMap *floor);
+
+    // update sprite and collider position and rotation values
+    sf::Vector2f updateSpriteAndCollider(sf::Vector2f deltaPos, float deltaAngle, FloorMap *floor);
+
+    // select movement animation based on movement direction and facing angle
+    void selectAnimation(sf::Vector2f deltaPos);
 
     // the row of the Sprite sheet, that determine the behaviour of the animation
     int animationBehaviour = 0;
+
+    // coin owned
+    int coins;
 
 private:
 

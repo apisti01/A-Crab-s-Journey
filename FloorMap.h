@@ -30,7 +30,7 @@ public:
     std::vector<Room> roomList;
     int currentRoomIndex, startRoomIndex, endRoomIndex, shopRoomIndex = -1;
 
-    void draw(sf::RenderWindow &Twindow);
+    void draw(sf::RenderWindow &window);
 
 private:
     // level and number of rooms

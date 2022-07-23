@@ -128,8 +128,6 @@ int main() {
     // finally let's create the game
     auto game = Game::getInstance();
 
-
-
     // Game loop
     while (window.isOpen())
     {
@@ -147,8 +145,6 @@ int main() {
             // handles the event of the current state, like changing state or other actions
             game->eventHandling(event);
         }
-
-
 
         // if M key is pressed
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)) {
@@ -183,13 +179,11 @@ int main() {
             // TODO Updating the rest of the game
         }
 
-
         //window.clear(sf::Color::Green);
 
         //game->update();
 
         //game->draw(window);
-
 
         // Bring to screen and display the new frame just drawn
         window.display();

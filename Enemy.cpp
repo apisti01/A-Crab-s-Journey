@@ -10,3 +10,11 @@ Enemy::Enemy(std::string name, std::unique_ptr<Weapon> weapon, float hp, float m
         GameCharacter(std::move(name), sf::Texture(), Collider(0, 0, 0, 0, 0), std::unique_ptr<Weapon>(),
                 hp, maxHp, speed, maxSpeed, armor, maxArmor, strength, maxStrength), XpReward(xpReward),
                 coinsDropped(coinsDropped), pearlsDropped(pearlsDropped) {}
+
+void Enemy::update(int deltaTime, FloorMap *floor) {
+    // TODO: implement update function
+}
+
+void Enemy::attack(FloorMap *floor, float bulletAngle) {
+    // TODO: implement attack function
+}
