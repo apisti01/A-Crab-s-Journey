@@ -24,7 +24,7 @@ void Player::update(int deltaTime, FloorMap *floor) {
     changeRoom(floor);
 
     // TODO angle
-    attack(floor->roomList[floor->currentRoomIndex].enemyList, sprite.getAngle());
+    attack(floor, sprite.getAngle());
 
     // update the animation
     sprite.update(fps, animationBehaviour, deltaTime);

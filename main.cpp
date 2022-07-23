@@ -171,7 +171,7 @@ int main() {
             floor->draw(window);
 
             // update and draw the player
-            player->update(deltaTime, floor, enemyList);
+            player->update(deltaTime, floor);
             player->draw(window);
 
             currentPointer.setPosition((floor->roomList[floor->currentRoomIndex].getPosX() + 8) * 100 + 15, (floor->roomList[floor->currentRoomIndex].getPosY() + 4.5) * 100 + 15);
