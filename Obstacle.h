@@ -40,8 +40,6 @@ public:
 
     void draw(sf::RenderWindow &window);
 
-protected:
-
 private:
     // info about position and dimensions
     float posX, posY;

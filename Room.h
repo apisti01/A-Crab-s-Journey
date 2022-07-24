@@ -8,14 +8,24 @@
 #include <vector>
 
 #include "Obstacle.h"
+#include "GameCharacter.h"
 #include "Enemy.h"
 
 class Player;
 
+enum class MapType {
+    CoralReef,
+    MangroveForest,
+    TemperateReef,
+    KelpForest,
+    PosidoniaMeadow,
+    IceFloe,
+};
+
 class Room {
 public:
     // constructor and destructor
-    explicit Room(int posX, int posY, int width, int height);
+    explicit Room(int posX, int posY, int width, int height, MapType mapType);
     // ~Room();
 
     // doors list: -1 for closed, n if connected to nth room
@@ -50,12 +60,14 @@ public:
     int getHeight() const { return height; }
     void setHeight(int height) { Room::height = height; }
 
+    void update();
+
     void draw(sf::RenderWindow &window);
 
     // obstacle and enemy lists
     std::vector<Obstacle> obstacleList;
 
-    std::list<std::unique_ptr<Enemy>> enemyList;
+    // std::list<std::unique_ptr<Enemy>> enemyList;
 
     // collider for the walls
     std::vector<Collider> walls;
@@ -66,11 +78,13 @@ public:
 
     void closeDoors();
 
-protected:
-
 private:
     // grid position attributes
     int posX, posY;
+
+    // texture and sprite
+    sf::Texture backgroundTexture;
+    sf::Sprite background { backgroundTexture, sf::IntRect{ 0, 0, 1920, 1080 } };
 
     // room measures
     int width, height;

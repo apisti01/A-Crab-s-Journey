@@ -16,25 +16,15 @@ public:
     ~AnimatedSprite() = default;
 
     // getter and setter for sprite position
-    void setPosition(sf::Vector2f position) {
-        sprite.setPosition(position);
-    }
-    sf::Vector2f getPosition() const {
-        return sprite.getPosition();
-    }
+    void setPosition(sf::Vector2f position) { sprite.setPosition(position); }
+    sf::Vector2f getPosition() const { return sprite.getPosition(); }
 
     // getter for sprite size
-    float getWidth() const {
-        return sprite.getGlobalBounds().width;
-    }
-    float getHeight() const {
-        return sprite.getGlobalBounds().height;
-    }
+    float getWidth() const { return sprite.getGlobalBounds().width; }
+    float getHeight() const { return sprite.getGlobalBounds().height; }
 
     // move across the map
-    void move(float x, float y) {
-        sprite.move(x, y);
-    }
+    void move(float x, float y) { sprite.move(x, y); }
 
     // getter and setter for the angle
     void setAngle(float angle) {
@@ -62,6 +52,7 @@ public:
     void draw(sf::RenderWindow &window);
 
 private:
+    sf::Texture characterTexture;
     sf::Sprite sprite;
     float scl = 0.4;
 

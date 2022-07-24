@@ -25,7 +25,6 @@ public:
 
     // overridden only to draw bullets
     virtual void draw(sf::RenderWindow& window) = 0;
-
 };
 
 

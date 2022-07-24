@@ -12,24 +12,28 @@ class Game;
 enum class StateType{
     TitleScreen,
     MainMenu,
-    Pause,
+    PrepareRun,
     Play,
+    ManageInventory,
     DisplayMap,
     Shop,
-    ManageInventory
+    Pause,
+    PearlShop,
+    Settings,
+    Credits
 };
 
 class State {
 public:
     // Constructor and Destructor
-    explicit State(Game* game) : game(game){}
+    explicit State(Game* game) : game(game) {}
     virtual ~State() = default;
 
     // to handle the event as changing of the  current state
     virtual void eventHandling(sf::Event event) = 0;
 
     // updating all the game
-    virtual void update() = 0;
+    virtual void update(int deltaTime) = 0;
 
     // drawing the next frame on the window
     virtual void draw(sf::RenderWindow &window) = 0;
@@ -37,7 +41,6 @@ public:
 protected:
     // pointer to the game class
     Game* game;
-
 };
 
 

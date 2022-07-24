@@ -12,6 +12,7 @@
 #include "Wearable.h"
 #include "StaticRangedEnemy.h"
 #include "Weapon.h"
+#include "RangedWeapon.h"
 #include "FloorMap.h"
 
 enum class CrabSpecie {

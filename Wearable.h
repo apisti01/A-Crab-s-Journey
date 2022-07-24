@@ -21,11 +21,11 @@ public:
     ~Wearable() override = default;
 
     // Getters
-    WearablePieces getType() const {return type;}
-    float getHp() const {return hp;}
-    float getSpeed() const {return speed;}
-    float getArmor() const {return armor;}
-    float getStrength() const {return strength;}
+    WearablePieces getType() const { return type; }
+    float getHp() const { return hp; }
+    float getSpeed() const { return speed; }
+    float getArmor() const { return armor; }
+    float getStrength() const { return strength; }
 
 private:
     // piece's type

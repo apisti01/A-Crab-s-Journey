@@ -15,9 +15,6 @@ public:
     void chase(const Player &hero) override;
 
     void dropItems() override;
-
-private:
-
 };
 
 

@@ -3,10 +3,9 @@
 //
 
 
-#include <iostream>
 #include "FloorMap.h"
 
-FloorMap::FloorMap(int level, int roomWidth, int roomHeight) : level(level), roomWidth(roomWidth), roomHeight(roomHeight) {
+FloorMap::FloorMap(int level, MapType mapType) : level(level), mapType(mapType), roomWidth(1920), roomHeight(1080) {
     // there's a 40% chance that this floor has a shop room
     float chance = rand() / (RAND_MAX + 1.0);
     if (chance <= 0.4)
@@ -14,11 +13,14 @@ FloorMap::FloorMap(int level, int roomWidth, int roomHeight) : level(level), roo
 
     // then generates the floor
     generateFloor();
+
+    // create and setup player
+    setupPlayer();
 }
 
 void FloorMap::generateFloor() {
     // add first room in the middle of the grid (position 0, 0)
-    roomList.emplace_back(0, 0, roomWidth, roomHeight);
+    roomList.push_back(*new Room(0, 0, roomWidth, roomHeight, mapType));
 
     // calculate number of rooms in the floor
     numRooms = round(10 - exp(1.8 - level / 4));
@@ -51,9 +53,6 @@ void FloorMap::generateFloor() {
 
     // set the shop room
     setShopRoom();
-
-    // set player in the middle of the first room
-    setupPlayer();
 };
 
 int FloorMap::pickRoom() {
@@ -61,7 +60,7 @@ int FloorMap::pickRoom() {
     int roomIndex;
     bool isSurrounded;
     while (!availableRoomFounded) {
-        // generate a random number between 0 and the number of rooms
+        // generate a random  number between 0 and the number of rooms
         roomIndex = rand() % size(roomList);
 
         // check if the room picked is not surrounded by other rooms
@@ -140,7 +139,7 @@ void FloorMap::generateRoom(int roomIndex, int sideIndex, int newRoomIndex) {
     int otherSideX = roomList[roomIndex].getPosX() + round(sin(sideIndex * M_PI / 2));
     int otherSideY = roomList[roomIndex].getPosY() - round(cos(sideIndex * M_PI / 2));
 
-    roomList.emplace_back(otherSideX, otherSideY, roomWidth, roomHeight);
+    roomList.push_back(*new Room(otherSideX, otherSideY, roomWidth, roomHeight, mapType));
 
     // assign adjacent room index to start and new room
     roomList[roomIndex].doors[sideIndex] = newRoomIndex;
@@ -169,6 +168,9 @@ void FloorMap::setStartAndEndRooms() {
 
     roomList[startRoomIndex].setStartRoom(true);
     roomList[endRoomIndex].setBossRoom(true);
+
+    // set the start room to be the current room
+    currentRoomIndex = startRoomIndex;
 }
 
 int FloorMap::TerminalRoomIndex() {
@@ -250,14 +252,39 @@ void FloorMap::setShopRoom() {
 }
 
 void FloorMap::setupPlayer() {
-    // set the player in the first room
-    currentRoomIndex = startRoomIndex;
+    // load brown crab's texture for movement animation
+    sf::Texture brownCrabTexture;
+    brownCrabTexture.loadFromFile("../GameCharacter/Player/Brown Crab/Animations/Texture.png");
 
-    // in the middle
-    // player.setPosX();
-    // player.setPosY();
+    // bullet for ranged weapon
+    sf::Texture bulletTexture;
+    bulletTexture.loadFromFile("../others/bullet_rock.png");
+    sf::Sprite bullet { bulletTexture };
+    bullet.setScale(0.02, 0.02);
+
+    // Ranged weapon
+    std::unique_ptr<Weapon> rangedWeapon = std::make_unique<RangedWeapon>(bullet);
+    // give him a melee weapon
+    // std::unique_ptr<Weapon> weapon = std::make_unique<MeleeWeapon>(10, "player", ItemRarity::Common, 50);
+
+    // and a collider
+    Collider collider(roomWidth / 2, roomHeight / 2,
+                      brownCrabTexture.getSize().x / 6 * 0.4 * 0.6,
+                      brownCrabTexture.getSize().y / 3 * 0.4 * 0.8, 0);
+
+    // create the player
+    player = make_unique<Player>("Crab", CrabSpecie::BrownCrab, std::move(brownCrabTexture), collider, std::move(rangedWeapon), 10, 10, 1, 1, 10, 10, 10, 10);
+
+    // and set his position at the center of the map
+    player->setPosition(roomWidth / 2, roomHeight / 2);
+}
+
+void FloorMap::update(int deltaTime) {
+    roomList[currentRoomIndex].update();
+    player->update(deltaTime, this);
 }
 
 void FloorMap::draw(sf::RenderWindow &window) {
     roomList[currentRoomIndex].draw(window);
+    player->draw(window);
 }

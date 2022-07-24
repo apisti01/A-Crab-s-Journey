@@ -29,7 +29,7 @@ void Player::update(int deltaTime, FloorMap *floor) {
     // update the animation
     sprite.update(fps, animationBehaviour, deltaTime);
 
-    // if there is a weapon
+    // if the player has a weapon
     if (weapon) {
         // move the bullets
         weapon->update(deltaTime);
@@ -106,7 +106,7 @@ void Player::attack(FloorMap *floor, float bulletAngle) {
     // if player has a weapon and left mouse button is pressed
     if (weapon && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
         // if ranged it delegates the creation of bullets, return the damage if melee
-        weapon->useWeapon(sprite.getPosition(), bulletAngle, floor->roomList[floor->currentRoomIndex].enemyList, strength);
+        // weapon->useWeapon(sprite.getPosition(), bulletAngle, floor->roomList[floor->currentRoomIndex].enemyList, strength);
     }
 }
 

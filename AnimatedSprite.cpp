@@ -2,13 +2,18 @@
 // Created by apisti01 on 10/07/22.
 //
 
+#include <iostream>
+
 #include "AnimatedSprite.h"
 
-AnimatedSprite::AnimatedSprite(const sf::Texture& texture, sf::Vector2u imageCount) : frames(int(imageCount.x - 1)),
-    rectangle(sf::IntRect(0, 0, int(texture.getSize().x / imageCount.x), int(texture.getSize().y / imageCount.y))) {
+AnimatedSprite::AnimatedSprite(const sf::Texture& texture, sf::Vector2u imageCount) {
+    frames = int(imageCount.x - 1);
+
+    rectangle = sf::IntRect(0, 0, int(texture.getSize().x / imageCount.x), int(texture.getSize().y / imageCount.y));
 
     // initialize the sprite
-    sprite = sf::Sprite(texture, rectangle);
+    characterTexture = texture;
+    sprite = sf::Sprite(characterTexture, rectangle);
 
     // set the origin in the middle to correct the rotation
     sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);

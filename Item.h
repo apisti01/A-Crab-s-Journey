@@ -45,9 +45,6 @@ protected:
 
     // SFML sprite
     sf::Sprite body;
-
-private:
-
 };
 
 

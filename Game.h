@@ -22,23 +22,26 @@ public:
     // function that handle event and changes states
     void eventHandling(sf::Event event) { currentState->eventHandling(event); }
 
+    // changing the current state, creating a new one and deleting the old
+    void changeState(StateType type);
+
     // update the game on the different states it is
-    void update(){ currentState->update();}
+    void update(int deltaTime) { currentState->update(deltaTime); }
 
     // delegate to draw all
     void draw(sf::RenderWindow &window) { currentState->draw(window); }
 
     // restart the clock
-    void restartClock() { gameClock.restart();}
-
-    // changing the current state, creating a new one and deleting the old
-    void changeState(StateType type);
+    void restartClock() { clock.restart();}
 
     // pointer to the player, shared with the map
     std::shared_ptr<Player> player = nullptr;
 
     // pointer to the map
     std::unique_ptr<FloorMap> map = nullptr;
+
+    // the clock to get delta time to move and update the game
+    sf::Clock clock;
 
 private:
     // private constructor to only have one instance of the class (Singleton)
@@ -51,10 +54,6 @@ private:
 
     // Current state of the game
     std::unique_ptr<State> currentState;
-
-    // the clock to get delta time to move and update the game
-    sf::Clock gameClock;
-
 };
 
 

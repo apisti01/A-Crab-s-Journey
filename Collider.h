@@ -18,40 +18,20 @@ public:
     };
 
     // getters and setters
-    float getAngle() const {
-        return angle;
-    }
-    void setAngle(float angle) {
-        Collider::angle = angle;
-    }
+    float getAngle() const { return angle; }
+    void setAngle(float angle) { Collider::angle = angle; }
 
-    float getPosX() const {
-        return posX;
-    }
-    void setPosX(int posX) {
-        Collider::posX = posX;
-    }
+    float getPosX() const { return posX; }
+    void setPosX(float posX) { Collider::posX = posX; }
 
-    float getPosY() const {
-        return posY;
-    }
-    void setPosY(int posY) {
-        Collider::posY = posY;
-    }
+    float getPosY() const { return posY; }
+    void setPosY(float posY) { Collider::posY = posY; }
 
-    float getWidth() const {
-        return width;
-    }
-    void setWidth(int width) {
-        Collider::width = width;
-    }
+    float getWidth() const { return width; }
+    void setWidth(int width) { Collider::width = width; }
 
-    float getHeight() const {
-        return height;
-    }
-    void setHeight(int height) {
-        Collider::height = height;
-    }
+    float getHeight() const { return height; }
+    void setHeight(int height) { Collider::height = height; }
 
     void move(float dx, float dy);
 
@@ -61,7 +41,6 @@ public:
     bool isColliding;
 
     sf::RectangleShape colliderBox;
-protected:
 
 private:
     float posX, posY;

@@ -3,15 +3,12 @@
 //
 
 #include "StatePlay.h"
-
 #include "Game.h"
 
-StatePlay::StatePlay(Game *game) : State(game) {
-
-}
+StatePlay::StatePlay(Game *game) : State(game) {}
 
 void StatePlay::eventHandling(sf::Event event) {
-    if (event.type == sf::Event::KeyPressed){
+    if (event.type == sf::Event::KeyPressed) {
         switch (event.key.code) {
             case sf::Keyboard::M:
                 game->changeState(StateType::DisplayMap);
@@ -24,16 +21,16 @@ void StatePlay::eventHandling(sf::Event event) {
                 game->changeState(StateType::ManageInventory);
                 break;
             case sf::Keyboard::E:
-                if (game->map->currentRoomIndex == game->map->shopRoomIndex /* && game->map->roomList[game->map->currentRoomIndex].enemyList.empty()*/ ){ // FIXME player must be near the shop
+                // FIXME player must be near the shop
+                if (game->map->currentRoomIndex == game->map->shopRoomIndex /* && game->map->roomList[game->map->currentRoomIndex].enemyList.empty() */)
                     game->changeState(StateType::Shop);
-                }
                 break;
         }
     }
 }
 
-void StatePlay::update() {
-
+void StatePlay::update(int deltaTime) {
+    game->map->update(deltaTime);
 }
 
 void StatePlay::draw(sf::RenderWindow &window) {

@@ -7,7 +7,7 @@
 
 #include "State.h"
 
-class StatePlay : public State{
+class StatePlay : public State {
 public:
     // Constructor and Destructor
     explicit StatePlay(Game *game);
@@ -15,7 +15,7 @@ public:
 
     void eventHandling(sf::Event event) override;
 
-    void update() override;
+    void update(int deltaTime) override;
 
     void draw(sf::RenderWindow &window) override;
 };

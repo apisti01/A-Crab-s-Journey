@@ -7,7 +7,7 @@
 
 #include "State.h"
 
-class StateTitleScreen : public State{
+class StateTitleScreen : public State {
 public:
     // Constructor and Destructor
     explicit StateTitleScreen(Game* game);
@@ -15,15 +15,14 @@ public:
 
     void eventHandling(sf::Event event) override;
 
-    void update() override {}
+    void update(int deltaTime) override {}
 
     void draw(sf::RenderWindow &window) override;
 
 private:
     // background
     sf::Texture backgroundTexture;
-    sf::Sprite background {backgroundTexture, sf::IntRect(0,0,1920,1080)};
-
+    sf::Sprite background { backgroundTexture, sf::IntRect(0, 0, 1920, 1080) };
 };
 
 

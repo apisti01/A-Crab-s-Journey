@@ -28,7 +28,11 @@ public:
     virtual ~GameCharacter() = default;
 
     // getter and setter for character position
-    void setPosition(float x, float y) { sprite.setPosition(sf::Vector2f(x,y)); }
+    void setPosition(float x, float y) {
+        sprite.setPosition(sf::Vector2f(x, y));
+        collider.setPosX(x);
+        collider.setPosY(y);
+    }
     float getPosX() const { return sprite.getPosition().x; }
     float getPosY() const { return sprite.getPosition().y; }
 
@@ -113,9 +117,6 @@ protected:
 
     // coin owned
     int coins;
-
-private:
-
 };
 
 

@@ -8,11 +8,12 @@
 #include <vector>
 
 #include "Room.h"
+#include "Player.h"
 
 class FloorMap {
 public:
     // constructor
-    explicit FloorMap(int level, int roomWidth, int roomHeight);
+    explicit FloorMap(int level, MapType mapType);
 
     // getter and setter for level attribute
     int getLevel() const { return level; }
@@ -30,12 +31,17 @@ public:
     std::vector<Room> roomList;
     int currentRoomIndex, startRoomIndex, endRoomIndex, shopRoomIndex = -1;
 
+    std::unique_ptr<Player> player;
+
+    void update(int deltaTime);
+
     void draw(sf::RenderWindow &window);
 
 private:
     // level and number of rooms
     int level;
     int numRooms;
+    MapType mapType;
 
     std::string mapName;
     int roomWidth, roomHeight;
@@ -43,6 +49,8 @@ private:
     int longestPathLength;
     bool hasShop;
     float shopChance = 0.4;
+
+    sf::Texture backgroundTexture;
 
     // function for randomic floor generation
     void generateFloor();

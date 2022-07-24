@@ -1,16 +1,16 @@
 //
-// Created by apisti01 on 20/07/22.
+// Created by longo on 24/07/2022.
 //
 
-#ifndef MAIN_CPP_STATEMAINMENU_H
-#define MAIN_CPP_STATEMAINMENU_H
+#ifndef ACRABSJOURNEY_STATEPAUSE_H
+#define ACRABSJOURNEY_STATEPAUSE_H
 
 #include "State.h"
 
-class StateMainMenu : public State {
+class StatePause : public State {
 public:
-    explicit StateMainMenu(Game* game);
-    ~StateMainMenu() override = default;
+    explicit StatePause(Game* game);
+    ~StatePause() override = default;
 
     void eventHandling(sf::Event event) override;
 
@@ -25,4 +25,4 @@ private:
 };
 
 
-#endif //MAIN_CPP_STATEMAINMENU_H
+#endif //ACRABSJOURNEY_STATEPAUSE_H

@@ -1,16 +1,37 @@
 //
 // Created by longo on 07/07/2022.
 //
-
 #include <iostream>
 
 #include "Room.h"
 
-Room::Room(int posX, int posY, int width, int height) : posX(posX), posY(posY), width(width), height(height), XpReward(XpReward = 0),
-isCage(isCage = false), isStartRoom(isStartRoom = false), isBossRoom(isBossRoom = false), isShopRoom(isShopRoom = false),
-wallDepth(wallDepth = 0) {
+Room::Room(int posX, int posY, int width, int height, MapType mapType) : posX(posX), posY(posY), width(width),
+height(height), XpReward(XpReward = 0), isCage(isCage = false), isStartRoom(isStartRoom = false),
+isBossRoom(isBossRoom = false), isShopRoom(isShopRoom = false), wallDepth(wallDepth = 0) {
     // doors are all initially closed
     doors = {-1, -1, -1, -1};
+
+    // load coral reef texture as room background
+    switch (mapType) {
+        case MapType::CoralReef:
+            backgroundTexture.loadFromFile("../Map/Coral Reef/Coral Reef.png");
+            break;
+        case MapType::MangroveForest:
+            backgroundTexture.loadFromFile("../Map/Mangrove Forest/Mangrove Forest.png");
+            break;
+        case MapType::TemperateReef:
+            backgroundTexture.loadFromFile("../Map/Temperate Reef/Temperate Reef.png");
+            break;
+        case MapType::KelpForest:
+            backgroundTexture.loadFromFile("../Map/Kelp Forest/Kelp Forest.png");
+            break;
+        case MapType::PosidoniaMeadow:
+            backgroundTexture.loadFromFile("../Map/Posidonia Meadow/Posidonia Meadow.png");
+            break;
+        case MapType::IceFloe:
+            backgroundTexture.loadFromFile("../Map/Ice Floe/Ice Floe.png");
+            break;
+    }
 
     // TODO: if it isn't the start room, create list of enemies
     if (!getStartRoom()) {
@@ -170,7 +191,17 @@ void Room::exitCageMode() {
 }
 */
 
+void Room::update() {
+    /* update enemy in the room
+    for (int i = 0; i < size(enemyList); i++) {
+        // TODO: update the i-th enemy
+    }*/
+}
+
 void Room::draw(sf::RenderWindow &window) {
+    // draw background
+    window.draw(background);
+
     // draw walls
     for (int i = 0; i < size(walls); i++) {
         walls[i].draw(window);

@@ -8,12 +8,10 @@
 #include "GameCharacter.h"
 #include "FloorMap.h"
 
-class Enemy;
-
 GameCharacter::GameCharacter(std::string name, const sf::Texture &texture, Collider collider, std::unique_ptr<Weapon> weapon,
                              float hp, float maxHp, float speed, float maxSpeed, float armor, float maxArmor, float strength,
                              float maxStrength)
-        : name(std::move(name)), sprite(texture, sf::Vector2u(6, 3)), texture(texture), collider(collider),
+        : name(std::move(name)), sprite(texture, sf::Vector2u(6, 3)), collider(std::move(collider)),
         weapon(std::move(weapon)), hp(hp), maxHp(maxHp), speed(speed), maxSpeed(maxSpeed), armor(armor),
         maxArmor(maxArmor), strength(strength), maxStrength(maxStrength) {
 }

@@ -22,7 +22,6 @@ public:
     void update(int deltaTime) override {}
     void draw(sf::RenderWindow &window) override{}
 
-
     // TODO: write definition for the selection of hit enemy
     bool checkEnemy(const Enemy *enemy);
 
