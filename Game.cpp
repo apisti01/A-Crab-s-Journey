@@ -18,7 +18,15 @@ Game *Game::getInstance() {
     return gameInstance;
 }
 
-Game::Game() : currentState(make_unique<StateTitleScreen>(this)) {}
+Game::Game() : currentState(make_unique<StateTitleScreen>(this)) {
+    // load font
+    sf::Font Rancho;
+    if (!Rancho.loadFromFile("../Font/Arial/Arial.ttf")) {
+        cout << "font non caricato" << endl;
+        system("pause");
+    }
+    font = Rancho;
+}
 
 void Game::changeState(StateType type) {
     std::unique_ptr<State> tmp;
@@ -30,11 +38,6 @@ void Game::changeState(StateType type) {
             tmp = std::make_unique<StateMainMenu>(this);
             break;
         case StateType::Play: {
-            // FIXME: move to another place
-            // create new floor
-            int level = 1;
-            map = std::make_unique<FloorMap>(level, MapType::CoralReef);
-
             tmp = std::make_unique<StatePlay>(this);
         }
             break;

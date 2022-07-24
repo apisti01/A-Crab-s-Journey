@@ -8,13 +8,6 @@
 #include "Game.h"
 
 StateDisplayMap::StateDisplayMap(Game *game) : State(game) {
-    // load font
-    sf::Font Rancho;
-    if (!Rancho.loadFromFile("../Font/Arial/Arial.ttf")) {
-        cout << "font non caricato" << endl;
-        system("pause");
-    }
-
     for (int i = 0; i < game->map->roomList.size(); i++) {
         // room
         int posX = (game->map->roomList[i].getPosX() + 8) * 100;
@@ -40,7 +33,7 @@ StateDisplayMap::StateDisplayMap(Game *game) : State(game) {
         }
 
         // room index
-        sf::Text text(to_string(i), Rancho);
+        sf::Text text(to_string(i), game->font);
         text.setCharacterSize(40);
         text.setPosition((game->map->roomList[i].getPosX() + 8) * 100 - 10, (game->map->roomList[i].getPosY() + 4.5) * 100 - 30);
         text.setFillColor(sf::Color::Black);
@@ -65,7 +58,7 @@ StateDisplayMap::StateDisplayMap(Game *game) : State(game) {
 }
 
 void StateDisplayMap::eventHandling(sf::Event event) {
-    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
+    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::M)
         game->changeState(StateType::Play);
 }
 

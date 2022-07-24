@@ -43,6 +43,9 @@ public:
     // the clock to get delta time to move and update the game
     sf::Clock clock;
 
+    // font used in game
+    sf::Font font;
+
 private:
     // private constructor to only have one instance of the class (Singleton)
     Game();

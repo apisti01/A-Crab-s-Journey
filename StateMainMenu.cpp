@@ -12,11 +12,21 @@ StateMainMenu::StateMainMenu(Game *game) : State(game) {
 void StateMainMenu::eventHandling(sf::Event event) {
     if (event.type == sf::Event::KeyPressed) {
         switch (event.key.code) {
-            case sf::Keyboard::Num1:
+            case sf::Keyboard::Num1: {
+                // create new floor
+                int level = 1;
+                game->map = std::make_unique<FloorMap>(level, MapType::CoralReef);
+
                 game->changeState(StateType::Play);
+            }
                 break;
-            case sf::Keyboard::Num2:
+            case sf::Keyboard::Num2: {
+                // create new floor
+                int level = 1;
+                game->map = std::make_unique<FloorMap>(level, MapType::CoralReef);
+
                 game->changeState(StateType::Play);
+            }
                 break;
             case sf::Keyboard::Num3:
                 // game->changeState(StateType::PearlShop);
