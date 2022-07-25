@@ -46,6 +46,9 @@ public:
     // font used in game
     sf::Font font;
 
+    // unit
+    float lenUnit = 120;
+
 private:
     // private constructor to only have one instance of the class (Singleton)
     Game();

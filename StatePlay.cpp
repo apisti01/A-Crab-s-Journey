@@ -2,8 +2,9 @@
 // Created by apisti01 on 21/07/22.
 //
 
-#include "StatePlay.h"
+#include <iostream>
 #include "Game.h"
+#include "StatePlay.h"
 
 StatePlay::StatePlay(Game *game) : State(game) {}
 
@@ -22,7 +23,7 @@ void StatePlay::eventHandling(sf::Event event) {
                 break;
             case sf::Keyboard::E:
                 // FIXME player must be near the shop
-                if (game->map->currentRoomIndex == game->map->shopRoomIndex /* && game->map->roomList[game->map->currentRoomIndex].enemyList.empty() */)
+                if (game->map->isPlayerNearShop() /* && game->map->roomList[game->map->currentRoomIndex].enemyList.empty() */)
                     game->changeState(StateType::Shop);
                 break;
         }

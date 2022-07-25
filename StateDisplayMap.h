@@ -22,7 +22,9 @@ public:
 private:
     std::vector<sf::RectangleShape> roomShapes;
     std::vector<sf::Text> roomTextNumbers;
-    sf::CircleShape startPointer, endPointer, shopPointer, currentPointer;
+    sf::RectangleShape startPointer, endPointer, shopPointer, currentPointer;
+
+    float unit;
 };
 
 

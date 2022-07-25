@@ -8,7 +8,7 @@
 FloorMap::FloorMap(int level, MapType mapType) : level(level), mapType(mapType), roomWidth(1920), roomHeight(1080) {
     // there's a 40% chance that this floor has a shop room
     float chance = rand() / (RAND_MAX + 1.0);
-    if (chance <= 0.4)
+    if (chance <= shopChance)
         hasShop = true;
 
     // then generates the floor
@@ -277,6 +277,17 @@ void FloorMap::setupPlayer() {
 
     // and set his position at the center of the map
     player->setPosition(roomWidth / 2, roomHeight / 2);
+}
+
+// tells if player is near the shop
+bool FloorMap::isPlayerNearShop() {
+    // shop position in the room
+    sf::Vector2f shopPos {float(roomWidth), 0};
+
+    if (currentRoomIndex == shopRoomIndex && sqrtf(powf(player->getPosX() - shopPos.x, 2) + powf(player->getPosY() - shopPos.y, 2)) < 360)
+        return true;
+    else
+        return false;
 }
 
 void FloorMap::update(int deltaTime) {
