@@ -6,12 +6,13 @@
 #include "Game.h"
 
 StatePause::StatePause(Game *game) : State(game) {
-    backgroundTexture.loadFromFile("../Games_States/Pause Screen/Pause Screen.png");
+    backgroundTexture.loadFromFile("../Games States/Pause Screen/Pause Screen.png");
 }
 
 void StatePause::eventHandling(sf::Event event) {
     if (event.type == sf::Event::KeyPressed){
         switch (event.key.code) {
+            case sf::Keyboard::Escape:
             case sf::Keyboard::Num1:
                 game->changeState(StateType::Play);
                 break;

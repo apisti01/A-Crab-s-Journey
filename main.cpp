@@ -35,7 +35,7 @@ int main() {
                 case sf::Event::Closed:
                     window.close();
                 case sf::Event::KeyPressed:
-                    if (event.key.code == sf::Keyboard::Escape)
+                    if (event.key.code == sf::Keyboard::Q)
                         window.close();
             }
             // handles the event of the current state, like changing state or other actions

@@ -63,8 +63,10 @@ StateDisplayMap::StateDisplayMap(Game *game) : State(game), unit(150.0) {
 }
 
 void StateDisplayMap::eventHandling(sf::Event event) {
-    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::M)
-        game->changeState(StateType::Play);
+    if (event.type == sf::Event::KeyPressed) {
+        if (event.key.code == sf::Keyboard::M || event.key.code == sf::Keyboard::Escape)
+            game->changeState(StateType::Play);
+    }
 }
 
 void StateDisplayMap::draw(sf::RenderWindow &window) {

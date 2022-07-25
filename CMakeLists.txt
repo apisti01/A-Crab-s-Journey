@@ -29,7 +29,7 @@ add_library(core AnimatedSprite.cpp AnimatedSprite.h Bullet.cpp Bullet.h Consuma
         FloorMap.cpp FloorMap.h GameCharacter.cpp GameCharacter.h Item.cpp Item.h MeleeWeapon.cpp MeleeWeapon.h
         Obstacle.cpp Obstacle.h Player.cpp Player.h RangedWeapon.cpp RangedWeapon.h Room.cpp Room.h
         StaticRangedEnemy.cpp StaticRangedEnemy.h Weapon.cpp Weapon.h Wearable.cpp Wearable.h Game.cpp Game.h State.cpp State.h
-        Collider.cpp Collider.h StateTitleScreen.cpp StateTitleScreen.h StateMainMenu.cpp StateMainMenu.h StatePlay.cpp StatePlay.h StateDisplayMap.cpp StateDisplayMap.h StatePause.cpp StatePause.h StateShop.cpp StateShop.h)
+        Collider.cpp Collider.h StateTitleScreen.cpp StateTitleScreen.h StateMainMenu.cpp StateMainMenu.h StatePlay.cpp StatePlay.h StateDisplayMap.cpp StateDisplayMap.h StatePause.cpp StatePause.h StateShop.cpp StateShop.h StatePearlShop.cpp StatePearlShop.h)
 target_link_libraries(core PUBLIC sfml-graphics sfml-audio)
 
 # executable file

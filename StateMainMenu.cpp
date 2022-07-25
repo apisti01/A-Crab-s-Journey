@@ -6,7 +6,7 @@
 #include "Game.h"
 
 StateMainMenu::StateMainMenu(Game *game) : State(game) {
-    backgroundTexture.loadFromFile("../Games_States/Start_Menu/Start_Menu.png");
+    backgroundTexture.loadFromFile("../Games States/Start Menu/Start Menu.png");
 }
 
 void StateMainMenu::eventHandling(sf::Event event) {
@@ -29,7 +29,7 @@ void StateMainMenu::eventHandling(sf::Event event) {
             }
                 break;
             case sf::Keyboard::Num3:
-                // game->changeState(StateType::PearlShop);
+                game->changeState(StateType::PearlShop);
                 break;
             case sf::Keyboard::Num4:
                 // TODO: simulate Escape press so that it ends the game
