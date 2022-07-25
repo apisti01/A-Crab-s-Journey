@@ -9,7 +9,7 @@
 
 class Game;
 
-enum class StateType{
+enum class StateType {
     TitleScreen,
     MainMenu,
     PrepareRun,

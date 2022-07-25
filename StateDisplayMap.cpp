@@ -21,6 +21,7 @@ StateDisplayMap::StateDisplayMap(Game *game) : State(game) {
         newRoom.setFillColor(sf::Color::White);
         roomShapes.emplace_back(newRoom);
 
+        /*
         for (int j = 0; j < 4; j++) {
             if (game->map->roomList[i].doors[j] != -1) {
                 sf::RectangleShape newDoor(sf::Vector2f(20 * sin(j * M_PI / 2), 20 * cos(j * M_PI / 2)));
@@ -31,6 +32,7 @@ StateDisplayMap::StateDisplayMap(Game *game) : State(game) {
                 roomShapes.emplace_back(newDoor);
             }
         }
+        */
 
         // room index
         sf::Text text(to_string(i), game->font);
@@ -67,16 +69,24 @@ void StateDisplayMap::draw(sf::RenderWindow &window) {
     window.clear(sf::Color::White);
 
     // draw the map
-    for (int i = 0; i < size(roomShapes); i++)
-        window.draw(roomShapes[i]);
-    for (int i = 0; i < size(roomTextNumbers); i++)
-        window.draw(roomTextNumbers[i]);
+    for (int i = 0; i < size(roomShapes); i++) {
+        if (game->map->roomList[i].getVisited())
+            window.draw(roomShapes[i]);
+    }
+
+    for (int i = 0; i < size(roomTextNumbers); i++) {
+        if (game->map->roomList[i].getVisited())
+            window.draw(roomTextNumbers[i]);
+    }
 
     currentPointer.setPosition((game->map->roomList[game->map->currentRoomIndex].getPosX() + 8) * 100 + 15, (game->map->roomList[game->map->currentRoomIndex].getPosY() + 4.5) * 100 + 15);
 
     // highlight special rooms of the game
-    window.draw(startPointer);
-    window.draw(endPointer);
-    window.draw(shopPointer);
+    if (game->map->roomList[game->map->startRoomIndex].getVisited())
+        window.draw(startPointer);
+    if (game->map->roomList[game->map->endRoomIndex].getVisited())
+        window.draw(endPointer);
+    if (game->map->roomList[game->map->shopRoomIndex].getVisited())
+        window.draw(shopPointer);
     window.draw(currentPointer);
 }
