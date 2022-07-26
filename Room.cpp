@@ -4,6 +4,8 @@
 #include <iostream>
 
 #include "Room.h"
+#include "GameCharacter.h"
+
 
 Room::Room(int posX, int posY, int width, int height, MapType mapType) : posX(posX), posY(posY), width(width),
 height(height), XpReward(XpReward = 0), isCage(isCage = false), isVisited(false), isStartRoom(isStartRoom = false),
@@ -174,11 +176,16 @@ void Room::closeDoors() {
     }
 }
 
-void Room::update() {
+void Room::update(int deltaTime) {
     /* update enemy in the room
     for (int i = 0; i < size(enemyList); i++) {
         // TODO: update the i-th enemy
     }*/
+
+    // move every bullet in the room
+    for (auto bullet = bulletList.begin(); bullet != bulletList.end() ; bullet++) {
+        bullet->move(deltaTime);
+    }
 }
 
 void Room::draw(sf::RenderWindow &window) {
@@ -192,4 +199,8 @@ void Room::draw(sf::RenderWindow &window) {
     // draw the obstacles in the room
     for (int i = 0; i < size(obstacleList); i++)
         obstacleList[i].draw(window);
+
+    // draw every bullet in the room
+    for (auto bullet = bulletList.begin(); bullet != bulletList.end() ; bullet++)
+        bullet->draw(window);
 }

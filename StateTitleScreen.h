@@ -13,9 +13,9 @@ public:
     explicit StateTitleScreen(Game* game);
     ~StateTitleScreen() override = default;
 
-    void eventHandling(sf::Event event) override;
+    void eventHandling(sf::Event event, sf::RenderWindow &window) override;
 
-    void update(int deltaTime) override {}
+    void update(int deltaTime, bool clicked) override {}
 
     void draw(sf::RenderWindow &window) override;
 

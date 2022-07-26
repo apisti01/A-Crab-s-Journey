@@ -20,13 +20,13 @@ public:
     static Game* getInstance();
 
     // function that handle event and changes states
-    void eventHandling(sf::Event event) { currentState->eventHandling(event); }
+    void eventHandling(sf::Event event, sf::RenderWindow &window) { currentState->eventHandling(event, window); }
 
     // changing the current state, creating a new one and deleting the old
     void changeState(StateType type);
 
     // update the game on the different states it is
-    void update(int deltaTime) { currentState->update(deltaTime); }
+    void update(int deltaTime, bool clicked) { currentState->update(deltaTime, clicked); }
 
     // delegate to draw all
     void draw(sf::RenderWindow &window) { currentState->draw(window); }

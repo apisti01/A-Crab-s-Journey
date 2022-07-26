@@ -7,6 +7,7 @@
 
 #include "GameCharacter.h"
 #include "FloorMap.h"
+#include "Weapon.h"
 
 GameCharacter::GameCharacter(std::string name, const sf::Texture &texture, Collider collider, std::unique_ptr<Weapon> weapon,
                              float hp, float maxHp, float speed, float maxSpeed, float armor, float maxArmor, float strength,
@@ -24,11 +25,6 @@ void GameCharacter::draw(sf::RenderWindow &window) {
     sprite.draw(window);
     collider.draw(window);
 
-    // if the weapon is ranged
-    if (weapon) {
-        // draw its bullets
-        weapon->draw(window);
-    }
 }
 
 sf::Vector2f GameCharacter::updateSpriteAndCollider(sf::Vector2f deltaPos, float deltaAngle, FloorMap *floor) {

@@ -68,7 +68,7 @@ StateDisplayMap::StateDisplayMap(Game *game) : State(game), unit(150.0) {
     levelCounter.setFillColor(sf::Color::Black);
 }
 
-void StateDisplayMap::eventHandling(sf::Event event) {
+void StateDisplayMap::eventHandling(sf::Event event, sf::RenderWindow &window) {
     if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::M || event.key.code == sf::Keyboard::Escape)
             game->changeState(StateType::Play);

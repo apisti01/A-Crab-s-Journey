@@ -14,10 +14,12 @@ int main() {
     // load window
     sf::RenderWindow window(sf::VideoMode(), "A Crab's Journey", sf::Style::Fullscreen);
 
+    /*
     // load and set Game's Icon
     sf::Image icon;
     icon.loadFromFile("../Icon.png");
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+     */
 
     // creation of the event
     sf::Event event;
@@ -25,28 +27,32 @@ int main() {
     // create the game
     auto game = Game::getInstance();
 
+    bool clicked = false;
+
     // Game loop
     while (window.isOpen()) {
         int deltaTime = game->clock.restart().asMicroseconds();
+
+        clicked = false;
 
         while (window.pollEvent(event)) {
             // closing the window and ending the game
             switch (event.type) {
                 case sf::Event::Closed:
                     window.close();
-                case sf::Event::KeyPressed:
-                    if (event.key.code == sf::Keyboard::Q)
-                        window.close();
+                case sf::Event::MouseButtonPressed:
+                    if (event.mouseButton.button == sf::Mouse::Left)
+                        clicked = true;
             }
             // handles the event of the current state, like changing state or other actions
-            game->eventHandling(event);
+            game->eventHandling(event, window);
         }
 
         // Clearing the old frame and preparing for drawing the new one
         window.clear(sf::Color::White);
 
         // game update and draw
-        game->update(deltaTime);
+        game->update(deltaTime, clicked);
         game->draw(window);
 
         // Bring to screen and display the new frame just drawn

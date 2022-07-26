@@ -11,7 +11,7 @@ Player::Player(std::string name, CrabSpecie crabSpecie, const sf::Texture& textu
                       maxArmor, strength, maxStrength), crabSpecie(crabSpecie) {
 }
 
-void Player::update(int deltaTime, FloorMap *floor) {
+void Player::update(int deltaTime, FloorMap *floor, bool clicked) {
     // get keyboard and mouse inputs to move and rotate the player
     sf::Vector2f deltaPos = getKeyboardInput(deltaTime, floor);
     float deltaAngle = getMouseInput(deltaTime);
@@ -23,17 +23,11 @@ void Player::update(int deltaTime, FloorMap *floor) {
     // if the player goes through doors, then change room
     changeRoom(floor);
 
-    // TODO angle
-    attack(floor, sprite.getAngle());
+    attack(floor, sprite.getAngle(), clicked);
 
     // update the animation
     sprite.update(fps, animationBehaviour, deltaTime);
 
-    // if the player has a weapon
-    if (weapon) {
-        // move the bullets
-        weapon->update(deltaTime);
-    }
 }
 
 sf::Vector2f Player::getKeyboardInput(int deltaTime, FloorMap *floor) {
@@ -105,11 +99,11 @@ void Player::changeRoom(FloorMap *floor) {
     collider.setPosY(sprite.getPosition().y);
 }
 
-void Player::attack(FloorMap *floor, float bulletAngle) {
+void Player::attack(FloorMap *floor, float bulletAngle, bool clicked) {
     // if player has a weapon and left mouse button is pressed
-    if (weapon && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+    if (weapon && clicked) {
         // if ranged it delegates the creation of bullets, return the damage if melee
-        // weapon->useWeapon(sprite.getPosition(), bulletAngle, floor->roomList[floor->currentRoomIndex].enemyList, strength);
+        weapon->useWeapon(sprite.getPosition(), bulletAngle, strength, floor);
     }
 }
 

@@ -3,32 +3,24 @@
 //
 
 #include "RangedWeapon.h"
+#include "FloorMap.h"
 
-RangedWeapon::RangedWeapon(sf::Sprite bulletBody, float damage, float speed, float range, bool isTracking,
+
+RangedWeapon::RangedWeapon(RangedWeaponType type, float damage, float speed, float range, bool isTracking,
                            bool isShattering, ItemRarity rarity, std::string name, int price)
-                           : Weapon(std::move(name), rarity, price), range(range), sprite(std::move(bulletBody)),
+                           : Weapon(std::move(name), rarity, price), range(range),
                            damage(damage), speed(speed), isTracking(isTracking), isShattering(isShattering) {
+    switch (type) {
+        case RangedWeaponType::Rock:
+            bulletTexture.loadFromFile("../others/bullet_rock.png"); // FIXME to complete
+    }
 }
 
-void RangedWeapon::useWeapon(sf::Vector2f playerPosition, float bulletAngle,
-                             std::list<std::unique_ptr<Enemy>> &enemyList, float strength) {
+void RangedWeapon::useWeapon(sf::Vector2f playerPosition, float facingAngle, float strength, FloorMap *floor) {
+
     // create new bullet with the weapon specifications
-    Bullet tmp(damage, speed, range, sprite, playerPosition, bulletAngle, isTracking, isShattering);
+    Bullet tmp(damage, speed, range, &bulletTexture, playerPosition, facingAngle, isTracking, isShattering);
 
     // insert the new bullet on the list
-    bulletList.push_back(tmp);
-}
-
-void RangedWeapon::draw(sf::RenderWindow &window) {
-    // draw the bullets on their positions
-    for (auto bullet : bulletList) {
-        bullet.draw(window);
-    }
-}
-
-void RangedWeapon::update(int deltaTime) {
-    // move the bullets on their trajectory
-    for (auto bullet : bulletList) {
-        bullet.move(deltaTime);
-    }
+    floor->roomList[floor->currentRoomIndex].bulletList.push_back(tmp);
 }

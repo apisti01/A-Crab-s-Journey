@@ -7,6 +7,8 @@
 
 #include "Weapon.h"
 #include "Enemy.h"
+#include "FloorMap.h"
+
 
 class MeleeWeapon : public Weapon{
 public:
@@ -15,15 +17,10 @@ public:
     ~MeleeWeapon() override = default;
 
     // attack the nearest available enemy
-    void useWeapon(sf::Vector2f playerPosition, float bulletAngle,
-                   std::list<std::unique_ptr<Enemy>> &enemyList, float strength) override;
-
-    // empty because it does not have to draw bullets
-    void update(int deltaTime) override {}
-    void draw(sf::RenderWindow &window) override{}
+    void useWeapon(sf::Vector2f playerPosition, float facingAngle, float strength, FloorMap *floor) override;
 
     // TODO: write definition for the selection of hit enemy
-    bool checkEnemy(const Enemy *enemy);
+    bool checkEnemy(const GameCharacter *character);
 
 private:
     // Damage dealt with the attack

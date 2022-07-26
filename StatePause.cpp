@@ -9,14 +9,13 @@ StatePause::StatePause(Game *game) : State(game) {
     backgroundTexture.loadFromFile("../Games States/Pause Screen/Pause Screen.png");
 }
 
-void StatePause::eventHandling(sf::Event event) {
+void StatePause::eventHandling(sf::Event event, sf::RenderWindow &window) {
     if (event.type == sf::Event::KeyPressed){
         switch (event.key.code) {
-            case sf::Keyboard::Escape:
             case sf::Keyboard::Num1:
                 game->changeState(StateType::Play);
                 break;
-            case sf::Keyboard::Num2:
+            case sf::Keyboard::Escape:
                 game->changeState(StateType::MainMenu);
                 break;
             case sf::Keyboard::Num3:

@@ -11,7 +11,7 @@ StatePearlShop::StatePearlShop(Game *game) : State(game) {
     backgroundSprite = { texture, sf::IntRect(0, 0, 1920, 1080) };
 }
 
-void StatePearlShop::eventHandling(sf::Event event) {
+void StatePearlShop::eventHandling(sf::Event event, sf::RenderWindow &window) {
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
         game->changeState(StateType::MainMenu);
 }

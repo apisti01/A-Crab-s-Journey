@@ -256,19 +256,13 @@ void FloorMap::setupPlayer() {
     sf::Texture brownCrabTexture;
     brownCrabTexture.loadFromFile("../GameCharacter/Player/Brown Crab/Animations/Texture.png");
 
-    // bullet for ranged weapon
-    sf::Texture bulletTexture;
-    bulletTexture.loadFromFile("../others/bullet_rock.png");
-    sf::Sprite bullet { bulletTexture };
-    bullet.setScale(0.02, 0.02);
-
     // Ranged weapon
-    std::unique_ptr<Weapon> rangedWeapon = std::make_unique<RangedWeapon>(bullet);
+    std::unique_ptr<Weapon> rangedWeapon = std::make_unique<RangedWeapon>(RangedWeaponType::Rock);
     // give him a melee weapon
     // std::unique_ptr<Weapon> weapon = std::make_unique<MeleeWeapon>(10, "player", ItemRarity::Common, 50);
 
     // and a collider
-    Collider collider(roomWidth / 2, roomHeight / 2,
+    Collider collider(float (roomWidth) / 2, float (roomHeight) / 2,
                       brownCrabTexture.getSize().x / 6 * 0.4 * 0.6,
                       brownCrabTexture.getSize().y / 3 * 0.4 * 0.8, 0);
 
@@ -299,9 +293,9 @@ bool FloorMap::floorCompleted() {
         return false;
 }
 
-void FloorMap::update(int deltaTime) {
-    roomList[currentRoomIndex].update();
-    player->update(deltaTime, this);
+void FloorMap::update(int deltaTime, bool attack) {
+    roomList[currentRoomIndex].update(deltaTime);
+    player->update(deltaTime, this, attack);
 }
 
 void FloorMap::draw(sf::RenderWindow &window) {

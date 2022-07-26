@@ -4,8 +4,3 @@
 
 #include "Weapon.h"
 
-#include <utility>
-
-Weapon::Weapon(std::string name, ItemRarity rarity, int price) : Item(std::move(name), rarity, price) {
-
-}

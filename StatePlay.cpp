@@ -7,7 +7,7 @@
 
 StatePlay::StatePlay(Game *game) : State(game) {}
 
-void StatePlay::eventHandling(sf::Event event) {
+void StatePlay::eventHandling(sf::Event event, sf::RenderWindow &window) {
     if (event.type == sf::Event::KeyPressed) {
         switch (event.key.code) {
             case sf::Keyboard::M:
@@ -33,8 +33,8 @@ void StatePlay::eventHandling(sf::Event event) {
     }
 }
 
-void StatePlay::update(int deltaTime) {
-    game->map->update(deltaTime);
+void StatePlay::update(int deltaTime, bool clicked) {
+    game->map->update(deltaTime, clicked);
 }
 
 void StatePlay::draw(sf::RenderWindow &window) {
