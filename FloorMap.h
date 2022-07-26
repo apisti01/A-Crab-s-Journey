@@ -38,12 +38,13 @@ public:
     void draw(sf::RenderWindow &window);
 
     bool isPlayerNearShop();
+    bool floorCompleted();
 
+    MapType mapType;
 private:
     // level and number of rooms
     int level;
     int numRooms;
-    MapType mapType;
 
     std::string mapName;
     int roomWidth, roomHeight;

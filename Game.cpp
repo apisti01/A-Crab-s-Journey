@@ -10,6 +10,7 @@
 #include "StateDisplayMap.h"
 #include "StateShop.h"
 #include "StatePause.h"
+#include "StateSettings.h"
 
 #include <iostream>
 
@@ -54,6 +55,9 @@ void Game::changeState(StateType type) {
             break;
         case StateType::Pause:
             tmp = std::make_unique<StatePause>(this);
+            break;
+        case StateType::Settings:
+            tmp = std::make_unique<StateSettings>(this);
             break;
     }
     // the current state became the one just created, deleting the old one

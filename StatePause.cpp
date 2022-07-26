@@ -20,7 +20,7 @@ void StatePause::eventHandling(sf::Event event) {
                 game->changeState(StateType::MainMenu);
                 break;
             case sf::Keyboard::Num3:
-                // game->changeState(StateType::Settings);
+                game->changeState(StateType::Settings);
                 break;
         }
     }

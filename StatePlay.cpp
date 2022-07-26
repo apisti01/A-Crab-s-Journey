@@ -21,9 +21,13 @@ void StatePlay::eventHandling(sf::Event event) {
                 game->changeState(StateType::ManageInventory);
                 break;
             case sf::Keyboard::E:
-                // FIXME player must be near the shop
-                if (game->map->isPlayerNearShop() /* && game->map->roomList[game->map->currentRoomIndex].enemyList.empty() */)
+                // if player is near the shop
+                if (game->map->isPlayerNearShop() && !game->map->roomList[game->map->currentRoomIndex].getCage())
                     game->changeState(StateType::Shop);
+
+                // if player has completed the floor
+                if (game->map->floorCompleted())
+                    game->map = std::make_unique<FloorMap>(game->map->getLevel() + 1, game->map->mapType);
                 break;
         }
     }

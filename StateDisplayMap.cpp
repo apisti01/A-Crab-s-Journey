@@ -60,6 +60,12 @@ StateDisplayMap::StateDisplayMap(Game *game) : State(game), unit(150.0) {
     currentPointer.setSize(sf::Vector2f{ unit / 5, unit / 5 });
     currentPointer.setOrigin(unit / 5, 0);
     currentPointer.setFillColor(sf::Color::Blue);
+
+    levelCounter.setString(to_string(game->map->getLevel()));
+    levelCounter.setFont(game->font);
+    levelCounter.setCharacterSize(unit);
+    levelCounter.setPosition(unit, unit);
+    levelCounter.setFillColor(sf::Color::Black);
 }
 
 void StateDisplayMap::eventHandling(sf::Event event) {
@@ -72,6 +78,8 @@ void StateDisplayMap::eventHandling(sf::Event event) {
 void StateDisplayMap::draw(sf::RenderWindow &window) {
     // reset canvas
     window.clear(sf::Color::White);
+
+    window.draw(levelCounter);
 
     // draw the map
     for (int i = 0; i < size(roomShapes); i++) {

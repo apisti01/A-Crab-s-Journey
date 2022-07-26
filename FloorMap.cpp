@@ -284,7 +284,16 @@ bool FloorMap::isPlayerNearShop() {
     // shop position in the room
     sf::Vector2f shopPos {float(roomWidth), 0};
 
+    // if player is in the shop room and it's near the shop corner
     if (currentRoomIndex == shopRoomIndex && sqrtf(powf(player->getPosX() - shopPos.x, 2) + powf(player->getPosY() - shopPos.y, 2)) < 360)
+        return true;
+    else
+        return false;
+}
+
+bool FloorMap::floorCompleted() {
+    // if player is in the boss room and it's empty
+    if (currentRoomIndex == endRoomIndex && !roomList[currentRoomIndex].getCage())
         return true;
     else
         return false;

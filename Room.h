@@ -43,7 +43,7 @@ public:
     void setCage(bool isCage) { Room::isCage = isCage; }
 
     bool getVisited() const { return isVisited; }
-    bool setVisited(bool isVisited) { Room::isVisited = isVisited; }
+    void setVisited(bool isVisited) { Room::isVisited = isVisited; }
 
     bool getStartRoom() const { return isStartRoom; }
     void setStartRoom(bool isStartRoom) { Room::isStartRoom = isStartRoom;}

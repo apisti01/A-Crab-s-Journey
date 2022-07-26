@@ -25,6 +25,8 @@ private:
     sf::RectangleShape startPointer, endPointer, shopPointer, currentPointer;
 
     float unit;
+
+    sf::Text levelCounter;
 };
 
 
