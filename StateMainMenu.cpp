@@ -9,7 +9,7 @@ StateMainMenu::StateMainMenu(Game *game) : State(game) {
     backgroundTexture.loadFromFile("../Games_States/Start_Menu/Start_Menu.png");
 }
 
-void StateMainMenu::eventHandling(sf::Event event) {
+void StateMainMenu::eventHandling(sf::Event event, sf::RenderWindow &window) {
     if (event.type == sf::Event::KeyPressed) {
         switch (event.key.code) {
             case sf::Keyboard::Num1: {
@@ -29,10 +29,10 @@ void StateMainMenu::eventHandling(sf::Event event) {
             }
                 break;
             case sf::Keyboard::Num3:
-                // game->changeState(StateType::PearlShop);
+                game->changeState(StateType::PearlShop);
                 break;
-            case sf::Keyboard::Num4:
-                // TODO: simulate Escape press so that it ends the game
+            case sf::Keyboard::Escape:
+                window.close();
                 break;
         }
     }

@@ -57,7 +57,7 @@ StateDisplayMap::StateDisplayMap(Game *game) : State(game) {
     currentPointer.setFillColor(sf::Color::Blue);
 }
 
-void StateDisplayMap::eventHandling(sf::Event event) {
+void StateDisplayMap::eventHandling(sf::Event event, sf::RenderWindow &window) {
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::M)
         game->changeState(StateType::Play);
 }

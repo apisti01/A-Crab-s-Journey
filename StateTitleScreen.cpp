@@ -9,7 +9,7 @@ StateTitleScreen::StateTitleScreen(Game* game): State(game) {
     backgroundTexture.loadFromFile("../Games_States/TitleScreen/Title_Screen.png");
 }
 
-void StateTitleScreen::eventHandling(sf::Event event) {
+void StateTitleScreen::eventHandling(sf::Event event, sf::RenderWindow &window) {
     // when clicked any key it changes and go to the Start/Main menu
     if (event.type == sf::Event::KeyReleased || event.type == sf::Event::MouseButtonPressed) {
         game->changeState(StateType::MainMenu);

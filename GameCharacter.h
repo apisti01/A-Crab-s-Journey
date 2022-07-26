@@ -12,8 +12,8 @@
 
 #include "Item.h"
 #include "AnimatedSprite.h"
-#include "Weapon.h"
 #include "Collider.h"
+#include "Weapon.h"
 
 class MeleeWeapon;
 
@@ -71,10 +71,10 @@ public:
     void receiveDamage(float damage);
 
     // update game character
-    virtual void update(int deltaTime, FloorMap *floor) = 0;
+    virtual void update(int deltaTime, FloorMap *floor, bool clicked) = 0;
 
     // if weapon is ranged create bullet, if melee find the first in range enemy and gives it damages
-    virtual void attack(FloorMap *floor, float bulletAngle) = 0;
+    virtual void attack(FloorMap *floor, float bulletAngle, bool clicked) = 0;
 
     void draw(sf::RenderWindow &window);
 

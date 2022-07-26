@@ -9,19 +9,19 @@
 
 class Player;
 
-class Enemy : public GameCharacter{
+class Enemy : public GameCharacter {
 public:
     // Constructor and Destructor
     Enemy(std::string name, std::unique_ptr<Weapon> weapon, float hp, float maxHp, float speed, float maxSpeed,
           float armor, float maxArmor, float strength, float maxStrength, float xpReward, int coinsDropped, int pearlsDropped);
     ~Enemy() override = default;
 
-    void update(int deltaTime, FloorMap *floor) override;
+    void update(int deltaTime, FloorMap *floor, bool clicked) override;
 
     // move towards the player
     virtual void chase(const Player& hero) = 0;
 
-    void attack(FloorMap *floor, float bulletAngle) override;
+    void attack(FloorMap *floor, float bulletAngle, bool clicked) override;
 
     // drop items when killed
     virtual void dropItems() = 0;

@@ -8,10 +8,11 @@
 #include <vector>
 
 #include "Obstacle.h"
-#include "GameCharacter.h"
 #include "Enemy.h"
+#include "Bullet.h"
 
 class Player;
+class GameCharacter;
 
 enum class MapType {
     CoralReef,
@@ -60,7 +61,7 @@ public:
     int getHeight() const { return height; }
     void setHeight(int height) { Room::height = height; }
 
-    void update();
+    void update(int deltaTime);
 
     void draw(sf::RenderWindow &window);
 
@@ -68,6 +69,9 @@ public:
     std::vector<Obstacle> obstacleList;
 
     // std::list<std::unique_ptr<Enemy>> enemyList;
+
+    // list of all bullets in the room
+    std::list<Bullet> bulletList{};
 
     // collider for the walls
     std::vector<Collider> walls;

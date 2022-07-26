@@ -7,12 +7,14 @@
 
 MeleeWeapon::MeleeWeapon(float damage, std::string name, ItemRarity rarity, int price) : Weapon(std::move(name), rarity,price), damage(damage) {}
 
-void MeleeWeapon::useWeapon(sf::Vector2f playerPosition, float bulletAngle, std::list<std::unique_ptr<Enemy>> &enemyList, float strength) {
+void
+MeleeWeapon::useWeapon(sf::Vector2f playerPosition, float bulletAngle, std::list<std::unique_ptr<Enemy>> &enemyList,
+                       float strength, FloorMap *floor) {
     // find the first available enemy
     for (auto & enemy : enemyList) {
         if (checkEnemy(enemy.get())) {
             // the first one found gets damaged
-            enemy->receiveDamage(damage * strength);
+            enemy->receiveDamage(damage * strength); // FIXME
             break;
         }
     }

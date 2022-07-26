@@ -18,5 +18,5 @@ void Bullet::draw(sf::RenderWindow &window) {
 }
 
 void Bullet::move(int deltaTime) {
-    sprite.move( cosf(direction)* speed * float (deltaTime), sinf(direction) * speed * float (deltaTime));
+    sprite.move( cosf(direction)* speed * float (deltaTime)/1000000 * 50, sinf(direction) * speed * float (deltaTime)/1000000 * 50);
 }

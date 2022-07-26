@@ -30,10 +30,10 @@ public:
     virtual ~State() = default;
 
     // to handle the event as changing of the  current state
-    virtual void eventHandling(sf::Event event) = 0;
+    virtual void eventHandling(sf::Event event, sf::RenderWindow &window) = 0;
 
     // updating all the game
-    virtual void update(int deltaTime) = 0;
+    virtual void update(int deltaTime, bool clicked) = 0;
 
     // drawing the next frame on the window
     virtual void draw(sf::RenderWindow &window) = 0;

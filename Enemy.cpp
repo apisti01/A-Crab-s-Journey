@@ -11,10 +11,10 @@ Enemy::Enemy(std::string name, std::unique_ptr<Weapon> weapon, float hp, float m
                 hp, maxHp, speed, maxSpeed, armor, maxArmor, strength, maxStrength), XpReward(xpReward),
                 coinsDropped(coinsDropped), pearlsDropped(pearlsDropped) {}
 
-void Enemy::update(int deltaTime, FloorMap *floor) {
+void Enemy::update(int deltaTime, FloorMap *floor, bool clicked) {
     // TODO: implement update function
 }
 
-void Enemy::attack(FloorMap *floor, float bulletAngle) {
+void Enemy::attack(FloorMap *floor, float bulletAngle, bool clicked) {
     // TODO: implement attack function
 }

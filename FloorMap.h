@@ -33,7 +33,7 @@ public:
 
     std::unique_ptr<Player> player;
 
-    void update(int deltaTime);
+    void update(int deltaTime, bool attack);
 
     void draw(sf::RenderWindow &window);
 
