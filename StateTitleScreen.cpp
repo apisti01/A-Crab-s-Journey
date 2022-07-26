@@ -6,7 +6,7 @@
 #include "Game.h"
 
 StateTitleScreen::StateTitleScreen(Game* game): State(game) {
-    backgroundTexture.loadFromFile("../Games States/Title Screen/Title Screen.png");
+    backgroundTexture.loadFromFile("Games States/Title Screen/Title Screen.png");
 }
 
 void StateTitleScreen::eventHandling(sf::Event event, sf::RenderWindow &window) {

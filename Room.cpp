@@ -16,22 +16,22 @@ isBossRoom(isBossRoom = false), isShopRoom(isShopRoom = false), wallDepth(wallDe
     // load coral reef texture as room background
     switch (mapType) {
         case MapType::CoralReef:
-            backgroundTexture.loadFromFile("../Map/Coral Reef/Coral Reef.png");
+            backgroundTexture.loadFromFile("Map/Coral Reef/Coral Reef.png");
             break;
         case MapType::MangroveForest:
-            backgroundTexture.loadFromFile("../Map/Mangrove Forest/Mangrove Forest.png");
+            backgroundTexture.loadFromFile("Map/Mangrove Forest/Mangrove Forest.png");
             break;
         case MapType::TemperateReef:
-            backgroundTexture.loadFromFile("../Map/Temperate Reef/Temperate Reef.png");
+            backgroundTexture.loadFromFile("Map/Temperate Reef/Temperate Reef.png");
             break;
         case MapType::KelpForest:
-            backgroundTexture.loadFromFile("../Map/Kelp Forest/Kelp Forest.png");
+            backgroundTexture.loadFromFile("Map/Kelp Forest/Kelp Forest.png");
             break;
         case MapType::PosidoniaMeadow:
-            backgroundTexture.loadFromFile("../Map/Posidonia Meadow/Posidonia Meadow.png");
+            backgroundTexture.loadFromFile("Map/Posidonia Meadow/Posidonia Meadow.png");
             break;
         case MapType::IceFloe:
-            backgroundTexture.loadFromFile("../Map/Ice Floe/Ice Floe.png");
+            backgroundTexture.loadFromFile("Map/Ice Floe/Ice Floe.png");
             break;
     }
 
@@ -79,7 +79,7 @@ void Room::generateObstacles() {
 
         // prepare collider and texture
         Collider collider(pos.x, pos.y, 120, 120);
-        obstacleTexture.loadFromFile("../Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
+        obstacleTexture.loadFromFile("Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
 
         // add the obstacle just created to the list
         obstacleList.push_back(*new Obstacle(obstacleTexture, collider, pos.x, pos.y, 120, 120));
@@ -155,22 +155,22 @@ void Room::closeDoors() {
     std::string obstacleTypes[] = {"algae 1", "algae 2", "bottle 1", "bottle 2", "flipflop", "rock 1", "rock 2"} ;
 
     if (doors[0] == -1) {
-        obstacleTexture.loadFromFile("../Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
+        obstacleTexture.loadFromFile("Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
         Collider collider(120 * 8, 60, 120, 120);
         obstacleList.push_back(*new Obstacle(obstacleTexture, collider, 120 * 8, 60, 120, 120));
     }
     if (doors[1] == -1) {
-        obstacleTexture.loadFromFile("../Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
+        obstacleTexture.loadFromFile("Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
         Collider collider(width - 60, 120 * 4.5, 120, 120);
         obstacleList.push_back(*new Obstacle(obstacleTexture, collider, width - 60, 120 * 4.5, 120, 120));
     }
     if (doors[2] == -1) {
-        obstacleTexture.loadFromFile("../Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
+        obstacleTexture.loadFromFile("Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
         Collider collider(120 * 8, height - 60, 120, 120);
         obstacleList.push_back(*new Obstacle(obstacleTexture, collider, 120 * 8, height - 60, 120, 120));
     }
     if (doors[3] == -1) {
-        obstacleTexture.loadFromFile("../Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
+        obstacleTexture.loadFromFile("Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
         Collider collider(60, 120 * 4.5, 120, 120);
         obstacleList.push_back(*new Obstacle(obstacleTexture, collider, 60, 120 * 4.5, 120, 120));
     }

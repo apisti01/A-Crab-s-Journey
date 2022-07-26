@@ -4,14 +4,8 @@
 
 #include "StaticRangedEnemy.h"
 
-void StaticRangedEnemy::chase(const Player &hero) {
+void StaticRangedEnemy::chase(const Player &hero) {}
 
-}
+void StaticRangedEnemy::dropItems() {}
 
-void StaticRangedEnemy::dropItems() {
-
-}
-
-StaticRangedEnemy::StaticRangedEnemy() : Enemy(" ", nullptr, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10) {
-
-}
+StaticRangedEnemy::StaticRangedEnemy() : Enemy(" ", nullptr, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10) {}

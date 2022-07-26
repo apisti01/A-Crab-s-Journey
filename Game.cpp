@@ -8,6 +8,7 @@
 #include "StatePearlShop.h"
 #include "StatePlay.h"
 #include "StateDisplayMap.h"
+#include "StateManageInventory.h"
 #include "StateShop.h"
 #include "StatePause.h"
 #include "StateSettings.h"
@@ -25,7 +26,7 @@ Game *Game::getInstance() {
 Game::Game() : currentState(make_unique<StateTitleScreen>(this)) {
     // load font
     sf::Font Rancho;
-    if (!Rancho.loadFromFile("../Font/Arial/Arial.ttf")) {
+    if (!Rancho.loadFromFile("Font/Arial/Arial.ttf")) {
         cout << "font non caricato" << endl;
         system("pause");
     }
@@ -49,6 +50,9 @@ void Game::changeState(StateType type) {
             break;
         case StateType::DisplayMap:
             tmp = std::make_unique<StateDisplayMap>(this);
+            break;
+        case StateType::ManageInventory:
+            tmp = std::make_unique<StateManageInventory>(this);
             break;
         case StateType::Shop:
             tmp = std::make_unique<StateShop>(this);

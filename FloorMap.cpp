@@ -254,7 +254,7 @@ void FloorMap::setShopRoom() {
 void FloorMap::setupPlayer() {
     // load brown crab's texture for movement animation
     sf::Texture brownCrabTexture;
-    brownCrabTexture.loadFromFile("../GameCharacter/Player/Brown Crab/Animations/Texture.png");
+    brownCrabTexture.loadFromFile("GameCharacter/Player/Brown Crab/Animations/Texture.png");
 
     // Ranged weapon
     std::unique_ptr<Weapon> rangedWeapon = std::make_unique<RangedWeapon>(RangedWeaponType::Rock);

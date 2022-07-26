@@ -6,7 +6,7 @@
 #include "Game.h"
 
 StateMainMenu::StateMainMenu(Game *game) : State(game) {
-    backgroundTexture.loadFromFile("../Games States/Start Menu/Start Menu.png");
+    backgroundTexture.loadFromFile("Games States/Start Menu/Start Menu.png");
 }
 
 void StateMainMenu::eventHandling(sf::Event event, sf::RenderWindow &window) {

@@ -7,7 +7,7 @@
 
 
 StatePearlShop::StatePearlShop(Game *game) : State(game) {
-    texture.loadFromFile("../Games States/Pearl Shop/Pearl Shop.png");
+    texture.loadFromFile("Games States/Pearl Shop/Pearl Shop.png");
     backgroundSprite = { texture, sf::IntRect(0, 0, 1920, 1080) };
 }
 

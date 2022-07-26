@@ -6,7 +6,7 @@
 #include "Game.h"
 
 StatePause::StatePause(Game *game) : State(game) {
-    backgroundTexture.loadFromFile("../Games States/Pause Screen/Pause Screen.png");
+    backgroundTexture.loadFromFile("Games States/Pause Screen/Pause Screen.png");
 }
 
 void StatePause::eventHandling(sf::Event event, sf::RenderWindow &window) {

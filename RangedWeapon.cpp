@@ -12,7 +12,7 @@ RangedWeapon::RangedWeapon(RangedWeaponType type, float damage, float speed, flo
                            damage(damage), speed(speed), isTracking(isTracking), isShattering(isShattering) {
     switch (type) {
         case RangedWeaponType::Rock:
-            bulletTexture.loadFromFile("../others/bullet_rock.png"); // FIXME to complete
+            bulletTexture.loadFromFile("others/bullet_rock.png"); // FIXME to complete
     }
 }
 

@@ -7,11 +7,11 @@
 
 
 StateSettings::StateSettings(Game *game) : State(game) {
-    texture.loadFromFile("../Games States/Settings/Settings.png");
+    texture.loadFromFile("Games States/Settings/Settings.png");
     backgroundSprite = { texture, sf::IntRect(0, 0, 1920, 1080) };
 }
 
-void StateSettings::eventHandling(sf::Event event) {
+void StateSettings::eventHandling(sf::Event event, sf::RenderWindow &window) {
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
         game->changeState(StateType::Play);
 }
