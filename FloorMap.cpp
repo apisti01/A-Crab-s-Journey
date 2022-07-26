@@ -256,12 +256,8 @@ void FloorMap::setupPlayer() {
     sf::Texture brownCrabTexture;
     brownCrabTexture.loadFromFile("../GameCharacter/Player/Brown Crab/Animations/Texture.png");
 
-    // bullet for ranged weapon
-    sf::Texture bulletTexture;
-    bulletTexture.loadFromFile("../others/bullet_rock.png");
-
     // Ranged weapon
-    std::unique_ptr<Weapon> rangedWeapon = std::make_unique<RangedWeapon>(bulletTexture);
+    std::unique_ptr<Weapon> rangedWeapon = std::make_unique<RangedWeapon>(RangedWeaponType::Rock);
     // give him a melee weapon
     // std::unique_ptr<Weapon> weapon = std::make_unique<MeleeWeapon>(10, "player", ItemRarity::Common, 50);
 

@@ -10,18 +10,22 @@
 #include "Weapon.h"
 #include "Bullet.h"
 
+enum class RangedWeaponType{
+    Rock,
+    Straw
+};
+
 class RangedWeapon : public Weapon{
 public:
     // Constructor and Destructor
-    explicit RangedWeapon(const sf::Texture& bulletBody, float damage = 5, float speed = 5, float range = 10,
+    explicit RangedWeapon(RangedWeaponType type, float damage = 5, float speed = 5, float range = 10,
                           bool isTracking = false,
                           bool isShattering = false, ItemRarity rarity = ItemRarity::Common, std::string name = " ",
                           int price = 50);
     ~RangedWeapon() override = default;
 
     // Create bullet and puts it on the list
-    void useWeapon(sf::Vector2f playerPosition, float bulletAngle, std::list<std::unique_ptr<Enemy>> &enemyList,
-                   float strength, FloorMap *floor) override;
+    void useWeapon(sf::Vector2f playerPosition, float facingAngle, float strength, FloorMap *floor) override;
 
 private:
 

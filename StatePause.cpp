@@ -12,7 +12,6 @@ StatePause::StatePause(Game *game) : State(game) {
 void StatePause::eventHandling(sf::Event event, sf::RenderWindow &window) {
     if (event.type == sf::Event::KeyPressed){
         switch (event.key.code) {
-            case sf::Keyboard::Escape:
             case sf::Keyboard::Num1:
                 game->changeState(StateType::Play);
                 break;

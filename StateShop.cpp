@@ -11,7 +11,7 @@ StateShop::StateShop(Game *game) : State(game) {
     backgroundSprite = { texture, sf::IntRect(0, 0, 1920, 1080) };
 }
 
-void StateShop::eventHandling(sf::Event event) {
+void StateShop::eventHandling(sf::Event event, sf::RenderWindow &window) {
     if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::Escape || event.key.code == sf::Keyboard::E)
            game->changeState(StateType::Play);

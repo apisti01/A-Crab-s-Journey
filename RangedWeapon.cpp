@@ -6,20 +6,20 @@
 #include "FloorMap.h"
 
 
-RangedWeapon::RangedWeapon(const sf::Texture& bulletBody, float damage, float speed, float range, bool isTracking,
+RangedWeapon::RangedWeapon(RangedWeaponType type, float damage, float speed, float range, bool isTracking,
                            bool isShattering, ItemRarity rarity, std::string name, int price)
-                           : Weapon(std::move(name), rarity, price), range(range), bulletTexture(bulletBody),
+                           : Weapon(std::move(name), rarity, price), range(range),
                            damage(damage), speed(speed), isTracking(isTracking), isShattering(isShattering) {
-    sprite.setScale(0.02, 0.02);
-
+    switch (type) {
+        case RangedWeaponType::Rock:
+            bulletTexture.loadFromFile("../others/bullet_rock.png"); // FIXME to complete
+    }
 }
 
-void
-RangedWeapon::useWeapon(sf::Vector2f playerPosition, float bulletAngle, std::list<std::unique_ptr<Enemy>> &enemyList,
-                        float strength, FloorMap *floor) {
+void RangedWeapon::useWeapon(sf::Vector2f playerPosition, float facingAngle, float strength, FloorMap *floor) {
 
     // create new bullet with the weapon specifications
-    Bullet tmp(damage, speed, range, sprite, playerPosition, bulletAngle, isTracking, isShattering);
+    Bullet tmp(damage, speed, range, &bulletTexture, playerPosition, facingAngle, isTracking, isShattering);
 
     // insert the new bullet on the list
     floor->roomList[floor->currentRoomIndex].bulletList.push_back(tmp);

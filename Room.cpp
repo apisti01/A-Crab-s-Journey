@@ -199,10 +199,8 @@ void Room::draw(sf::RenderWindow &window) {
     // draw the obstacles in the room
     for (int i = 0; i < size(obstacleList); i++)
         obstacleList[i].draw(window);
-    }
 
     // draw every bullet in the room
-    for (auto bullet = bulletList.begin(); bullet != bulletList.end() ; bullet++) {
+    for (auto bullet = bulletList.begin(); bullet != bulletList.end() ; bullet++)
         bullet->draw(window);
-    }
 }

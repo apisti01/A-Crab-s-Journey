@@ -17,11 +17,10 @@ public:
     ~MeleeWeapon() override = default;
 
     // attack the nearest available enemy
-    void useWeapon(sf::Vector2f playerPosition, float bulletAngle, std::list<std::unique_ptr<Enemy>> &enemyList,
-                   float strength, FloorMap *floor) override;
+    void useWeapon(sf::Vector2f playerPosition, float facingAngle, float strength, FloorMap *floor) override;
 
     // TODO: write definition for the selection of hit enemy
-    bool checkEnemy(const Enemy *enemy);
+    bool checkEnemy(const GameCharacter *character);
 
 private:
     // Damage dealt with the attack
