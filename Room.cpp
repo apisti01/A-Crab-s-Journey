@@ -8,7 +8,7 @@
 
 
 Room::Room(int posX, int posY, int width, int height, MapType mapType) : posX(posX), posY(posY), width(width),
-height(height), XpReward(XpReward = 0), isCage(isCage = false), isStartRoom(isStartRoom = false),
+height(height), XpReward(XpReward = 0), isCage(isCage = false), isVisited(false), isStartRoom(isStartRoom = false),
 isBossRoom(isBossRoom = false), isShopRoom(isShopRoom = false), wallDepth(wallDepth = 0) {
     // doors are all initially closed
     doors = {-1, -1, -1, -1};
@@ -41,56 +41,6 @@ isBossRoom(isBossRoom = false), isShopRoom(isShopRoom = false), wallDepth(wallDe
     }
 };
 
-void Room::setupGrid() {
-    // all cells start with false
-    for (int i = 0; i < size(roomGrid); i++) {
-        for (int j = 0; j < size(roomGrid[i]); j++) {
-            roomGrid[i][j] = false;
-        }
-    }
-
-    // obstacles can't be in front of open doors:
-    // upper door
-    if (!doors[0]) {
-        for (int i = 5; i <= 8; i++) {
-            for (int j = 0; j <= 1; j++) {
-                roomGrid[i][j] = true;
-            }
-        }
-    }
-    // right door
-    if (!doors[1]) {
-        for (int i = 12; i <= 13; i++) {
-            for (int j = 2; j <= 4; j++)
-                roomGrid[i][j] = true;
-        }
-    }
-    // bottom door
-    if (!doors[2]) {
-        for (int i = 5; i <= 8; i++) {
-            for (int j = 6; j <= 7; j++) {
-                roomGrid[i][j] = true;
-            }
-        }
-    }
-    // left door
-    if (!doors[3]) {
-        for (int i = 0; i <= 1; i++) {
-            for (int j = 2; j <= 4; j++)
-                roomGrid[i][j] = true;
-        }
-    }
-
-    // if the room is the start one
-    if (isStartRoom) {
-        // obstacles can't be in the center
-        for (int i = 6; i <= 7; i++) {
-            for (int j = 2; j <= 4; j++)
-                roomGrid[i][j] = true;
-        }
-    }
-}
-
 void Room::generateWalls() {
     // walls
     for (int i = 0; i < 16; i++) {
@@ -120,7 +70,6 @@ void Room::generateObstacles() {
 
     sf::Texture obstacleTexture;
 
-    // TODO: implementare l'utilizzo di una lista di oggetti per la generazione randomica
     std::string obstacleTypes[] = {"algae 1", "algae 2", "bottle 1", "bottle 2", "flipflop", "rock 1", "rock 2"} ;
 
     // for every obstacle
@@ -134,6 +83,56 @@ void Room::generateObstacles() {
 
         // add the obstacle just created to the list
         obstacleList.push_back(*new Obstacle(obstacleTexture, collider, pos.x, pos.y, 120, 120));
+    }
+}
+
+void Room::setupGrid() {
+    // all cells start with false
+    for (int i = 0; i < 14; i++) {
+        for (int j = 0; j < 7; j++) {
+            roomGrid[i][j] = false;
+        }
+    }
+
+    // obstacles can't be in front of open doors:
+    // upper door
+    if (doors[0] != -1) {
+        for (int i = 5; i <= 8; i++) {
+            for (int j = 0; j <= 1; j++) {
+                roomGrid[i][j] = true;
+            }
+        }
+    }
+    // right door
+    if (doors[1] != -1) {
+        for (int i = 12; i <= 13; i++) {
+            for (int j = 2; j <= 4; j++)
+                roomGrid[i][j] = true;
+        }
+    }
+    // bottom door
+    if (doors[2] != -1) {
+        for (int i = 5; i <= 8; i++) {
+            for (int j = 5; j <= 6; j++) {
+                roomGrid[i][j] = true;
+            }
+        }
+    }
+    // left door
+    if (doors[3] != -1) {
+        for (int i = 0; i <= 1; i++) {
+            for (int j = 2; j <= 4; j++)
+                roomGrid[i][j] = true;
+        }
+    }
+
+    // if the room is the start one
+    if (isStartRoom) {
+        // obstacles can't be in the center
+        for (int i = 6; i <= 7; i++) {
+            for (int j = 2; j <= 4; j++)
+                roomGrid[i][j] = true;
+        }
     }
 }
 
@@ -177,22 +176,6 @@ void Room::closeDoors() {
     }
 }
 
-/*
-void Room::enterCageMode(Player &player) {
-    // if player enter the room and there are enemies
-    if (player.getPosX() > wallDepth && player.getPosX() < roomWidth - wallDepth && player.getPosY() > wallDepth && player.getPosY() < roomHeight - wallDepth && size(enemyList) != 0) {
-        isCage = true;
-    }
-}
-
-void Room::exitCageMode() {
-    // when the player kills an enemy, if it's the last in the room
-    if (size(enemyList) != 0) {
-        isCage = false;
-    }
-}
-*/
-
 void Room::update(int deltaTime) {
     /* update enemy in the room
     for (int i = 0; i < size(enemyList); i++) {
@@ -210,12 +193,11 @@ void Room::draw(sf::RenderWindow &window) {
     window.draw(background);
 
     // draw walls
-    for (int i = 0; i < size(walls); i++) {
+    for (int i = 0; i < size(walls); i++)
         walls[i].draw(window);
-    }
 
     // draw the obstacles in the room
-    for (int i = 0; i < size(obstacleList); i++) {
+    for (int i = 0; i < size(obstacleList); i++)
         obstacleList[i].draw(window);
     }
 

@@ -43,6 +43,9 @@ public:
     bool getCage() const { return isCage; }
     void setCage(bool isCage) { Room::isCage = isCage; }
 
+    bool getVisited() const { return isVisited; }
+    bool setVisited(bool isVisited) { Room::isVisited = isVisited; }
+
     bool getStartRoom() const { return isStartRoom; }
     void setStartRoom(bool isStartRoom) { Room::isStartRoom = isStartRoom;}
 
@@ -100,6 +103,7 @@ private:
 
     // room state
     bool isCage;
+    bool isVisited;
 
     // special rooms
     bool isStartRoom;
@@ -108,10 +112,6 @@ private:
 
     // xp rewarded when completed
     int XpReward;
-
-    // change room status
-    // void enterCageMode(Player &player);
-    // void exitCageMode();
 };
 
 #endif //ACRABSJOURNEY_ROOM_H

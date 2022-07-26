@@ -5,9 +5,11 @@
 #include "Game.h"
 #include "StateTitleScreen.h"
 #include "StateMainMenu.h"
+#include "StatePearlShop.h"
 #include "StatePlay.h"
 #include "StateDisplayMap.h"
 #include "StatePause.h"
+#include "StateShop.h"
 
 #include <iostream>
 
@@ -38,11 +40,17 @@ void Game::changeState(StateType type) {
         case StateType::MainMenu:
             tmp = std::make_unique<StateMainMenu>(this);
             break;
+        case StateType::PearlShop:
+            tmp = std::make_unique<StatePearlShop>(this);
+            break;
         case StateType::Play:
             tmp = std::make_unique<StatePlay>(this);
             break;
         case StateType::DisplayMap:
             tmp = std::make_unique<StateDisplayMap>(this);
+            break;
+        case StateType::Shop:
+            tmp = std::make_unique<StateShop>(this);
             break;
         case StateType::Pause:
             tmp = std::make_unique<StatePause>(this);

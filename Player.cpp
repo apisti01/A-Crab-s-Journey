@@ -92,6 +92,9 @@ void Player::changeRoom(FloorMap *floor) {
         floor->currentRoomIndex = floor->roomList[floor->currentRoomIndex].doors[0];
         sprite.setPosition({ sprite.getPosition().x, static_cast<float>(floor->roomList[floor->currentRoomIndex].getHeight() - 5) });
     }
+
+    floor->roomList[floor->currentRoomIndex].setVisited(true);
+
     collider.setPosX(sprite.getPosition().x);
     collider.setPosY(sprite.getPosition().y);
 }
@@ -102,6 +105,26 @@ void Player::attack(FloorMap *floor, float bulletAngle, bool clicked) {
         // if ranged it delegates the creation of bullets, return the damage if melee
         // weapon->useWeapon(sprite.getPosition(), bulletAngle, floor->roomList[floor->currentRoomIndex].enemyList, strength, floor);
     }
+}
+
+void Player::enterCageMode(FloorMap *floor) {
+    // if player enter the room and there are enemies
+    if (
+            sprite.getPosition().x > 120 &&
+            sprite.getPosition().x < 1920 - 120 &&
+            sprite.getPosition().y > 120 &&
+            sprite.getPosition().y < 1920 - 20 /* && size(enemyList) != 0 */
+        ) {
+        floor->roomList[floor->currentRoomIndex].setCage(true);
+    }
+}
+
+void Player::exitCageMode(FloorMap *floor) {
+    /* when the player kills an enemy, if it's the last in the room
+    if (size(floor->roomList[floor->currentRoomIndex].enemyList) != 0) {
+        floor->roomList[floor->currentRoomIndex].setCage(false);
+    }
+    */
 }
 
 std::unique_ptr<Wearable> Player::wearItem(std::unique_ptr<Wearable> item) {

@@ -60,6 +60,10 @@ private:
 
     // change room if a door is walked
     void changeRoom(FloorMap *floor);
+
+    // change room status
+    void enterCageMode(FloorMap *floor);
+    void exitCageMode(FloorMap *floor);
 };
 
 

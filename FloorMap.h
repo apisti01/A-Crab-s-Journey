@@ -37,6 +37,8 @@ public:
 
     void draw(sf::RenderWindow &window);
 
+    bool isPlayerNearShop();
+
 private:
     // level and number of rooms
     int level;
