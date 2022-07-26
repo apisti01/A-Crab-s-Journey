@@ -113,7 +113,7 @@ void Player::enterCageMode(FloorMap *floor) {
             sprite.getPosition().x > 120 &&
             sprite.getPosition().x < 1920 - 120 &&
             sprite.getPosition().y > 120 &&
-            sprite.getPosition().y < 1920 - 20 /* && size(enemyList) != 0 */
+            sprite.getPosition().y < 1920 - 20 /* && size(floor->roomList[floor->currentRoomIndex].enemyList) != 0 */
         ) {
         floor->roomList[floor->currentRoomIndex].setCage(true);
     }
@@ -123,6 +123,8 @@ void Player::exitCageMode(FloorMap *floor) {
     /* when the player kills an enemy, if it's the last in the room
     if (size(floor->roomList[floor->currentRoomIndex].enemyList) != 0) {
         floor->roomList[floor->currentRoomIndex].setCage(false);
+
+        // TODO: receive coins and pearls from completing the room
     }
     */
 }
