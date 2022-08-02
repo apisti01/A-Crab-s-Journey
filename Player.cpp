@@ -102,8 +102,8 @@ void Player::changeRoom(FloorMap *floor) {
 void Player::attack(FloorMap *floor, float bulletAngle, bool clicked) {
     // if player has a weapon and left mouse button is pressed
     if (weapon && clicked) {
-        // if ranged it delegates the creation of bullets, return the damage if melee
-        weapon->useWeapon(sprite.getPosition(), bulletAngle, strength, floor);
+        // if ranged it delegates the creation of bullets, if melee deal the damage to all the character in the hit zone
+        weapon->useWeapon(sprite.getPosition(), bulletAngle, strength, floor, this->collider);
     }
 }
 

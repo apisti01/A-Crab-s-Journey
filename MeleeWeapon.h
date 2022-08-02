@@ -13,18 +13,20 @@
 class MeleeWeapon : public Weapon{
 public:
     // Constructor and Destructor
-    explicit MeleeWeapon(float damage, std::string name = " ", ItemRarity rarity = ItemRarity::Common, int price = 50);
+    explicit MeleeWeapon(float damage, float range, std::string name = " ", ItemRarity rarity = ItemRarity::Common, int price = 50);
     ~MeleeWeapon() override = default;
 
-    // attack the nearest available enemy
-    void useWeapon(sf::Vector2f playerPosition, float facingAngle, float strength, FloorMap *floor) override;
+    //  attack all the character that are in the hit area
+    void useWeapon(sf::Vector2f playerPosition, float facingAngle, float strength, FloorMap *floor,
+                   Collider &attackerCollider) override;
 
-    // TODO: write definition for the selection of hit enemy
-    bool checkEnemy(const GameCharacter *character);
+    // check if a particular character is in range
+    bool checkEnemy(const GameCharacter *character, sf::Vector2f position, float angle, const Collider &attackerCollider);
 
 private:
     // Damage dealt with the attack
     float damage;
+    float range;
 };
 
 

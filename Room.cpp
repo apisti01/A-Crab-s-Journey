@@ -185,7 +185,7 @@ void Room::update(int deltaTime) {
     // move every bullet in the room
     for (auto bullet = bulletList.begin(); bullet != bulletList.end() ; bullet++) {
         bullet->move(deltaTime);
-    }
+    } // TODO check collisions of the bullets, deal damage and destroy them
 }
 
 void Room::draw(sf::RenderWindow &window) {

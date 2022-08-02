@@ -16,7 +16,8 @@ RangedWeapon::RangedWeapon(RangedWeaponType type, float damage, float speed, flo
     }
 }
 
-void RangedWeapon::useWeapon(sf::Vector2f playerPosition, float facingAngle, float strength, FloorMap *floor) {
+void RangedWeapon::useWeapon(sf::Vector2f playerPosition, float facingAngle, float strength, FloorMap *floor,
+                             Collider &attackerCollider) {
 
     // create new bullet with the weapon specifications
     Bullet tmp(damage, speed, range, &bulletTexture, playerPosition, facingAngle, isTracking, isShattering);
