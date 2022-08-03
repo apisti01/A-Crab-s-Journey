@@ -75,7 +75,7 @@ public:
     virtual void update(int deltaTime, FloorMap *floor, bool clicked) = 0;
 
     // if weapon is ranged create bullet, if melee find the first in range enemy and gives it damages
-    virtual void attack(FloorMap *floor, float bulletAngle, bool clicked) = 0;
+    virtual void attack(FloorMap *floor, bool clicked) = 0;
 
     void draw(sf::RenderWindow &window);
 

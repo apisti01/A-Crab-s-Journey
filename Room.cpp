@@ -8,8 +8,7 @@
 
 
 Room::Room(int posX, int posY, int width, int height, MapType mapType) : posX(posX), posY(posY), width(width),
-height(height), XpReward(XpReward = 0), isCage(isCage = false), isVisited(false), isStartRoom(isStartRoom = false),
-isBossRoom(isBossRoom = false), isShopRoom(isShopRoom = false), wallDepth(wallDepth = 0) {
+height(height) {
     // doors are all initially closed
     doors = {-1, -1, -1, -1};
 
@@ -157,22 +156,22 @@ void Room::closeDoors() {
     if (doors[0] == -1) {
         obstacleTexture.loadFromFile("Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
         Collider collider(120 * 8, 60, 120, 120);
-        obstacleList.push_back(*new Obstacle(obstacleTexture, collider, 120 * 8, 60, 120, 120));
+        obstacleList.emplace_back(obstacleTexture, collider, 120 * 8, 60, 120, 120);
     }
     if (doors[1] == -1) {
         obstacleTexture.loadFromFile("Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
         Collider collider(width - 60, 120 * 4.5, 120, 120);
-        obstacleList.push_back(*new Obstacle(obstacleTexture, collider, width - 60, 120 * 4.5, 120, 120));
+        obstacleList.emplace_back(obstacleTexture, collider, width - 60, 120 * 4.5, 120, 120);
     }
     if (doors[2] == -1) {
         obstacleTexture.loadFromFile("Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
         Collider collider(120 * 8, height - 60, 120, 120);
-        obstacleList.push_back(*new Obstacle(obstacleTexture, collider, 120 * 8, height - 60, 120, 120));
+        obstacleList.emplace_back(obstacleTexture, collider, 120 * 8, height - 60, 120, 120);
     }
     if (doors[3] == -1) {
         obstacleTexture.loadFromFile("Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
         Collider collider(60, 120 * 4.5, 120, 120);
-        obstacleList.push_back(*new Obstacle(obstacleTexture, collider, 60, 120 * 4.5, 120, 120));
+        obstacleList.emplace_back(obstacleTexture, collider, 60, 120 * 4.5, 120, 120);
     }
 }
 

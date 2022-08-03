@@ -99,23 +99,23 @@ private:
 
     // room measures
     int width{}, height{};
-    int wallDepth{};
+    int wallDepth {0};
     bool roomGrid[14][7]{};
 
     void setupGrid();
     sf::Vector2i pickFreeGridSpot();
 
     // room state
-    bool isCage{};
-    bool isVisited{};
+    bool isCage {false};
+    bool isVisited {false};
 
     // special rooms
-    bool isStartRoom{};
-    bool isBossRoom{};
-    bool isShopRoom{};
+    bool isStartRoom {false};
+    bool isBossRoom {false};
+    bool isShopRoom {false};
 
     // xp rewarded when completed
-    int XpReward{};
+    int XpReward {0};
 };
 
 #endif //ACRABSJOURNEY_ROOM_H

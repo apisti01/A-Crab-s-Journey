@@ -32,7 +32,7 @@ public:
 
     void update(int deltaTime, FloorMap *floor, bool clicked) override;
 
-    void attack(FloorMap *floor, float bulletAngle, bool clicked) override;
+    void attack(FloorMap *floor, bool clicked) override;
 
     // take a Wearable and puts it on, return the item wore before
     std::unique_ptr<Wearable> wearItem(std::unique_ptr<Wearable> item);

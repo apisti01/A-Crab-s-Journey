@@ -32,7 +32,7 @@ add_library(core AnimatedSprite.cpp AnimatedSprite.h Bullet.cpp Bullet.h Consuma
         State.h Collider.cpp Collider.h StateTitleScreen.cpp StateTitleScreen.h StateMainMenu.cpp StateMainMenu.h
         StatePlay.cpp StatePlay.h StateDisplayMap.cpp StateDisplayMap.h StatePause.cpp StatePause.h StateShop.cpp
         StateShop.h StatePearlShop.cpp StatePearlShop.h StateSettings.cpp StateSettings.h StateManageInventory.cpp
-        StateManageInventory.h)
+        StateManageInventory.h AggressiveMeleeEnemy.cpp AggressiveMeleeEnemy.h)
 target_link_libraries(core PUBLIC sfml-graphics sfml-audio)
 
 # executable file

@@ -23,7 +23,7 @@ void Player::update(int deltaTime, FloorMap *floor, bool clicked) {
     // if the player goes through doors, then change room
     changeRoom(floor);
 
-    attack(floor, sprite.getAngle(), clicked);
+    attack(floor, clicked);
 
     // update the animation
     sprite.update(fps, animationBehaviour, deltaTime);
@@ -99,7 +99,7 @@ void Player::changeRoom(FloorMap *floor) {
     collider.setPosY(sprite.getPosition().y);
 }
 
-void Player::attack(FloorMap *floor, float bulletAngle, bool clicked) {
+void Player::attack(FloorMap *floor, bool clicked) {
     // if player has a weapon and left mouse button is pressed
     if (weapon && clicked) {
         // if ranged it delegates the creation of bullets, if melee deal the damage to all the character in the hit zone

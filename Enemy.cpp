@@ -16,13 +16,13 @@ void Enemy::update(int deltaTime, FloorMap *floor, bool clicked) {
 
     float deltaAngle = 0;
 
-    auto deltaPos = chase(floor->player.get(), deltaAngle);
+    auto deltaPos = chase(floor->player.get(), deltaAngle, deltaTime);
 
     deltaPos = updateSpriteAndCollider(deltaPos, deltaAngle, floor);
 
     selectAnimation(deltaPos);
 
-    attack(floor, sprite.getAngle(), true);
+    attack(floor, true);
 
     // update the animation
     sprite.update(fps, animationBehaviour, deltaTime);
