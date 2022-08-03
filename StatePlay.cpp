@@ -22,7 +22,7 @@ void StatePlay::eventHandling(sf::Event event, sf::RenderWindow &window) {
                 break;
             case sf::Keyboard::E:
                 // if player is near the shop
-                if (game->map->isPlayerNearShop() && !game->map->roomList[game->map->currentRoomIndex].getCage())
+                if (game->map->isPlayerNearShop() && !game->map->roomList[game->map->currentRoomIndex]->getCage())
                     game->changeState(StateType::Shop);
 
                 // if player has completed the floor

@@ -12,6 +12,7 @@
 class FloorMap;
 class Collider;
 class Enemy;
+class GameCharacter;
 
 class Weapon : public Item {
 public:
@@ -21,8 +22,7 @@ public:
     ~Weapon() override = default;
 
     // overridden in derived classes to attack the nearest enemy or to create a bullet
-    virtual void useWeapon(sf::Vector2f playerPosition, float facingAngle, float strength, FloorMap *floor,
-                           Collider &attackerCollider) = 0;
+    virtual void useWeapon(FloorMap *floor, GameCharacter *attacker) = 0;
 };
 
 #endif //MAIN_CPP_WEAPON_H

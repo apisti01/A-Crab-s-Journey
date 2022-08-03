@@ -6,7 +6,6 @@
 #define MAIN_CPP_MELEEWEAPON_H
 
 #include "Weapon.h"
-#include "Enemy.h"
 #include "FloorMap.h"
 
 
@@ -17,12 +16,10 @@ public:
     ~MeleeWeapon() override = default;
 
     //  attack all the character that are in the hit area
-    void useWeapon(sf::Vector2f playerPosition, float facingAngle, float strength, FloorMap *floor,
-                   Collider &attackerCollider) override;
+    void useWeapon(FloorMap *floor, GameCharacter *attacker) override;
 
-    // check if a particular character is in range
-    bool checkEnemy(const GameCharacter *character, sf::Vector2f position, float angle, const Collider &attackerCollider);
-
+    // check if a particular victim is in range
+    bool checkEnemy(const GameCharacter *victim, const GameCharacter *attacker) const;
 private:
     // Damage dealt with the attack
     float damage;

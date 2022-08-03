@@ -35,6 +35,7 @@ public:
     }
     float getPosX() const { return sprite.getPosition().x; }
     float getPosY() const { return sprite.getPosition().y; }
+    float getAngle() const {return sprite.getAngle();}
 
     // Getter and Setters for statistics
     const std::string &getName() const { return name;}

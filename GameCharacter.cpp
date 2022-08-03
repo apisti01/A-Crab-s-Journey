@@ -29,7 +29,7 @@ void GameCharacter::draw(sf::RenderWindow &window) {
 
 sf::Vector2f GameCharacter::updateSpriteAndCollider(sf::Vector2f deltaPos, float deltaAngle, FloorMap *floor) {
     // update the sprite with the just calculated values
-    sprite.setPosition({ sprite.getPosition().x + deltaPos.x, sprite.getPosition().y + deltaPos.y} );
+    sprite.move(deltaPos.x, deltaPos.y);
     collider.setPosX(sprite.getPosition().x);
     collider.setPosY(sprite.getPosition().y);
     sprite.setAngle(sprite.getAngle() + deltaAngle);
@@ -56,15 +56,15 @@ bool GameCharacter::isValidPosition(FloorMap *floor) {
 
     // check collision with obstacles
     collider.isColliding = false;
-    for (int i = 0; i < size(floor->roomList[floor->currentRoomIndex].obstacleList); i++) {
-        floor->roomList[floor->currentRoomIndex].obstacleList[i].collider.isColliding = false;
-        collider.isCollidingWith(floor->roomList[floor->currentRoomIndex].obstacleList[i].collider);
+    for (int i = 0; i < size(floor->roomList[floor->currentRoomIndex]->obstacleList); i++) {
+        floor->roomList[floor->currentRoomIndex]->obstacleList[i].collider.isColliding = false;
+        collider.isCollidingWith(floor->roomList[floor->currentRoomIndex]->obstacleList[i].collider);
     }
 
     // check collision with walls
-    for (int i = 0; i < size(floor->roomList[floor->currentRoomIndex].walls); i++) {
-        floor->roomList[floor->currentRoomIndex].walls[i].isColliding = false;
-        collider.isCollidingWith(floor->roomList[floor->currentRoomIndex].walls[i]);
+    for (int i = 0; i < size(floor->roomList[floor->currentRoomIndex]->walls); i++) {
+        floor->roomList[floor->currentRoomIndex]->walls[i].isColliding = false;
+        collider.isCollidingWith(floor->roomList[floor->currentRoomIndex]->walls[i]);
     }
 
     return !collider.isColliding;

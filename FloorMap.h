@@ -28,7 +28,7 @@ public:
     void setLongestPathLength(int longestPathLength) { FloorMap::longestPathLength = longestPathLength; }
 
     // list of all rooms on floor
-    std::vector<Room> roomList;
+    std::vector<std::unique_ptr<Room> > roomList {};
     int currentRoomIndex, startRoomIndex, endRoomIndex, shopRoomIndex = -1;
 
     std::unique_ptr<Player> player;

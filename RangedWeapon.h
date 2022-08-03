@@ -25,8 +25,7 @@ public:
     ~RangedWeapon() override = default;
 
     // Create bullet and puts it on the list
-    void useWeapon(sf::Vector2f playerPosition, float facingAngle, float strength, FloorMap *floor,
-                   Collider &attackerCollider) override;
+    void useWeapon(FloorMap *floor, GameCharacter *attacker) override;
 
 private:
 

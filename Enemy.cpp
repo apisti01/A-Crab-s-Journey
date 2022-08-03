@@ -3,6 +3,7 @@
 //
 
 #include "Enemy.h"
+#include "FloorMap.h"
 
 Enemy::Enemy(std::string name, std::unique_ptr<Weapon> weapon, float hp, float maxHp, float speed, float maxSpeed,
              float armor, float maxArmor, float strength, float maxStrength, float xpReward, int coinsDropped,
@@ -12,9 +13,17 @@ Enemy::Enemy(std::string name, std::unique_ptr<Weapon> weapon, float hp, float m
                 coinsDropped(coinsDropped), pearlsDropped(pearlsDropped) {}
 
 void Enemy::update(int deltaTime, FloorMap *floor, bool clicked) {
-    // TODO: implement update function
-}
 
-void Enemy::attack(FloorMap *floor, float bulletAngle, bool clicked) {
-    // TODO: implement attack function
+    float deltaAngle = 0;
+
+    auto deltaPos = chase(floor->player.get(), deltaAngle);
+
+    deltaPos = updateSpriteAndCollider(deltaPos, deltaAngle, floor);
+
+    selectAnimation(deltaPos);
+
+    attack(floor, sprite.getAngle(), true);
+
+    // update the animation
+    sprite.update(fps, animationBehaviour, deltaTime);
 }

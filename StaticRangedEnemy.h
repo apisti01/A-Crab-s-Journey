@@ -12,8 +12,12 @@ public:
     StaticRangedEnemy();
     ~StaticRangedEnemy() override = default;
 
-    void chase(const Player &hero) override;
+private:
+    sf::Vector2f chase(const Player *hero, float &deltaAngle) override;
 
+    void attack(FloorMap *floor, float bulletAngle, bool clicked) override;
+
+public:
     void dropItems() override;
 };
 

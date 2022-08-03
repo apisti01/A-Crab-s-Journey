@@ -73,27 +73,27 @@ float Player::getMouseInput(int deltaTime) {
 void Player::changeRoom(FloorMap *floor) {
     // move across map through doors
     // right door
-    if (sprite.getPosition().x > floor->roomList[floor->currentRoomIndex].getWidth() && floor->roomList[floor->currentRoomIndex].doors[1] != -1) {
-        floor->currentRoomIndex = floor->roomList[floor->currentRoomIndex].doors[1];
+    if (sprite.getPosition().x > floor->roomList[floor->currentRoomIndex]->getWidth() && floor->roomList[floor->currentRoomIndex]->doors[1] != -1) {
+        floor->currentRoomIndex = floor->roomList[floor->currentRoomIndex]->doors[1];
         sprite.setPosition({ 5, sprite.getPosition().y });
     }
     // left door
-    if (sprite.getPosition().x < 0 && floor->roomList[floor->currentRoomIndex].doors[3] != -1) {
-        floor->currentRoomIndex = floor->roomList[floor->currentRoomIndex].doors[3];
-        sprite.setPosition({ static_cast<float>(floor->roomList[floor->currentRoomIndex].getWidth() - 5), sprite.getPosition().y });
+    if (sprite.getPosition().x < 0 && floor->roomList[floor->currentRoomIndex]->doors[3] != -1) {
+        floor->currentRoomIndex = floor->roomList[floor->currentRoomIndex]->doors[3];
+        sprite.setPosition({ static_cast<float>(floor->roomList[floor->currentRoomIndex]->getWidth() - 5), sprite.getPosition().y });
     }
     // bottom door
-    if (sprite.getPosition().y > floor->roomList[floor->currentRoomIndex].getHeight() && floor->roomList[floor->currentRoomIndex].doors[2] != -1) {
-        floor->currentRoomIndex = floor->roomList[floor->currentRoomIndex].doors[2];
+    if (sprite.getPosition().y > floor->roomList[floor->currentRoomIndex]->getHeight() && floor->roomList[floor->currentRoomIndex]->doors[2] != -1) {
+        floor->currentRoomIndex = floor->roomList[floor->currentRoomIndex]->doors[2];
         sprite.setPosition({ sprite.getPosition().x, 5 });
     }
     // upper door
-    if (sprite.getPosition().y < 0 && floor->roomList[floor->currentRoomIndex].doors[0] != -1) {
-        floor->currentRoomIndex = floor->roomList[floor->currentRoomIndex].doors[0];
-        sprite.setPosition({ sprite.getPosition().x, static_cast<float>(floor->roomList[floor->currentRoomIndex].getHeight() - 5) });
+    if (sprite.getPosition().y < 0 && floor->roomList[floor->currentRoomIndex]->doors[0] != -1) {
+        floor->currentRoomIndex = floor->roomList[floor->currentRoomIndex]->doors[0];
+        sprite.setPosition({ sprite.getPosition().x, static_cast<float>(floor->roomList[floor->currentRoomIndex]->getHeight() - 5) });
     }
 
-    floor->roomList[floor->currentRoomIndex].setVisited(true);
+    floor->roomList[floor->currentRoomIndex]->setVisited(true);
 
     collider.setPosX(sprite.getPosition().x);
     collider.setPosY(sprite.getPosition().y);
@@ -103,7 +103,7 @@ void Player::attack(FloorMap *floor, float bulletAngle, bool clicked) {
     // if player has a weapon and left mouse button is pressed
     if (weapon && clicked) {
         // if ranged it delegates the creation of bullets, if melee deal the damage to all the character in the hit zone
-        weapon->useWeapon(sprite.getPosition(), bulletAngle, strength, floor, this->collider);
+        weapon->useWeapon(floor, this);
     }
 }
 
@@ -115,18 +115,18 @@ void Player::enterCageMode(FloorMap *floor) {
             sprite.getPosition().y > 120 &&
             sprite.getPosition().y < 1920 - 20 /* && size(floor->roomList[floor->currentRoomIndex].enemyList) != 0 */
         ) {
-        floor->roomList[floor->currentRoomIndex].setCage(true);
+        floor->roomList[floor->currentRoomIndex]->setCage(true);
     }
 }
 
 void Player::exitCageMode(FloorMap *floor) {
-    /* when the player kills an enemy, if it's the last in the room
-    if (size(floor->roomList[floor->currentRoomIndex].enemyList) != 0) {
-        floor->roomList[floor->currentRoomIndex].setCage(false);
+    //when the player kills an enemy, if it's the last in the room
+    if (!floor->roomList[floor->currentRoomIndex]->enemyList.empty()) {
+        floor->roomList[floor->currentRoomIndex]->setCage(false);
 
         // TODO: receive coins and pearls from completing the room
     }
-    */
+
 }
 
 std::unique_ptr<Wearable> Player::wearItem(std::unique_ptr<Wearable> item) {

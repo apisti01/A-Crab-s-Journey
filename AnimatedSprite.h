@@ -35,7 +35,7 @@ public:
 
         sprite.setRotation(angle);
     }
-    float getAngle() {
+    float getAngle() const{
         float angle = sprite.getRotation();
 
         // adjustment for SFML plane

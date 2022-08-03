@@ -176,11 +176,10 @@ void Room::closeDoors() {
     }
 }
 
-void Room::update(int deltaTime) {
-    /* update enemy in the room
-    for (int i = 0; i < size(enemyList); i++) {
-        // TODO: update the i-th enemy
-    }*/
+void Room::update(int deltaTime, FloorMap *floor) {
+    //update enemy in the room
+    for (auto &enemy : enemyList)
+        enemy->update(deltaTime, floor, true);
 
     // move every bullet in the room
     for (auto bullet = bulletList.begin(); bullet != bulletList.end() ; bullet++) {
@@ -200,7 +199,12 @@ void Room::draw(sf::RenderWindow &window) {
     for (int i = 0; i < size(obstacleList); i++)
         obstacleList[i].draw(window);
 
+    // draw every enemy still alive
+    for (auto &enemy : enemyList)
+        enemy->draw(window);
+
     // draw every bullet in the room
     for (auto bullet = bulletList.begin(); bullet != bulletList.end() ; bullet++)
         bullet->draw(window);
 }
+

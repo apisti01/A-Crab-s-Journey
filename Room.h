@@ -27,7 +27,10 @@ class Room {
 public:
     // constructor and destructor
     explicit Room(int posX, int posY, int width, int height, MapType mapType);
-    // ~Room();
+    ~Room() = default;
+    Room(const Room& room) = delete;
+    Room& operator=(const Room & room) = delete;
+
 
     // doors list: -1 for closed, n if connected to nth room
     std::vector<int> doors;
@@ -64,20 +67,21 @@ public:
     int getHeight() const { return height; }
     void setHeight(int height) { Room::height = height; }
 
-    void update(int deltaTime);
+    void update(int deltaTime, FloorMap *floor);
 
     void draw(sf::RenderWindow &window);
 
     // obstacle and enemy lists
-    std::vector<Obstacle> obstacleList;
+    std::vector<Obstacle> obstacleList {};
 
-    // std::list<std::unique_ptr<Enemy>> enemyList;
+    // list of the enemy present in the room, when they die they are deleted
+    std::list<std::unique_ptr<Enemy>> enemyList {};
 
     // list of all bullets in the room
     std::list<Bullet> bulletList{};
 
     // collider for the walls
-    std::vector<Collider> walls;
+    std::vector<Collider> walls {};
 
     void generateWalls();
 
@@ -87,31 +91,31 @@ public:
 
 private:
     // grid position attributes
-    int posX, posY;
+    int posX{}, posY{};
 
     // texture and sprite
     sf::Texture backgroundTexture;
     sf::Sprite background { backgroundTexture, sf::IntRect{ 0, 0, 1920, 1080 } };
 
     // room measures
-    int width, height;
-    int wallDepth;
-    bool roomGrid[14][7];
+    int width{}, height{};
+    int wallDepth{};
+    bool roomGrid[14][7]{};
 
     void setupGrid();
     sf::Vector2i pickFreeGridSpot();
 
     // room state
-    bool isCage;
-    bool isVisited;
+    bool isCage{};
+    bool isVisited{};
 
     // special rooms
-    bool isStartRoom;
-    bool isBossRoom;
-    bool isShopRoom;
+    bool isStartRoom{};
+    bool isBossRoom{};
+    bool isShopRoom{};
 
     // xp rewarded when completed
-    int XpReward;
+    int XpReward{};
 };
 
 #endif //ACRABSJOURNEY_ROOM_H
