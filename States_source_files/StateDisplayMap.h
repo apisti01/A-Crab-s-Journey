@@ -6,7 +6,7 @@
 #define ACRABSJOURNEY_STATEDISPLAYMAP_H
 
 #include "State.h"
-#include "FloorMap.h"
+#include "../FloorMap.h"
 
 class StateDisplayMap : public State {
 public:

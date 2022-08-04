@@ -12,7 +12,7 @@ void StaticRangedEnemy::dropItems() {
     // TODO random drop of items
 }
 
-sf::Vector2f StaticRangedEnemy::chase(const Player *hero, float &deltaAngle, int deltaTime) {
+sf::Vector2f StaticRangedEnemy::chase(const Player *hero, float &deltaAngle, int deltaTime, bool &triggered) {
 
     // the enemy is facing the player
     deltaAngle = atan2f(hero->getPosY() - this->getPosY(),hero->getPosX() - this->getPosX()) - getAngle();

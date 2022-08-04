@@ -3,7 +3,7 @@
 //
 
 #include "StatePause.h"
-#include "Game.h"
+#include "../Game.h"
 
 StatePause::StatePause(Game *game) : State(game) {
     backgroundTexture.loadFromFile("Games States/Pause Screen/Pause Screen.png");

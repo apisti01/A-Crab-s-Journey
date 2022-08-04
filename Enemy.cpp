@@ -12,17 +12,17 @@ Enemy::Enemy(std::string name, std::unique_ptr<Weapon> weapon, float hp, float m
                 hp, maxHp, speed, maxSpeed, armor, maxArmor, strength, maxStrength), XpReward(xpReward),
                 coinsDropped(coinsDropped), pearlsDropped(pearlsDropped) {}
 
-void Enemy::update(int deltaTime, FloorMap *floor, bool clicked) {
+void Enemy::update(int deltaTime, FloorMap *floor, bool triggered) {
 
     float deltaAngle = 0;
 
-    auto deltaPos = chase(floor->player.get(), deltaAngle, deltaTime);
+    auto deltaPos = chase(floor->player.get(), deltaAngle, deltaTime, triggered);
 
     deltaPos = updateSpriteAndCollider(deltaPos, deltaAngle, floor);
 
     selectAnimation(deltaPos);
 
-    attack(floor, true);
+    attack(floor, triggered);
 
     // update the animation
     sprite.update(fps, animationBehaviour, deltaTime);

@@ -2,7 +2,7 @@
 // Created by apisti01 on 21/07/22.
 //
 
-#include "Game.h"
+#include "../Game.h"
 #include "StatePlay.h"
 
 StatePlay::StatePlay(Game *game) : State(game) {}

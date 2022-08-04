@@ -2,7 +2,7 @@
 // Created by longo on 24/07/2022.
 //
 
-#include "Game.h"
+#include "../Game.h"
 #include "StateDisplayMap.h"
 
 StateDisplayMap::StateDisplayMap(Game *game) : State(game), unit(150.0) {

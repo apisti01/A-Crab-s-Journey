@@ -3,7 +3,7 @@
 //
 
 #include "StateTitleScreen.h"
-#include "Game.h"
+#include "../Game.h"
 
 StateTitleScreen::StateTitleScreen(Game* game): State(game) {
     backgroundTexture.loadFromFile("Games States/Title Screen/Title Screen.png");

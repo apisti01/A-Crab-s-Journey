@@ -3,15 +3,15 @@
 //
 
 #include "Game.h"
-#include "StateTitleScreen.h"
-#include "StateMainMenu.h"
-#include "StatePearlShop.h"
-#include "StatePlay.h"
-#include "StateDisplayMap.h"
-#include "StateManageInventory.h"
-#include "StateShop.h"
-#include "StatePause.h"
-#include "StateSettings.h"
+#include "States_source_files/StateTitleScreen.h"
+#include "States_source_files/StateMainMenu.h"
+#include "States_source_files/StatePearlShop.h"
+#include "States_source_files/StatePlay.h"
+#include "States_source_files/StateDisplayMap.h"
+#include "States_source_files/StateManageInventory.h"
+#include "States_source_files/StateShop.h"
+#include "States_source_files/StatePause.h"
+#include "States_source_files/StateSettings.h"
 
 #include <iostream>
 

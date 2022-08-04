@@ -1,25 +1,48 @@
 //
-// Created by apisti01 on 03/08/22.
+// Created by apisti01 on 04/08/22.
 //
 
-#include "AggressiveMeleeEnemy.h"
+#include "DefensiveMeleeEnemy.h"
 #include "Player.h"
-#include "Weapon.h"
 
-AggressiveMeleeEnemy::AggressiveMeleeEnemy (float range, std::string name, std::unique_ptr<Weapon> weapon, float hp,
+DefensiveMeleeEnemy::DefensiveMeleeEnemy(float range, std::string name, std::unique_ptr<Weapon> weapon, float hp,
                                          float maxHp, float speed, float maxSpeed, float armor, float maxArmor,
                                          float strength, float maxStrength, float xpReward, int coinsDropped,
                                          int pearlsDropped) : Enemy(std::move(name), std::move(weapon),
                                                                     hp,maxHp,speed,maxSpeed,armor,maxArmor,strength,maxStrength,
                                                                     xpReward,coinsDropped,pearlsDropped),
                                                               triggerRange(range){
-
+    origPosX = getPosX();
+    origPosY = getPosY();
 }
 
+sf::Vector2f DefensiveMeleeEnemy::chase(const Player *hero, float &deltaAngle, int deltaTime, bool &triggered) {
+    /* this function calculate the distance of the player form the original place of the enemy,
+     * if the player is too close, the enemy chase him and attack him
+     */
 
-sf::Vector2f AggressiveMeleeEnemy::chase(const Player *hero, float &deltaAngle, int deltaTime, bool &triggered) {
     // position of the player
-    auto movement = sf::Vector2f {hero->getPosX(), hero->getPosY()};
+    auto triggerDistance = sf::Vector2f {hero->getPosX(), hero->getPosY()};
+
+    // coordinates relative to the original position of the enemy
+    triggerDistance.x -= origPosX;
+    triggerDistance.y -= origPosY;
+
+    // distance from the original point
+    auto distance = sqrtf(powf(triggerDistance.x, 2) + powf(triggerDistance.y, 2));
+
+    // movement the enemy will do
+    sf::Vector2f movement;
+
+    if (distance < triggerRange){
+        // position of the player
+        movement = sf::Vector2f {hero->getPosX(), hero->getPosY()};
+        triggered = true;
+    }else{
+        // original position
+        movement = sf::Vector2f {origPosX, origPosY};
+        triggered = false;
+    }
 
     // coordinates relative to the position of the enemy
     movement.x -= getPosX();
@@ -33,13 +56,8 @@ sf::Vector2f AggressiveMeleeEnemy::chase(const Player *hero, float &deltaAngle, 
     if (norm != 0) {
         movement.x = movement.x / norm;
         movement.y = movement.y / norm;
-    }
-
-    // attacking only if the player is near the enemy
-    if (norm < triggerRange)
-        triggered = true;
-    else
-        triggered = false;
+    }else
+        deltaAngle -= getAngle(); // face upward again
 
     // the actual movement
     movement.x = movement.x * speed * sprite.getWidth() * static_cast<float>(deltaTime) / 1000000;
@@ -48,13 +66,12 @@ sf::Vector2f AggressiveMeleeEnemy::chase(const Player *hero, float &deltaAngle, 
     return movement;
 }
 
-void AggressiveMeleeEnemy::attack(FloorMap *floor, bool triggered) {
-    // attack with the melee weapon
-    if (triggered)
+void DefensiveMeleeEnemy::attack(FloorMap *floor, bool clicked) {
+    if (clicked)
         weapon->useWeapon(floor, this);
 }
 
-void AggressiveMeleeEnemy::dropItems() {
+void DefensiveMeleeEnemy::dropItems() {
     // TODO
 
 }
