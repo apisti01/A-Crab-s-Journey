@@ -12,8 +12,9 @@
  */
 class DefensiveMeleeEnemy : public Enemy{
 public:
-    DefensiveMeleeEnemy(float range, std::string name, std::unique_ptr<Weapon> weapon, float hp, float maxHp, float speed, float maxSpeed,
-                        float armor, float maxArmor, float strength, float maxStrength, float xpReward, int coinsDropped, int pearlsDropped);
+    DefensiveMeleeEnemy(std::string name, const sf::Texture& texture, Collider collider, std::unique_ptr<Weapon> weapon,
+                        float hp, float maxHp, float speed, float maxSpeed, float armor, float maxArmor, float strength,
+                        float maxStrength, float XpReward, int coinsDropped, int pearlsDropped, float triggerRange);
     ~DefensiveMeleeEnemy() override = default;
 
     sf::Vector2f chase(const Player *hero, float &deltaAngle, int deltaTime, bool &triggered) override;

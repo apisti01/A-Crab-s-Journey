@@ -8,9 +8,9 @@
 #include <list>
 
 #include "GameCharacter.h"
-#include "Enemy.h"
+#include "Enemy_source_files/Enemy.h"
 #include "Wearable.h"
-#include "StaticRangedEnemy.h"
+#include "Enemy_source_files/StaticRangedEnemy.h"
 #include "Weapon.h"
 #include "RangedWeapon.h"
 #include "FloorMap.h"
@@ -25,9 +25,9 @@ enum class CrabSpecie {
 class Player : public GameCharacter {
 public:
     // Constructor and Destructor
-    Player(std::string name, CrabSpecie crabSpecie, const sf::Texture& texture, Collider collider, std::unique_ptr<Weapon> Weapon,
+    Player(std::string name, CrabSpecie crabSpecie, const sf::Texture& texture, Collider collider, std::unique_ptr<Weapon> weapon,
            float hp = 8, float maxHp = 10, float speed = 2, float maxSpeed = 3, float armor = 0.2,
-           float maxArmor = 0.5, float strength = 1.2, float maxStrength = 2, int coins = 0);
+           float maxArmor = 0.5, float strength = 1.2, float maxStrength = 2);
     ~Player() override = default;
 
     void update(int deltaTime, FloorMap *floor, bool clicked) override;
@@ -41,9 +41,6 @@ public:
     std::unique_ptr<Weapon> changeWeapon(std::unique_ptr<Weapon> weapon1);
 
 private:
-    // name of the crab specie
-    std::string namePlayer;
-
     // Specification about the starting statistics
     CrabSpecie crabSpecie;
 
@@ -64,6 +61,9 @@ private:
     // change room status
     void enterCageMode(FloorMap *floor);
     void exitCageMode(FloorMap *floor);
+
+    // modify the statistics of the player given the object
+    void modifyStatistics(Wearable* item, bool wore);
 };
 
 

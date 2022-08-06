@@ -8,7 +8,7 @@
 #include <vector>
 
 #include "Obstacle.h"
-#include "Enemy.h"
+#include "Enemy_source_files/Enemy.h"
 #include "Bullet.h"
 
 class Player;

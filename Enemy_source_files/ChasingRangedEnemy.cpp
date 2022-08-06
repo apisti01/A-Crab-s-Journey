@@ -3,7 +3,17 @@
 //
 
 #include "ChasingRangedEnemy.h"
-#include "Player.h"
+#include "../Player.h"
+
+ChasingRangedEnemy::ChasingRangedEnemy(std::string name, const sf::Texture &texture, Collider collider,
+                                       std::unique_ptr<Weapon> weapon, float hp, float maxHp, float speed,
+                                       float maxSpeed, float armor, float maxArmor, float strength, float maxStrength,
+                                       float XpReward, int coinsDropped, int pearlsDropped, float triggerRange) :
+                                       Enemy(std::move(name), texture, std::move(collider),
+                                             std::move(weapon), hp, maxHp, speed, maxSpeed, armor, maxArmor,
+                                             strength, maxStrength, XpReward, coinsDropped, pearlsDropped), triggerRange(triggerRange) {
+
+}
 
 sf::Vector2f ChasingRangedEnemy::chase(const Player *hero, float &deltaAngle, int deltaTime, bool &triggered) {
     // position of the player

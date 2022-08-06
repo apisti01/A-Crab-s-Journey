@@ -4,11 +4,13 @@
 
 #include "Player.h"
 
-Player::Player(std::string name, CrabSpecie crabSpecie, const sf::Texture& texture, Collider collider, std::unique_ptr<Weapon> Weapon,
+#include <utility>
+
+Player::Player(std::string name, CrabSpecie crabSpecie, const sf::Texture& texture, Collider collider, std::unique_ptr<Weapon> weapon,
                float hp, float maxHp, float speed, float maxSpeed, float armor, float maxArmor, float strength,
-               float maxStrength, int coins) :
-        GameCharacter(std::move(name), texture, collider, std::move(Weapon), hp, maxHp, speed, maxSpeed, armor,
-                      maxArmor, strength, maxStrength), crabSpecie(crabSpecie) {
+               float maxStrength) :
+        GameCharacter(std::move(name), texture, std::move(collider), std::move(weapon), hp, maxHp, speed, maxSpeed, armor,
+                      maxArmor, strength, maxStrength, sf::Vector2u(6,3)), crabSpecie(crabSpecie) {
 }
 
 void Player::update(int deltaTime, FloorMap *floor, bool clicked) {
@@ -132,6 +134,10 @@ void Player::exitCageMode(FloorMap *floor) {
 std::unique_ptr<Wearable> Player::wearItem(std::unique_ptr<Wearable> item) {
     std::unique_ptr<Wearable> tmp = nullptr;
 
+    // add the stats from the new item worn
+    if (item)
+        modifyStatistics(item.get(), true);
+
     // different types of wearable player can have
     switch (item->getType()) {
         case WearablePieces::Hat:
@@ -147,6 +153,9 @@ std::unique_ptr<Wearable> Player::wearItem(std::unique_ptr<Wearable> item) {
             shell = std::move(item);
             break;
     }
+    // remove the statistics given by the item wore before
+    if(tmp)
+        modifyStatistics(tmp.get(), false);
 
     // gives back the object wore before
     return tmp;
@@ -158,4 +167,17 @@ std::unique_ptr<Weapon> Player::changeWeapon(std::unique_ptr<Weapon> weapon1) {
     weapon = std::move(weapon1);
     // gives back the old weapon
     return tmp;
+}
+
+void Player::modifyStatistics(Wearable *item, bool wore) {
+    float i = 1.f;
+    // boolean to modify the behaviour if the item is being worn or being put off
+    if (!wore)
+        i = -1.f;
+
+    // modify stats
+    strength += i * item->getStrength();
+    speed += i * item->getSpeed();
+    hp += i * item->getHp();
+    armor += i * item->getArmor();
 }

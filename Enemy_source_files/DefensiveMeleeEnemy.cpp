@@ -3,15 +3,15 @@
 //
 
 #include "DefensiveMeleeEnemy.h"
-#include "Player.h"
+#include "../Player.h"
 
-DefensiveMeleeEnemy::DefensiveMeleeEnemy(float range, std::string name, std::unique_ptr<Weapon> weapon, float hp,
-                                         float maxHp, float speed, float maxSpeed, float armor, float maxArmor,
-                                         float strength, float maxStrength, float xpReward, int coinsDropped,
-                                         int pearlsDropped) : Enemy(std::move(name), std::move(weapon),
-                                                                    hp,maxHp,speed,maxSpeed,armor,maxArmor,strength,maxStrength,
-                                                                    xpReward,coinsDropped,pearlsDropped),
-                                                              triggerRange(range){
+DefensiveMeleeEnemy::DefensiveMeleeEnemy(std::string name, const sf::Texture &texture, Collider collider,
+                                         std::unique_ptr<Weapon> weapon, float hp, float maxHp, float speed,
+                                         float maxSpeed, float armor, float maxArmor, float strength, float maxStrength,
+                                         float XpReward, int coinsDropped, int pearlsDropped, float triggerRange) :
+                                         Enemy(std::move(name), texture, std::move(collider), std::move(weapon), hp, maxHp,
+                                               speed, maxSpeed, armor, maxArmor, strength, maxStrength, XpReward, coinsDropped,
+                                               pearlsDropped), triggerRange(triggerRange) {
     origPosX = getPosX();
     origPosY = getPosY();
 }
@@ -68,7 +68,7 @@ sf::Vector2f DefensiveMeleeEnemy::chase(const Player *hero, float &deltaAngle, i
 
 void DefensiveMeleeEnemy::attack(FloorMap *floor, bool clicked) {
     if (clicked)
-        weapon->useWeapon(floor, this);
+    weapon->useWeapon(floor, this);
 }
 
 void DefensiveMeleeEnemy::dropItems() {

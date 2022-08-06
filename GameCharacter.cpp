@@ -9,12 +9,13 @@
 #include "FloorMap.h"
 #include "Weapon.h"
 
-GameCharacter::GameCharacter(std::string name, const sf::Texture &texture, Collider collider, std::unique_ptr<Weapon> weapon,
-                             float hp, float maxHp, float speed, float maxSpeed, float armor, float maxArmor, float strength,
-                             float maxStrength)
-        : name(std::move(name)), sprite(texture, sf::Vector2u(6, 3)), collider(std::move(collider)),
-        weapon(std::move(weapon)), hp(hp), maxHp(maxHp), speed(speed), maxSpeed(maxSpeed), armor(armor),
-        maxArmor(maxArmor), strength(strength), maxStrength(maxStrength) {
+GameCharacter::GameCharacter(std::string name, const sf::Texture &texture, Collider collider,
+                             std::unique_ptr<Weapon> weapon, float hp, float maxHp, float speed, float maxSpeed,
+                             float armor, float maxArmor, float strength, float maxStrength,
+                             sf::Vector2u imageCount)
+        : name(std::move(name)), sprite(texture, imageCount), collider(std::move(collider)),
+          weapon(std::move(weapon)), hp(hp), maxHp(maxHp), speed(speed), maxSpeed(maxSpeed), armor(armor),
+          maxArmor(maxArmor), strength(strength), maxStrength(maxStrength) {
 }
 
 void GameCharacter::receiveDamage(float damage) {
@@ -24,7 +25,6 @@ void GameCharacter::receiveDamage(float damage) {
 void GameCharacter::draw(sf::RenderWindow &window) {
     sprite.draw(window);
     collider.draw(window);
-
 }
 
 sf::Vector2f GameCharacter::updateSpriteAndCollider(sf::Vector2f deltaPos, float deltaAngle, FloorMap *floor) {

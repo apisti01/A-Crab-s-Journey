@@ -33,11 +33,6 @@ height(height) {
             backgroundTexture.loadFromFile("Map/Ice Floe/Ice Floe.png");
             break;
     }
-
-    // TODO: if it isn't the start room, create list of enemies
-    if (!getStartRoom()) {
-
-    }
 };
 
 void Room::generateWalls() {

@@ -13,6 +13,9 @@
  */
 class ChasingRangedEnemy : public Enemy{
 public:
+    ChasingRangedEnemy(std::string name, const sf::Texture& texture, Collider collider, std::unique_ptr<Weapon> weapon,
+                       float hp, float maxHp, float speed, float maxSpeed, float armor, float maxArmor, float strength,
+                       float maxStrength, float XpReward, int coinsDropped, int pearlsDropped, float triggerRange);
     ~ChasingRangedEnemy() override = default;
 
     sf::Vector2f chase(const Player *hero, float &deltaAngle, int deltaTime, bool &triggered) override;

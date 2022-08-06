@@ -32,7 +32,7 @@ void FloorMap::generateFloor() {
         // of that room, pick a free side
         int sideIndex = FloorMap::pickFreeSide(roomIndex);
         // generate a new room
-        FloorMap::generateRoom(roomIndex, sideIndex, i);
+        generateRoom(roomIndex, sideIndex, i);
     }
 
     // set start and end rooms
@@ -47,6 +47,7 @@ void FloorMap::generateFloor() {
         if (!roomList[i]->getBossRoom()) {
             roomList[i]->generateObstacles();
         }
+        // TODO add enemies, if not start room
 
         roomList[i]->closeDoors();
     }

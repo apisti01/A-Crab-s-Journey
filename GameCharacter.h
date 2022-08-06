@@ -22,9 +22,10 @@ class FloorMap;
 class GameCharacter {
 public:
     // constructor and virtual destructor
-    GameCharacter(std::string name, const sf::Texture &texture, Collider collider, std::unique_ptr<Weapon> weapon,
-                  float hp, float maxHp, float speed, float maxSpeed, float armor, float maxArmor, float strength,
-                  float maxStrength);
+    GameCharacter(std::string name, const sf::Texture &texture, Collider collider,
+                  std::unique_ptr<Weapon> weapon, float hp, float maxHp, float speed, float maxSpeed,
+                  float armor, float maxArmor, float strength, float maxStrength,
+                  sf::Vector2u imageCount);
     virtual ~GameCharacter() = default;
 
     // getter and setter for character position
@@ -35,7 +36,7 @@ public:
     }
     float getPosX() const { return sprite.getPosition().x; }
     float getPosY() const { return sprite.getPosition().y; }
-    float getAngle() const {return sprite.getAngle();}
+    float getAngle() const { return sprite.getAngle(); }
 
     // Getter and Setters for statistics
     const std::string &getName() const { return name;}
@@ -100,7 +101,6 @@ protected:
     std::unique_ptr<Weapon> weapon;
 
     // SFML Texture and Animated sprite
-    sf::Texture texture;
     AnimatedSprite sprite;
     int fps = 10;
 
@@ -117,7 +117,7 @@ protected:
     int animationBehaviour = 0;
 
     // coin owned
-    int coins;
+    int coins = 0;
 };
 
 

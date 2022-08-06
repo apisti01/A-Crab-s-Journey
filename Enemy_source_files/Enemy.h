@@ -5,15 +5,16 @@
 #ifndef MAIN_CPP_ENEMY_H
 #define MAIN_CPP_ENEMY_H
 
-#include "GameCharacter.h"
+#include "../GameCharacter.h"
 
 class Player;
 
 class Enemy : public GameCharacter {
 public:
     // Constructor and Destructor
-    Enemy(std::string name, std::unique_ptr<Weapon> weapon, float hp, float maxHp, float speed, float maxSpeed,
-          float armor, float maxArmor, float strength, float maxStrength, float xpReward, int coinsDropped, int pearlsDropped);
+    Enemy(std::string name, const sf::Texture& texture, Collider collider, std::unique_ptr<Weapon> weapon,
+          float hp, float maxHp, float speed, float maxSpeed, float armor, float maxArmor, float strength,
+          float maxStrength, float XpReward, int coinsDropped, int pearlsDropped);
     ~Enemy() override = default;
 
     void update(int deltaTime, FloorMap *floor, bool triggered) override;
