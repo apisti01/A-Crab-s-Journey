@@ -6,8 +6,8 @@
 #include "FloorMap.h"
 
 
-RangedWeapon::RangedWeapon(RangedWeaponType type, float damage, float speed, float range, bool isTracking,
-                           bool isShattering, ItemRarity rarity, std::string name, int price)
+RangedWeapon::RangedWeapon(RangedWeaponType type, std::string name, float damage, float speed, float range,
+                           bool isTracking, bool isShattering, ItemRarity rarity, int price)
                            : Weapon(std::move(name), rarity, price), range(range),
                            damage(damage), speed(speed), isTracking(isTracking), isShattering(isShattering) {
     switch (type) {

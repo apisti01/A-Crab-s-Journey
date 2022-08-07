@@ -179,6 +179,9 @@ void Room::update(int deltaTime, FloorMap *floor) {
     for (auto bullet = bulletList.begin(); bullet != bulletList.end() ; bullet++) {
         bullet->move(deltaTime);
     } // TODO check collisions of the bullets, deal damage and destroy them
+
+    // TODO check life of the enemies, if <= 0 erase them from the list
+    // TODO when killed the enemy update the observer in order to show the new enemy in the bestiary
 }
 
 void Room::draw(sf::RenderWindow &window) {

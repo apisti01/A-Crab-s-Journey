@@ -20,6 +20,14 @@ private:
 
     // put the enemy in the right position
     void locateEnemy(Enemy *enemy, Room *room);
+
+    // function specific for every mapType
+    std::unique_ptr<Enemy> coralReefEnemy(int level);
+    std::unique_ptr<Enemy> mangroveForestEnemy(int level);
+    std::unique_ptr<Enemy> temperateReefEnemy(int level);
+    std::unique_ptr<Enemy> kelpForestEnemy(int level);
+    std::unique_ptr<Enemy> posidoniaMeadowEnemy(int level);
+    std::unique_ptr<Enemy> iceFloeEnemy(int level);
 };
 
 
