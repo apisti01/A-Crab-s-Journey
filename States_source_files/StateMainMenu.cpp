@@ -3,7 +3,7 @@
 //
 
 #include "StateMainMenu.h"
-#include "Game.h"
+#include "../Game.h"
 
 StateMainMenu::StateMainMenu(Game *game) : State(game) {
     backgroundTexture.loadFromFile("Games States/Start Menu/Start Menu.png");

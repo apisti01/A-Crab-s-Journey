@@ -2,7 +2,7 @@
 // Created by longo on 26/07/2022.
 //
 
-#include "Game.h"
+#include "../Game.h"
 #include "StateShop.h"
 
 

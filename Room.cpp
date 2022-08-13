@@ -8,8 +8,7 @@
 
 
 Room::Room(int posX, int posY, int width, int height, MapType mapType) : posX(posX), posY(posY), width(width),
-height(height), XpReward(XpReward = 0), isCage(isCage = false), isVisited(false), isStartRoom(isStartRoom = false),
-isBossRoom(isBossRoom = false), isShopRoom(isShopRoom = false), wallDepth(wallDepth = 0) {
+height(height) {
     // doors are all initially closed
     doors = {-1, -1, -1, -1};
 
@@ -33,11 +32,6 @@ isBossRoom(isBossRoom = false), isShopRoom(isShopRoom = false), wallDepth(wallDe
         case MapType::IceFloe:
             backgroundTexture.loadFromFile("Map/Ice Floe/Ice Floe.png");
             break;
-    }
-
-    // TODO: if it isn't the start room, create list of enemies
-    if (!getStartRoom()) {
-
     }
 };
 
@@ -157,35 +151,37 @@ void Room::closeDoors() {
     if (doors[0] == -1) {
         obstacleTexture.loadFromFile("Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
         Collider collider(120 * 8, 60, 120, 120);
-        obstacleList.push_back(*new Obstacle(obstacleTexture, collider, 120 * 8, 60, 120, 120));
+        obstacleList.emplace_back(obstacleTexture, collider, 120 * 8, 60, 120, 120);
     }
     if (doors[1] == -1) {
         obstacleTexture.loadFromFile("Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
         Collider collider(width - 60, 120 * 4.5, 120, 120);
-        obstacleList.push_back(*new Obstacle(obstacleTexture, collider, width - 60, 120 * 4.5, 120, 120));
+        obstacleList.emplace_back(obstacleTexture, collider, width - 60, 120 * 4.5, 120, 120);
     }
     if (doors[2] == -1) {
         obstacleTexture.loadFromFile("Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
         Collider collider(120 * 8, height - 60, 120, 120);
-        obstacleList.push_back(*new Obstacle(obstacleTexture, collider, 120 * 8, height - 60, 120, 120));
+        obstacleList.emplace_back(obstacleTexture, collider, 120 * 8, height - 60, 120, 120);
     }
     if (doors[3] == -1) {
         obstacleTexture.loadFromFile("Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
         Collider collider(60, 120 * 4.5, 120, 120);
-        obstacleList.push_back(*new Obstacle(obstacleTexture, collider, 60, 120 * 4.5, 120, 120));
+        obstacleList.emplace_back(obstacleTexture, collider, 60, 120 * 4.5, 120, 120);
     }
 }
 
-void Room::update(int deltaTime) {
-    /* update enemy in the room
-    for (int i = 0; i < size(enemyList); i++) {
-        // TODO: update the i-th enemy
-    }*/
+void Room::update(int deltaTime, FloorMap *floor) {
+    //update enemy in the room
+    for (auto &enemy : enemyList)
+        enemy->update(deltaTime, floor, true);
 
     // move every bullet in the room
     for (auto bullet = bulletList.begin(); bullet != bulletList.end() ; bullet++) {
         bullet->move(deltaTime);
-    }
+    } // TODO check collisions of the bullets, deal damage and destroy them
+
+    // TODO check life of the enemies, if <= 0 erase them from the list
+    // TODO when killed the enemy update the observer in order to show the new enemy in the bestiary
 }
 
 void Room::draw(sf::RenderWindow &window) {
@@ -200,7 +196,12 @@ void Room::draw(sf::RenderWindow &window) {
     for (int i = 0; i < size(obstacleList); i++)
         obstacleList[i].draw(window);
 
+    // draw every enemy still alive
+    for (auto &enemy : enemyList)
+        enemy->draw(window);
+
     // draw every bullet in the room
     for (auto bullet = bulletList.begin(); bullet != bulletList.end() ; bullet++)
         bullet->draw(window);
 }
+

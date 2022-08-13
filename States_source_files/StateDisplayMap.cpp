@@ -2,14 +2,14 @@
 // Created by longo on 24/07/2022.
 //
 
-#include "Game.h"
+#include "../Game.h"
 #include "StateDisplayMap.h"
 
 StateDisplayMap::StateDisplayMap(Game *game) : State(game), unit(150.0) {
     for (int i = 0; i < game->map->roomList.size(); i++) {
         // room
-        int posX = game->map->roomList[0].getWidth() / 2 + game->map->roomList[i].getPosX() * unit;
-        int posY = game->map->roomList[0].getHeight() / 2 + game->map->roomList[i].getPosY() * unit;
+        int posX = game->map->roomList[0]->getWidth() / 2 + game->map->roomList[i]->getPosX() * unit;
+        int posY = game->map->roomList[0]->getHeight() / 2 + game->map->roomList[i]->getPosY() * unit;
 
         sf::RectangleShape newRoom(sf::Vector2f(unit * 0.8, unit * 0.8));
         newRoom.setOrigin(unit * 0.4, unit * 0.4);
@@ -42,19 +42,19 @@ StateDisplayMap::StateDisplayMap(Game *game) : State(game), unit(150.0) {
 
     // highlight start, end and shop room
     startPointer.setSize(sf::Vector2f{ unit / 5, unit / 5 });
-    startPointer.setPosition(game->map->roomList[0].getWidth() / 2 + game->map->roomList[game->map->startRoomIndex].getPosX() * unit - unit * 0.4,
-                             game->map->roomList[0].getHeight() / 2 + game->map->roomList[game->map->startRoomIndex].getPosY() * unit - unit * 0.4);
+    startPointer.setPosition(game->map->roomList[0]->getWidth() / 2 + game->map->roomList[game->map->startRoomIndex]->getPosX() * unit - unit * 0.4,
+                             game->map->roomList[0]->getHeight() / 2 + game->map->roomList[game->map->startRoomIndex]->getPosY() * unit - unit * 0.4);
     startPointer.setFillColor(sf::Color::Green);
 
     endPointer.setSize(sf::Vector2f{ unit / 5, unit / 5 });
-    endPointer.setPosition(game->map->roomList[0].getWidth() / 2 + game->map->roomList[game->map->endRoomIndex].getPosX() * unit - unit * 0.4,
-                             game->map->roomList[0].getHeight() / 2 + game->map->roomList[game->map->endRoomIndex].getPosY() * unit - unit * 0.4);
+    endPointer.setPosition(game->map->roomList[0]->getWidth() / 2 + game->map->roomList[game->map->endRoomIndex]->getPosX() * unit - unit * 0.4,
+                             game->map->roomList[0]->getHeight() / 2 + game->map->roomList[game->map->endRoomIndex]->getPosY() * unit - unit * 0.4);
     endPointer.setFillColor(sf::Color::Red);
 
     shopPointer.setSize(sf::Vector2f{ unit / 5, unit / 5 });
     shopPointer.setOrigin(0, unit / 5);
-    shopPointer.setPosition(game->map->roomList[0].getWidth() / 2 + game->map->roomList[game->map->shopRoomIndex].getPosX() * unit - unit * 0.4,
-                             game->map->roomList[0].getHeight() / 2 + game->map->roomList[game->map->shopRoomIndex].getPosY() * unit + unit * 0.4);
+    shopPointer.setPosition(game->map->roomList[0]->getWidth() / 2 + game->map->roomList[game->map->shopRoomIndex]->getPosX() * unit - unit * 0.4,
+                             game->map->roomList[0]->getHeight() / 2 + game->map->roomList[game->map->shopRoomIndex]->getPosY() * unit + unit * 0.4);
     shopPointer.setFillColor(sf::Color::Yellow);
 
     currentPointer.setSize(sf::Vector2f{ unit / 5, unit / 5 });
@@ -83,24 +83,24 @@ void StateDisplayMap::draw(sf::RenderWindow &window) {
 
     // draw the map
     for (int i = 0; i < size(roomShapes); i++) {
-        if (game->map->roomList[i].getVisited())
+        if (game->map->roomList[i]->getVisited())
             window.draw(roomShapes[i]);
     }
 
     for (int i = 0; i < size(roomTextNumbers); i++) {
-        if (game->map->roomList[i].getVisited())
+        if (game->map->roomList[i]->getVisited())
             window.draw(roomTextNumbers[i]);
     }
 
-    currentPointer.setPosition(game->map->roomList[0].getWidth() / 2 + game->map->roomList[game->map->currentRoomIndex].getPosX() * unit + unit * 0.4,
-                             game->map->roomList[0].getHeight() / 2 + game->map->roomList[game->map->currentRoomIndex].getPosY() * unit - unit * 0.4);
+    currentPointer.setPosition(game->map->roomList[0]->getWidth() / 2 + game->map->roomList[game->map->currentRoomIndex]->getPosX() * unit + unit * 0.4,
+                             game->map->roomList[0]->getHeight() / 2 + game->map->roomList[game->map->currentRoomIndex]->getPosY() * unit - unit * 0.4);
 
     // highlight special rooms of the game
-    if (game->map->roomList[game->map->startRoomIndex].getVisited())
+    if (game->map->roomList[game->map->startRoomIndex]->getVisited())
         window.draw(startPointer);
-    if (game->map->roomList[game->map->endRoomIndex].getVisited())
+    if (game->map->roomList[game->map->endRoomIndex]->getVisited())
         window.draw(endPointer);
-    if (game->map->roomList[game->map->shopRoomIndex].getVisited())
+    if (game->map->roomList[game->map->shopRoomIndex]->getVisited())
         window.draw(shopPointer);
     window.draw(currentPointer);
 }

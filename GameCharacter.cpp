@@ -9,12 +9,13 @@
 #include "FloorMap.h"
 #include "Weapon.h"
 
-GameCharacter::GameCharacter(std::string name, const sf::Texture &texture, Collider collider, std::unique_ptr<Weapon> weapon,
-                             float hp, float maxHp, float speed, float maxSpeed, float armor, float maxArmor, float strength,
-                             float maxStrength)
-        : name(std::move(name)), sprite(texture, sf::Vector2u(6, 3)), collider(std::move(collider)),
-        weapon(std::move(weapon)), hp(hp), maxHp(maxHp), speed(speed), maxSpeed(maxSpeed), armor(armor),
-        maxArmor(maxArmor), strength(strength), maxStrength(maxStrength) {
+GameCharacter::GameCharacter(std::string name, const sf::Texture &texture, Collider collider,
+                             std::unique_ptr<Weapon> weapon, float hp, float maxHp, float speed, float maxSpeed,
+                             float armor, float maxArmor, float strength, float maxStrength,
+                             sf::Vector2u imageCount)
+        : name(std::move(name)), sprite(texture, imageCount), collider(std::move(collider)),
+          weapon(std::move(weapon)), hp(hp), maxHp(maxHp), speed(speed), maxSpeed(maxSpeed), armor(armor),
+          maxArmor(maxArmor), strength(strength), maxStrength(maxStrength) {
 }
 
 void GameCharacter::receiveDamage(float damage) {
@@ -24,12 +25,11 @@ void GameCharacter::receiveDamage(float damage) {
 void GameCharacter::draw(sf::RenderWindow &window) {
     sprite.draw(window);
     collider.draw(window);
-
 }
 
 sf::Vector2f GameCharacter::updateSpriteAndCollider(sf::Vector2f deltaPos, float deltaAngle, FloorMap *floor) {
     // update the sprite with the just calculated values
-    sprite.setPosition({ sprite.getPosition().x + deltaPos.x, sprite.getPosition().y + deltaPos.y} );
+    sprite.move(deltaPos.x, deltaPos.y);
     collider.setPosX(sprite.getPosition().x);
     collider.setPosY(sprite.getPosition().y);
     sprite.setAngle(sprite.getAngle() + deltaAngle);
@@ -56,15 +56,15 @@ bool GameCharacter::isValidPosition(FloorMap *floor) {
 
     // check collision with obstacles
     collider.isColliding = false;
-    for (int i = 0; i < size(floor->roomList[floor->currentRoomIndex].obstacleList); i++) {
-        floor->roomList[floor->currentRoomIndex].obstacleList[i].collider.isColliding = false;
-        collider.isCollidingWith(floor->roomList[floor->currentRoomIndex].obstacleList[i].collider);
+    for (int i = 0; i < size(floor->roomList[floor->currentRoomIndex]->obstacleList); i++) {
+        floor->roomList[floor->currentRoomIndex]->obstacleList[i].collider.isColliding = false;
+        collider.isCollidingWith(floor->roomList[floor->currentRoomIndex]->obstacleList[i].collider);
     }
 
     // check collision with walls
-    for (int i = 0; i < size(floor->roomList[floor->currentRoomIndex].walls); i++) {
-        floor->roomList[floor->currentRoomIndex].walls[i].isColliding = false;
-        collider.isCollidingWith(floor->roomList[floor->currentRoomIndex].walls[i]);
+    for (int i = 0; i < size(floor->roomList[floor->currentRoomIndex]->walls); i++) {
+        floor->roomList[floor->currentRoomIndex]->walls[i].isColliding = false;
+        collider.isCollidingWith(floor->roomList[floor->currentRoomIndex]->walls[i]);
     }
 
     return !collider.isColliding;

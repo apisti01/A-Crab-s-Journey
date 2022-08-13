@@ -20,7 +20,7 @@ FloorMap::FloorMap(int level, MapType mapType) : level(level), mapType(mapType),
 
 void FloorMap::generateFloor() {
     // add first room in the middle of the grid (position 0, 0)
-    roomList.push_back(*new Room(0, 0, roomWidth, roomHeight, mapType));
+    roomList.push_back( std::make_unique<Room>(0, 0, roomWidth, roomHeight, mapType));
 
     // calculate number of rooms in the floor
     numRooms = round(10 - exp(1.8 - level / 4));
@@ -32,7 +32,7 @@ void FloorMap::generateFloor() {
         // of that room, pick a free side
         int sideIndex = FloorMap::pickFreeSide(roomIndex);
         // generate a new room
-        FloorMap::generateRoom(roomIndex, sideIndex, i);
+        generateRoom(roomIndex, sideIndex, i);
     }
 
     // set start and end rooms
@@ -41,14 +41,15 @@ void FloorMap::generateFloor() {
     // then add room's door colliders
     for (int i = 0; i < size(roomList); i++) {
         // add walls to the room
-        roomList[i].generateWalls();
+        roomList[i]->generateWalls();
 
         // if the room isn't the boss room, generate obstacles
-        if (!roomList[i].getBossRoom()) {
-            roomList[i].generateObstacles();
+        if (!roomList[i]->getBossRoom()) {
+            roomList[i]->generateObstacles();
         }
+        // TODO add enemies, if not start room
 
-        roomList[i].closeDoors();
+        roomList[i]->closeDoors();
     }
 
     // set the shop room
@@ -69,14 +70,14 @@ int FloorMap::pickRoom() {
         int otherSideX, otherSideY;
         for (int i = 0; i < 4; i++) {
             // calculate coordinates for the adjacent grid cell
-            otherSideX = roomList[roomIndex].getPosX() + round(sin(i * M_PI / 2));
-            otherSideY = roomList[roomIndex].getPosY() - round(cos(i * M_PI / 2));
+            otherSideX = roomList[roomIndex]->getPosX() + round(sin(i * M_PI / 2));
+            otherSideY = roomList[roomIndex]->getPosY() - round(cos(i * M_PI / 2));
 
             bool isOccupied = false;
             // check for a room in the cell: for every room
             for (int j = 0; j < size(roomList); j++) {
                 // if the room coordinates are the same as the cell coordinates
-                if (roomList[j].getPosX() == otherSideX && roomList[j].getPosY() == otherSideY) {
+                if (roomList[j]->getPosX() == otherSideX && roomList[j]->getPosY() == otherSideY) {
                     // the cell is occupied
                     isOccupied = true;
                 }
@@ -107,14 +108,14 @@ int FloorMap::pickFreeSide(int roomIndex) {
     int otherSideX, otherSideY;
     for (int i = 0; i < 4; i++) {
         // calculate coordinates for the adjacent grid cell
-        otherSideX = roomList[roomIndex].getPosX() + round(sin(i * M_PI / 2));
-        otherSideY = roomList[roomIndex].getPosY() - round(cos(i * M_PI / 2));
+        otherSideX = roomList[roomIndex]->getPosX() + round(sin(i * M_PI / 2));
+        otherSideY = roomList[roomIndex]->getPosY() - round(cos(i * M_PI / 2));
 
         bool isOccupied = false;
         // for every room
         for (int j = 0; j < size(roomList); j++) {
             // if the room coordinates are the same as the cell coordinates
-            if (roomList[j].getPosX() == otherSideX && roomList[j].getPosY() == otherSideY) {
+            if (roomList[j]->getPosX() == otherSideX && roomList[j]->getPosY() == otherSideY) {
                 // the cell is occupied
                 isOccupied = true;
             }
@@ -136,14 +137,14 @@ int FloorMap::pickFreeSide(int roomIndex) {
 
 void FloorMap::generateRoom(int roomIndex, int sideIndex, int newRoomIndex) {
     // calculate new room's grid coordinates
-    int otherSideX = roomList[roomIndex].getPosX() + round(sin(sideIndex * M_PI / 2));
-    int otherSideY = roomList[roomIndex].getPosY() - round(cos(sideIndex * M_PI / 2));
+    int otherSideX = roomList[roomIndex]->getPosX() + round(sin(sideIndex * M_PI / 2));
+    int otherSideY = roomList[roomIndex]->getPosY() - round(cos(sideIndex * M_PI / 2));
 
-    roomList.push_back(*new Room(otherSideX, otherSideY, roomWidth, roomHeight, mapType));
+    roomList.push_back(std::make_unique<Room>(otherSideX, otherSideY, roomWidth, roomHeight, mapType));
 
     // assign adjacent room index to start and new room
-    roomList[roomIndex].doors[sideIndex] = newRoomIndex;
-    roomList[newRoomIndex].doors[(sideIndex + 2) % 4] = roomIndex;
+    roomList[roomIndex]->doors[sideIndex] = newRoomIndex;
+    roomList[newRoomIndex]->doors[(sideIndex + 2) % 4] = roomIndex;
 }
 
 void FloorMap::setStartAndEndRooms() {
@@ -166,8 +167,8 @@ void FloorMap::setStartAndEndRooms() {
         newPathLength = getLongestPathLength();
     }
 
-    roomList[startRoomIndex].setStartRoom(true);
-    roomList[endRoomIndex].setBossRoom(true);
+    roomList[startRoomIndex]->setStartRoom(true);
+    roomList[endRoomIndex]->setBossRoom(true);
 
     // set the start room to be the current room
     currentRoomIndex = startRoomIndex;
@@ -187,7 +188,7 @@ int FloorMap::TerminalRoomIndex() {
         // for every side
         for (int j = 0; j < 4; j++) {
             // if there's a connection
-            if (roomList[i].doors[j] != -1) {
+            if (roomList[i]->doors[j] != -1) {
                 // increment counter
                 numAdjacentRooms++;
             }
@@ -211,12 +212,12 @@ int FloorMap::visitAdjacentRooms(int index, int prev, int dist) {
     // for every side
     for (int i = 0; i < 4; i++) {
         // if there's a connection with another room, except for the previous
-        if (roomList[index].doors[i] != -1 && i != prev) {
+        if (roomList[index]->doors[i] != -1 && i != prev) {
             // the room is not terminal
             isTerminalRoom = false;
 
             // visit that room
-            visitAdjacentRooms(roomList[index].doors[i], (i + 2) % 4, dist + 1);
+            visitAdjacentRooms(roomList[index]->doors[i], (i + 2) % 4, dist + 1);
         }
     }
 
@@ -247,7 +248,7 @@ void FloorMap::setShopRoom() {
         // select one random room from all the possible rooms
         shopRoomIndex = possibleShopRoomIndexes[rand() % size(possibleShopRoomIndexes)];
         // and set its attribute true
-        roomList[shopRoomIndex].setShopRoom(true);
+        roomList[shopRoomIndex]->setShopRoom(true);
     }
 }
 
@@ -287,18 +288,18 @@ bool FloorMap::isPlayerNearShop() {
 
 bool FloorMap::floorCompleted() {
     // if player is in the boss room and it's empty
-    if (currentRoomIndex == endRoomIndex && !roomList[currentRoomIndex].getCage())
+    if (currentRoomIndex == endRoomIndex && !roomList[currentRoomIndex]->getCage())
         return true;
     else
         return false;
 }
 
 void FloorMap::update(int deltaTime, bool attack) {
-    roomList[currentRoomIndex].update(deltaTime);
+    roomList[currentRoomIndex]->update(deltaTime, this);
     player->update(deltaTime, this, attack);
 }
 
 void FloorMap::draw(sf::RenderWindow &window) {
-    roomList[currentRoomIndex].draw(window);
+    roomList[currentRoomIndex]->draw(window);
     player->draw(window);
 }

@@ -9,7 +9,7 @@
 
 #include "Player.h"
 #include "FloorMap.h"
-#include "State.h"
+#include "States_source_files/State.h"
 
 class Game {
 public:

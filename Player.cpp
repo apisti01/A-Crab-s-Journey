@@ -4,11 +4,13 @@
 
 #include "Player.h"
 
-Player::Player(std::string name, CrabSpecie crabSpecie, const sf::Texture& texture, Collider collider, std::unique_ptr<Weapon> Weapon,
+#include <utility>
+
+Player::Player(std::string name, CrabSpecie crabSpecie, const sf::Texture& texture, Collider collider, std::unique_ptr<Weapon> weapon,
                float hp, float maxHp, float speed, float maxSpeed, float armor, float maxArmor, float strength,
-               float maxStrength, int coins) :
-        GameCharacter(std::move(name), texture, collider, std::move(Weapon), hp, maxHp, speed, maxSpeed, armor,
-                      maxArmor, strength, maxStrength), crabSpecie(crabSpecie) {
+               float maxStrength) :
+        GameCharacter(std::move(name), texture, std::move(collider), std::move(weapon), hp, maxHp, speed, maxSpeed, armor,
+                      maxArmor, strength, maxStrength, sf::Vector2u(6,3)), crabSpecie(crabSpecie) {
 }
 
 void Player::update(int deltaTime, FloorMap *floor, bool clicked) {
@@ -23,7 +25,7 @@ void Player::update(int deltaTime, FloorMap *floor, bool clicked) {
     // if the player goes through doors, then change room
     changeRoom(floor);
 
-    attack(floor, sprite.getAngle(), clicked);
+    attack(floor, clicked);
 
     // update the animation
     sprite.update(fps, animationBehaviour, deltaTime);
@@ -73,37 +75,37 @@ float Player::getMouseInput(int deltaTime) {
 void Player::changeRoom(FloorMap *floor) {
     // move across map through doors
     // right door
-    if (sprite.getPosition().x > floor->roomList[floor->currentRoomIndex].getWidth() && floor->roomList[floor->currentRoomIndex].doors[1] != -1) {
-        floor->currentRoomIndex = floor->roomList[floor->currentRoomIndex].doors[1];
+    if (sprite.getPosition().x > floor->roomList[floor->currentRoomIndex]->getWidth() && floor->roomList[floor->currentRoomIndex]->doors[1] != -1) {
+        floor->currentRoomIndex = floor->roomList[floor->currentRoomIndex]->doors[1];
         sprite.setPosition({ 5, sprite.getPosition().y });
     }
     // left door
-    if (sprite.getPosition().x < 0 && floor->roomList[floor->currentRoomIndex].doors[3] != -1) {
-        floor->currentRoomIndex = floor->roomList[floor->currentRoomIndex].doors[3];
-        sprite.setPosition({ static_cast<float>(floor->roomList[floor->currentRoomIndex].getWidth() - 5), sprite.getPosition().y });
+    if (sprite.getPosition().x < 0 && floor->roomList[floor->currentRoomIndex]->doors[3] != -1) {
+        floor->currentRoomIndex = floor->roomList[floor->currentRoomIndex]->doors[3];
+        sprite.setPosition({ static_cast<float>(floor->roomList[floor->currentRoomIndex]->getWidth() - 5), sprite.getPosition().y });
     }
     // bottom door
-    if (sprite.getPosition().y > floor->roomList[floor->currentRoomIndex].getHeight() && floor->roomList[floor->currentRoomIndex].doors[2] != -1) {
-        floor->currentRoomIndex = floor->roomList[floor->currentRoomIndex].doors[2];
+    if (sprite.getPosition().y > floor->roomList[floor->currentRoomIndex]->getHeight() && floor->roomList[floor->currentRoomIndex]->doors[2] != -1) {
+        floor->currentRoomIndex = floor->roomList[floor->currentRoomIndex]->doors[2];
         sprite.setPosition({ sprite.getPosition().x, 5 });
     }
     // upper door
-    if (sprite.getPosition().y < 0 && floor->roomList[floor->currentRoomIndex].doors[0] != -1) {
-        floor->currentRoomIndex = floor->roomList[floor->currentRoomIndex].doors[0];
-        sprite.setPosition({ sprite.getPosition().x, static_cast<float>(floor->roomList[floor->currentRoomIndex].getHeight() - 5) });
+    if (sprite.getPosition().y < 0 && floor->roomList[floor->currentRoomIndex]->doors[0] != -1) {
+        floor->currentRoomIndex = floor->roomList[floor->currentRoomIndex]->doors[0];
+        sprite.setPosition({ sprite.getPosition().x, static_cast<float>(floor->roomList[floor->currentRoomIndex]->getHeight() - 5) });
     }
 
-    floor->roomList[floor->currentRoomIndex].setVisited(true);
+    floor->roomList[floor->currentRoomIndex]->setVisited(true);
 
     collider.setPosX(sprite.getPosition().x);
     collider.setPosY(sprite.getPosition().y);
 }
 
-void Player::attack(FloorMap *floor, float bulletAngle, bool clicked) {
+void Player::attack(FloorMap *floor, bool clicked) {
     // if player has a weapon and left mouse button is pressed
     if (weapon && clicked) {
-        // if ranged it delegates the creation of bullets, return the damage if melee
-        weapon->useWeapon(sprite.getPosition(), bulletAngle, strength, floor);
+        // if ranged it delegates the creation of bullets, if melee deal the damage to all the character in the hit zone
+        weapon->useWeapon(floor, this);
     }
 }
 
@@ -115,22 +117,26 @@ void Player::enterCageMode(FloorMap *floor) {
             sprite.getPosition().y > 120 &&
             sprite.getPosition().y < 1920 - 20 /* && size(floor->roomList[floor->currentRoomIndex].enemyList) != 0 */
         ) {
-        floor->roomList[floor->currentRoomIndex].setCage(true);
+        floor->roomList[floor->currentRoomIndex]->setCage(true);
     }
 }
 
 void Player::exitCageMode(FloorMap *floor) {
-    /* when the player kills an enemy, if it's the last in the room
-    if (size(floor->roomList[floor->currentRoomIndex].enemyList) != 0) {
-        floor->roomList[floor->currentRoomIndex].setCage(false);
+    //when the player kills an enemy, if it's the last in the room
+    if (!floor->roomList[floor->currentRoomIndex]->enemyList.empty()) {
+        floor->roomList[floor->currentRoomIndex]->setCage(false);
 
         // TODO: receive coins and pearls from completing the room
     }
-    */
+
 }
 
 std::unique_ptr<Wearable> Player::wearItem(std::unique_ptr<Wearable> item) {
     std::unique_ptr<Wearable> tmp = nullptr;
+
+    // add the stats from the new item worn
+    if (item)
+        modifyStatistics(item.get(), true);
 
     // different types of wearable player can have
     switch (item->getType()) {
@@ -147,6 +153,9 @@ std::unique_ptr<Wearable> Player::wearItem(std::unique_ptr<Wearable> item) {
             shell = std::move(item);
             break;
     }
+    // remove the statistics given by the item wore before
+    if(tmp)
+        modifyStatistics(tmp.get(), false);
 
     // gives back the object wore before
     return tmp;
@@ -158,4 +167,17 @@ std::unique_ptr<Weapon> Player::changeWeapon(std::unique_ptr<Weapon> weapon1) {
     weapon = std::move(weapon1);
     // gives back the old weapon
     return tmp;
+}
+
+void Player::modifyStatistics(Wearable *item, bool wore) {
+    float i = 1.f;
+    // boolean to modify the behaviour if the item is being worn or being put off
+    if (!wore)
+        i = -1.f;
+
+    // modify stats
+    strength += i * item->getStrength();
+    speed += i * item->getSpeed();
+    hp += i * item->getHp();
+    armor += i * item->getArmor();
 }

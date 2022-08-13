@@ -66,7 +66,7 @@ TEST_F(PlayerTest, Weapon) {
     ASSERT_TRUE(player.getWeapon());
 
     // create a new ranged weapon
-    std::unique_ptr<Weapon> weapon2 = std::make_unique<RangedWeapon>(sf::Sprite());
+    std::unique_ptr<Weapon> weapon2 = std::make_unique<RangedWeapon>(& sf::Texture());
 
     // put the new weapon on, tmp takes the old melee weapon
     tmp = player.changeWeapon(std::move(weapon2));

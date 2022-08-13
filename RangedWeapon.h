@@ -12,20 +12,21 @@
 
 enum class RangedWeaponType{
     Rock,
-    Straw
+    Straw,
+    NaturalWeapon
 };
 
 class RangedWeapon : public Weapon{
 public:
     // Constructor and Destructor
-    explicit RangedWeapon(RangedWeaponType type, float damage = 5, float speed = 5, float range = 10,
-                          bool isTracking = false,
-                          bool isShattering = false, ItemRarity rarity = ItemRarity::Common, std::string name = " ",
+    /// the sprite of the bullet is loaded directly in the constructor
+    explicit RangedWeapon(RangedWeaponType type, std::string name = " ", float damage = 5, float speed = 5, float range = 10,
+                          bool isTracking = false, bool isShattering = false, ItemRarity rarity = ItemRarity::Common,
                           int price = 50);
     ~RangedWeapon() override = default;
 
     // Create bullet and puts it on the list
-    void useWeapon(sf::Vector2f playerPosition, float facingAngle, float strength, FloorMap *floor) override;
+    void useWeapon(FloorMap *floor, GameCharacter *attacker) override;
 
 private:
 

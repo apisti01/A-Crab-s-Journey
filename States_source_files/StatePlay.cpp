@@ -2,7 +2,7 @@
 // Created by apisti01 on 21/07/22.
 //
 
-#include "Game.h"
+#include "../Game.h"
 #include "StatePlay.h"
 
 StatePlay::StatePlay(Game *game) : State(game) {}
@@ -22,7 +22,7 @@ void StatePlay::eventHandling(sf::Event event, sf::RenderWindow &window) {
                 break;
             case sf::Keyboard::E:
                 // if player is near the shop
-                if (game->map->isPlayerNearShop() && !game->map->roomList[game->map->currentRoomIndex].getCage())
+                if (game->map->isPlayerNearShop() && !game->map->roomList[game->map->currentRoomIndex]->getCage())
                     game->changeState(StateType::Shop);
 
                 // if player has completed the floor
