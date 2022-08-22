@@ -70,9 +70,24 @@ StateDisplayMap::StateDisplayMap(Game *game) : State(game), unit(150.0) {
 
 void StateDisplayMap::eventHandling(sf::Event event, sf::RenderWindow &window) {
     if (event.type == sf::Event::KeyPressed) {
-        if (event.key.code == sf::Keyboard::M || event.key.code == sf::Keyboard::Escape)
-            game->changeState(StateType::Play);
+        switch (event.key.code) {
+            case sf::Keyboard::M:
+            case sf::Keyboard::Escape:
+                game->changeState(StateType::Play);
+                break;
+            case sf::Keyboard::B: {
+                game->changeState(StateType::Bestiary);
+                break;
+            case sf::Keyboard::I:
+                game->changeState(StateType::ManageInventory);
+                break;
+            case sf::Keyboard::P:
+                game->changeState(StateType::Pause);
+                break;
+            }
+        }
     }
+
 }
 
 void StateDisplayMap::draw(sf::RenderWindow &window) {

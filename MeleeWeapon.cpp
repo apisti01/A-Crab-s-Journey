@@ -6,7 +6,8 @@
 #include <bitset>
 #include "MeleeWeapon.h"
 
-MeleeWeapon::MeleeWeapon(float damage, float range, std::string name, ItemRarity rarity, int price) : Weapon(std::move(name), rarity,price), damage(damage), range(range) {}
+MeleeWeapon::MeleeWeapon(MeleeWeaponType type, std::string name, float damage, float range, ItemRarity rarity, int price) :
+        Weapon(std::move(name), rarity, price), damage(damage), range(range) {}
 
 void MeleeWeapon::useWeapon(FloorMap *floor, GameCharacter *attacker) {
     auto hit = attacker->getStrength() * damage;
@@ -22,7 +23,6 @@ void MeleeWeapon::useWeapon(FloorMap *floor, GameCharacter *attacker) {
 }
 
 bool MeleeWeapon::checkEnemy(const GameCharacter *victim, const GameCharacter *attacker) const{
-
     // for every vertex of attacked
     for (int i = 0; i < 4; i++) {
         std::string x = std::bitset<2>(i).to_string();
@@ -37,10 +37,10 @@ bool MeleeWeapon::checkEnemy(const GameCharacter *victim, const GameCharacter *a
         float dist = sqrtf(powf(pt.x - attacker->getPosX(), 2) + powf(pt.y - attacker->getPosY(), 2));
 
         // minimum distance for the attacker to not attack itself
-        auto attackerDistance = sqrt(powf(attacker->collider.getWidth(),2) + powf(attacker->collider.getHeight(),2));
+        auto attackerDistance = sqrt(powf(attacker->collider.getWidth(), 2) + powf(attacker->collider.getHeight(), 2));
 
         // check if the vertex is in the range of the weapon
-        if (dist > attackerDistance && dist < range && theta > attacker->getAngle() - M_PI / 4 && theta < attacker->getAngle() + M_PI /4)
+        if (dist > attackerDistance && dist < range && theta > attacker->getAngle() - M_PI / 4 && theta < attacker->getAngle() + M_PI / 4)
             return true;
     }
     return false;

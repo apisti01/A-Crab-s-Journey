@@ -1,10 +1,10 @@
 //
 // Created by longo on 07/07/2022.
 //
-#include <iostream>
 
 #include "Room.h"
 #include "GameCharacter.h"
+#include "Enemy_source_files/EnemyFactory.h"
 
 
 Room::Room(int posX, int posY, int width, int height, MapType mapType) : posX(posX), posY(posY), width(width),
@@ -136,7 +136,7 @@ sf::Vector2i Room::pickFreeGridSpot() {
 
     if (!roomGrid[posx][posy]) {
         roomGrid[posx][posy] = true;
-        return sf::Vector2i { (posx + 1) * 120 + 60, (posy + 1) * 120 + 60};
+        return sf::Vector2i { (posx + 1) * 120 + 60, (posy + 1) * 120 + 60 };
     } else {
         return pickFreeGridSpot();
     }
@@ -146,7 +146,7 @@ void Room::closeDoors() {
     sf::Texture obstacleTexture;
 
     // TODO: implementare l'utilizzo di una lista di oggetti per la generazione randomica
-    std::string obstacleTypes[] = {"algae 1", "algae 2", "bottle 1", "bottle 2", "flipflop", "rock 1", "rock 2"} ;
+    std::string obstacleTypes[] = {"algae 1", "algae 2", "bottle 1", "bottle 2", "flipflop", "rock 1", "rock 2"};
 
     if (doors[0] == -1) {
         obstacleTexture.loadFromFile("Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
@@ -170,18 +170,18 @@ void Room::closeDoors() {
     }
 }
 
+void Room::generateEnemies(MapType mapType, int level) {
+    enemyList = EnemyFactory::fillRoomWithEnemies(this, mapType, level);
+}
+
 void Room::update(int deltaTime, FloorMap *floor) {
-    //update enemy in the room
+    // update enemy in the room
     for (auto &enemy : enemyList)
         enemy->update(deltaTime, floor, true);
 
-    // move every bullet in the room
-    for (auto bullet = bulletList.begin(); bullet != bulletList.end() ; bullet++) {
-        bullet->move(deltaTime);
-    } // TODO check collisions of the bullets, deal damage and destroy them
-
-    // TODO check life of the enemies, if <= 0 erase them from the list
-    // TODO when killed the enemy update the observer in order to show the new enemy in the bestiary
+    // update every bullet in the room
+    for (auto bullet = bulletList.begin(); bullet != bulletList.end(); bullet++)
+        bullet->update(deltaTime, floor);
 }
 
 void Room::draw(sf::RenderWindow &window) {
@@ -201,7 +201,6 @@ void Room::draw(sf::RenderWindow &window) {
         enemy->draw(window);
 
     // draw every bullet in the room
-    for (auto bullet = bulletList.begin(); bullet != bulletList.end() ; bullet++)
+    for (auto bullet = bulletList.begin(); bullet != bulletList.end(); bullet++)
         bullet->draw(window);
 }
-

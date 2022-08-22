@@ -10,15 +10,18 @@ StatePlay::StatePlay(Game *game) : State(game) {}
 void StatePlay::eventHandling(sf::Event event, sf::RenderWindow &window) {
     if (event.type == sf::Event::KeyPressed) {
         switch (event.key.code) {
-            case sf::Keyboard::M:
-                game->changeState(StateType::DisplayMap);
-                break;
             case sf::Keyboard::Escape:
             case sf::Keyboard::P:
                 game->changeState(StateType::Pause);
                 break;
+            case sf::Keyboard::M:
+                game->changeState(StateType::DisplayMap);
+                break;
             case sf::Keyboard::I:
                 game->changeState(StateType::ManageInventory);
+                break;
+            case sf::Keyboard::B:
+                game->changeState(StateType::Bestiary);
                 break;
             case sf::Keyboard::E:
                 // if player is near the shop

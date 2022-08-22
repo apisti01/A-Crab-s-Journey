@@ -6,50 +6,187 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
 #include <bitset>
+#include <list>
 
 #include "Collider.h"
 
-void Collider::isCollidingWith(Collider other) {
-    // for every vertex of this collider
-    for (int i = 0; i < 4; i++) {
-        std::string x = std::bitset<2>(i).to_string();
-        std::string y = std::bitset<2>((5 - i) % 4).to_string();
 
-        sf::Vector2f pt(posX + pow(-1, x[0]) * width / 2 * cosf(angle) + pow(-1, x[1]) * height / 2 * sinf(angle),
-                        posY + pow(-1, y[0]) * width / 2 * sinf(angle) + pow(-1, y[1]) * height / 2 * cosf(angle));
-        float teta = other.angle - atan2f(pt.y - other.posY, pt.x - other.posX);
-        float dist = sqrtf(powf(pt.x - other.posX, 2) + powf(pt.y - other.posY, 2));
+Collider::Collider(float posX, float posY, float width, float height, float angle) :
+posX(posX), posY(posY), prevPosX(posX), prevPosY(posY), width(width), height(height), angle(angle), isColliding(false) {
+    colliderBox = sf::RectangleShape(sf::Vector2f(width, height));
+    colliderBox.setOrigin(width / 2, height / 2);
+    colliderBox.setOutlineThickness(3);
+    colliderBox.setFillColor(sf::Color::Transparent);
 
-        // check if the vertex is in the other collider
-        if (dist * cosf(teta) > -other.width / 2 && dist * cosf(teta) < other.width / 2 &&
-            dist * sinf(teta) > -other.height / 2 && dist * sinf(teta) < other.height / 2) {
-            isColliding = true;
-            other.isColliding = true;
+    // define all four vertexes
+    vertexes = {
+            { width / 2, -height / 2 },
+            { width / 2, height / 2 },
+            { -width / 2, height / 2 },
+            { -width / 2, -height / 2 }
+    };
+
+    // rotate all vertexes by the angle
+    sf::Vector2f temp {};
+    for (int i = 0; i < size(vertexes); i++) {
+        temp.x = posX + vertexes[i].x * cosf(angle) - vertexes[i].y * sinf(angle);
+        temp.y = posY + vertexes[i].x * sinf(angle) + vertexes[i].y * cosf(angle);
+        vertexes[i].x = temp.x;
+        vertexes[i].y = temp.y;
+    }
+
+    vertexPoints = {};
+    for (int i = 0; i < size(vertexes); i++) {
+        sf::CircleShape pt;
+        pt.setRadius(3);
+        pt.setOrigin(3, 3);
+        pt.setPosition(vertexes[i].x, vertexes[i].y);
+        pt.setFillColor(sf::Color::Blue);
+        vertexPoints.emplace_back(pt);
+    }
+};
+
+bool Collider::isCollidingWith(Collider other) {
+    // assuming that it's colliding
+    other.isColliding = true;
+
+    sf::Vector2f minOverlappingAxis;
+    float minOverlappingDepth = 9999;
+
+    sf::Vector2f axis;
+    float minA, maxA, minB, maxB;
+    std::vector<float> projA {};
+    std::vector<float> projB {};
+
+    float overlappingDepth, axisMag;
+
+    // for every vertex in this collider
+    for (int i = 0; i < size(vertexes); i++) {
+        // calculate the correspondent axis: the vector that connect two consecutive vertexes
+        axis = {vertexes[(i + 1) % size(vertexes)].x - vertexes[i].x,
+                vertexes[(i + 1) % size(vertexes)].y - vertexes[i].y};
+        axisMag = sqrtf(powf(axis.x, 2) + powf(axis.y, 2));
+        axis = {-axis.y / axisMag, axis.x / axisMag};
+
+        // for every vertex of the first collider
+        projA = {};
+        for (int j = 0; j < size(vertexes); j++)
+            // calculate its projection on the axis
+            projA.emplace_back(vertexes[j].x * axis.x + vertexes[j].y * axis.y);
+
+        // and find the min and the max proj values
+        minA = *min_element(projA.begin(), projA.end());
+        maxA = *max_element(projA.begin(), projA.end());
+
+        // for every vertex of the second collider
+        projB = {};
+        for (int j = 0; j < size(other.vertexes); j++)
+            // calculate its projection on the axis
+            projB.emplace_back(other.vertexes[j].x * axis.x + other.vertexes[j].y * axis.y);
+
+        // and find the min and the max proj values
+        minB = *min_element(projB.begin(), projB.end());
+        maxB = *max_element(projB.begin(), projB.end());
+
+        // then compare min and max values
+        if (minA > maxB || minB > maxA) {
+            other.isColliding = false;
+            return false;
+        }
+
+        // if they overlap, calculate the overlapping value
+        overlappingDepth = std::min(maxA, maxB) - std::max(minA, minB);
+        if (overlappingDepth < minOverlappingDepth) {
+            minOverlappingDepth = overlappingDepth;
+            minOverlappingAxis = axis;
         }
     }
 
-    // for every vertex of the other collider
-    for (int i = 0; i < 4; i++) {
-        std::string x = std::bitset<2>(i).to_string();
-        std::string y = std::bitset<2>((5 - i) % 4).to_string();
+    // for every vertex in the other collider
+    for (int i = 0; i < size(other.vertexes); i++) {
+        // calculate the correspondent axis: the vector that connect two consecutive vertexes
+        axis = {other.vertexes[(i + 1) % size(other.vertexes)].x - other.vertexes[i].x,
+                other.vertexes[(i + 1) % size(other.vertexes)].y - other.vertexes[i].y};
+        axisMag = sqrtf(powf(axis.x, 2) + powf(axis.y, 2));
+        axis = {-axis.y / axisMag, axis.x / axisMag};
 
-        sf::Vector2f pt(other.posX + pow(-1, x[0]) * other.width / 2 * cosf(other.angle) + pow(-1, x[1]) * other.height / 2 * sinf(other.angle),
-                        other.posY + pow(-1, y[0]) * other.width / 2 * sinf(other.angle) + pow(-1, y[1]) * other.height / 2 * cosf(other.angle));
-        float teta = angle - atan2f(pt.y - posY, pt.x - posX);
-        float dist = sqrtf(powf(pt.x - posX, 2) + powf(pt.y - posY, 2));
+        // for every vertex of the first collider
+        projA = {};
+        for (int j = 0; j < size(vertexes); j++)
+            // calculate its projection on the axis
+            projA.emplace_back(vertexes[j].x * axis.x + vertexes[j].y * axis.y);
 
-        // check if the vertex is in this collider
-        if (dist * cosf(teta) > -width / 2 && dist * cosf(teta) < width / 2 &&
-            dist * sinf(teta) > -height / 2 && dist * sinf(teta) < height / 2) {
-            isColliding = true;
-            other.isColliding = true;
+        // and find the min and the max proj values
+        minA = *min_element(projA.begin(), projA.end());
+        maxA = *max_element(projA.begin(), projA.end());
+
+        // for every vertex of the second collider
+        projB = {};
+        for (int j = 0; j < size(other.vertexes); j++)
+            // calculate its projection on the axis
+            projB.emplace_back(other.vertexes[j].x * axis.x + other.vertexes[j].y * axis.y);
+
+        // and find the min and the max proj values
+        minB = *min_element(projB.begin(), projB.end());
+        maxB = *max_element(projB.begin(), projB.end());
+
+        // then compare min and max values
+        if (minA > maxB || minB > maxA) {
+            other.isColliding = false;
+            return false;
+        }
+
+        // if they overlap, calculate the overlapping value
+        overlappingDepth = std::min(maxA, maxB) - std::max(minA, minB);
+        if (overlappingDepth < minOverlappingDepth) {
+            minOverlappingDepth = overlappingDepth;
+            minOverlappingAxis = axis;
         }
     }
+
+    // if this code is read, an overlap has been found
+    isColliding = true;
+
+    // check the right direction
+    if (minOverlappingAxis.x * (other.posX - posX) + minOverlappingAxis.y * (other.posY - posY) <= 0)
+        minOverlappingAxis = {-minOverlappingAxis.x, -minOverlappingAxis.y};
+
+    // move the first collider back in position according to the overlapping value and axis
+    float teta = atan2f(minOverlappingAxis.y, minOverlappingAxis.x);
+    move(-minOverlappingDepth * cosf(teta), -minOverlappingDepth * sinf(teta));
+
+    return true;
 }
 
 void Collider::move(float dx, float dy) {
     posX = posX + dx;
     posY = posY + dy;
+
+    // define all four vertexes
+    vertexes = {
+            { width / 2, -height / 2 },
+            { width / 2, height / 2 },
+            { -width / 2, height / 2 },
+            { -width / 2, -height / 2 }
+    };
+
+    sf::Vector2f temp {};
+    for (int i = 0; i < size(vertexes); i++) {
+        temp.x = posX + vertexes[i].x * cosf(angle) - vertexes[i].y * sinf(angle);
+        temp.y = posY + vertexes[i].x * sinf(angle) + vertexes[i].y * cosf(angle);
+        vertexes[i].x = temp.x;
+        vertexes[i].y = temp.y;
+    }
+
+    vertexPoints = {};
+    for (int i = 0; i < size(vertexes); i++) {
+        sf::CircleShape pt;
+        pt.setRadius(3);
+        pt.setOrigin(3, 3);
+        pt.setPosition(vertexes[i].x, vertexes[i].y);
+        pt.setFillColor(sf::Color::Blue);
+        vertexPoints.emplace_back(pt);
+    }
 }
 
 void Collider::draw(sf::RenderWindow &window) {
@@ -61,4 +198,22 @@ void Collider::draw(sf::RenderWindow &window) {
     colliderBox.setRotation(angle * 180 / M_PI);
 
     // window.draw(colliderBox);
+
+    // draw the vertexes
+    // for (int i = 0; i < size(vertexPoints); i++)
+        // window.draw(vertexPoints[i]);
+}
+
+bool Collider::isEqual(Collider other) {
+    // TODO: make it a collider operator ==
+    if (
+        this->posX == other.posX &&
+        this->posY == other.posY &&
+        this->angle == other.angle &&
+        this->width == other.width &&
+        this->height == other.height
+    )
+        return true;
+    else
+        return false;
 }

@@ -8,6 +8,8 @@
 
 #include <SFML/Graphics.hpp>
 
+class FloorMap;
+
 class Bullet {
 public:
     // Constructor and Destructor
@@ -26,7 +28,7 @@ public:
     void setSpeed(float speed) { Bullet::speed = speed; }
 
     // move the bullet with his speed on its trajectory
-    void move(int deltaTime);
+    void update(int deltaTime, FloorMap *floor);
 
     void draw(sf::RenderWindow& window);
 

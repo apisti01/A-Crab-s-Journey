@@ -1,26 +1,26 @@
 //
-// Created by longo on 26/07/2022.
+// Created by longo on 19/08/2022.
 //
 
+#include "StateBestiary.h"
 #include "../Game.h"
-#include "StateManageInventory.h"
 
-StateManageInventory::StateManageInventory(Game *game) : State(game) {
-    backgroundTexture.loadFromFile("Games States/Inventory/Inventory.png");
+StateBestiary::StateBestiary(Game *game) : State(game) {
+    backgroundTexture.loadFromFile("Games States/Bestiary/Bestiary.png");
 }
 
-void StateManageInventory::eventHandling(sf::Event event, sf::RenderWindow &window) {
+void StateBestiary::eventHandling(sf::Event event, sf::RenderWindow &window) {
     if (event.type == sf::Event::KeyPressed) {
         switch (event.key.code) {
-            case sf::Keyboard::I:
+            case sf::Keyboard::B:
             case sf::Keyboard::Escape:
                 game->changeState(StateType::Play);
                 break;
             case sf::Keyboard::M: {
                 game->changeState(StateType::DisplayMap);
                 break;
-            case sf::Keyboard::B:
-                game->changeState(StateType::Bestiary);
+            case sf::Keyboard::I:
+                game->changeState(StateType::ManageInventory);
                 break;
             case sf::Keyboard::P:
                 game->changeState(StateType::Pause);
@@ -28,9 +28,8 @@ void StateManageInventory::eventHandling(sf::Event event, sf::RenderWindow &wind
             }
         }
     }
-
 }
 
-void StateManageInventory::draw(sf::RenderWindow &window) {
+void StateBestiary::draw(sf::RenderWindow &window) {
     window.draw(background);
 }

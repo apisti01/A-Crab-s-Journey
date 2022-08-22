@@ -11,6 +11,7 @@
 #include "States_source_files/StateManageInventory.h"
 #include "States_source_files/StateShop.h"
 #include "States_source_files/StatePause.h"
+#include "States_source_files/StateBestiary.h"
 #include "States_source_files/StateSettings.h"
 
 #include <iostream>
@@ -56,6 +57,9 @@ void Game::changeState(StateType type) {
             break;
         case StateType::Shop:
             tmp = std::make_unique<StateShop>(this);
+            break;
+        case StateType::Bestiary:
+            tmp = std::make_unique<StateBestiary>(this);
             break;
         case StateType::Pause:
             tmp = std::make_unique<StatePause>(this);

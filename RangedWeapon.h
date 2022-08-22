@@ -10,17 +10,17 @@
 #include "Weapon.h"
 #include "Bullet.h"
 
-enum class RangedWeaponType{
+enum class RangedWeaponType {
     Rock,
     Straw,
     NaturalWeapon
 };
 
-class RangedWeapon : public Weapon{
+class RangedWeapon : public Weapon {
 public:
     // Constructor and Destructor
     /// the sprite of the bullet is loaded directly in the constructor
-    explicit RangedWeapon(RangedWeaponType type, std::string name = " ", float damage = 5, float speed = 5, float range = 10,
+    explicit RangedWeapon(RangedWeaponType type, std::string name = " ", float damage = 1, float speed = 5, float range = 10,
                           bool isTracking = false, bool isShattering = false, ItemRarity rarity = ItemRarity::Common,
                           int price = 50);
     ~RangedWeapon() override = default;

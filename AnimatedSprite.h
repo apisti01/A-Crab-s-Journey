@@ -12,7 +12,7 @@
 class AnimatedSprite {
 public:
     // Constructor and Destructor
-    AnimatedSprite(const sf::Texture& texture, sf::Vector2u imageCount);
+    AnimatedSprite(const sf::Texture& texture, sf::Vector2u imageCount, float scl);
     ~AnimatedSprite() = default;
 
     // getter and setter for sprite position
@@ -54,7 +54,7 @@ public:
 private:
     sf::Texture characterTexture;
     sf::Sprite sprite;
-    float scl = 0.4;
+    float scl;
 
     // time passed from the last change of frame of the animation
     int totalTime = 0;

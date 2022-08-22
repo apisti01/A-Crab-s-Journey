@@ -7,8 +7,8 @@
 
 #include <vector>
 
-#include "Room.h"
 #include "Player.h"
+#include "Room.h"
 
 class FloorMap {
 public:
@@ -28,7 +28,7 @@ public:
     void setLongestPathLength(int longestPathLength) { FloorMap::longestPathLength = longestPathLength; }
 
     // list of all rooms on floor
-    std::vector<std::unique_ptr<Room> > roomList {};
+    std::vector<std::unique_ptr<Room>> roomList {};
     int currentRoomIndex, startRoomIndex, endRoomIndex, shopRoomIndex = -1;
 
     std::unique_ptr<Player> player;
@@ -51,7 +51,7 @@ private:
 
     int longestPathLength;
     bool hasShop;
-    float shopChance = 0.4;
+    float shopChance = 0.5;
 
     sf::Texture backgroundTexture;
 

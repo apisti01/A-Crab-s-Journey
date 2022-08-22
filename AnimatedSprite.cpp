@@ -6,7 +6,7 @@
 
 #include "AnimatedSprite.h"
 
-AnimatedSprite::AnimatedSprite(const sf::Texture& texture, sf::Vector2u imageCount) {
+AnimatedSprite::AnimatedSprite(const sf::Texture& texture, sf::Vector2u imageCount, float scl) : scl(scl) {
     frames = int(imageCount.x - 1);
 
     rectangle = sf::IntRect(0, 0, int(texture.getSize().x / imageCount.x), int(texture.getSize().y / imageCount.y));
