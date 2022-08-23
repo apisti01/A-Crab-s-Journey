@@ -18,7 +18,10 @@ public:
     void update(int deltaTime, bool clicked) override;
 
     void draw(sf::RenderWindow &window) override;
-};
 
+private:
+    sf::RectangleShape mapIcon;
+    sf::Texture mapIconTexture;
+};
 
 #endif //MAIN_CPP_STATEPLAY_H

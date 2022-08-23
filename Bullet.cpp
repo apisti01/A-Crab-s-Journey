@@ -36,6 +36,7 @@ void Bullet::update(int deltaTime, FloorMap *floor) {
         if (dist * cosf(teta) > -enemy->collider.getWidth() / 2 && dist * cosf(teta) < enemy->collider.getWidth() / 2 &&
             dist * sinf(teta) > -enemy->collider.getHeight() / 2 && dist * sinf(teta) < enemy->collider.getHeight() / 2) {
             enemy->receiveDamage(damage);
+            // TODO: delete the bullet
         }
     }
 
@@ -50,6 +51,22 @@ void Bullet::update(int deltaTime, FloorMap *floor) {
     if (dist * cosf(teta) > -floor->player->collider.getWidth() / 2 && dist * cosf(teta) < floor->player->collider.getWidth() / 2 &&
         dist * sinf(teta) > -floor->player->collider.getHeight() / 2 && dist * sinf(teta) < floor->player->collider.getHeight() / 2) {
         floor->player->receiveDamage(damage);
+        // TODO: delete the bullet
+    }
+
+    // check collision with enemies
+    for (auto &obstacle : floor->roomList[floor->currentRoomIndex]->obstacleList) {
+        float teta = obstacle.collider.getAngle() - atan2f(sprite.getPosition().y - obstacle.getPosY(), sprite.getPosition().x - obstacle.getPosX());
+        while (teta <= -M_PI || teta > M_PI)
+            teta -= fabs(teta) / teta * 2 * M_PI;
+
+        float dist = sqrtf(powf(sprite.getPosition().x - obstacle.getPosX(), 2) + powf(sprite.getPosition().y - obstacle.getPosY(), 2));
+
+        // check if the vertex is in the other collider
+        if (dist * cosf(teta) > -obstacle.collider.getWidth() / 2 && dist * cosf(teta) < obstacle.collider.getWidth() / 2 &&
+            dist * sinf(teta) > -obstacle.collider.getHeight() / 2 && dist * sinf(teta) < obstacle.collider.getHeight() / 2) {
+            // TODO: delete the bullet
+        }
     }
 }
 
