@@ -22,6 +22,13 @@ private:
     // background
     sf::Texture backgroundTexture;
     sf::Sprite background { backgroundTexture, sf::IntRect {0, 0, 1920, 1080} };
+
+    // buttons
+    sf::RectangleShape titleBtn, newGameBtn, loadGameBtn, pearlShopBtn, backToSurfaceBtn;
+    sf::Texture titleBtnTexture, newGameBtnTexture, loadGameBtnTexture, pearlShopBtnTexture, backToSurfaceBtnTexture;
+
+    sf::RectangleShape creditsBtn, settingsBtn;
+    sf::Texture creditsBtnTexture, settingsBtnTexture;
 };
 
 

@@ -5,8 +5,8 @@
 #ifndef ACRABSJOURNEY_COLLIDER_H
 #define ACRABSJOURNEY_COLLIDER_H
 
-
 #include <cmath>
+
 
 class Collider {
 public:

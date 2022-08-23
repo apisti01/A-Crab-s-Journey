@@ -22,6 +22,10 @@ private:
     // background
     sf::Texture backgroundTexture;
     sf::Sprite background { backgroundTexture, sf::IntRect {0, 0, 1920, 1080} };
+
+    // buttons
+    sf::RectangleShape resumeBtn, exitBtn, settingsBtn;
+    sf::Texture resumeBtnTexture, exitBtnTexture, settingsBtnTexture;
 };
 
 

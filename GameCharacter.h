@@ -15,8 +15,8 @@
 #include "Collider.h"
 #include "Weapon.h"
 
-class MeleeWeapon;
 
+class MeleeWeapon;
 class FloorMap;
 
 class GameCharacter {

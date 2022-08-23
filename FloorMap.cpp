@@ -2,8 +2,8 @@
 // Created by longo on 07/07/2022.
 //
 
-
 #include "FloorMap.h"
+
 
 FloorMap::FloorMap(int level, MapType mapType) : level(level), mapType(mapType), roomWidth(1920), roomHeight(1080) {
     // there's a 40% chance that this floor has a shop room
