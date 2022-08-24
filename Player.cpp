@@ -108,13 +108,13 @@ void Player::checkCageStatus(FloorMap *floor) {
         collider.getPosY() > 120 && collider.getPosY() < 1080 - 120 &&
         size(floor->roomList[floor->currentRoomIndex]->enemyList) != 0 &&
         !floor->roomList[floor->currentRoomIndex]->getCage()) {
-        // close the doors
+        // TODO: add obstacles to the doors
         floor->roomList[floor->currentRoomIndex]->setCage(true);
     }
 
     // if the room is cleared
     else if (size(floor->roomList[floor->currentRoomIndex]->enemyList) == 0 && floor->roomList[floor->currentRoomIndex]->getCage()) {
-        // open the doors back
+        // TOOO: remove the obstacles from the doors
         floor->roomList[floor->currentRoomIndex]->setCage(false);
 
         // TODO: receive coins and pearls from completing the room

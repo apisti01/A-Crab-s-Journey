@@ -28,7 +28,8 @@ public:
     void setSpeed(float speed) { Bullet::speed = speed; }
 
     // move the bullet with his speed on its trajectory
-    void update(int deltaTime, FloorMap *floor);
+    void update(int deltaTime);
+    bool checkCollisions(FloorMap *floor);
 
     void draw(sf::RenderWindow& window);
 

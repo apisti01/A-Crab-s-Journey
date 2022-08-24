@@ -64,7 +64,8 @@ public:
     int getHeight() const { return height; }
     void setHeight(int height) { Room::height = height; }
 
-    void update(int deltaTime, FloorMap *floor);
+    void updateEnemies(int deltaTime, FloorMap *floor);
+    void updateBullets(int deltaTime, FloorMap *floor);
 
     void draw(sf::RenderWindow &window);
 

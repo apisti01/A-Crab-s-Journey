@@ -285,7 +285,7 @@ bool FloorMap::isPlayerNearShop() {
     sf::Vector2f shopPos {float(roomWidth), 0};
 
     // if player is in the shop room and it's near the shop corner
-    if (currentRoomIndex == shopRoomIndex && sqrtf(powf(player->getPosX() - shopPos.x, 2) + powf(player->getPosY() - shopPos.y, 2)) < 360)
+    if (currentRoomIndex == shopRoomIndex && sqrtf(powf(player->getPosX() - shopPos.x, 2) + powf(player->getPosY() - shopPos.y, 2)) < 600)
         return true;
     else
         return false;
@@ -300,13 +300,20 @@ bool FloorMap::floorCompleted() {
 }
 
 void FloorMap::update(int deltaTime, bool attack) {
-    roomList[currentRoomIndex]->update(deltaTime, this);
-    player->update(deltaTime, this, attack);
+    // update the current room
+    if (roomList[currentRoomIndex]->getCage())
+        roomList[currentRoomIndex]->updateEnemies(deltaTime, this);
+    roomList[currentRoomIndex]->updateBullets(deltaTime, this);
 
-    // check if the player is still alive, if not change state to main menu (to change to the end screen)
-    if (player->getHp() <= 0)
+    // and the player: check if it's still alive
+    player->update(deltaTime, this, attack);
+    // if not change state to main menu
+    if (player->getHp() <= 0) {
+        // TODO: it has to be the Game Over State
         Game::getInstance()->changeState(StateType::MainMenu);
+    }
 }
+
 
 void FloorMap::draw(sf::RenderWindow &window) {
     roomList[currentRoomIndex]->draw(window);

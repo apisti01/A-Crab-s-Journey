@@ -7,8 +7,7 @@
 #include "Enemy_source_files/EnemyFactory.h"
 
 
-Room::Room(int posX, int posY, int width, int height, MapType mapType) : posX(posX), posY(posY), width(width),
-height(height) {
+Room::Room(int posX, int posY, int width, int height, MapType mapType) : posX(posX), posY(posY), width(width), height(height) {
     // doors are all initially closed
     doors = {-1, -1, -1, -1};
 
@@ -145,7 +144,7 @@ sf::Vector2i Room::pickFreeGridSpot() {
 void Room::closeDoors() {
     sf::Texture obstacleTexture;
 
-    // TODO: implementare l'utilizzo di una lista di oggetti per la generazione randomica
+    // TODO: random generation have to use a list of data
     std::string obstacleTypes[] = {"algae 1", "algae 2", "bottle 1", "bottle 2", "flipflop", "rock 1", "rock 2"};
 
     if (doors[0] == -1) {
@@ -174,26 +173,35 @@ void Room::generateEnemies(MapType mapType, int level) {
     enemyList = EnemyFactory::fillRoomWithEnemies(this, mapType, level);
 }
 
-void Room::update(int deltaTime, FloorMap *floor) {
+void Room::updateEnemies(int deltaTime, FloorMap *floor) {
     // update enemy in the room
     for (auto &enemy : enemyList)
         enemy->update(deltaTime, floor, true);
 
-    // update every bullet in the room
-    for (auto bullet = bulletList.begin(); bullet != bulletList.end(); bullet++)
-        bullet->update(deltaTime, floor);
-    // TODO check collisions of the bullets, deal damage and destroy them
-
-
     // check life of the enemies, if <= 0 erase them from the list
     auto enemy = enemyList.begin();
     while (enemy != enemyList.end()) {
-        if ((*enemy)->getHp() > 0) {
-            ++enemy;
-        } else {
+        // if an enemy has less than 0 health points, delete it
+        if ((*enemy)->getHp() <= 0) {
             enemy = enemyList.erase(enemy);
             // TODO when killed the enemy update the observer in order to show the new enemy in the bestiary
+        } else {
+            ++enemy;
         }
+    }
+}
+
+void Room::updateBullets(int deltaTime, FloorMap *floor) {
+    // update every bullet in the room
+    auto bullet = bulletList.begin();
+    while (bullet != bulletList.end()) {
+        bullet->update(deltaTime);
+
+        // if a bullet hit something, delete it
+        if (bullet->checkCollisions(floor)) {
+            bullet = bulletList.erase(bullet);
+        } else
+            ++bullet;
     }
 }
 

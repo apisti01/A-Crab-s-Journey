@@ -25,19 +25,20 @@ Game *Game::getInstance() {
 }
 
 Game::Game() : currentState(make_unique<StateTitleScreen>(this)) {
+    /*
     // load font
     sf::Font Rancho;
-    if (!Rancho.loadFromFile("Font/Arial/Arial.ttf")) {
+    if (!Rancho.loadFromFile("Font/Rancho/Rancho.ttf")) {
         cout << "font non caricato" << endl;
         system("pause");
     }
     font = Rancho;
+    */
 }
 
 void Game::changeState(StateType type) {
     std::unique_ptr<State> tmp;
 
-    // FIXME to complete
     // based on the enum it creates a new instance of a derived state class
     switch (type) {
         case StateType::MainMenu:
