@@ -12,7 +12,7 @@
 class StaticRangedEnemy :  public Enemy {
 public:
     StaticRangedEnemy(std::string name, const sf::Texture& texture, Collider collider, std::unique_ptr<Weapon> weapon,
-                      float hp, float maxHp, float armor, float maxArmor, float strength,
+                      float hp, float maxHp, float speed, float maxSpeed, float armor, float maxArmor, float strength,
                       float maxStrength, float XpReward, int coinsDropped, int pearlsDropped);
     ~StaticRangedEnemy() override = default;
 

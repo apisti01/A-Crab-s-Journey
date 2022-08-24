@@ -11,8 +11,6 @@
 #include "Enemy_source_files/Enemy.h"
 #include "Bullet.h"
 
-class Player;
-class GameCharacter;
 
 enum class MapType {
     CoralReef,
@@ -29,8 +27,7 @@ public:
     explicit Room(int posX, int posY, int width, int height, MapType mapType);
     ~Room() = default;
     Room(const Room& room) = delete;
-    Room& operator=(const Room & room) = delete;
-
+    Room& operator = (const Room & room) = delete;
 
     // doors list: -1 for closed, n if connected to nth room
     std::vector<int> doors;
@@ -87,7 +84,11 @@ public:
 
     void generateObstacles();
 
+    void generateEnemies(MapType mapType, int level);
+
     void closeDoors();
+
+    sf::Vector2i pickFreeGridSpot();
 
 private:
     // grid position attributes
@@ -103,7 +104,6 @@ private:
     bool roomGrid[14][7]{};
 
     void setupGrid();
-    sf::Vector2i pickFreeGridSpot();
 
     // room state
     bool isCage {false};

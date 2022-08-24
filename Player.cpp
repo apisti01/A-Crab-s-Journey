@@ -10,7 +10,7 @@ Player::Player(std::string name, CrabSpecie crabSpecie, const sf::Texture& textu
                float hp, float maxHp, float speed, float maxSpeed, float armor, float maxArmor, float strength,
                float maxStrength) :
         GameCharacter(std::move(name), texture, std::move(collider), std::move(weapon), hp, maxHp, speed, maxSpeed, armor,
-                      maxArmor, strength, maxStrength, sf::Vector2u(6,3)), crabSpecie(crabSpecie) {
+                      maxArmor, strength, maxStrength, sf::Vector2u(6, 3), 0.4), crabSpecie(crabSpecie) {
 }
 
 void Player::update(int deltaTime, FloorMap *floor, bool clicked) {
@@ -18,18 +18,19 @@ void Player::update(int deltaTime, FloorMap *floor, bool clicked) {
     sf::Vector2f deltaPos = getKeyboardInput(deltaTime, floor);
     float deltaAngle = getMouseInput(deltaTime);
 
-    deltaPos = updateSpriteAndCollider(deltaPos, deltaAngle, floor);
+    updateColliderAndSprite(deltaPos, deltaAngle, floor);
 
-    selectAnimation(deltaPos);
+    selectAnimation();
 
     // if the player goes through doors, then change room
     changeRoom(floor);
+    // check for room's cage status
+    checkCageStatus(floor);
 
     attack(floor, clicked);
 
     // update the animation
     sprite.update(fps, animationBehaviour, deltaTime);
-
 }
 
 sf::Vector2f Player::getKeyboardInput(int deltaTime, FloorMap *floor) {
@@ -51,8 +52,8 @@ sf::Vector2f Player::getKeyboardInput(int deltaTime, FloorMap *floor) {
         deltaPos.x = deltaPos.x / norm;
         deltaPos.y = deltaPos.y / norm;
     }
-    deltaPos.x = deltaPos.x * speed * sprite.getWidth() * static_cast<float>(deltaTime) / 1000000;
-    deltaPos.y = deltaPos.y * speed * sprite.getHeight() * static_cast<float>(deltaTime) / 1000000;
+    deltaPos.x = deltaPos.x * speed * sprite.getWidth() * static_cast<float>(deltaTime) / pow(10, 6);
+    deltaPos.y = deltaPos.y * speed * sprite.getHeight() * static_cast<float>(deltaTime) / pow(10, 6);
 
     return deltaPos;
 }
@@ -101,34 +102,31 @@ void Player::changeRoom(FloorMap *floor) {
     collider.setPosY(sprite.getPosition().y);
 }
 
+void Player::checkCageStatus(FloorMap *floor) {
+    // if player enter the room and there are enemies
+    if (collider.getPosX() > 120 && collider.getPosX() < 1920 - 120 &&
+        collider.getPosY() > 120 && collider.getPosY() < 1080 - 120 &&
+        size(floor->roomList[floor->currentRoomIndex]->enemyList) != 0 &&
+        !floor->roomList[floor->currentRoomIndex]->getCage()) {
+        // close the doors
+        floor->roomList[floor->currentRoomIndex]->setCage(true);
+    }
+
+    // if the room is cleared
+    else if (size(floor->roomList[floor->currentRoomIndex]->enemyList) == 0 && floor->roomList[floor->currentRoomIndex]->getCage()) {
+        // open the doors back
+        floor->roomList[floor->currentRoomIndex]->setCage(false);
+
+        // TODO: receive coins and pearls from completing the room
+    }
+}
+
 void Player::attack(FloorMap *floor, bool clicked) {
     // if player has a weapon and left mouse button is pressed
     if (weapon && clicked) {
         // if ranged it delegates the creation of bullets, if melee deal the damage to all the character in the hit zone
         weapon->useWeapon(floor, this);
     }
-}
-
-void Player::enterCageMode(FloorMap *floor) {
-    // if player enter the room and there are enemies
-    if (
-            sprite.getPosition().x > 120 &&
-            sprite.getPosition().x < 1920 - 120 &&
-            sprite.getPosition().y > 120 &&
-            sprite.getPosition().y < 1920 - 20 /* && size(floor->roomList[floor->currentRoomIndex].enemyList) != 0 */
-        ) {
-        floor->roomList[floor->currentRoomIndex]->setCage(true);
-    }
-}
-
-void Player::exitCageMode(FloorMap *floor) {
-    //when the player kills an enemy, if it's the last in the room
-    if (!floor->roomList[floor->currentRoomIndex]->enemyList.empty()) {
-        floor->roomList[floor->currentRoomIndex]->setCage(false);
-
-        // TODO: receive coins and pearls from completing the room
-    }
-
 }
 
 std::unique_ptr<Wearable> Player::wearItem(std::unique_ptr<Wearable> item) {
@@ -154,7 +152,7 @@ std::unique_ptr<Wearable> Player::wearItem(std::unique_ptr<Wearable> item) {
             break;
     }
     // remove the statistics given by the item wore before
-    if(tmp)
+    if (tmp)
         modifyStatistics(tmp.get(), false);
 
     // gives back the object wore before

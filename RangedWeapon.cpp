@@ -8,8 +8,8 @@
 
 RangedWeapon::RangedWeapon(RangedWeaponType type, std::string name, float damage, float speed, float range,
                            bool isTracking, bool isShattering, ItemRarity rarity, int price)
-                           : Weapon(std::move(name), rarity, price), range(range),
-                           damage(damage), speed(speed), isTracking(isTracking), isShattering(isShattering) {
+                           : Weapon(std::move(name), rarity, price),
+                           range(range), damage(damage), speed(speed), isTracking(isTracking), isShattering(isShattering) {
     switch (type) {
         case RangedWeaponType::Rock:
             bulletTexture.loadFromFile("others/bullet_rock.png"); // FIXME to complete
@@ -17,7 +17,6 @@ RangedWeapon::RangedWeapon(RangedWeaponType type, std::string name, float damage
 }
 
 void RangedWeapon::useWeapon(FloorMap *floor, GameCharacter *attacker) {
-
     // create new bullet with the weapon specifications
     Bullet tmp(damage, speed, range, &bulletTexture, sf::Vector2f {attacker->getPosX(),attacker->getPosY()}, attacker->getAngle(), isTracking, isShattering);
 

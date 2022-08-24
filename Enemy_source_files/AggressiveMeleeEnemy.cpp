@@ -17,7 +17,7 @@ AggressiveMeleeEnemy::AggressiveMeleeEnemy(std::string name, const sf::Texture &
 
 sf::Vector2f AggressiveMeleeEnemy::chase(const Player *hero, float &deltaAngle, int deltaTime, bool &triggered) {
     // position of the player
-    auto movement = sf::Vector2f {hero->getPosX(), hero->getPosY()};
+    auto movement = sf::Vector2f { hero->getPosX(), hero->getPosY() };
 
     // coordinates relative to the position of the enemy
     movement.x -= getPosX();
@@ -40,8 +40,8 @@ sf::Vector2f AggressiveMeleeEnemy::chase(const Player *hero, float &deltaAngle, 
         triggered = false;
 
     // the actual movement
-    movement.x = movement.x * speed * sprite.getWidth() * static_cast<float>(deltaTime) / 1000000;
-    movement.y = movement.y * speed * sprite.getHeight() * static_cast<float>(deltaTime) / 1000000;
+    movement.x = movement.x * speed * sprite.getWidth() * static_cast<float>(deltaTime) / pow(10, 6);
+    movement.y = movement.y * speed * sprite.getHeight() * static_cast<float>(deltaTime) / pow(10, 6);
 
     return movement;
 }
@@ -53,7 +53,6 @@ void AggressiveMeleeEnemy::attack(FloorMap *floor, bool triggered) {
 }
 
 void AggressiveMeleeEnemy::dropItems() {
-    // TODO
-
+    // TODO: random drop of items
 }
 

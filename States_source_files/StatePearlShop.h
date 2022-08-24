@@ -25,5 +25,4 @@ private:
 };
 
 
-
 #endif //ACRABSJOURNEY_STATEPEARLSHOP_H

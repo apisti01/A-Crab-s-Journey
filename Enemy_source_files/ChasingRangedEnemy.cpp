@@ -12,12 +12,11 @@ ChasingRangedEnemy::ChasingRangedEnemy(std::string name, const sf::Texture &text
                                        Enemy(std::move(name), texture, std::move(collider),
                                              std::move(weapon), hp, maxHp, speed, maxSpeed, armor, maxArmor,
                                              strength, maxStrength, XpReward, coinsDropped, pearlsDropped), triggerRange(triggerRange) {
-
 }
 
 sf::Vector2f ChasingRangedEnemy::chase(const Player *hero, float &deltaAngle, int deltaTime, bool &triggered) {
     // position of the player
-    auto movement = sf::Vector2f {hero->getPosX(), hero->getPosY()};
+    auto movement = sf::Vector2f { hero->getPosX(), hero->getPosY() };
 
     // coordinates relative to the position of the enemy
     movement.x -= getPosX();
@@ -25,8 +24,9 @@ sf::Vector2f ChasingRangedEnemy::chase(const Player *hero, float &deltaAngle, in
 
     // normalization
     float distance = sqrtf(powf(movement.x, 2) + powf(movement.y, 2));
-    if (distance < triggerRange) {
 
+    // if the enemy is too far from the player
+    if (distance > triggerRange) {
         // variation in radians of the facing angle
         deltaAngle = atan2f(movement.y, movement.x) - getAngle();
 
@@ -36,16 +36,18 @@ sf::Vector2f ChasingRangedEnemy::chase(const Player *hero, float &deltaAngle, in
             movement.y = movement.y / distance;
         }
 
-        // triggered and will shoot
-        triggered = true;
-
-        // the actual movement
-        movement.x = movement.x * speed * sprite.getWidth() * static_cast<float>(deltaTime) / 1000000;
-        movement.y = movement.y * speed * sprite.getHeight() * static_cast<float>(deltaTime) / 1000000;
-    } else {
-        // stand still and does not attack
-        movement = sf::Vector2f{0.f, 0.f};
+        // it does not attack
         triggered = false;
+
+        // it moves to come near the player
+        movement.x = movement.x * speed * sprite.getWidth() * static_cast<float>(deltaTime) / pow(10, 6);
+        movement.y = movement.y * speed * sprite.getHeight() * static_cast<float>(deltaTime) / pow(10, 6);
+    }
+    // if the enemy is near enough
+    else {
+        // stand still and does not attack
+        movement = sf::Vector2f {0.f, 0.f};
+        triggered = true;
     }
 
     return movement;
@@ -58,5 +60,5 @@ void ChasingRangedEnemy::attack(FloorMap *floor, bool triggered) {
 }
 
 void ChasingRangedEnemy::dropItems() {
-    // TODO
+    // TODO random drop of items
 }

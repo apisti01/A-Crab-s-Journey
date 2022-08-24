@@ -17,6 +17,7 @@ enum class StateType {
     ManageInventory,
     DisplayMap,
     Shop,
+    Bestiary,
     Pause,
     PearlShop,
     Settings,

@@ -2,75 +2,74 @@
 // Created by apisti01 on 29/06/22.
 //
 
-
 #include <utility>
 
 #include "GameCharacter.h"
 #include "FloorMap.h"
 #include "Weapon.h"
 
+
 GameCharacter::GameCharacter(std::string name, const sf::Texture &texture, Collider collider,
                              std::unique_ptr<Weapon> weapon, float hp, float maxHp, float speed, float maxSpeed,
                              float armor, float maxArmor, float strength, float maxStrength,
-                             sf::Vector2u imageCount)
-        : name(std::move(name)), sprite(texture, imageCount), collider(std::move(collider)),
+                             sf::Vector2u imageCount, float spriteScale)
+        : name(std::move(name)), sprite(texture, imageCount, spriteScale), collider(std::move(collider)),
           weapon(std::move(weapon)), hp(hp), maxHp(maxHp), speed(speed), maxSpeed(maxSpeed), armor(armor),
-          maxArmor(maxArmor), strength(strength), maxStrength(maxStrength) {
+          maxArmor(maxArmor), strength(strength), maxStrength(maxStrength), spriteScale(spriteScale) {
 }
 
 void GameCharacter::receiveDamage(float damage) {
-    hp -= damage * (1 -  armor);
-}
+    hp -= damage * (10 - armor);
 
-void GameCharacter::draw(sf::RenderWindow &window) {
-    sprite.draw(window);
-    collider.draw(window);
-}
-
-sf::Vector2f GameCharacter::updateSpriteAndCollider(sf::Vector2f deltaPos, float deltaAngle, FloorMap *floor) {
-    // update the sprite with the just calculated values
-    sprite.move(deltaPos.x, deltaPos.y);
-    collider.setPosX(sprite.getPosition().x);
-    collider.setPosY(sprite.getPosition().y);
-    sprite.setAngle(sprite.getAngle() + deltaAngle);
-    collider.setAngle(sprite.getAngle());
-
-    // check if the next position and rotation is valid
-    if (!isValidPosition(floor)) {
-        sprite.setPosition({ sprite.getPosition().x - deltaPos.x, sprite.getPosition().y - deltaPos.y });
-        sprite.setAngle(sprite.getAngle() - deltaAngle);
-
-        deltaPos = {0, 0};
+    // if health points are negative
+    if (hp <= 0) {
+        // TODO when killed the enemy update the observer in order to show the new enemy in the bestiary
     }
-
-    // update the collider
-    collider.setPosX(sprite.getPosition().x);
-    collider.setPosY(sprite.getPosition().y);
-    collider.setAngle(sprite.getAngle());
-
-    return deltaPos;
 }
 
-bool GameCharacter::isValidPosition(FloorMap *floor) {
-    // TODO: check collision with every other game character in the room by override
+void GameCharacter::updateColliderAndSprite(sf::Vector2f deltaPos, float deltaAngle, FloorMap *floor) {
+    collider.setPrevPosX(collider.getPosX());
+    collider.setPrevPosY(collider.getPosY());
+
+    // update the collider with the just calculated values
+    collider.move(deltaPos.x, deltaPos.y);
+    collider.setAngle(collider.getAngle() + deltaAngle);
+
+    // put it in a position in which does not overlap with other colliders
+    separatingAxisTheorem(floor);
+
+    // update the sprite
+    sprite.setPosition(sf::Vector2f { collider.getPosX(), collider.getPosY() });
+    sprite.setAngle(collider.getAngle());
+}
+
+void GameCharacter::separatingAxisTheorem(FloorMap *floor) {
+    // suppose the collider is not overlapping with any other
+    collider.isColliding = false;
+
+    // check collision with player
+    if (!collider.isEqual(floor->player->collider))
+        collider.isCollidingWith(floor->player->collider);
+
+    // check collision with enemies
+    for (auto &enemy : floor->roomList[floor->currentRoomIndex]->enemyList) {
+        if (!collider.isEqual(enemy->collider))
+            collider.isCollidingWith(enemy->collider);
+    }
 
     // check collision with obstacles
-    collider.isColliding = false;
-    for (int i = 0; i < size(floor->roomList[floor->currentRoomIndex]->obstacleList); i++) {
-        floor->roomList[floor->currentRoomIndex]->obstacleList[i].collider.isColliding = false;
+    for (int i = 0; i < size(floor->roomList[floor->currentRoomIndex]->obstacleList); i++)
         collider.isCollidingWith(floor->roomList[floor->currentRoomIndex]->obstacleList[i].collider);
-    }
 
     // check collision with walls
-    for (int i = 0; i < size(floor->roomList[floor->currentRoomIndex]->walls); i++) {
-        floor->roomList[floor->currentRoomIndex]->walls[i].isColliding = false;
+    for (int i = 0; i < size(floor->roomList[floor->currentRoomIndex]->walls); i++)
         collider.isCollidingWith(floor->roomList[floor->currentRoomIndex]->walls[i]);
-    }
+ }
 
-    return !collider.isColliding;
-}
+void GameCharacter::selectAnimation() {
+    // calculate deltaPos based on current and previous position
+    sf::Vector2f deltaPos { collider.getPosX() - collider.getPrevPosX(), collider.getPosY() - collider.getPrevPosY() };
 
-void GameCharacter::selectAnimation(sf::Vector2f deltaPos) {
     // suppose the player is standing still
     animationBehaviour = 0;
     // if player is moving
@@ -89,4 +88,9 @@ void GameCharacter::selectAnimation(sf::Vector2f deltaPos) {
             animationBehaviour = 2;
         }
     }
+}
+
+void GameCharacter::draw(sf::RenderWindow &window) {
+    sprite.draw(window);
+    collider.draw(window);
 }

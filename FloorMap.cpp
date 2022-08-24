@@ -2,9 +2,9 @@
 // Created by longo on 07/07/2022.
 //
 
-
 #include "FloorMap.h"
 #include "Game.h"
+
 
 FloorMap::FloorMap(int level, MapType mapType) : level(level), mapType(mapType), roomWidth(1920), roomHeight(1080) {
     // there's a 40% chance that this floor has a shop room
@@ -44,12 +44,15 @@ void FloorMap::generateFloor() {
         // add walls to the room
         roomList[i]->generateWalls();
 
-        // if the room isn't the boss room, generate obstacles
-        if (!roomList[i]->getBossRoom()) {
+        // if the room is not the boss room, generate obstacles
+        if (!roomList[i]->getBossRoom())
             roomList[i]->generateObstacles();
-        }
-        // TODO add enemies, if not start room
 
+        // if the room is not the start room, generate enemies
+        if (!roomList[i]->getStartRoom())
+            roomList[i]->generateEnemies(mapType, level);
+
+        // close the doors that don't connect with other rooms
         roomList[i]->closeDoors();
     }
 
@@ -266,10 +269,11 @@ void FloorMap::setupPlayer() {
     // and a collider
     Collider collider(float (roomWidth) / 2, float (roomHeight) / 2,
                       brownCrabTexture.getSize().x / 6 * 0.4 * 0.6,
-                      brownCrabTexture.getSize().y / 3 * 0.4 * 0.8, 0);
+                      brownCrabTexture.getSize().y / 3 * 0.4 * 0.8);
 
     // create the player
-    player = make_unique<Player>("Crab", CrabSpecie::BrownCrab, std::move(brownCrabTexture), collider, std::move(rangedWeapon), 10, 10, 1, 1, 10, 10, 10, 10);
+    player = make_unique<Player>("Crab", CrabSpecie::BrownCrab, std::move(brownCrabTexture), collider, std::move(rangedWeapon),
+                                 10, 10, 1, 1, 10, 10, 10, 10);
 
     // and set his position at the center of the map
     player->setPosition(roomWidth / 2, roomHeight / 2);
