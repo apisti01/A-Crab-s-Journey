@@ -4,6 +4,7 @@
 
 
 #include "FloorMap.h"
+#include "Game.h"
 
 FloorMap::FloorMap(int level, MapType mapType) : level(level), mapType(mapType), roomWidth(1920), roomHeight(1080) {
     // there's a 40% chance that this floor has a shop room
@@ -297,6 +298,10 @@ bool FloorMap::floorCompleted() {
 void FloorMap::update(int deltaTime, bool attack) {
     roomList[currentRoomIndex]->update(deltaTime, this);
     player->update(deltaTime, this, attack);
+
+    // check if the player is still alive, if not change state to main menu (to change to the end screen)
+    if (player->getHp() <= 0)
+        Game::getInstance()->changeState(StateType::MainMenu);
 }
 
 void FloorMap::draw(sf::RenderWindow &window) {
