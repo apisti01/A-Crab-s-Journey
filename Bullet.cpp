@@ -40,6 +40,7 @@ void Bullet::update(int deltaTime, FloorMap *floor) {
         }
     }
 
+    
     // check collision with player
     float teta = floor->player->getAngle() - atan2f(sprite.getPosition().y - floor->player->getPosY(), sprite.getPosition().x - floor->player->getPosX());
     while (teta <= -M_PI || teta > M_PI)
@@ -54,7 +55,8 @@ void Bullet::update(int deltaTime, FloorMap *floor) {
         // TODO: delete the bullet
     }
 
-    // check collision with enemies
+
+    // check collision with obstacles
     for (auto &obstacle : floor->roomList[floor->currentRoomIndex]->obstacleList) {
         float teta = obstacle.collider.getAngle() - atan2f(sprite.getPosition().y - obstacle.getPosY(), sprite.getPosition().x - obstacle.getPosX());
         while (teta <= -M_PI || teta > M_PI)
