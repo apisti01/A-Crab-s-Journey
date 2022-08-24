@@ -38,6 +38,7 @@ StateMainMenu::StateMainMenu(Game *game) : State(game) {
 }
 
 void StateMainMenu::createStateButton(sf::RectangleShape* btn, sf::Texture btnTexture, float scl, float posX, float posY, bool clickable) {
+    // TODO: create button class
     btn->setPosition(posX, posY);
     btn->setScale(scl, scl);
     btn->setOrigin(btnTexture.getSize().x / 2, btnTexture.getSize().y / 2);

@@ -19,9 +19,8 @@ StateTitleScreen::StateTitleScreen(Game* game): State(game) {
 
 void StateTitleScreen::eventHandling(sf::Event event, sf::RenderWindow &window) {
     // when clicked any key it changes and go to the Start/Main menu
-    if (event.type == sf::Event::KeyReleased) {
+    if (event.type == sf::Event::KeyReleased)
         game->changeState(StateType::MainMenu);
-    }
 }
 
 void StateTitleScreen::draw(sf::RenderWindow &window) {

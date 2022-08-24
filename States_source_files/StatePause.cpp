@@ -51,6 +51,7 @@ void StatePause::eventHandling(sf::Event event, sf::RenderWindow &window) {
 }
 
 void StatePause::updateButton(sf::RectangleShape* btn, sf::RenderWindow &window) {
+    // TODO: create button class
     if (btn->getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
         btn->setFillColor(sf::Color(255, 255, 255, 255));
     else
