@@ -10,6 +10,7 @@
 #include "Obstacle.h"
 #include "Enemy_source_files/Enemy.h"
 #include "Bullet.h"
+#include "Bestiary.h"
 
 
 enum class MapType {
@@ -85,7 +86,7 @@ public:
 
     void generateObstacles();
 
-    void generateEnemies(MapType mapType, int level);
+    void generateEnemies(Bestiary* bestiary, MapType mapType, int level);
 
     void closeDoors();
 

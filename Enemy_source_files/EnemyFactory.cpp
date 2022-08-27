@@ -12,7 +12,7 @@
 
 #include <cstdlib>
 
-std::list<std::unique_ptr<Enemy>> EnemyFactory::fillRoomWithEnemies(Room *room, MapType type, int level) {
+std::list<std::unique_ptr<Enemy>> EnemyFactory::fillRoomWithEnemies(Bestiary* bestiary, Room *room, MapType type, int level) {
     std::list<std::unique_ptr<Enemy>> enemyList{};
 
     // if it's not the boss room
@@ -23,7 +23,7 @@ std::list<std::unique_ptr<Enemy>> EnemyFactory::fillRoomWithEnemies(Room *room, 
         // prepare every enemy
         for (int i = 0; i < numberOfEnemies; ++i) {
             // creation
-            auto enemy = createSingleEnemy(type, level);
+            auto enemy = selectRandomEnemy(bestiary, type, level);
             // setting position
             placeEnemy(enemy.get(), room);
             //adding to the list
@@ -36,31 +36,80 @@ std::list<std::unique_ptr<Enemy>> EnemyFactory::fillRoomWithEnemies(Room *room, 
     return enemyList;
 }
 
-std::unique_ptr<Enemy> EnemyFactory::createSingleEnemy(MapType mapType, int level) {
-    std::unique_ptr<Enemy> enemy;
+std::unique_ptr<Enemy> EnemyFactory::selectRandomEnemy(Bestiary* bestiary, MapType mapType, int level) {
+    // pick a random enemy from all the bestiary
+    auto enemy = bestiary->beasts[rand() % size(bestiary->beasts)];
 
+    std::string habitat;
     switch (mapType) {
         case MapType::CoralReef:
-            enemy = coralReefEnemy(level);
+            habitat = "CoralReef";
             break;
         case MapType::MangroveForest:
-            enemy = mangroveForestEnemy(level);
+            habitat = "MangroveForest";
             break;
         case MapType::TemperateReef:
-            enemy = temperateReefEnemy(level);
+            habitat = "TemperateReef";
             break;
         case MapType::KelpForest:
-            enemy = kelpForestEnemy(level);
+            habitat = "KelpForest";
             break;
         case MapType::PosidoniaMeadow:
-            enemy = posidoniaMeadowEnemy(level);
+            habitat = "PosidoniaMeadow";
             break;
         case MapType::IceFloe:
-            enemy = iceFloeEnemy(level);
+            habitat = "IceFloe";
             break;
     }
 
-    return enemy;
+    // if this enemy is
+    if (std::count(enemy.habitats.begin(), enemy.habitats.end(), habitat)) {
+        // assing a weapon
+        auto rangedWeapon = make_unique<RangedWeapon>(RangedWeaponType::NaturalWeapon, "Natural Weapon");
+        auto meleeWeapon = make_unique<MeleeWeapon>(MeleeWeaponType::NaturalWeapon, "Natural Weapon");
+
+        // the sprite of the enemy instead has to be created, loaded and passed here
+        sf::Texture enemyTexture;
+        enemyTexture.loadFromFile("GameCharacter/Enemy/" + enemy.type + "/" + enemy.name + "/Texture.png");
+
+        // and a collider
+        Collider enemyCollider(float(1920) / 2, float(1080) / 2, enemyTexture.getSize().x * 0.6,
+                               enemyTexture.getSize().y * 0.6);
+
+        auto ame = std::make_unique<AggressiveMeleeEnemy>(enemy.name, enemyTexture, enemyCollider,
+                                                          std::move(meleeWeapon), enemy.health, enemy.health,
+                                                          enemy.speed, enemy.speed, enemy.armor, enemy.armor,
+                                                          enemy.strength, enemy.strength, 10, 10, 10,
+                                                          enemy.triggerRange);
+        auto cre = std::make_unique<ChasingRangedEnemy>(enemy.name, enemyTexture, enemyCollider,
+                                                        std::move(rangedWeapon), enemy.health, enemy.health,
+                                                        enemy.speed, enemy.speed, enemy.armor, enemy.armor,
+                                                        enemy.strength, enemy.strength, 10, 10, 10,
+                                                        enemy.triggerRange);
+        auto dme = std::make_unique<DefensiveMeleeEnemy>(enemy.name, enemyTexture, enemyCollider,
+                                                         std::move(meleeWeapon), enemy.health, enemy.health,
+                                                         enemy.speed, enemy.speed, enemy.armor, enemy.armor,
+                                                         enemy.strength, enemy.strength, 10, 10, 10,
+                                                         enemy.triggerRange);
+        auto sre = std::make_unique<StaticRangedEnemy>(enemy.name, enemyTexture, enemyCollider,
+                                                       std::move(rangedWeapon), enemy.health, enemy.health,
+                                                       enemy.speed, enemy.speed, enemy.armor, enemy.armor,
+                                                       enemy.strength, enemy.strength, 10, 10, 10);
+
+        std::unique_ptr<Enemy> enemyPtr;
+        if (enemy.type == "AggressiveMelee")
+            enemyPtr = std::move(ame);
+        else if (enemy.type == "ChasingRanged")
+            enemyPtr = std::move(cre);
+        else if (enemy.type == "DefensiveMelee")
+            enemyPtr = std::move(dme);
+        else if (enemy.type == "StaticRanged")
+            enemyPtr = std::move(sre);
+
+        return enemyPtr;
+    } else {
+        return selectRandomEnemy(bestiary, mapType, level);
+    }
 }
 
 void EnemyFactory::placeEnemy(Enemy *enemy, Room *room) {
@@ -72,122 +121,3 @@ void EnemyFactory::placeEnemy(Enemy *enemy, Room *room) {
     // and place the enemy there
     enemy->setPosition(pos.x, pos.y);
 }
-
-std::unique_ptr<Enemy> EnemyFactory::coralReefEnemy(int level) {
-    std::unique_ptr<Enemy> enemy;
-
-    // random type of behaviour type
-    int type = rand() % 4;
-
-    // TODO if there are more than 1 enemy type per behaviour per habitat then do another switch inside
-    switch (type) {
-        case 0: // Static ranged
-        {
-            // the sprite of the bullet of the ranged weapon is directly loaded in the constructor of the weapon
-            auto weapon = make_unique<RangedWeapon>(RangedWeaponType::NaturalWeapon, "Natural Weapon");
-            // the sprite of the enemy instead has to be created, loaded and passed here
-            sf::Texture enemyTexture;
-            enemyTexture.loadFromFile("GameCharacter/Enemy/Static Ranged/Hermit Crab/Texture.png");
-
-            // and a collider
-            Collider enemyCollider(float (1920) / 2, float (1080) / 2,
-                                   enemyTexture.getSize().x * 0.6,
-                                   enemyTexture.getSize().y * 0.6);
-            auto tmp = std::make_unique<StaticRangedEnemy>("Hermit Crab", enemyTexture, enemyCollider, std::move(weapon),
-                                                           10, 10, 1, 1, 3, 3, 10, 10, 10, 10, 10);
-            // move to the pointer that is then returned
-            enemy = std::move(tmp);
-
-            break;
-        }
-        case 1: // Chasing ranged
-        {
-            // the sprite of the bullet of the ranged weapon is directly loaded in the constructor of the weapon
-            auto weapon = make_unique<RangedWeapon>(RangedWeaponType::NaturalWeapon, "Natural Weapon");
-            // the sprite of the enemy instead has to be created, loaded and passed here
-            sf::Texture enemyTexture;
-            enemyTexture.loadFromFile("GameCharacter/Enemy/Chasing Ranged/Squid/Texture.png");
-
-            // and a collider
-            Collider enemyCollider(float (1920) / 2, float (1080) / 2,
-                                   enemyTexture.getSize().x * 0.6,
-                                   enemyTexture.getSize().y * 0.6);
-            int triggerRange = 360;
-            auto tmp = std::make_unique<ChasingRangedEnemy>("Squid", enemyTexture, enemyCollider, std::move(weapon),
-                                                            10, 10, 1, 1, 2, 2, 10, 10, 10, 10, 10, triggerRange);
-            // move to the pointer that is then returned
-            enemy = std::move(tmp);
-
-            break;
-        }
-        case 2: // Aggressive melee
-        {
-            // the sprite of the bullet of the ranged weapon is directly loaded in the constructor of the weapon
-            auto weapon = make_unique<MeleeWeapon>(MeleeWeaponType::NaturalWeapon, "Natural Weapon");
-            // the sprite of the enemy instead has to be created, loaded and passed here
-            sf::Texture enemyTexture;
-            enemyTexture.loadFromFile("GameCharacter/Enemy/Aggressive Melee/Sea Turtle/Texture.png");
-
-            // and a collider
-            Collider enemyCollider(float (1920) / 2, float (1080) / 2,
-                                   enemyTexture.getSize().x * 0.6,
-                                   enemyTexture.getSize().y * 0.6);
-            int triggerRange = 180;
-            auto tmp = std::make_unique<AggressiveMeleeEnemy>("Sea Turtle", enemyTexture, enemyCollider, std::move(weapon),
-                                                              10, 10, 1, 1, 4, 4, 10, 10, 10, 10, 10, triggerRange);
-            // move to the pointer that is then returned
-            enemy = std::move(tmp);
-
-            break;
-        }
-        case 3: // Defensive melee
-        {
-            // the sprite of the bullet of the ranged weapon is directly loaded in the constructor of the weapon
-            auto weapon = make_unique<MeleeWeapon>(MeleeWeaponType::NaturalWeapon, "Natural Weapon");
-            // the sprite of the enemy instead has to be created, loaded and passed here
-            sf::Texture enemyTexture;
-            enemyTexture.loadFromFile("GameCharacter/Enemy/Defensive Melee/Puffer Fish/Texture.png");
-
-            // and a collider
-            Collider enemyCollider(float (1920) / 2, float (1080) / 2,
-                                   enemyTexture.getSize().x * 0.6,
-                                   enemyTexture.getSize().y * 0.6);
-            int triggerRange = 240;
-            auto tmp = std::make_unique<DefensiveMeleeEnemy>("Puffer Fish", enemyTexture, enemyCollider, std::move(weapon),
-                                                             10, 10, 0.6, 0.6, 2, 2, 10, 10, 10, 10, 10, triggerRange);
-            // move to the pointer that is then returned
-            enemy = std::move(tmp);
-
-            break;
-        }
-    }
-
-    return enemy;
-}
-
-std::unique_ptr<Enemy> EnemyFactory::mangroveForestEnemy(int level) {
-    std::unique_ptr<Enemy> enemy;
-    return enemy;
-}
-
-std::unique_ptr<Enemy> EnemyFactory::temperateReefEnemy(int level) {
-    std::unique_ptr<Enemy> enemy;
-    return enemy;
-}
-
-std::unique_ptr<Enemy> EnemyFactory::kelpForestEnemy(int level) {
-    std::unique_ptr<Enemy> enemy;
-    return enemy;
-}
-
-std::unique_ptr<Enemy> EnemyFactory::posidoniaMeadowEnemy(int level) {
-    std::unique_ptr<Enemy> enemy;
-    return enemy;
-}
-
-std::unique_ptr<Enemy> EnemyFactory::iceFloeEnemy(int level) {
-    std::unique_ptr<Enemy> enemy;
-    return enemy;
-}
-
-

@@ -18,14 +18,13 @@
 
 Game* Game::gameInstance = nullptr;
 
-Game *Game::getInstance() {
+Game* Game::getInstance() {
     if (gameInstance == nullptr)
         gameInstance = new Game();
     return gameInstance;
 }
 
-Game::Game() : currentState(make_unique<StateTitleScreen>(this)) {
-    /*
+Game::Game() : currentState(make_unique<StateTitleScreen>(this)), bestiary(Bestiary()) {
     // load font
     sf::Font Rancho;
     if (!Rancho.loadFromFile("Font/Rancho/Rancho.ttf")) {
@@ -33,7 +32,6 @@ Game::Game() : currentState(make_unique<StateTitleScreen>(this)) {
         system("pause");
     }
     font = Rancho;
-    */
 }
 
 void Game::changeState(StateType type) {
@@ -71,10 +69,10 @@ void Game::changeState(StateType type) {
                 tmp = std::make_unique<StateSettings>(this);
                 break;
         }
-
-    } catch(exception &e) {
+    } catch (exception &e) {
         std::cout << e.what();
     }
+
     // the current state became the one just created, deleting the old one
     currentState = std::move(tmp);
 }

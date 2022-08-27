@@ -9,26 +9,17 @@
 
 class EnemyFactory {
 public:
-    // XXX MAYBE THEY SHOULD ALL BE STATIC, TO DECIDE ONCE FINISHED WRITING
+    // FIXME: MAYBE THEY SHOULD ALL BE STATIC, TO DECIDE ONCE FINISHED WRITING
 
     // return the final list of the enemies in the room, already in the correct position
-    static std::list<std::unique_ptr<Enemy>> fillRoomWithEnemies(Room *room, MapType type, int level);
+    static std::list<std::unique_ptr<Enemy>> fillRoomWithEnemies(Bestiary* bestiary, Room *room, MapType type, int level);
 
 private:
     // decide the single enemy based on the mapType
-    static std::unique_ptr<Enemy> createSingleEnemy(MapType mapType, int level);
+    static std::unique_ptr<Enemy> selectRandomEnemy(Bestiary* bestiary, MapType mapType, int level);
 
     // put the enemy in the right position
     static void placeEnemy(Enemy *enemy, Room *room);
-
-    // function specific for every mapType
-    static std::unique_ptr<Enemy> coralReefEnemy(int level);
-    static std::unique_ptr<Enemy> mangroveForestEnemy(int level);
-    static std::unique_ptr<Enemy> temperateReefEnemy(int level);
-    static std::unique_ptr<Enemy> kelpForestEnemy(int level);
-    static std::unique_ptr<Enemy> posidoniaMeadowEnemy(int level);
-    static std::unique_ptr<Enemy> iceFloeEnemy(int level);
 };
-
 
 #endif //MAIN_CPP_ENEMYFACTORY_H

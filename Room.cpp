@@ -7,7 +7,6 @@
 #include "GameCharacter.h"
 #include "Enemy_source_files/EnemyFactory.h"
 
-
 Room::Room(int posX, int posY, int width, int height, MapType mapType) : posX(posX), posY(posY), width(width), height(height) {
     // doors are all initially closed
     doors = {-1, -1, -1, -1};
@@ -170,8 +169,8 @@ void Room::closeDoors() {
     }
 }
 
-void Room::generateEnemies(MapType mapType, int level) {
-    enemyList = EnemyFactory::fillRoomWithEnemies(this, mapType, level);
+void Room::generateEnemies(Bestiary* bestiary, MapType mapType, int level) {
+    enemyList = EnemyFactory::fillRoomWithEnemies(bestiary, this, mapType, level);
 }
 
 void Room::updateEnemies(int deltaTime, FloorMap *floor) {

@@ -4,16 +4,15 @@
 
 #include "FloorMap.h"
 #include "Game.h"
-#include "Observer.h"
 
-FloorMap::FloorMap(int level, MapType mapType) : level(level), mapType(mapType), roomWidth(1920), roomHeight(1080) {
+FloorMap::FloorMap(int level, MapType mapType, Bestiary* bestiary) : level(level), mapType(mapType), roomWidth(1920), roomHeight(1080) {
     // there's a 40% chance that this floor has a shop room
     float chance = rand() / (RAND_MAX + 1.0);
     if (chance <= shopChance)
         hasShop = true;
 
     // then generates the floor
-    generateFloor();
+    generateFloor(bestiary);
 
     // subscribe to the observers
     subscribeObserver(&(Game::getInstance()->bestiary));
@@ -23,13 +22,13 @@ FloorMap::FloorMap(int level, MapType mapType) : level(level), mapType(mapType),
 }
 
 FloorMap::~FloorMap() {
-    //unsubscribe observers
+    // unsubscribe observers
     unsubscribeObserver(&(Game::getInstance()->bestiary));
 }
 
-void FloorMap::generateFloor() {
+void FloorMap::generateFloor(Bestiary* bestiary) {
     // add first room in the middle of the grid (position 0, 0)
-    roomList.push_back( std::make_unique<Room>(0, 0, roomWidth, roomHeight, mapType));
+    roomList.push_back(std::make_unique<Room>(0, 0, roomWidth, roomHeight, mapType));
 
     // calculate number of rooms in the floor
     numRooms = round(10 - exp(1.8 - level / 4));
@@ -58,7 +57,7 @@ void FloorMap::generateFloor() {
 
         // if the room is not the start room, generate enemies
         if (!roomList[i]->getStartRoom())
-            roomList[i]->generateEnemies(mapType, level);
+            roomList[i]->generateEnemies(bestiary, mapType, level);
 
         // close the doors that don't connect with other rooms
         roomList[i]->closeDoors();
@@ -328,20 +327,16 @@ void FloorMap::draw(sf::RenderWindow &window) {
     player->draw(window);
 }
 
-void FloorMap::subscribeObserver(Observer *obs) {
-    observers.push_back(obs);
-}
+void FloorMap::subscribeObserver(Observer *obs) { observers.push_back(obs); }
 
-void FloorMap::unsubscribeObserver(Observer *obs) {
-    observers.remove(obs);
-}
+void FloorMap::unsubscribeObserver(Observer *obs) { observers.remove(obs); }
 
 void FloorMap::notifyObserver(Room *room) {
-    for(auto obs : observers)
+    for (auto obs : observers)
         obs->update(room);
 }
 
 void FloorMap::notifyObserver(Enemy *enemy) {
-    for(auto obs : observers)
+    for (auto obs : observers)
         obs->update(enemy);
 }

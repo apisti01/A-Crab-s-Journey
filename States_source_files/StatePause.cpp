@@ -38,14 +38,14 @@ void StatePause::eventHandling(sf::Event event, sf::RenderWindow &window) {
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
         game->changeState(StateType::Play);
 
-    if (event.type == sf::Event::MouseButtonReleased) {
+    else if (event.type == sf::Event::MouseButtonReleased) {
         if (resumeBtn.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
             game->changeState(StateType::Play);
 
-        if (exitBtn.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
+        else if (exitBtn.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
             game->changeState(StateType::MainMenu);
 
-        if (settingsBtn.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
+        else if (settingsBtn.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
             game->changeState(StateType::Settings);
     }
 }

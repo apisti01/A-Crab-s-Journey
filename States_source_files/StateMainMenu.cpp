@@ -61,33 +61,32 @@ void StateMainMenu::eventHandling(sf::Event event, sf::RenderWindow &window) {
         if (newGameBtn.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
             // create new floor
             int level = 1;
-            game->map = std::make_unique<FloorMap>(level, MapType::CoralReef);
+            game->map = std::make_unique<FloorMap>(level, MapType::CoralReef, &(game->bestiary));
             game->changeState(StateType::Play);
         }
 
         // TODO load a game saved
-        if (loadGameBtn.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
+        else if (loadGameBtn.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
             // create new floor
             int level = 1;
-            game->map = std::make_unique<FloorMap>(level, MapType::CoralReef);
+            game->map = std::make_unique<FloorMap>(level, MapType::CoralReef, &(game->bestiary));
             game->changeState(StateType::Play);
         }
 
-        // TODO go to pearls shop
-        if (pearlShopBtn.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
+        else if (pearlShopBtn.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
             game->changeState(StateType::PearlShop);
 
         // quit the game
-        if (backToSurfaceBtn.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
+        else if (backToSurfaceBtn.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
             window.close();
 
         // go to the credits
-        if (creditsBtn.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
+        else if (creditsBtn.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
             // TODO: add a credits game state
         }
 
         // go to the settings
-        if (settingsBtn.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
+        else if (settingsBtn.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
             game->changeState(StateType::Settings);
     }
 }

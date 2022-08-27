@@ -15,7 +15,7 @@ class Observer;
 class FloorMap {
 public:
     // constructor
-    explicit FloorMap(int level, MapType mapType);
+    explicit FloorMap(int level, MapType mapType, Bestiary* bestiary);
     ~FloorMap();
 
     // getter and setter for level attribute
@@ -52,6 +52,7 @@ public:
     // overloaded functions to notify observers
     void notifyObserver(Room *room);
     void notifyObserver(Enemy *enemy);
+
 private:
     // level and number of rooms
     int level;
@@ -67,7 +68,7 @@ private:
     sf::Texture backgroundTexture;
 
     // function for randomic floor generation
-    void generateFloor();
+    void generateFloor(Bestiary* bestiary);
     // returns the index of a room with at least one free side
     int pickRoom();
     // given a room index, returns the index of a free side
@@ -89,7 +90,7 @@ private:
     void setupPlayer();
 
     // list of the observers subscribed
-    std::list<Observer *> observers {};
+    std::list<Observer*> observers {};
 };
 
 #endif //ACRABSJOURNEY_FLOORMAP_H

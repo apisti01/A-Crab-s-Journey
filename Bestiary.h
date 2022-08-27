@@ -5,8 +5,18 @@
 #ifndef MAIN_CPP_BESTIARY_H
 #define MAIN_CPP_BESTIARY_H
 
-#include <map>
 #include "Observer.h"
+#include "Enemy_source_files/Enemy.h"
+
+struct Beast {
+    int id;
+    bool discovered;
+    std::string name, type;
+    float health, armor, strength, speed;
+    std::vector<std::string> habitats;
+    std::string description;
+    int triggerRange;
+};
 
 class Bestiary : public Observer {
 public:
@@ -14,13 +24,11 @@ public:
     Bestiary();
     ~Bestiary() override = default;
 
-    void update(Enemy *enemy) override;
     void update(Room *room) override;
+    void update(Enemy *enemy) override;
 
-private:
-    // map of strings for every enemy and the state of knowledge they are (?)
-    std::map<std::string, int> knowledge;
-
+    // map of data of all the enemies in the game
+    std::vector<Beast> beasts;
 };
 
 

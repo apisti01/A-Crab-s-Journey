@@ -36,7 +36,7 @@ void StatePlay::eventHandling(sf::Event event, sf::RenderWindow &window) {
                 if (game->map->isPlayerNearShop() && !game->map->roomList[game->map->currentRoomIndex]->getCage())
                     game->changeState(StateType::Shop);
                 else if (game->map->floorCompleted()) // if player has completed the floor
-                    game->map = std::make_unique<FloorMap>(game->map->getLevel() + 1, game->map->mapType);
+                    game->map = std::make_unique<FloorMap>(game->map->getLevel() + 1, game->map->mapType, &game->bestiary);
                 break;
         }
     }
