@@ -1,6 +1,7 @@
 //
 // Created by longo on 24/07/2022.
 //
+#include <iostream>
 
 #include "../Game.h"
 #include "StateDisplayMap.h"
@@ -91,9 +92,8 @@ void StateDisplayMap::eventHandling(sf::Event event, sf::RenderWindow &window) {
 }
 
 void StateDisplayMap::draw(sf::RenderWindow &window) {
-    // reset canvas
-    window.clear(sf::Color::White);
 
+    // draw the number of the level
     window.draw(levelCounter);
 
     // draw the map

@@ -3,6 +3,7 @@
 //
 
 #include "Room.h"
+#include "FloorMap.h"
 #include "GameCharacter.h"
 #include "Enemy_source_files/EnemyFactory.h"
 
@@ -182,11 +183,13 @@ void Room::updateEnemies(int deltaTime, FloorMap *floor) {
     auto enemy = enemyList.begin();
     while (enemy != enemyList.end()) {
         // if an enemy has less than 0 health points, delete it
-        if ((*enemy)->getHp() <= 0) {
-            enemy = enemyList.erase(enemy);
-            // TODO when killed the enemy update the observer in order to show the new enemy in the bestiary
-        } else {
+        if ((*enemy)->getHp() > 0) {
+            // next enemy
             ++enemy;
+        } else {
+            // update the bestiary and delete the enemy form the list
+            floor->notifyObserver(enemy->get());
+            enemy = enemyList.erase(enemy);
         }
     }
 }

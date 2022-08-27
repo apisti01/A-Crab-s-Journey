@@ -39,35 +39,41 @@ Game::Game() : currentState(make_unique<StateTitleScreen>(this)) {
 void Game::changeState(StateType type) {
     std::unique_ptr<State> tmp;
 
-    // based on the enum it creates a new instance of a derived state class
-    switch (type) {
-        case StateType::MainMenu:
-            tmp = std::make_unique<StateMainMenu>(this);
-            break;
-        case StateType::PearlShop:
-            tmp = std::make_unique<StatePearlShop>(this);
-            break;
-        case StateType::Play:
-            tmp = std::make_unique<StatePlay>(this);
-            break;
-        case StateType::DisplayMap:
-            tmp = std::make_unique<StateDisplayMap>(this);
-            break;
-        case StateType::ManageInventory:
-            tmp = std::make_unique<StateManageInventory>(this);
-            break;
-        case StateType::Shop:
-            tmp = std::make_unique<StateShop>(this);
-            break;
-        case StateType::Bestiary:
-            tmp = std::make_unique<StateBestiary>(this);
-            break;
-        case StateType::Pause:
-            tmp = std::make_unique<StatePause>(this);
-            break;
-        case StateType::Settings:
-            tmp = std::make_unique<StateSettings>(this);
-            break;
+    try {
+        // FIXME to complete
+        // based on the enum it creates a new instance of a derived state class
+        switch (type) {
+            case StateType::MainMenu:
+                tmp = std::make_unique<StateMainMenu>(this);
+                break;
+            case StateType::PearlShop:
+                tmp = std::make_unique<StatePearlShop>(this);
+                break;
+            case StateType::Play:
+                tmp = std::make_unique<StatePlay>(this);
+                break;
+            case StateType::DisplayMap:
+                tmp = std::make_unique<StateDisplayMap>(this);
+                break;
+            case StateType::ManageInventory:
+                tmp = std::make_unique<StateManageInventory>(this);
+                break;
+            case StateType::Shop:
+                tmp = std::make_unique<StateShop>(this);
+                break;
+            case StateType::Bestiary:
+                tmp = std::make_unique<StateBestiary>(this);
+                break;
+            case StateType::Pause:
+                tmp = std::make_unique<StatePause>(this);
+                break;
+            case StateType::Settings:
+                tmp = std::make_unique<StateSettings>(this);
+                break;
+        }
+
+    } catch(exception &e) {
+        std::cout << e.what();
     }
     // the current state became the one just created, deleting the old one
     currentState = std::move(tmp);

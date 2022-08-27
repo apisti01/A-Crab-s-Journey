@@ -4,7 +4,7 @@
 
 #include "FloorMap.h"
 #include "Game.h"
-
+#include "Observer.h"
 
 FloorMap::FloorMap(int level, MapType mapType) : level(level), mapType(mapType), roomWidth(1920), roomHeight(1080) {
     // there's a 40% chance that this floor has a shop room
@@ -15,8 +15,14 @@ FloorMap::FloorMap(int level, MapType mapType) : level(level), mapType(mapType),
     // then generates the floor
     generateFloor();
 
+    // TODO subscribe to the observers
+
     // create and setup player
     setupPlayer();
+}
+
+FloorMap::~FloorMap() {
+    //TODO unsubscribe observers
 }
 
 void FloorMap::generateFloor() {
@@ -273,7 +279,7 @@ void FloorMap::setupPlayer() {
 
     // create the player
     player = make_unique<Player>("Crab", CrabSpecie::BrownCrab, std::move(brownCrabTexture), collider, std::move(rangedWeapon),
-                                 10, 10, 1, 1, 10, 10, 10, 10);
+                                 10, 10, 2, 1, 10, 10, 10, 10);
 
     // and set his position at the center of the map
     player->setPosition(roomWidth / 2, roomHeight / 2);
@@ -318,4 +324,22 @@ void FloorMap::update(int deltaTime, bool attack) {
 void FloorMap::draw(sf::RenderWindow &window) {
     roomList[currentRoomIndex]->draw(window);
     player->draw(window);
+}
+
+void FloorMap::subscribeObserver(Observer *obs) {
+    observers.push_back(obs);
+}
+
+void FloorMap::unsubscribeObserver(Observer *obs) {
+    observers.remove(obs);
+}
+
+void FloorMap::notifyObserver(Room *room) {
+    for(auto obs : observers)
+        obs->update(room);
+}
+
+void FloorMap::notifyObserver(Enemy *enemy) {
+    for(auto obs : observers)
+        obs->update(enemy);
 }

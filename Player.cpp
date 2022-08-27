@@ -110,6 +110,8 @@ void Player::checkCageStatus(FloorMap *floor) {
         !floor->roomList[floor->currentRoomIndex]->getCage()) {
         // TODO: add obstacles to the doors
         floor->roomList[floor->currentRoomIndex]->setCage(true);
+        // update the observers
+        floor->notifyObserver(floor->roomList[floor->currentRoomIndex].get());
     }
 
     // if the room is cleared

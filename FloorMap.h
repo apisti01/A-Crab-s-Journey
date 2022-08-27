@@ -10,10 +10,13 @@
 #include "Player.h"
 #include "Room.h"
 
+class Observer;
+
 class FloorMap {
 public:
     // constructor
     explicit FloorMap(int level, MapType mapType);
+    ~FloorMap();
 
     // getter and setter for level attribute
     int getLevel() const { return level; }
@@ -41,6 +44,14 @@ public:
     bool floorCompleted();
 
     MapType mapType;
+
+    // functions for the observers ( bestiary and achievements)
+    void subscribeObserver(Observer *obs);
+    void unsubscribeObserver(Observer *obs);
+
+    // overloaded functions to notify observers
+    void notifyObserver(Room *room);
+    void notifyObserver(Enemy *enemy);
 private:
     // level and number of rooms
     int level;
@@ -74,7 +85,11 @@ private:
     // set shop room
     void setShopRoom();
 
+    //  create the player and prepare it for the game
     void setupPlayer();
+
+    // list of the observers subscribed
+    std::list<Observer *> observers {};
 };
 
 #endif //ACRABSJOURNEY_FLOORMAP_H
