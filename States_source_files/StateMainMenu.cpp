@@ -57,6 +57,7 @@ void StateMainMenu::eventHandling(sf::Event event, sf::RenderWindow &window) {
     updateButton(&settingsBtn, window);
 
     if (event.type == sf::Event::MouseButtonReleased) {
+        // new game
         if (newGameBtn.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
             // create new floor
             int level = 1;
@@ -64,6 +65,7 @@ void StateMainMenu::eventHandling(sf::Event event, sf::RenderWindow &window) {
             game->changeState(StateType::Play);
         }
 
+        // TODO load a game saved
         if (loadGameBtn.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
             // create new floor
             int level = 1;
@@ -71,16 +73,20 @@ void StateMainMenu::eventHandling(sf::Event event, sf::RenderWindow &window) {
             game->changeState(StateType::Play);
         }
 
+        // TODO go to pearls shop
         if (pearlShopBtn.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
             game->changeState(StateType::PearlShop);
 
+        // quit the game
         if (backToSurfaceBtn.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
             window.close();
 
+        // go to the credits
         if (creditsBtn.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
             // TODO: add a credits game state
         }
 
+        // go to the settings
         if (settingsBtn.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
             game->changeState(StateType::Settings);
     }
