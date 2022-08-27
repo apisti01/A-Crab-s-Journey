@@ -9,6 +9,7 @@
 
 #include "Player.h"
 #include "FloorMap.h"
+#include "Bestiary.h"
 #include "States_source_files/State.h"
 
 class Game {
@@ -39,6 +40,9 @@ public:
 
     // pointer to the map
     std::unique_ptr<FloorMap> map = nullptr;
+
+    // Bestiary with the knowledge of all the enemy in the game
+    Bestiary bestiary = Bestiary();
 
     // the clock to get delta time to move and update the game
     sf::Clock clock;
