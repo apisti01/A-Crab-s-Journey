@@ -15,14 +15,16 @@ FloorMap::FloorMap(int level, MapType mapType) : level(level), mapType(mapType),
     // then generates the floor
     generateFloor();
 
-    // TODO subscribe to the observers
+    // subscribe to the observers
+    subscribeObserver(&(Game::getInstance()->bestiary));
 
     // create and setup player
     setupPlayer();
 }
 
 FloorMap::~FloorMap() {
-    //TODO unsubscribe observers
+    //unsubscribe observers
+    unsubscribeObserver(&(Game::getInstance()->bestiary));
 }
 
 void FloorMap::generateFloor() {
