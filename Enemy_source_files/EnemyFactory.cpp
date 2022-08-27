@@ -64,47 +64,64 @@ std::unique_ptr<Enemy> EnemyFactory::selectRandomEnemy(Bestiary* bestiary, MapTy
 
     // if this enemy is
     if (std::count(enemy.habitats.begin(), enemy.habitats.end(), habitat)) {
-        // assing a weapon
-        auto rangedWeapon = make_unique<RangedWeapon>(RangedWeaponType::NaturalWeapon, "Natural Weapon");
-        auto meleeWeapon = make_unique<MeleeWeapon>(MeleeWeaponType::NaturalWeapon, "Natural Weapon");
-
         // the sprite of the enemy instead has to be created, loaded and passed here
         sf::Texture enemyTexture;
         enemyTexture.loadFromFile("GameCharacter/Enemy/" + enemy.type + "/" + enemy.name + "/Texture.png");
 
-        // and a collider
+        // create the enemy collider
         Collider enemyCollider(float(1920) / 2, float(1080) / 2, enemyTexture.getSize().x * 0.6,
                                enemyTexture.getSize().y * 0.6);
 
-        auto ame = std::make_unique<AggressiveMeleeEnemy>(enemy.name, enemyTexture, enemyCollider,
-                                                          std::move(meleeWeapon), enemy.health, enemy.health,
-                                                          enemy.speed, enemy.speed, enemy.armor, enemy.armor,
-                                                          enemy.strength, enemy.strength, 10, 10, 10,
-                                                          enemy.triggerRange);
-        auto cre = std::make_unique<ChasingRangedEnemy>(enemy.name, enemyTexture, enemyCollider,
-                                                        std::move(rangedWeapon), enemy.health, enemy.health,
-                                                        enemy.speed, enemy.speed, enemy.armor, enemy.armor,
-                                                        enemy.strength, enemy.strength, 10, 10, 10,
-                                                        enemy.triggerRange);
-        auto dme = std::make_unique<DefensiveMeleeEnemy>(enemy.name, enemyTexture, enemyCollider,
-                                                         std::move(meleeWeapon), enemy.health, enemy.health,
-                                                         enemy.speed, enemy.speed, enemy.armor, enemy.armor,
-                                                         enemy.strength, enemy.strength, 10, 10, 10,
-                                                         enemy.triggerRange);
-        auto sre = std::make_unique<StaticRangedEnemy>(enemy.name, enemyTexture, enemyCollider,
-                                                       std::move(rangedWeapon), enemy.health, enemy.health,
-                                                       enemy.speed, enemy.speed, enemy.armor, enemy.armor,
-                                                       enemy.strength, enemy.strength, 10, 10, 10);
-
+        // create the enemy pointer
         std::unique_ptr<Enemy> enemyPtr;
-        if (enemy.type == "AggressiveMelee")
+
+        if (enemy.type == "AggressiveMelee") {
+            // create a weapon
+            auto meleeWeapon = make_unique<MeleeWeapon>(MeleeWeaponType::NaturalWeapon, "Natural Weapon");
+            // create the enemy
+            auto ame = std::make_unique<AggressiveMeleeEnemy>(enemy.name, enemyTexture, enemyCollider,
+                                                              std::move(meleeWeapon), enemy.health, enemy.health,
+                                                              enemy.speed, enemy.speed, enemy.armor, enemy.armor,
+                                                              enemy.strength, enemy.strength, 10, 10, 10,
+                                                              enemy.attackTimer, enemy.triggerRange);
             enemyPtr = std::move(ame);
-        else if (enemy.type == "ChasingRanged")
+        }
+
+        else if (enemy.type == "ChasingRanged") {
+            // create a weapon
+            auto rangedWeapon = make_unique<RangedWeapon>(RangedWeaponType::NaturalWeapon, "Natural Weapon");
+            // create the enemy
+            auto cre = std::make_unique<ChasingRangedEnemy>(enemy.name, enemyTexture, enemyCollider,
+                                                            std::move(rangedWeapon), enemy.health, enemy.health,
+                                                            enemy.speed, enemy.speed, enemy.armor, enemy.armor,
+                                                            enemy.strength, enemy.strength, 10, 10, 10,
+                                                            enemy.attackTimer, enemy.triggerRange);
             enemyPtr = std::move(cre);
-        else if (enemy.type == "DefensiveMelee")
+        }
+
+        else if (enemy.type == "DefensiveMelee") {
+            // create a weapon
+            auto meleeWeapon = make_unique<RangedWeapon>(RangedWeaponType::NaturalWeapon, "Natural Weapon");
+            // create the enemy
+            auto dme = std::make_unique<DefensiveMeleeEnemy>(enemy.name, enemyTexture, enemyCollider,
+                                                             std::move(meleeWeapon), enemy.health, enemy.health,
+                                                             enemy.speed, enemy.speed, enemy.armor, enemy.armor,
+                                                             enemy.strength, enemy.strength, 10, 10, 10,
+                                                             enemy.attackTimer, enemy.triggerRange);
             enemyPtr = std::move(dme);
-        else if (enemy.type == "StaticRanged")
+        }
+
+        else if (enemy.type == "StaticRanged") {
+            // create a weapon
+            auto rangedWeapon = make_unique<RangedWeapon>(RangedWeaponType::NaturalWeapon, "Natural Weapon");
+            // create the enemy
+            auto sre = std::make_unique<StaticRangedEnemy>(enemy.name, enemyTexture, enemyCollider,
+                                                           std::move(rangedWeapon), enemy.health, enemy.health,
+                                                           enemy.speed, enemy.speed, enemy.armor, enemy.armor,
+                                                           enemy.strength, enemy.strength, 10, 10, 10,
+                                                           enemy.attackTimer);
             enemyPtr = std::move(sre);
+        }
 
         return enemyPtr;
     } else {

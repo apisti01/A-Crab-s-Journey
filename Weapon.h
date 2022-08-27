@@ -18,7 +18,6 @@ class Weapon : public Item {
 public:
     // Constructor and Destructor
     explicit Weapon(std::string name, ItemRarity rarity, int price): Item(std::move(name), rarity, price) {}
-
     ~Weapon() override = default;
 
     // overridden in derived classes to attack the nearest enemy or to create a bullet

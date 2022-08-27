@@ -21,7 +21,7 @@ Bestiary::Bestiary() {
 
             // load the attributes
             ss >> beast.id >> beast.discovered >> beast.name >> beast.type >> beast.health >> beast.speed
-               >> beast.armor >> beast.strength >> beast.triggerRange;
+               >> beast.armor >> beast.strength >> beast.triggerRange >> beast.attackTimer;
             // and the habitats in which the enemy can be found
             int i = 0;
             while (ss >> habitat) {

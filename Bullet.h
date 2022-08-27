@@ -7,14 +7,15 @@
 #define MAIN_CPP_BULLET_H
 
 #include <SFML/Graphics.hpp>
+#include "GameCharacter.h"
 
 class FloorMap;
 
 class Bullet {
 public:
     // Constructor and Destructor
-    Bullet(float damage, float speed, float range, sf::Texture *texture, sf::Vector2f playerPosition,
-           float direction, bool isTracking, bool isShattering);
+    Bullet(float damage, float speed, float range, sf::Texture* texture, sf::Vector2f playerPosition,
+           float direction, bool isTracking, bool isShattering, GameCharacter* shooter);
     ~Bullet() = default;
 
     // getters and setters
@@ -44,6 +45,8 @@ private:
     // Special ability
     bool isTracking;
     bool isShattering;
+
+    GameCharacter* shooter;
 
     // SFML Sprite
     sf::Sprite sprite;

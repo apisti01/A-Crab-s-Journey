@@ -8,10 +8,11 @@
 DefensiveMeleeEnemy::DefensiveMeleeEnemy(std::string name, const sf::Texture &texture, Collider collider,
                                          std::unique_ptr<Weapon> weapon, float hp, float maxHp, float speed,
                                          float maxSpeed, float armor, float maxArmor, float strength, float maxStrength,
-                                         float XpReward, int coinsDropped, int pearlsDropped, float triggerRange) :
-                                         Enemy(std::move(name), texture, std::move(collider), std::move(weapon), hp, maxHp,
-                                               speed, maxSpeed, armor, maxArmor, strength, maxStrength, XpReward, coinsDropped,
-                                               pearlsDropped), triggerRange(triggerRange) {
+                                         float XpReward, int coinsDropped, int pearlsDropped, int attackTimer,
+                                         float triggerRange) :
+                                         Enemy(std::move(name), texture, std::move(collider), std::move(weapon), hp,
+                                               maxHp, speed, maxSpeed, armor, maxArmor, strength, maxStrength, XpReward,
+                                               coinsDropped, pearlsDropped, attackTimer), triggerRange(triggerRange) {
     origPosX = getPosX();
     origPosY = getPosY();
 }
@@ -25,10 +26,10 @@ sf::Vector2f DefensiveMeleeEnemy::chase(const Player *hero, float &deltaAngle, i
 
     // if the player is near enough
     if (distance <= triggerRange) {
-        deltaPos = {hero->getPosX() - getPosX(), hero->getPosY() - getPosY() };
+        deltaPos = {hero->getPosX() - getPosX(), hero->getPosY() - getPosY()};
         triggered = true;
     } else {
-        deltaPos = {origPosX - getPosX(), origPosY - getPosY() };
+        deltaPos = {origPosX - getPosX(), origPosY - getPosY()};
         triggered = false;
     }
 
@@ -49,9 +50,9 @@ sf::Vector2f DefensiveMeleeEnemy::chase(const Player *hero, float &deltaAngle, i
     return deltaPos;
 }
 
-void DefensiveMeleeEnemy::attack(FloorMap *floor, bool clicked) {
-    if (clicked)
-    weapon->useWeapon(floor, this);
+void DefensiveMeleeEnemy::attack(FloorMap *floor, bool triggered) {
+    if (triggered)
+        weapon->useWeapon(floor, this);
 }
 
 void DefensiveMeleeEnemy::dropItems() {

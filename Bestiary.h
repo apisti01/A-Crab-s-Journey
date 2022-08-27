@@ -15,7 +15,7 @@ struct Beast {
     float health, armor, strength, speed;
     std::vector<std::string> habitats;
     std::string description;
-    int triggerRange;
+    int triggerRange, attackTimer;
 };
 
 class Bestiary : public Observer {

@@ -19,29 +19,24 @@ enum class RangedWeaponType {
 class RangedWeapon : public Weapon {
 public:
     // Constructor and Destructor
-    /// the sprite of the bullet is loaded directly in the constructor
-    explicit RangedWeapon(RangedWeaponType type, std::string name = " ", float damage = 1, float speed = 5, float range = 10,
-                          bool isTracking = false, bool isShattering = false, ItemRarity rarity = ItemRarity::Common,
-                          int price = 50);
+    explicit RangedWeapon(RangedWeaponType type, std::string name = " ", float damage = 1, float speed = 5,
+                          float range = 10, bool isTracking = false, bool isShattering = false,
+                          ItemRarity rarity = ItemRarity::Common, int price = 50);
     ~RangedWeapon() override = default;
 
     // Create bullet and puts it on the list
     void useWeapon(FloorMap *floor, GameCharacter *attacker) override;
 
 private:
-
     // list of bullets' attributes
-    float damage;
-    float speed;
-    float range;
+    float damage, speed, range;
 
     // special bullets features
-    bool isTracking;
-    bool isShattering;
+    bool isTracking, isShattering;
 
     // SFML Sprite of the bullet
     sf::Texture bulletTexture;
-    sf::Sprite sprite {bulletTexture};
+    sf::Sprite sprite{bulletTexture};
 };
 
 
