@@ -13,7 +13,7 @@ StateSettings::StateSettings(Game *game) : State(game) {
 
 void StateSettings::eventHandling(sf::Event event, sf::RenderWindow &window) {
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
-        game->changeState(StateType::Play);
+        game->changeState(StateType::Pause);
 }
 
 void StateSettings::draw(sf::RenderWindow &window) {

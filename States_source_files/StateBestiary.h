@@ -19,7 +19,6 @@ public:
     void draw(sf::RenderWindow &window) override;
 
 private:
-    // background
     sf::Texture backgroundTexture;
     sf::Sprite background { backgroundTexture, sf::IntRect {0, 0, 1920, 1080} };
 };

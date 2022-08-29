@@ -10,6 +10,7 @@
 #include "Player.h"
 #include "FloorMap.h"
 #include "Bestiary.h"
+#include "GlobalProgress.h"
 #include "States_source_files/State.h"
 
 class Game {
@@ -44,6 +45,8 @@ public:
     // Bestiary with the knowledge of all the enemy in the game
     Bestiary bestiary;
 
+    GlobalProgress globalProgress;
+
     // the clock to get delta time to move and update the game
     sf::Clock clock;
 
@@ -52,9 +55,6 @@ public:
 
     // unit
     float lenUnit = 120;
-
-    // pearls
-    int pearls;
 
 private:
     // private constructor to only have one instance of the class (Singleton)

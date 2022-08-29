@@ -44,7 +44,7 @@ add_library(core ${STATES_SOURCE_FILES} ${ENEMY_SOURCE_FILES} AnimatedSprite.cpp
         Consumable.cpp Consumable.h FloorMap.cpp FloorMap.h GameCharacter.cpp GameCharacter.h Item.cpp Item.h
         MeleeWeapon.cpp MeleeWeapon.h Obstacle.cpp Obstacle.h Player.cpp Player.h RangedWeapon.cpp RangedWeapon.h
         Room.cpp Room.h Weapon.cpp Weapon.h Wearable.cpp Wearable.h Game.cpp Game.h Collider.cpp Collider.h Observer.cpp
-        Observer.h Bestiary.cpp Bestiary.h)
+        Observer.h Bestiary.cpp Bestiary.h GlobalProgress.cpp GlobalProgress.h Button.cpp Button.h)
 
 target_link_libraries(core PUBLIC sfml-graphics sfml-audio)
 

@@ -14,8 +14,8 @@ class FloorMap;
 class Bullet {
 public:
     // Constructor and Destructor
-    Bullet(float damage, float speed, float range, sf::Texture* texture, sf::Vector2f playerPosition,
-           float direction, bool isTracking, bool isShattering, GameCharacter* shooter);
+    Bullet(float damage, float speed, float range, sf::Texture* texture, sf::Vector2f pos, float direction,
+           bool isTracking, bool isShattering, GameCharacter* shooter);
     ~Bullet() = default;
 
     // getters and setters
@@ -40,6 +40,7 @@ private:
     float speed;
 
     // directions chosen when launched
+    sf::Vector2f pos;
     float direction;
 
     // Special ability
@@ -49,6 +50,7 @@ private:
     GameCharacter* shooter;
 
     // SFML Sprite
+    sf::Texture texture;
     sf::Sprite sprite;
 };
 

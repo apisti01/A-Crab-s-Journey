@@ -280,7 +280,7 @@ void FloorMap::setupPlayer() {
 
     // create the player
     player = make_unique<Player>("Crab", CrabSpecie::BrownCrab, std::move(brownCrabTexture), collider, std::move(rangedWeapon),
-                                 10, 10, 2, 1, 10, 10, 10, 10);
+                                 5, 5, 3, 3, 1, 1, 4, 4);
 
     // and set his position at the center of the map
     player->setPosition(roomWidth / 2, roomHeight / 2);

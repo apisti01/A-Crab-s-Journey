@@ -17,7 +17,6 @@ public:
     // update function to modify to behaviour of the concrete observers, overloaded depending on the needs
     virtual void update(Enemy* enemy) = 0;
     virtual void update(Room* room) = 0;
-
 };
 
 

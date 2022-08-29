@@ -24,7 +24,7 @@ Game* Game::getInstance() {
     return gameInstance;
 }
 
-Game::Game() : currentState(make_unique<StateTitleScreen>(this)), bestiary(Bestiary()) {
+Game::Game() : currentState(make_unique<StateTitleScreen>(this)), bestiary(Bestiary()), globalProgress(GlobalProgress()) {
     // load font
     sf::Font Rancho;
     if (!Rancho.loadFromFile("Font/Rancho/Rancho.ttf")) {

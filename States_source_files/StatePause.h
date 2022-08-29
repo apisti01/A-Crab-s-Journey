@@ -5,6 +5,8 @@
 #ifndef ACRABSJOURNEY_STATEPAUSE_H
 #define ACRABSJOURNEY_STATEPAUSE_H
 
+#include "../Game.h"
+#include "../Button.h"
 #include "State.h"
 
 class StatePause : public State {
@@ -28,8 +30,9 @@ private:
     sf::Sprite background { backgroundTexture, sf::IntRect {0, 0, 1920, 1080} };
 
     // buttons
-    sf::RectangleShape resumeBtn, exitBtn, settingsBtn;
-    sf::Texture resumeBtnTexture, exitBtnTexture, settingsBtnTexture;
+    Button resumeBtn = {"Games States/Pause Screen/Resume Texture.png", 0.8, 1920 / 2, 300};
+    Button exitBtn = {"Games States/Pause Screen/Exit Texture.png", 0.8, 1920 / 2, 500};
+    Button settingsBtn = {"Games States/Pause Screen/Settings Texture.png", 0.8, 1920 / 2, 700};
 };
 
 
