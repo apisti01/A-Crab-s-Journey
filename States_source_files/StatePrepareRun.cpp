@@ -8,10 +8,12 @@ StatePrepareRun::StatePrepareRun(Game *game) : State(game) {
     backgroundTexture.loadFromFile("Game States/Main Menu/Main Menu Blank.png");
 }
 
-void StatePrepareRun::eventHandling(sf::Event event, sf::RenderWindow &window) {
+void StatePrepareRun::update(int deltaTime, bool clicked, sf::RenderWindow &window) {
     startRunTextBtn.updateBtn(window);
     backBtn.updateBtn(window);
+}
 
+void StatePrepareRun::eventHandling(sf::Event event, sf::RenderWindow &window) {
     if (event.type == sf::Event::MouseButtonReleased) {
         // new game
         if (startRunTextBtn.btnText.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {

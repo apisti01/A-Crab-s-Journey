@@ -17,7 +17,7 @@ public:
 
     void eventHandling(sf::Event event, sf::RenderWindow &window) override;
 
-    void update(int deltaTime, bool clicked) override {}
+    void update(int deltaTime, bool clicked, sf::RenderWindow &window) override;
 
     void draw(sf::RenderWindow &window) override;
 
@@ -27,7 +27,7 @@ private:
     sf::Sprite background{backgroundTexture, sf::IntRect{0, 0, 1920, 1080}};
 
     // text buttons
-    Button titleTextBtn = {"A Crab's Journey", game->font, 240, {1920 / 2, 175}};
+    Button titleTextBtn = {"A Crab's Journey", game->font, 240, {1920 / 2, 175}, false};
     Button newGameTextBtn = {"New Game", game->font, 150, {1920 / 2, 400}};
     Button loadGameTextBtn = {"Load Game", game->font, 150, {1920 / 2, 550}};
     Button pearlShopTextBtn = {"Pearl Shop", game->font, 150, {1920 / 2, 700}};

@@ -23,9 +23,11 @@ StatePearlShop::StatePearlShop(Game *game) : State(game) {
     loadStats();
 }
 
-void StatePearlShop::eventHandling(sf::Event event, sf::RenderWindow &window) {
+void StatePearlShop::update(int deltaTime, bool clicked, sf::RenderWindow &window) {
     backBtn.updateBtn(window);
+}
 
+void StatePearlShop::eventHandling(sf::Event event, sf::RenderWindow &window) {
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
         game->changeState(StateType::MainMenu);
 

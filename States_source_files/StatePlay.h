@@ -6,6 +6,7 @@
 #define MAIN_CPP_STATEPLAY_H
 
 #include "State.h"
+#include "../Button.h"
 
 class StatePlay : public State {
 public:
@@ -15,13 +16,13 @@ public:
 
     void eventHandling(sf::Event event, sf::RenderWindow &window) override;
 
-    void update(int deltaTime, bool clicked) override;
+    void update(int deltaTime, bool clicked, sf::RenderWindow &window) override;
 
     void draw(sf::RenderWindow &window) override;
 
 private:
-    sf::RectangleShape mapIcon;
-    sf::Texture mapIconTexture;
+    Button mapIcon = {"Game States/Play/Map Icon.png", 0.3, {1920 - 675, 1080 - 100}, false};
+    Button bestiaryIcon = {"Game States/Play/Bestiary Icon.png", 0.3, {1920 - 500, 1080 - 100}, false};
 };
 
 #endif //MAIN_CPP_STATEPLAY_H

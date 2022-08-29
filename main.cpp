@@ -50,7 +50,7 @@ int main() {
         window.clear(sf::Color::White);
 
         // game update and draw
-        game->update(deltaTime, clicked);
+        game->update(deltaTime, clicked, window);
         game->draw(window);
 
         // Bring to screen and display the new frame just drawn

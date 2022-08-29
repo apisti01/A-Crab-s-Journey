@@ -10,7 +10,7 @@
 class Button {
 public:
     Button(std::string texturePath, float scl, sf::Vector2f position, bool clickable = true);
-    Button(std::string string, sf::Font &font, int characterSize, sf::Vector2f position, std::string origin = "center");
+    Button(std::string string, sf::Font &font, int characterSize, sf::Vector2f position, bool clickable = true, std::string origin = "center");
     ~Button() = default;
 
     void updateBtn(sf::RenderWindow &window);
@@ -21,6 +21,9 @@ public:
     sf::RectangleShape box;
     sf::Texture texture;
     sf::Text btnText;
+
+    std::string origin;
+    bool clickable;
 };
 
 

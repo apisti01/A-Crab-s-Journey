@@ -8,15 +8,18 @@ StateMainMenu::StateMainMenu(Game *game) : State(game) {
     backgroundTexture.loadFromFile("Game States/Main Menu/Main Menu Blank.png");
 }
 
-void StateMainMenu::eventHandling(sf::Event event, sf::RenderWindow &window) {
+void StateMainMenu::update(int deltaTime, bool clicked, sf::RenderWindow &window) {
     // update the buttons
+    titleTextBtn.updateBtn(window);
     newGameTextBtn.updateBtn(window);
     loadGameTextBtn.updateBtn(window);
     pearlShopTextBtn.updateBtn(window);
     backToSurfaceTextBtn.updateBtn(window);
     creditsBtn.updateBtn(window);
     settingsBtn.updateBtn(window);
+}
 
+void StateMainMenu::eventHandling(sf::Event event, sf::RenderWindow &window) {
     if (event.type == sf::Event::MouseButtonReleased) {
         // new game
         if (newGameTextBtn.btnText.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {

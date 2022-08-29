@@ -26,13 +26,11 @@ StateDisplayMap::StateDisplayMap(Game *game) : State(game) {
             rooms.push_back(room);
         }
     }
+}
 
-    // set level text
-    levelTxt.setString("Floor: " + to_string(game->map->getLevel()));
-    levelTxt.setFont(game->font);
-    levelTxt.setCharacterSize(184);
-    levelTxt.setPosition(100, 1080 - 100);
-    levelTxt.setOrigin(0, levelTxt.getLocalBounds().height);
+void StateDisplayMap::update(int deltaTime, bool clicked, sf::RenderWindow &window) {
+    mapText.updateBtn(window);
+    levelText.updateBtn(window);
 }
 
 void StateDisplayMap::eventHandling(sf::Event event, sf::RenderWindow &window) {
@@ -58,7 +56,7 @@ void StateDisplayMap::eventHandling(sf::Event event, sf::RenderWindow &window) {
 void StateDisplayMap::draw(sf::RenderWindow &window) {
     // draw the background
     window.draw(background);
-    mapBtn.drawBtn(window);
+    mapText.drawTextBtn(window);
 
     // draw the rooms
     for (int i = 0; i < size(rooms); i++) {
@@ -66,5 +64,5 @@ void StateDisplayMap::draw(sf::RenderWindow &window) {
     }
 
     // and the level text
-    window.draw(levelTxt);
+    levelText.drawTextBtn(window);
 }

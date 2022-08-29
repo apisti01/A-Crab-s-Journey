@@ -27,9 +27,15 @@ public:
     GlobalProgress();
     ~GlobalProgress() = default;
 
+    // progress
     std::vector<Character> characters;
     std::vector<Habitat> habitats;
     int pearls, price;
+
+    // settings
+    int language;
+    std::string difficulty;
+    int effectsVolume, musicVolume;
 };
 
 

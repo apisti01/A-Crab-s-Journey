@@ -19,6 +19,7 @@ RangedWeapon::RangedWeapon(RangedWeaponType type, std::string name, float damage
 
 void RangedWeapon::useWeapon(FloorMap *floor, GameCharacter *attacker) {
     // create new bullet with the weapon specifications
+    // TODO: add the tangent component of player speed to the bullet speed
     Bullet tmp(damage, speed, range, &bulletTexture, sf::Vector2f {attacker->getPosX(),attacker->getPosY()}, attacker->getAngle(), isTracking, isShattering, attacker);
 
     // insert the new bullet on the list

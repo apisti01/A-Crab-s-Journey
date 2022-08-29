@@ -46,7 +46,7 @@ GlobalProgress::GlobalProgress() {
         }
 
         // pearls
-        file >> pearls;
+        file >> pearls >> language >> difficulty >> effectsVolume >> musicVolume;
     } else {
         std::cout << "File dei dati sui nemici non trovato" << std::endl;
     }

@@ -5,9 +5,15 @@
 #include "../Game.h"
 #include "StateSettings.h"
 
-
 StateSettings::StateSettings(Game *game) : State(game) {
     texture.loadFromFile("Game States/Pause Screen/Pause Screen Blank.png");
+}
+
+void StateSettings::update(int deltaTime, bool clicked, sf::RenderWindow &window) {
+    settingsText.updateBtn(window);
+    languageText.updateBtn(window);
+    difficultyText.updateBtn(window);
+    soundText.updateBtn(window);
 }
 
 void StateSettings::eventHandling(sf::Event event, sf::RenderWindow &window) {
@@ -17,4 +23,9 @@ void StateSettings::eventHandling(sf::Event event, sf::RenderWindow &window) {
 
 void StateSettings::draw(sf::RenderWindow &window) {
     window.draw(backgroundSprite);
+
+    settingsText.drawTextBtn(window);
+    languageText.drawTextBtn(window);
+    difficultyText.drawTextBtn(window);
+    soundText.drawTextBtn(window);
 }
