@@ -25,7 +25,7 @@ enum class MapType {
 class Room {
 public:
     // constructor and destructor
-    explicit Room(int posX, int posY, int width, int height, MapType mapType);
+    explicit Room(std::string mapType, int posX, int posY, int width, int height);
     ~Room() = default;
     Room(const Room& room) = delete;
     Room& operator = (const Room & room) = delete;
@@ -86,7 +86,7 @@ public:
 
     void generateObstacles();
 
-    void generateEnemies(Bestiary* bestiary, MapType mapType, int level);
+    void generateEnemies(Bestiary* bestiary, std::string mapType, int level);
 
     void closeDoors();
 

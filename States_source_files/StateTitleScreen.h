@@ -5,6 +5,8 @@
 #ifndef MAIN_CPP_STATETITLESCREEN_H
 #define MAIN_CPP_STATETITLESCREEN_H
 
+#include "../Game.h"
+#include "../Button.h"
 #include "State.h"
 
 class StateTitleScreen : public State {
@@ -24,8 +26,7 @@ private:
     sf::Texture backgroundTexture;
     sf::Sprite background { backgroundTexture, sf::IntRect(0, 0, 1920, 1080) };
 
-    sf::RectangleShape titleBtn;
-    sf::Texture titleBtnTexture;
+    Button titleBtn = { "Game States/Main Menu/A Crab's Journey Texture.png", 1.3, 1920 / 2, 1080 / 2, false};
 };
 
 

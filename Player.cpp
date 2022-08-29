@@ -6,11 +6,11 @@
 
 #include <utility>
 
-Player::Player(std::string name, CrabSpecie crabSpecie, const sf::Texture& texture, Collider collider, std::unique_ptr<Weapon> weapon,
+Player::Player(int characterIndex, std::string name, CrabSpecie crabSpecie, const sf::Texture& texture, Collider collider, std::unique_ptr<Weapon> weapon,
                float hp, float maxHp, float speed, float maxSpeed, float armor, float maxArmor, float strength,
                float maxStrength) :
         GameCharacter(std::move(name), texture, std::move(collider), std::move(weapon), hp, maxHp, speed, maxSpeed, armor,
-                      maxArmor, strength, maxStrength, sf::Vector2u(6, 3), 0.4), crabSpecie(crabSpecie) {
+                      maxArmor, strength, maxStrength, sf::Vector2u(6, 3), 0.4), characterIndex(characterIndex), crabSpecie(crabSpecie) {
 }
 
 void Player::update(int deltaTime, FloorMap *floor, bool clicked) {
@@ -52,8 +52,8 @@ sf::Vector2f Player::getKeyboardInput(int deltaTime, FloorMap *floor) {
         deltaPos.x = deltaPos.x / norm;
         deltaPos.y = deltaPos.y / norm;
     }
-    deltaPos.x = deltaPos.x * speed * sprite.getWidth() * static_cast<float>(deltaTime) / pow(10, 6);
-    deltaPos.y = deltaPos.y * speed * sprite.getHeight() * static_cast<float>(deltaTime) / pow(10, 6);
+    deltaPos.x = deltaPos.x * speed * Game::getInstance()->lenUnit * static_cast<float>(deltaTime) / pow(10, 6);
+    deltaPos.y = deltaPos.y * speed * Game::getInstance()->lenUnit * static_cast<float>(deltaTime) / pow(10, 6);
 
     return deltaPos;
 }
@@ -73,27 +73,31 @@ float Player::getMouseInput(int deltaTime) {
     return facingAngle - sprite.getAngle();
 }
 
-void Player::changeRoom(FloorMap *floor) {
+void Player::changeRoom(FloorMap* floor) {
     // move across map through doors
     // right door
-    if (sprite.getPosition().x > floor->roomList[floor->currentRoomIndex]->getWidth() && floor->roomList[floor->currentRoomIndex]->doors[1] != -1) {
+    if (sprite.getPosition().x > floor->roomList[floor->currentRoomIndex]->getWidth() &&
+        floor->roomList[floor->currentRoomIndex]->doors[1] != -1) {
         floor->currentRoomIndex = floor->roomList[floor->currentRoomIndex]->doors[1];
-        sprite.setPosition({ 5, sprite.getPosition().y });
+        sprite.setPosition({5, sprite.getPosition().y});
     }
     // left door
     if (sprite.getPosition().x < 0 && floor->roomList[floor->currentRoomIndex]->doors[3] != -1) {
         floor->currentRoomIndex = floor->roomList[floor->currentRoomIndex]->doors[3];
-        sprite.setPosition({ static_cast<float>(floor->roomList[floor->currentRoomIndex]->getWidth() - 5), sprite.getPosition().y });
+        sprite.setPosition(
+                {static_cast<float>(floor->roomList[floor->currentRoomIndex]->getWidth() - 5), sprite.getPosition().y});
     }
     // bottom door
-    if (sprite.getPosition().y > floor->roomList[floor->currentRoomIndex]->getHeight() && floor->roomList[floor->currentRoomIndex]->doors[2] != -1) {
+    if (sprite.getPosition().y > floor->roomList[floor->currentRoomIndex]->getHeight() &&
+        floor->roomList[floor->currentRoomIndex]->doors[2] != -1) {
         floor->currentRoomIndex = floor->roomList[floor->currentRoomIndex]->doors[2];
-        sprite.setPosition({ sprite.getPosition().x, 5 });
+        sprite.setPosition({sprite.getPosition().x, 5});
     }
     // upper door
     if (sprite.getPosition().y < 0 && floor->roomList[floor->currentRoomIndex]->doors[0] != -1) {
         floor->currentRoomIndex = floor->roomList[floor->currentRoomIndex]->doors[0];
-        sprite.setPosition({ sprite.getPosition().x, static_cast<float>(floor->roomList[floor->currentRoomIndex]->getHeight() - 5) });
+        sprite.setPosition({sprite.getPosition().x,
+                            static_cast<float>(floor->roomList[floor->currentRoomIndex]->getHeight() - 5)});
     }
 
     floor->roomList[floor->currentRoomIndex]->setVisited(true);

@@ -5,7 +5,7 @@
 #include "StateMainMenu.h"
 
 StateMainMenu::StateMainMenu(Game *game) : State(game) {
-    backgroundTexture.loadFromFile("Games States/Start Menu/Start Menu Blank.png");
+    backgroundTexture.loadFromFile("Game States/Main Menu/Main Menu Blank.png");
 }
 
 void StateMainMenu::eventHandling(sf::Event event, sf::RenderWindow &window) {
@@ -20,33 +20,28 @@ void StateMainMenu::eventHandling(sf::Event event, sf::RenderWindow &window) {
     if (event.type == sf::Event::MouseButtonReleased) {
         // new game
         if (newGameBtn.btnBox.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
-            // create new floor
-            int level = 1;
-            game->map = std::make_unique<FloorMap>(level, MapType::CoralReef, &(game->bestiary));
-            game->changeState(StateType::Play);
+            // go to the prepare run state
+            game->changeState(StateType::PrepareRun);
         }
 
-        // TODO load a game saved
+        // load game
         else if (loadGameBtn.btnBox.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
-            // create new floor
-            int level = 1;
-            game->map = std::make_unique<FloorMap>(level, MapType::CoralReef, &(game->bestiary));
-            game->changeState(StateType::Play);
+            // TODO load a saved game
         }
 
         else if (pearlShopBtn.btnBox.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
             game->changeState(StateType::PearlShop);
 
-        // quit the game
+            // quit the game
         else if (backToSurfaceBtn.btnBox.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
             window.close();
 
-        // go to the credits
+            // go to the credits
         else if (creditsBtn.btnBox.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
             // TODO: add a credits game state
         }
 
-        // go to the settings
+            // go to the settings
         else if (settingsBtn.btnBox.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
             game->changeState(StateType::Settings);
     }

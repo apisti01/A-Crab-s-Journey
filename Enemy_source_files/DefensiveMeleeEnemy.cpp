@@ -44,8 +44,8 @@ sf::Vector2f DefensiveMeleeEnemy::chase(const Player *hero, float &deltaAngle, i
     }
 
     // the actual movement
-    deltaPos.x = deltaPos.x * speed * sprite.getWidth() * static_cast<float>(deltaTime) / pow(10, 6);
-    deltaPos.y = deltaPos.y * speed * sprite.getHeight() * static_cast<float>(deltaTime) / pow(10, 6);
+    deltaPos.x = deltaPos.x * speed * Game::getInstance()->lenUnit * static_cast<float>(deltaTime) / pow(10, 6);
+    deltaPos.y = deltaPos.y * speed * Game::getInstance()->lenUnit * static_cast<float>(deltaTime) / pow(10, 6);
 
     return deltaPos;
 }

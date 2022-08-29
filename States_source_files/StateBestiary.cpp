@@ -6,7 +6,7 @@
 #include "../Game.h"
 
 StateBestiary::StateBestiary(Game *game) : State(game) {
-    backgroundTexture.loadFromFile("Games States/Bestiary/Bestiary.png");
+    backgroundTexture.loadFromFile("Game States/Bestiary/Bestiary.png");
 }
 
 void StateBestiary::eventHandling(sf::Event event, sf::RenderWindow &window) {

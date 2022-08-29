@@ -6,6 +6,7 @@
 #include "States_source_files/StateTitleScreen.h"
 #include "States_source_files/StateMainMenu.h"
 #include "States_source_files/StatePearlShop.h"
+#include "States_source_files/StatePrepareRun.h"
 #include "States_source_files/StatePlay.h"
 #include "States_source_files/StateDisplayMap.h"
 #include "States_source_files/StateManageInventory.h"
@@ -46,6 +47,9 @@ void Game::changeState(StateType type) {
                 break;
             case StateType::PearlShop:
                 tmp = std::make_unique<StatePearlShop>(this);
+                break;
+            case StateType::PrepareRun:
+                tmp = std::make_unique<StatePrepareRun>(this);
                 break;
             case StateType::Play:
                 tmp = std::make_unique<StatePlay>(this);

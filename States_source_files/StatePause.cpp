@@ -5,7 +5,7 @@
 #include "StatePause.h"
 
 StatePause::StatePause(Game *game) : State(game) {
-    backgroundTexture.loadFromFile("Games States/Pause Screen/Pause Screen Blank.png");
+    backgroundTexture.loadFromFile("Game States/Pause Screen/Pause Screen Blank.png");
 }
 
 void StatePause::eventHandling(sf::Event event, sf::RenderWindow &window) {
@@ -33,6 +33,7 @@ void StatePause::draw(sf::RenderWindow &window) {
     window.draw(background);
 
     // and all the buttons
+    pauseBtn.drawBtn(window);
     resumeBtn.drawBtn(window);
     exitBtn.drawBtn(window);
     settingsBtn.drawBtn(window);

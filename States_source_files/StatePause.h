@@ -30,9 +30,10 @@ private:
     sf::Sprite background { backgroundTexture, sf::IntRect {0, 0, 1920, 1080} };
 
     // buttons
-    Button resumeBtn = {"Games States/Pause Screen/Resume Texture.png", 0.8, 1920 / 2, 300};
-    Button exitBtn = {"Games States/Pause Screen/Exit Texture.png", 0.8, 1920 / 2, 500};
-    Button settingsBtn = {"Games States/Pause Screen/Settings Texture.png", 0.8, 1920 / 2, 700};
+    Button pauseBtn = {"Game States/Pause Screen/Pause Texture.png", 1, 1920 / 2, 200, false};
+    Button resumeBtn = {"Game States/Pause Screen/Resume Texture.png", 0.75, 1920 / 2, 450};
+    Button exitBtn = {"Game States/Pause Screen/Exit Texture.png", 0.75, 1920 / 2, 650};
+    Button settingsBtn = {"Game States/Pause Screen/Settings Texture.png", 0.75, 1920 / 2, 850};
 };
 
 

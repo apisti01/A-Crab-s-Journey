@@ -6,7 +6,7 @@
 #include "StatePlay.h"
 
 StatePlay::StatePlay(Game *game) : State(game) {
-    mapIconTexture.loadFromFile("Games States/Game/Map Icon.png");
+    mapIconTexture.loadFromFile("Game States/Game/Map Icon.png");
     float mapIconScl = 0.25;
     mapIcon.setPosition(1920 - 700, 1080 - 75);
     mapIcon.setScale(mapIconScl, mapIconScl);
@@ -35,8 +35,10 @@ void StatePlay::eventHandling(sf::Event event, sf::RenderWindow &window) {
                 // if player is near the shop
                 if (game->map->isPlayerNearShop() && !game->map->roomList[game->map->currentRoomIndex]->getCage())
                     game->changeState(StateType::Shop);
-                else if (game->map->floorCompleted()) // if player has completed the floor
-                    game->map = std::make_unique<FloorMap>(game->map->getLevel() + 1, game->map->mapType, &game->bestiary);
+
+                // if player has completed the floor
+                else if (game->map->floorCompleted())
+                    game->map = std::make_unique<FloorMap>(game->player->characterIndex, game->map->mapType, game->map->getLevel() + 1, &game->bestiary);
                 break;
         }
     }

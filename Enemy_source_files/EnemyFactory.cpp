@@ -12,7 +12,7 @@
 
 #include <cstdlib>
 
-std::list<std::unique_ptr<Enemy>> EnemyFactory::fillRoomWithEnemies(Bestiary* bestiary, Room *room, MapType type, int level) {
+std::list<std::unique_ptr<Enemy>> EnemyFactory::fillRoomWithEnemies(Bestiary* bestiary, Room *room, std::string mapType, int level) {
     std::list<std::unique_ptr<Enemy>> enemyList{};
 
     // if it's not the boss room
@@ -23,7 +23,7 @@ std::list<std::unique_ptr<Enemy>> EnemyFactory::fillRoomWithEnemies(Bestiary* be
         // prepare every enemy
         for (int i = 0; i < numberOfEnemies; ++i) {
             // creation
-            auto enemy = selectRandomEnemy(bestiary, type, level);
+            auto enemy = selectRandomEnemy(bestiary, mapType, level);
             // setting position
             placeEnemy(enemy.get(), room);
             //adding to the list
@@ -36,34 +36,12 @@ std::list<std::unique_ptr<Enemy>> EnemyFactory::fillRoomWithEnemies(Bestiary* be
     return enemyList;
 }
 
-std::unique_ptr<Enemy> EnemyFactory::selectRandomEnemy(Bestiary* bestiary, MapType mapType, int level) {
+std::unique_ptr<Enemy> EnemyFactory::selectRandomEnemy(Bestiary* bestiary, std::string mapType, int level) {
     // pick a random enemy from all the bestiary
     auto enemy = bestiary->beasts[rand() % size(bestiary->beasts)];
 
-    std::string habitat;
-    switch (mapType) {
-        case MapType::CoralReef:
-            habitat = "CoralReef";
-            break;
-        case MapType::MangroveForest:
-            habitat = "MangroveForest";
-            break;
-        case MapType::TemperateReef:
-            habitat = "TemperateReef";
-            break;
-        case MapType::KelpForest:
-            habitat = "KelpForest";
-            break;
-        case MapType::PosidoniaMeadow:
-            habitat = "PosidoniaMeadow";
-            break;
-        case MapType::IceFloe:
-            habitat = "IceFloe";
-            break;
-    }
-
     // if this enemy is
-    if (std::count(enemy.habitats.begin(), enemy.habitats.end(), habitat)) {
+    if (std::count(enemy.habitats.begin(), enemy.habitats.end(), mapType)) {
         // the sprite of the enemy instead has to be created, loaded and passed here
         sf::Texture enemyTexture;
         enemyTexture.loadFromFile("GameCharacter/Enemy/" + enemy.type + "/" + enemy.name + "/Texture.png");

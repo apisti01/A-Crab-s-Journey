@@ -3,18 +3,9 @@
 //
 
 #include "StateTitleScreen.h"
-#include "../Game.h"
 
 StateTitleScreen::StateTitleScreen(Game* game): State(game) {
-    backgroundTexture.loadFromFile("Games States/Start Menu/Start Menu Blank.png");
-
-    titleBtnTexture.loadFromFile("Games States/Start Menu/A Crab's Journey Texture.png");
-    float titleBtnScl = 1.3;
-    titleBtn.setPosition(1920 / 2, 1080 / 2);
-    titleBtn.setScale(titleBtnScl, titleBtnScl);
-    titleBtn.setOrigin(titleBtnTexture.getSize().x / 2, titleBtnTexture.getSize().y / 2);
-    titleBtn.setSize(sf::Vector2f(titleBtnTexture.getSize().x, titleBtnTexture.getSize().y));
-    titleBtn.setTexture(&titleBtnTexture);
+    backgroundTexture.loadFromFile("Game States/Main Menu/Main Menu Blank.png");
 }
 
 void StateTitleScreen::eventHandling(sf::Event event, sf::RenderWindow &window) {
@@ -25,5 +16,5 @@ void StateTitleScreen::eventHandling(sf::Event event, sf::RenderWindow &window) 
 
 void StateTitleScreen::draw(sf::RenderWindow &window) {
     window.draw(background);
-    window.draw(titleBtn);
+    titleBtn.drawBtn(window);
 }

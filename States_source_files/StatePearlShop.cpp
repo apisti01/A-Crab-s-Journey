@@ -5,25 +5,20 @@
 #include "StatePearlShop.h"
 
 StatePearlShop::StatePearlShop(Game *game) : State(game) {
-    texture.loadFromFile("Games States/Pearl Shop/Pearl Shop.png");
+    texture.loadFromFile("Game States/Pearl Shop/Pearl Shop.png");
 
     // load the characters textures
     crabsTextures.emplace_back();
-    crabsTextures[0].loadFromFile("Games States/Pearl Shop/Brown Crab.png");
+    crabsTextures[0].loadFromFile("Game States/Pearl Shop/Brown Crab.png");
     crabsTextures.emplace_back();
-    crabsTextures[1].loadFromFile("Games States/Pearl Shop/Fiddler Crab.png");
+    crabsTextures[1].loadFromFile("Game States/Pearl Shop/Fiddler Crab.png");
     crabsTextures.emplace_back();
-    crabsTextures[2].loadFromFile("Games States/Pearl Shop/Triangle Tanner Crab.png");
+    crabsTextures[2].loadFromFile("Game States/Pearl Shop/Triangle Tanner Crab.png");
     crabsTextures.emplace_back();
-    crabsTextures[3].loadFromFile("Games States/Pearl Shop/Asian Great Paddle.png");
-
-    // load the locked texture
-    lockedCharacterTexture.loadFromFile("Games States/Pearl Shop/Locked Character.png");
-    currCharacterLocked.setScale(0.225, 0.225);
-    currCharacterLocked.setOrigin(lockedCharacterTexture.getSize().x / 2, lockedCharacterTexture.getSize().y / 2);
+    crabsTextures[3].loadFromFile("Game States/Pearl Shop/Asian Great Paddle.png");
 
     // load the upgrade unit texture
-    upgradeUnit.loadFromFile("Games States/Pearl Shop/Upgrade Unit.png");
+    upgradeUnit.loadFromFile("Game States/Pearl Shop/Upgrade Unit.png");
 
     loadStats();
 }
@@ -102,9 +97,18 @@ void StatePearlShop::draw(sf::RenderWindow &window) {
     window.draw(backgroundSprite);
 
     // draw the characters
+    auto characters = Game::getInstance()->globalProgress.characters;
     currCharacterBtn.drawBtn(window);
+    if (!characters[currCharacter].unlocked)
+        currCharacterLocked.drawBtn(window);
+
     nextCharacterBtn.drawBtn(window);
+    if (!characters[(currCharacter + 1) % size(characters)].unlocked)
+        nextCharacterLocked.drawBtn(window);
+
     prevCharacterBtn.drawBtn(window);
+    if (!characters[(currCharacter - 1 + size(characters)) % size(characters)].unlocked)
+        prevCharacterLocked.drawBtn(window);
 
     // draw the habitats
     currHabitatBtn.drawBtn(window);

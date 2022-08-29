@@ -15,7 +15,7 @@ class Observer;
 class FloorMap {
 public:
     // constructor
-    explicit FloorMap(int level, MapType mapType, Bestiary* bestiary);
+    explicit FloorMap(int characterIndex, std::string mapType, int level, Bestiary* bestiary);
     ~FloorMap();
 
     // getter and setter for level attribute
@@ -43,8 +43,6 @@ public:
     bool isPlayerNearShop();
     bool floorCompleted();
 
-    MapType mapType;
-
     // functions for the observers ( bestiary and achievements)
     void subscribeObserver(Observer *obs);
     void unsubscribeObserver(Observer *obs);
@@ -53,10 +51,15 @@ public:
     void notifyObserver(Room *room);
     void notifyObserver(Enemy *enemy);
 
+    std::string mapType;
+    float minX = 0;
+    float maxX = 0;
+    float minY = 0;
+    float maxY = 0;
+
 private:
     // level and number of rooms
-    int level;
-    int numRooms;
+    int level, numRooms;
 
     std::string mapName;
     int roomWidth, roomHeight;
@@ -68,7 +71,7 @@ private:
     sf::Texture backgroundTexture;
 
     // function for randomic floor generation
-    void generateFloor(Bestiary* bestiary);
+    void generateFloor(std::string mapType, Bestiary* bestiary);
     // returns the index of a room with at least one free side
     int pickRoom();
     // given a room index, returns the index of a free side
@@ -87,7 +90,7 @@ private:
     void setShopRoom();
 
     //  create the player and prepare it for the game
-    void setupPlayer();
+    void setupPlayer(int characterIndex);
 
     // list of the observers subscribed
     std::list<Observer*> observers {};

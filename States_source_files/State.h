@@ -10,18 +10,8 @@
 class Game;
 
 enum class StateType {
-    TitleScreen,
-    MainMenu,
-    PrepareRun,
-    Play,
-    ManageInventory,
-    DisplayMap,
-    Shop,
-    Bestiary,
-    Pause,
-    PearlShop,
-    Settings,
-    Credits
+    TitleScreen, MainMenu, PrepareRun, PearlShop, Settings, Credits,
+    Play, ManageInventory, DisplayMap, Shop, Bestiary, Pause
 };
 
 class State {

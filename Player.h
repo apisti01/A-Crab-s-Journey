@@ -7,6 +7,7 @@
 
 #include <list>
 
+#include "Game.h"
 #include "GameCharacter.h"
 #include "Enemy_source_files/Enemy.h"
 #include "Wearable.h"
@@ -17,17 +18,18 @@
 
 enum class CrabSpecie {
     BrownCrab,
-    AsianPaddleCrab,
+    FiddlerCrab,
     TriangleTannerCrab,
-    FiddlerCrab
+    AsianGreatPaddle
 };
 
 class Player : public GameCharacter {
 public:
     // Constructor and Destructor
-    Player(std::string name, CrabSpecie crabSpecie, const sf::Texture& texture, Collider collider, std::unique_ptr<Weapon> weapon,
-           float hp = 8, float maxHp = 10, float speed = 2, float maxSpeed = 3, float armor = 0.2,
-           float maxArmor = 0.5, float strength = 1.2, float maxStrength = 2);
+    Player(int characterIndex, std::string name, CrabSpecie crabSpecie, const sf::Texture &texture, Collider collider,
+           std::unique_ptr<Weapon> weapon, float hp, float maxHp, float speed, float maxSpeed, float armor,
+           float maxArmor, float strength, float maxStrength);
+
     ~Player() override = default;
 
     void update(int deltaTime, FloorMap *floor, bool clicked) override;
@@ -40,6 +42,7 @@ public:
     // take a Weapon and puts it on, return the weapon wielded before
     std::unique_ptr<Weapon> changeWeapon(std::unique_ptr<Weapon> weapon1);
 
+    int characterIndex;
 private:
     // Specification about the starting statistics
     CrabSpecie crabSpecie;
@@ -57,11 +60,12 @@ private:
 
     // change room if a door is walked
     void changeRoom(FloorMap *floor);
+
     // change room status
     void checkCageStatus(FloorMap *floor);
 
     // modify the statistics of the player given the object
-    void modifyStatistics(Wearable* item, bool wore);
+    void modifyStatistics(Wearable *item, bool wore);
 };
 
 

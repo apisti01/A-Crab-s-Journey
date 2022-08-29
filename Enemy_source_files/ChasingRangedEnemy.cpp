@@ -42,8 +42,8 @@ sf::Vector2f ChasingRangedEnemy::chase(const Player *hero, float &deltaAngle, in
         triggered = false;
 
         // it moves to come near the player
-        movement.x = movement.x * speed * sprite.getWidth() * static_cast<float>(deltaTime) / pow(10, 6);
-        movement.y = movement.y * speed * sprite.getHeight() * static_cast<float>(deltaTime) / pow(10, 6);
+        movement.x = movement.x * speed * Game::getInstance()->lenUnit * static_cast<float>(deltaTime) / pow(10, 6);
+        movement.y = movement.y * speed * Game::getInstance()->lenUnit * static_cast<float>(deltaTime) / pow(10, 6);
     }
     // if the enemy is near enough
     else {

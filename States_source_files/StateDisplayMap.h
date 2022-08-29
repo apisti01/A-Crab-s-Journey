@@ -7,6 +7,7 @@
 
 #include "State.h"
 #include "../FloorMap.h"
+#include "../Button.h"
 
 class StateDisplayMap : public State {
 public:
@@ -20,12 +21,14 @@ public:
     void draw(sf::RenderWindow &window) override;
 
 private:
-    std::vector<sf::RectangleShape> roomShapes;
-    std::vector<sf::Text> roomTextNumbers;
-    sf::RectangleShape startPointer, endPointer, shopPointer, currentPointer;
-
     float unit;
 
+    sf::Sprite background = { backgroundTexture, sf::IntRect(0, 0, 1920, 1080)};
+    std::vector<sf::Sprite> rooms;
+
+    sf::Texture backgroundTexture, roomTexture;
+
+    Button mapBtn = { "Game States/DisplayMap/Map Texture.png", 1, 1920 / 2, 200, false };
     sf::Text levelCounter;
 };
 

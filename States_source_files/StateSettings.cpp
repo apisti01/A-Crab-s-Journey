@@ -7,7 +7,7 @@
 
 
 StateSettings::StateSettings(Game *game) : State(game) {
-    texture.loadFromFile("Games States/Settings/Settings.png");
+    texture.loadFromFile("Game States/Settings/Settings.png");
     backgroundSprite = { texture, sf::IntRect(0, 0, 1920, 1080) };
 }
 
