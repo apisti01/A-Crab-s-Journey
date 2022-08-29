@@ -26,7 +26,7 @@ private:
     sf::Texture backgroundTexture;
     sf::Sprite background { backgroundTexture, sf::IntRect(0, 0, 1920, 1080) };
 
-    Button titleBtn = { "Game States/Main Menu/A Crab's Journey Texture.png", 1.3, 1920 / 2, 1080 / 2, false};
+    sf::Text titleTxt;
 };
 
 

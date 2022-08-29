@@ -28,8 +28,8 @@ private:
 
     sf::Texture backgroundTexture, roomTexture;
 
-    Button mapBtn = { "Game States/DisplayMap/Map Texture.png", 1, 1920 / 2, 200, false };
-    sf::Text levelCounter;
+    Button mapBtn = { "Game States/DisplayMap/Map Texture.png", 1, {1920 / 2, 200}, false };
+    sf::Text levelTxt;
 };
 
 

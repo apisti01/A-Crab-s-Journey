@@ -11,7 +11,8 @@
 
 class StatePrepareRun : public State {
 public:
-    explicit StatePrepareRun(Game* game);
+    explicit StatePrepareRun(Game *game);
+
     ~StatePrepareRun() override = default;
 
     void eventHandling(sf::Event event, sf::RenderWindow &window) override;
@@ -19,12 +20,15 @@ public:
     void update(int deltaTime, bool clicked) override {}
 
     void draw(sf::RenderWindow &window) override;
+
 private:
     // background
     sf::Texture backgroundTexture;
-    sf::Sprite background { backgroundTexture, sf::IntRect {0, 0, 1920, 1080} };
+    sf::Sprite background{backgroundTexture, sf::IntRect{0, 0, 1920, 1080}};
 
-    Button startRunBtn = { "Game States/Main Menu/New Game Texture.png", 1, 1920 / 2, 240};
+    Button startRunTextBtn = {"Start Game", game->font, 180, sf::Vector2f{1920 / 2, 1080 / 2}};
+
+    Button backBtn = {"Game States/Back Icon.png", 0.2, {150, 150}};
 
     int selectedCharacter = 0;
     int selectedMap = 0;

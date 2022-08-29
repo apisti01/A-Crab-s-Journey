@@ -26,6 +26,13 @@ StateDisplayMap::StateDisplayMap(Game *game) : State(game) {
             rooms.push_back(room);
         }
     }
+
+    // set level text
+    levelTxt.setString("Floor: " + to_string(game->map->getLevel()));
+    levelTxt.setFont(game->font);
+    levelTxt.setCharacterSize(184);
+    levelTxt.setPosition(100, 1080 - 100);
+    levelTxt.setOrigin(0, levelTxt.getLocalBounds().height);
 }
 
 void StateDisplayMap::eventHandling(sf::Event event, sf::RenderWindow &window) {
@@ -59,5 +66,5 @@ void StateDisplayMap::draw(sf::RenderWindow &window) {
     }
 
     // and the level text
-
+    window.draw(levelTxt);
 }

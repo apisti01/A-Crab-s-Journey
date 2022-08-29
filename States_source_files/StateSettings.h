@@ -19,8 +19,8 @@ public:
     void draw(sf::RenderWindow &window) override;
 
 private:
-    sf::Sprite backgroundSprite;
     sf::Texture texture;
+    sf::Sprite backgroundSprite = { texture, sf::IntRect(0, 0, 1920, 1080) };
 };
 
 #endif //ACRABSJOURNEY_STATESETTINGS_H

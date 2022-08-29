@@ -9,23 +9,32 @@ StatePrepareRun::StatePrepareRun(Game *game) : State(game) {
 }
 
 void StatePrepareRun::eventHandling(sf::Event event, sf::RenderWindow &window) {
-    startRunBtn.updateBtn(window);
+    startRunTextBtn.updateBtn(window);
+    backBtn.updateBtn(window);
 
     if (event.type == sf::Event::MouseButtonReleased) {
         // new game
-        if (startRunBtn.btnBox.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
+        if (startRunTextBtn.btnText.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
             // create new floor
-            game->map = std::make_unique<FloorMap>(selectedCharacter,
-                                                   Game::getInstance()->globalProgress.habitats[selectedMap].name, 1,
-                                                   &(game->bestiary));
+            game->map = std::make_unique<FloorMap>(selectedCharacter, game->globalProgress.habitats[selectedMap].name,
+                                                   1, game->bestiary);
             game->changeState(StateType::Play);
         }
+
+        else if (backBtn.box.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
+            game->changeState(StateType::MainMenu);
     }
+
+    else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
+        game->changeState(StateType::MainMenu);
 }
 
 void StatePrepareRun::draw(sf::RenderWindow &window) {
     // draw background
     window.draw(background);
 
-    startRunBtn.drawBtn(window);
+    startRunTextBtn.drawTextBtn(window);
+
+    backBtn.drawBtn(window);
+
 }

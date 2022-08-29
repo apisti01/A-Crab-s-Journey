@@ -7,8 +7,7 @@
 
 
 StateSettings::StateSettings(Game *game) : State(game) {
-    texture.loadFromFile("Game States/Settings/Settings.png");
-    backgroundSprite = { texture, sf::IntRect(0, 0, 1920, 1080) };
+    texture.loadFromFile("Game States/Pause Screen/Pause Screen Blank.png");
 }
 
 void StateSettings::eventHandling(sf::Event event, sf::RenderWindow &window) {

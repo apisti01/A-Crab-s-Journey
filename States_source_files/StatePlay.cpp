@@ -38,7 +38,7 @@ void StatePlay::eventHandling(sf::Event event, sf::RenderWindow &window) {
 
                 // if player has completed the floor
                 else if (game->map->floorCompleted())
-                    game->map = std::make_unique<FloorMap>(game->player->characterIndex, game->map->mapType, game->map->getLevel() + 1, &game->bestiary);
+                    game->map = std::make_unique<FloorMap>(game->player->characterIndex, game->map->mapType, game->map->getLevel() + 1, game->bestiary);
                 break;
         }
     }

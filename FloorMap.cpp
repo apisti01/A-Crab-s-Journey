@@ -5,7 +5,7 @@
 #include "FloorMap.h"
 #include "Game.h"
 
-FloorMap::FloorMap(int characterIndex, std::string mapType, int level, Bestiary* bestiary) :
+FloorMap::FloorMap(int characterIndex, std::string mapType, int level, Bestiary &bestiary) :
                     mapType(mapType), level(level), roomWidth(1920), roomHeight(1080) {
     // there's a 40% chance that this floor has a shop room
     float chance = rand() / (RAND_MAX + 1.0);
@@ -27,7 +27,7 @@ FloorMap::~FloorMap() {
     unsubscribeObserver(&(Game::getInstance()->bestiary));
 }
 
-void FloorMap::generateFloor(std::string mapType, Bestiary* bestiary) {
+void FloorMap::generateFloor(std::string mapType, Bestiary &bestiary) {
     // add first room in the middle of the grid (position 0, 0)
     roomList.push_back(std::make_unique<Room>(mapType, 0, 0, roomWidth, roomHeight));
 
@@ -58,7 +58,7 @@ void FloorMap::generateFloor(std::string mapType, Bestiary* bestiary) {
 
         // if the room is not the start room, generate enemies
         if (!roomList[i]->getStartRoom())
-            roomList[i]->generateEnemies(bestiary, mapType, level);
+            roomList[i]->generateEnemies(&bestiary, mapType, level);
 
         // close the doors that don't connect with other rooms
         roomList[i]->closeDoors();

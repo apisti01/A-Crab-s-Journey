@@ -24,29 +24,34 @@ StatePearlShop::StatePearlShop(Game *game) : State(game) {
 }
 
 void StatePearlShop::eventHandling(sf::Event event, sf::RenderWindow &window) {
+    backBtn.updateBtn(window);
+
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
         game->changeState(StateType::MainMenu);
 
     else if (event.type == sf::Event::MouseButtonReleased) {
         // scroll characters from right to left
-        if (nextCharacterBtn.btnBox.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
+        if (nextCharacterBtn.box.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
             currCharacter = (currCharacter + 1) % size(crabsTextures);
             reloadCharactersTextures();
             loadStats();
         }
         // scroll characters from left to right
-        else if (prevCharacterBtn.btnBox.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
+        else if (prevCharacterBtn.box.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
             currCharacter = (currCharacter - 1 + size(crabsTextures)) % size(crabsTextures);
             reloadCharactersTextures();
             loadStats();
         }
+
+        else if (backBtn.box.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
+            game->changeState(StateType::MainMenu);
     }
 }
 
 void StatePearlShop::reloadCharactersTextures() {
-    currCharacterBtn.btnBox.setTexture(&crabsTextures[currCharacter]);
-    nextCharacterBtn.btnBox.setTexture(&crabsTextures[(currCharacter + 1) % size(crabsTextures)]);
-    prevCharacterBtn.btnBox.setTexture(&crabsTextures[(currCharacter - 1 + size(crabsTextures)) % size(crabsTextures)]);
+    currCharacterBtn.box.setTexture(&crabsTextures[currCharacter]);
+    nextCharacterBtn.box.setTexture(&crabsTextures[(currCharacter + 1) % size(crabsTextures)]);
+    prevCharacterBtn.box.setTexture(&crabsTextures[(currCharacter - 1 + size(crabsTextures)) % size(crabsTextures)]);
 }
 
 void StatePearlShop::loadStats() {
@@ -124,4 +129,6 @@ void StatePearlShop::draw(sf::RenderWindow &window) {
     speedIcon.drawBtn(window);
     armorIcon.drawBtn(window);
     strengthIcon.drawBtn(window);
+
+    backBtn.drawBtn(window);
 }

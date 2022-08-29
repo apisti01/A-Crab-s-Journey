@@ -9,21 +9,21 @@ StatePause::StatePause(Game *game) : State(game) {
 }
 
 void StatePause::eventHandling(sf::Event event, sf::RenderWindow &window) {
-    resumeBtn.updateBtn(window);
-    exitBtn.updateBtn(window);
-    settingsBtn.updateBtn(window);
+    resumeTextBtn.updateBtn(window);
+    exitTextBtn.updateBtn(window);
+    settingsTextBtn.updateBtn(window);
 
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
         game->changeState(StateType::Play);
 
     else if (event.type == sf::Event::MouseButtonReleased) {
-        if (resumeBtn.btnBox.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
+        if (resumeTextBtn.btnText.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
             game->changeState(StateType::Play);
 
-        else if (exitBtn.btnBox.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
+        else if (exitTextBtn.btnText.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
             game->changeState(StateType::MainMenu);
 
-        else if (settingsBtn.btnBox.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
+        else if (settingsTextBtn.btnText.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
             game->changeState(StateType::Settings);
     }
 }
@@ -33,8 +33,8 @@ void StatePause::draw(sf::RenderWindow &window) {
     window.draw(background);
 
     // and all the buttons
-    pauseBtn.drawBtn(window);
-    resumeBtn.drawBtn(window);
-    exitBtn.drawBtn(window);
-    settingsBtn.drawBtn(window);
+    pauseTextBtn.drawTextBtn(window);
+    resumeTextBtn.drawTextBtn(window);
+    exitTextBtn.drawTextBtn(window);
+    settingsTextBtn.drawTextBtn(window);
 }

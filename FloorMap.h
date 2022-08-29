@@ -15,7 +15,7 @@ class Observer;
 class FloorMap {
 public:
     // constructor
-    explicit FloorMap(int characterIndex, std::string mapType, int level, Bestiary* bestiary);
+    explicit FloorMap(int characterIndex, std::string mapType, int level, Bestiary &bestiary);
     ~FloorMap();
 
     // getter and setter for level attribute
@@ -71,7 +71,7 @@ private:
     sf::Texture backgroundTexture;
 
     // function for randomic floor generation
-    void generateFloor(std::string mapType, Bestiary* bestiary);
+    void generateFloor(std::string mapType, Bestiary &bestiary);
     // returns the index of a room with at least one free side
     int pickRoom();
     // given a room index, returns the index of a free side
