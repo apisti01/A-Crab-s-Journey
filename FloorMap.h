@@ -61,14 +61,11 @@ private:
     // level and number of rooms
     int level, numRooms;
 
-    std::string mapName;
     int roomWidth, roomHeight;
 
     int longestPathLength;
     bool hasShop;
     float shopChance = 0.5;
-
-    sf::Texture backgroundTexture;
 
     // function for randomic floor generation
     void generateFloor(std::string mapType, Bestiary &bestiary);

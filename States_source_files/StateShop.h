@@ -6,6 +6,7 @@
 #define ACRABSJOURNEY_STATESHOP_H
 
 #include "State.h"
+#include "../Game.h"
 
 class StateShop : public State {
 public:
