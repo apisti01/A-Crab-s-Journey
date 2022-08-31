@@ -36,6 +36,10 @@ public:
     int language;
     std::string difficulty;
     int effectsVolume, musicVolume;
+
+private:
+    void createFile();
+    void readFile();
 };
 
 

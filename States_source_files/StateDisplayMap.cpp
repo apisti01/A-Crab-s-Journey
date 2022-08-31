@@ -14,6 +14,8 @@ StateDisplayMap::StateDisplayMap(Game *game) : State(game) {
     sf::Vector2f pos;
     sf::Vector2f center = { (game->map->minX + game->map->maxX) / 2, (game->map->minY + game->map->maxY) / 2 };
     unit = 600 / (game->map->maxY - game->map->minY + 1);
+    if (unit > 400)
+        unit = 400;
     float scl = unit / (roomTexture.getSize().x * 1.25);
 
     for (int i = 0; i < size(game->map->roomList); i++) {
@@ -31,6 +33,8 @@ StateDisplayMap::StateDisplayMap(Game *game) : State(game) {
 void StateDisplayMap::update(int deltaTime, bool clicked, sf::RenderWindow &window) {
     mapText.updateBtn(window);
     levelText.updateBtn(window);
+
+    backBtn.updateBtn(window);
 }
 
 void StateDisplayMap::eventHandling(sf::Event event, sf::RenderWindow &window) {
@@ -51,6 +55,11 @@ void StateDisplayMap::eventHandling(sf::Event event, sf::RenderWindow &window) {
                 break;
         }
     }
+
+    else if (event.type == sf::Event::MouseButtonReleased) {
+        if (backBtn.box.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
+            game->changeState(StateType::Play);
+    }
 }
 
 void StateDisplayMap::draw(sf::RenderWindow &window) {
@@ -65,4 +74,6 @@ void StateDisplayMap::draw(sf::RenderWindow &window) {
 
     // and the level text
     levelText.drawTextBtn(window);
+
+    backBtn.drawBtn(window);
 }

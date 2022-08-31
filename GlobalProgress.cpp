@@ -11,42 +11,51 @@
 
 GlobalProgress::GlobalProgress() {
     // initialize by load from file
-    std::ifstream file("Global Progress.txt");
+    std::ifstream file;
 
-    // if file is not found
-    if (!file.is_open()) {
-        // it has to be created
-        std::ofstream file ("Global Progress.txt");
+    file.open("Global Progress.txt");
 
-        // characters
-        file << "1 BrownCrab 5 3 1 3 0 0 0 0 0" << std::endl;
-        file << "0 FiddlerCrab 3 4 0.5 6 0 0 0 0 500" << std::endl;
-        file << "0 TriangleTannerCrab 4 6 0.5 3 0 0 0 0 500" << std::endl;
-        file << "0 AsianGreatPaddle 6 3 1.5 5 0 0 0 0 500" << std::endl;
-        file << std::endl;
-
-        // maps
-        file << "1 CoralReef 0 1" << std::endl;
-        file << "0 MangroveForest 200 1.5" << std::endl;
-        file << "0 TemperateReef 400 1.5" << std::endl;
-        file << "0 KelpForest 400 1.5" << std::endl;
-        file << "0 PosidoniaMeadow 400 1.5" << std::endl;
-        file << "0 IceFloe 600 2" << std::endl;
-        file << std::endl;
-
-        // pearls
-        file << "0" << std::endl;
-        file << std::endl;
-
-        // settings values
-        file << "0 Normal 10 10" << std::endl;
-        file << std::endl;
-
+    // if file is not found it has to be created
+    if (!file.is_open())
+        createFile();
+    else
         file.close();
-    }
 
     // then it is processed
-    file.open("Global Progress.txt");
+    readFile();
+}
+
+void GlobalProgress::createFile() {
+    std::ofstream file ("Global Progress.txt");
+
+    // characters
+    file << "1 BrownCrab 5 3 1 3 0 0 0 0 0" << std::endl;
+    file << "0 FiddlerCrab 3 4 0.5 6 0 0 0 0 500" << std::endl;
+    file << "0 TriangleTannerCrab 4 6 0.5 3 0 0 0 0 500" << std::endl;
+    file << "0 AsianGreatPaddle 6 3 1.5 5 0 0 0 0 500" << std::endl;
+    file << std::endl;
+
+    // maps
+    file << "1 CoralReef 0 1" << std::endl;
+    file << "0 MangroveForest 200 1.5" << std::endl;
+    file << "0 TemperateReef 400 1.5" << std::endl;
+    file << "0 KelpForest 400 1.5" << std::endl;
+    file << "0 PosidoniaMeadow 400 1.5" << std::endl;
+    file << "0 IceFloe 600 2" << std::endl;
+    file << std::endl;
+
+    // pearls
+    file << "0" << std::endl;
+    file << std::endl;
+
+    // settings values
+    file << "0 Normal 10 10" << std::endl;
+
+    file.close();
+}
+
+void GlobalProgress::readFile() {
+    std::ifstream file("Global Progress.txt");
     std::string line;
     Character character;
     Habitat habitat;

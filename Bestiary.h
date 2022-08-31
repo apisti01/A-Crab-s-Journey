@@ -29,6 +29,10 @@ public:
 
     // map of data of all the enemies in the game
     std::vector<Beast> beasts;
+
+private:
+    void createFile();
+    void readFile();
 };
 
 

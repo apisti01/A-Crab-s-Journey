@@ -32,6 +32,8 @@ private:
     Button mapText = {"Map", game->font, 240, {1920 / 2, 175}, false};
     Button levelText = {"Floor: " + to_string(game->map->getLevel()), game->font, 180, {100, 1080 - 100}, false,
                        "bottomLeft"};
+
+    Button backBtn = {"Game States/Back Icon.png", 0.2, {100, 100}};
 };
 
 

@@ -27,11 +27,11 @@ sf::Vector2f ChasingRangedEnemy::chase(const Player *hero, float &deltaAngle, in
     // normalization
     float distance = sqrtf(powf(movement.x, 2) + powf(movement.y, 2));
 
+    // variation in radians of the facing angle
+    deltaAngle = atan2f(movement.y, movement.x) - getAngle();
+
     // if the enemy is too far from the player
     if (distance > triggerRange) {
-        // variation in radians of the facing angle
-        deltaAngle = atan2f(movement.y, movement.x) - getAngle();
-
         // normalization
         if (distance != 0) {
             movement.x = movement.x / distance;

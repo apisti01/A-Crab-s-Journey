@@ -25,6 +25,8 @@ StatePearlShop::StatePearlShop(Game *game) : State(game) {
 
 void StatePearlShop::update(int deltaTime, bool clicked, sf::RenderWindow &window) {
     backBtn.updateBtn(window);
+
+    currCharacterPrice.btnText.setString(to_string(game->globalProgress.characters[currCharacter].price));
 }
 
 void StatePearlShop::eventHandling(sf::Event event, sf::RenderWindow &window) {
@@ -131,6 +133,13 @@ void StatePearlShop::draw(sf::RenderWindow &window) {
     speedIcon.drawBtn(window);
     armorIcon.drawBtn(window);
     strengthIcon.drawBtn(window);
+
+    // if mouse is on the current character and it's a locked character
+    if (currCharacterCoin.box.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))) &&
+        !game->globalProgress.characters[currCharacter].unlocked) {
+        currCharacterCoin.drawBtn(window);
+        currCharacterPrice.drawTextBtn(window);
+    }
 
     backBtn.drawBtn(window);
 }

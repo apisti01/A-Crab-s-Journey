@@ -11,12 +11,40 @@
 
 Bestiary::Bestiary() {
     // initialize by load from file
+    std::ifstream file;
+
+    file.open("Enemy_source_files/Enemy Data.txt");
+
+    // if file is not found it has to be created
+    if (!file.is_open())
+        createFile();
+    else
+        file.close();
+
+    // then it's processed
+    readFile();
+}
+
+void Bestiary::createFile() {
+    std::ofstream file("Enemy_source_files/Enemy Data.txt");
+
+    // enemies
+    file << "00 0 Squid ChasingRanged 6 4 3 4 360 1 CoralReef" << std::endl;
+    file << "01 0 PufferFish DefensiveMelee 4 2 2 5 240 1 CoralReef" << std::endl;
+    file << "02 0 SeaTurtle AggressiveMelee 8 3 6 5 180 1 CoralReef" << std::endl;
+    file << "03 0 HermitCrab StaticRanged 3 0 7 3 -1 1 CoralReef";
+
+    file.close();
+}
+
+void Bestiary::readFile() {
     std::ifstream file("Enemy_source_files/Enemy Data.txt");
     std::string habitat, line;
-
     Beast beast;
-    if (file.is_open()) {
-        while (std::getline(file, line)) {
+
+    // enemies
+    while (std::getline(file, line)) {
+        if (line != "") {
             std::istringstream ss(line);
 
             // load the attributes
@@ -34,8 +62,6 @@ Bestiary::Bestiary() {
             // clear the struct variable for the next enemy
             beast = {};
         }
-    } else {
-        std::cout << "File dei dati sui nemici non trovato" << std::endl;
     }
 }
 
