@@ -1,4 +1,4 @@
-00 0 Squid ChasingRanged 6 4 3 4 360 1 CoralReef
-01 0 PufferFish DefensiveMelee 4 2 2 5 240 1 CoralReef
-02 0 SeaTurtle AggressiveMelee 8 3 6 5 180 1 CoralReef
-03 0 HermitCrab StaticRanged 3 0 7 3 -1 1 CoralReef
+0 Squid ChasingRanged 6 4 3 4 360 1 CoralReef
+0 PufferFish DefensiveMelee 4 2 2 5 240 1 CoralReef
+0 SeaTurtle AggressiveMelee 8 3 6 5 180 1 CoralReef
+0 HermitCrab StaticRanged 3 0 7 3 -1 1 CoralReef

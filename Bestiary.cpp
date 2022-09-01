@@ -29,10 +29,10 @@ void Bestiary::createFile() {
     std::ofstream file("Enemy_source_files/Enemy Data.txt");
 
     // enemies
-    file << "00 0 Squid ChasingRanged 6 4 3 4 360 1 CoralReef" << std::endl;
-    file << "01 0 PufferFish DefensiveMelee 4 2 2 5 240 1 CoralReef" << std::endl;
-    file << "02 0 SeaTurtle AggressiveMelee 8 3 6 5 180 1 CoralReef" << std::endl;
-    file << "03 0 HermitCrab StaticRanged 3 0 7 3 -1 1 CoralReef";
+    file << "0 Squid ChasingRanged 6 4 3 4 360 1 CoralReef" << std::endl;
+    file << "0 PufferFish DefensiveMelee 4 2 2 5 240 1 CoralReef" << std::endl;
+    file << "0 SeaTurtle AggressiveMelee 8 3 6 5 180 1 CoralReef" << std::endl;
+    file << "0 HermitCrab StaticRanged 3 0 7 3 -1 1 CoralReef";
 
     file.close();
 }
@@ -48,7 +48,7 @@ void Bestiary::readFile() {
             std::istringstream ss(line);
 
             // load the attributes
-            ss >> beast.id >> beast.discovered >> beast.name >> beast.type >> beast.health >> beast.speed
+            ss >> beast.discovered >> beast.name >> beast.type >> beast.health >> beast.speed
                >> beast.armor >> beast.strength >> beast.triggerRange >> beast.attackTimer;
             // and the habitats in which the enemy can be found
             int i = 0;
@@ -68,3 +68,31 @@ void Bestiary::readFile() {
 void Bestiary::update(Room* room) {}
 
 void Bestiary::update(Enemy *enemy) {}
+
+void Bestiary::updateTxtFile() {
+    // load the file
+    std::ifstream rfile("Enemy Data.txt");
+    std::ofstream wfile("New Enemy Data.txt");
+    std::string line;
+
+    // scroll till the current character line
+    if (rfile.is_open() && wfile.is_open()) {
+        // check enemies
+        for (int i = 0; i < size(beasts); i++) {
+            std::getline(rfile, line);
+            // if a character has been purchased
+            if (beasts[i].discovered && line.find("0") == 0)
+                line.replace(line.find("0"), 1, "1");
+
+            wfile << line << std::endl;
+        }
+    } else {
+        std::cout << "Files could not be opened" << std::endl;
+    }
+
+    rfile.close();
+    wfile.close();
+
+    remove("Enemy Data.txt");
+    rename("New Enemy Data.txt", "Enemy Data.txt");
+}

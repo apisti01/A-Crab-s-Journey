@@ -26,7 +26,7 @@ GlobalProgress::GlobalProgress() {
 }
 
 void GlobalProgress::createFile() {
-    std::ofstream file ("Global Progress.txt");
+    std::ofstream file("Global Progress.txt");
 
     // characters
     file << "1 BrownCrab 5 3 1 3 0 0 0 0 0" << std::endl;
@@ -90,4 +90,75 @@ void GlobalProgress::readFile() {
 
     // pearls
     file >> pearls >> language >> difficulty >> effectsVolume >> musicVolume;
+}
+
+void GlobalProgress::unlockCharacter(int currCharacter) {
+    // subtract the pearls needed for the purchase
+    pearls -= characters[currCharacter].price;
+    characters[currCharacter].unlocked = true;
+}
+
+void GlobalProgress::unlockMap(int currMap) {
+    // subtract the pearls needed for the purchase
+    pearls -= habitats[currMap].price;
+    habitats[currMap].unlocked = true;
+}
+
+void GlobalProgress::updateTxtFile() {
+    // load the file
+    std::ifstream rfile("Global Progress.txt");
+    std::ofstream wfile("New Global Progress.txt");
+    std::string line;
+
+    // scroll till the current character line
+    if (rfile.is_open() && wfile.is_open()) {
+        // check characters
+        for (int i = 0; i < size(characters); i++) {
+            std::getline(rfile, line);
+            // if a character has been purchased
+            if (characters[i].unlocked && line.find("0") == 0)
+                line.replace(line.find("0"), 1, "1");
+
+            wfile << line << std::endl;
+        }
+
+        // empty line
+        std::getline(rfile, line);
+        wfile << line << std::endl;
+
+        // check for habitats
+        for (int i = 0; i < size(habitats); i++) {
+            std::getline(rfile, line);
+            // if a habitat has been purchased
+            if (habitats[i].unlocked && line.find("0") == 0)
+                line.replace(line.find("0"), 1, "1");
+
+            wfile << line << std::endl;
+        }
+
+        // empty line
+        std::getline(rfile, line);
+        wfile << line << std::endl;
+
+        // update pearls
+        std::getline(rfile, line);
+        line = std::to_string(pearls);
+        wfile << line << std::endl;
+
+        // empty line
+        std::getline(rfile, line);
+        wfile << line << std::endl;
+
+        // settings line
+        std::getline(rfile, line);
+        wfile << line << std::endl;
+    } else {
+        std::cout << "Files could not be opened" << std::endl;
+    }
+
+    rfile.close();
+    wfile.close();
+
+    remove("Global Progress.txt");
+    rename("New Global Progress.txt", "Global Progress.txt");
 }

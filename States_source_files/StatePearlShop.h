@@ -35,7 +35,7 @@ private:
     Button currCharacterBtn = {"Game States/Pearl Shop/Brown Crab.png", 0.21, {630, 510}, false};
     Button currCharacterLocked = {"Game States/Pearl Shop/Locked Character.png", 0.21, {630, 510}, false};
     Button currCharacterCoin = {"Game States/Coin.png", 0.15, {630, 510}, false};
-    Button currCharacterPrice = {to_string(game->globalProgress.characters[currCharacter].price), 150, {630, 510}, false};
+    Button currCharacterPrice = {to_string(game->globalProgress.characters[currCharacter].price), game->font, 150, {630, 510}, false};
 
     Button nextCharacterBtn = {"Game States/Pearl Shop/Fiddler Crab.png", 0.15, {1050, 510}, false};
     Button nextCharacterLocked = {"Game States/Pearl Shop/Locked Character.png", 0.15, {1050, 510}, false};

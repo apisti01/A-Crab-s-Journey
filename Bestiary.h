@@ -9,7 +9,6 @@
 #include "Enemy_source_files/Enemy.h"
 
 struct Beast {
-    int id;
     bool discovered;
     std::string name, type;
     float health, armor, strength, speed;
@@ -29,6 +28,8 @@ public:
 
     // map of data of all the enemies in the game
     std::vector<Beast> beasts;
+
+    void updateTxtFile();
 
 private:
     void createFile();

@@ -4,6 +4,8 @@
 
 #include "StatePearlShop.h"
 
+#include <iostream>
+
 StatePearlShop::StatePearlShop(Game *game) : State(game) {
     texture.loadFromFile("Game States/Pearl Shop/Pearl Shop.png");
 
@@ -26,6 +28,7 @@ StatePearlShop::StatePearlShop(Game *game) : State(game) {
 void StatePearlShop::update(int deltaTime, bool clicked, sf::RenderWindow &window) {
     backBtn.updateBtn(window);
 
+    currCharacterPrice.updateBtn(window);
     currCharacterPrice.btnText.setString(to_string(game->globalProgress.characters[currCharacter].price));
 }
 
@@ -45,6 +48,13 @@ void StatePearlShop::eventHandling(sf::Event event, sf::RenderWindow &window) {
             currCharacter = (currCharacter - 1 + size(crabsTextures)) % size(crabsTextures);
             reloadCharactersTextures();
             loadStats();
+        }
+        // if current character is clicked, it is locked and you have pears needed
+        else if (currCharacterBtn.box.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))) &&
+                !game->globalProgress.characters[currCharacter].unlocked &&
+                game->globalProgress.pearls >= game->globalProgress.characters[currCharacter].price) {
+            // buy the character
+            game->globalProgress.unlockCharacter(currCharacter);
         }
 
         else if (backBtn.box.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
@@ -135,9 +145,16 @@ void StatePearlShop::draw(sf::RenderWindow &window) {
     strengthIcon.drawBtn(window);
 
     // if mouse is on the current character and it's a locked character
-    if (currCharacterCoin.box.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))) &&
+    if (currCharacterBtn.box.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))) &&
         !game->globalProgress.characters[currCharacter].unlocked) {
         currCharacterCoin.drawBtn(window);
+
+        // if you can afford the price the text color is white, otherwise is rea
+        if (game->globalProgress.pearls >= game->globalProgress.characters[currCharacter].price)
+            currCharacterPrice.btnText.setFillColor(sf::Color(255, 255, 255));
+        else
+            currCharacterPrice.btnText.setFillColor(sf::Color(243, 29, 44));
+
         currCharacterPrice.drawTextBtn(window);
     }
 

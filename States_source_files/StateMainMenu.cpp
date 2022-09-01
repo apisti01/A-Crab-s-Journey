@@ -22,29 +22,35 @@ void StateMainMenu::update(int deltaTime, bool clicked, sf::RenderWindow &window
 void StateMainMenu::eventHandling(sf::Event event, sf::RenderWindow &window) {
     if (event.type == sf::Event::MouseButtonReleased) {
         // new game
-        if (newGameTextBtn.btnText.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
+        if (newGameTextBtn.btnText.getGlobalBounds().contains(
+                window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
             // go to the prepare run state
             game->changeState(StateType::PrepareRun);
         }
 
         // load game
-        else if (loadGameTextBtn.btnText.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
+        else if (loadGameTextBtn.btnText.getGlobalBounds().contains(
+                window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
             // TODO load a saved game
-        }
-
-        else if (pearlShopTextBtn.btnText.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
+        } else if (pearlShopTextBtn.btnText.getGlobalBounds().contains(
+                window.mapPixelToCoords(sf::Mouse::getPosition(window))))
             game->changeState(StateType::PearlShop);
 
-            // quit the game
-        else if (backToSurfaceTextBtn.btnText.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
-            window.close();
+        else if (backToSurfaceTextBtn.btnText.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
+            // update the global progress file
+            game->globalProgress.updateTxtFile();
+            game->bestiary.updateTxtFile();
 
-            // go to the credits
+            // quit the game
+            window.close();
+        }
+
+        // go to the credits
         else if (creditsBtn.box.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
             // TODO: add a credits game state
         }
 
-            // go to the settings
+        // go to the settings
         else if (settingsBtn.box.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
             game->changeState(StateType::Settings);
     }
