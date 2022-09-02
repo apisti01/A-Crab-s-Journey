@@ -5,7 +5,7 @@
 #include "FloorMap.h"
 #include "Game.h"
 
-FloorMap::FloorMap(int characterIndex, std::string mapType, int level, Bestiary &bestiary) :
+FloorMap::FloorMap(int characterIndex, const std::string& mapType, int level, Bestiary &bestiary) :
                     mapType(mapType), level(level), roomWidth(1920), roomHeight(1080) {
     // there's a 40% chance that this floor has a shop room
     float chance = rand() / (RAND_MAX + 1.0);

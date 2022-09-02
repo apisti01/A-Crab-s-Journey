@@ -16,8 +16,8 @@ public:
 
     void updateBtn(sf::RenderWindow &window);
 
-    void drawBtn(sf::RenderWindow &window);
-    void drawTextBtn(sf::RenderWindow &window);
+    void drawBtn(sf::RenderWindow &window) const;
+    void drawTextBtn(sf::RenderWindow &window) const;
 
     sf::RectangleShape box;
     sf::Texture texture;

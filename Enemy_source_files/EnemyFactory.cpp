@@ -57,7 +57,7 @@ std::unique_ptr<Enemy> EnemyFactory::selectRandomEnemy(Bestiary* bestiary, std::
             // create a weapon
             auto meleeWeapon = make_unique<MeleeWeapon>(MeleeWeaponType::NaturalWeapon, "Natural Weapon");
             // create the enemy
-            auto ame = std::make_unique<AggressiveMeleeEnemy>(enemy.name, enemyTexture, enemyCollider,
+            auto ame = std::make_unique<AggressiveMeleeEnemy>(enemy.id, enemy.name, enemyTexture, enemyCollider,
                                                               std::move(meleeWeapon), enemy.health, enemy.health,
                                                               enemy.speed, enemy.speed, enemy.armor, enemy.armor,
                                                               enemy.strength, enemy.strength, 10, 10, 10,
@@ -69,7 +69,7 @@ std::unique_ptr<Enemy> EnemyFactory::selectRandomEnemy(Bestiary* bestiary, std::
             // create a weapon
             auto rangedWeapon = make_unique<RangedWeapon>(RangedWeaponType::NaturalWeapon, "Natural Weapon");
             // create the enemy
-            auto cre = std::make_unique<ChasingRangedEnemy>(enemy.name, enemyTexture, enemyCollider,
+            auto cre = std::make_unique<ChasingRangedEnemy>(enemy.id, enemy.name, enemyTexture, enemyCollider,
                                                             std::move(rangedWeapon), enemy.health, enemy.health,
                                                             enemy.speed, enemy.speed, enemy.armor, enemy.armor,
                                                             enemy.strength, enemy.strength, 10, 10, 10,
@@ -81,7 +81,7 @@ std::unique_ptr<Enemy> EnemyFactory::selectRandomEnemy(Bestiary* bestiary, std::
             // create a weapon
             auto meleeWeapon = make_unique<RangedWeapon>(RangedWeaponType::NaturalWeapon, "Natural Weapon");
             // create the enemy
-            auto dme = std::make_unique<DefensiveMeleeEnemy>(enemy.name, enemyTexture, enemyCollider,
+            auto dme = std::make_unique<DefensiveMeleeEnemy>(enemy.id, enemy.name, enemyTexture, enemyCollider,
                                                              std::move(meleeWeapon), enemy.health, enemy.health,
                                                              enemy.speed, enemy.speed, enemy.armor, enemy.armor,
                                                              enemy.strength, enemy.strength, 10, 10, 10,
@@ -93,7 +93,7 @@ std::unique_ptr<Enemy> EnemyFactory::selectRandomEnemy(Bestiary* bestiary, std::
             // create a weapon
             auto rangedWeapon = make_unique<RangedWeapon>(RangedWeaponType::NaturalWeapon, "Natural Weapon");
             // create the enemy
-            auto sre = std::make_unique<StaticRangedEnemy>(enemy.name, enemyTexture, enemyCollider,
+            auto sre = std::make_unique<StaticRangedEnemy>(enemy.id, enemy.name, enemyTexture, enemyCollider,
                                                            std::move(rangedWeapon), enemy.health, enemy.health,
                                                            enemy.speed, enemy.speed, enemy.armor, enemy.armor,
                                                            enemy.strength, enemy.strength, 10, 10, 10,
@@ -110,8 +110,6 @@ std::unique_ptr<Enemy> EnemyFactory::selectRandomEnemy(Bestiary* bestiary, std::
 void EnemyFactory::placeEnemy(Enemy *enemy, Room *room) {
     // get one free spot on room grid coordinates
     sf::Vector2i pos = room->pickFreeGridSpot();
-
-    // TODO: if enemy is a defensive melee enemy set its origin position
 
     // and place the enemy there
     enemy->setPosition(pos.x, pos.y);

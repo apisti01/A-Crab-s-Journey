@@ -55,10 +55,10 @@ void Button::updateBtn(sf::RenderWindow &window) {
                           btnText.getLocalBounds().height + btnText.getLocalBounds().top);
 }
 
-void Button::drawBtn(sf::RenderWindow &window) {
+void Button::drawBtn(sf::RenderWindow &window) const {
     window.draw(box);
 }
 
-void Button::drawTextBtn(sf::RenderWindow &window) {
+void Button::drawTextBtn(sf::RenderWindow &window) const {
     window.draw(btnText);
 }

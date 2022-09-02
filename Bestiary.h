@@ -9,7 +9,8 @@
 #include "Enemy_source_files/Enemy.h"
 
 struct Beast {
-    bool discovered;
+    int id;
+    bool discovered, analized;
     std::string name, type;
     float health, armor, strength, speed;
     std::vector<std::string> habitats;

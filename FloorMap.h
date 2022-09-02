@@ -15,7 +15,7 @@ class Observer;
 class FloorMap {
 public:
     // constructor
-    explicit FloorMap(int characterIndex, std::string mapType, int level, Bestiary &bestiary);
+    explicit FloorMap(int characterIndex, const std::string& mapType, int level, Bestiary &bestiary);
     ~FloorMap();
 
     // getter and setter for level attribute
