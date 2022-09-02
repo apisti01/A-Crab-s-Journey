@@ -9,7 +9,7 @@ Enemy::Enemy(int id, std::string name, const sf::Texture& texture, Collider coll
              float hp, float maxHp, float speed, float maxSpeed, float armor, float maxArmor, float strength,
              float maxStrength, float XpReward, int coinsDropped, int pearlsDropped, int attackTimer) :
              GameCharacter(std::move(name), texture, std::move(collider), std::move(weapon), hp, maxHp, speed, maxSpeed, armor,
-                           maxArmor, strength, maxStrength, sf::Vector2u(1, 1), 1), id(id),
+                           maxArmor, strength, maxStrength, sf::Vector2u(1, 1), 0.1), id(id),
                            XpReward(XpReward), coinsDropped(coinsDropped), pearlsDropped(pearlsDropped), clock(0),
                            attackTimer(attackTimer * pow(10, 6)) {
 }

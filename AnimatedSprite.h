@@ -8,7 +8,6 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
 
-
 class AnimatedSprite {
 public:
     // Constructor and Destructor

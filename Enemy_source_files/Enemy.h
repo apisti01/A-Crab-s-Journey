@@ -19,10 +19,10 @@ public:
 
     void update(int deltaTime, FloorMap *floor, bool triggered) override;
 
-    // movement and facing of the enemy, return the movement
+    // movement and facing of the enemy1, return the movement
     virtual sf::Vector2f chase(const Player *hero, float &deltaAngle, int deltaTime, bool &triggered) = 0;
 
-    // attack the player on the conditions of the enemy
+    // attack the player on the conditions of the enemy1
     void attack(FloorMap *floor, bool triggered) override = 0;
 
     // drop items when killed

@@ -30,10 +30,11 @@ public:
     // map of data of all the enemies in the game
     std::vector<Beast> beasts;
 
+    void updateTxtFile();
+
 private:
     void createFile();
     void readFile();
-    void loadFile();
 };
 
 

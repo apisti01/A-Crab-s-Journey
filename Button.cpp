@@ -4,6 +4,8 @@
 
 #include "Button.h"
 
+Button::Button() {}
+
 Button::Button(std::string texturePath, float scl, sf::Vector2f position, bool clickable) : clickable(clickable) {
     texture.loadFromFile(texturePath);
     box.setTexture(&texture);

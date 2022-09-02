@@ -37,6 +37,13 @@ public:
     std::string difficulty;
     int effectsVolume, musicVolume;
 
+    // unlock elements
+    void unlockCharacter(int currCharacter);
+    void unlockMap(int currMap);
+
+    // update the global progress .txt file
+    void updateTxtFile();
+
 private:
     void createFile();
     void readFile();
