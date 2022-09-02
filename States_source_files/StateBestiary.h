@@ -30,7 +30,7 @@ private:
     sf::Texture backgroundTexture;
     sf::Sprite background { backgroundTexture, sf::IntRect {0, 0, 1920, 1080} };
 
-    Button titleText = {"Bestiary", game->font, 240, {1920 / 2, 175}, false};
+    Button titleText = {"Bestiary", game->font, 210, {1920 / 2, 150}, false};
 
     // enemies
     int currEnemy = 0;
@@ -48,6 +48,8 @@ private:
     Button speedIcon = {"GameCharacter/Player/Stats Icons/Speed.png", 0.05, {1410, 570}, false};
     Button armorIcon = {"GameCharacter/Player/Stats Icons/Armor.png", 0.05, {1410, 690}, false};
     Button strengthIcon = {"GameCharacter/Player/Stats Icons/Strength.png", 0.05, {1410, 810}, false};
+
+    Button backBtn = {"Game States/Back Icon.png", 0.2, {150, 150}};
 };
 
 

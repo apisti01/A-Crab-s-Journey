@@ -4,6 +4,8 @@
 
 #include "Button.h"
 
+#include <iostream>
+
 Button::Button() {}
 
 Button::Button(std::string texturePath, float scl, sf::Vector2f position, bool clickable) : clickable(clickable) {
@@ -36,16 +38,21 @@ void Button::updateBtn(sf::RenderWindow &window) {
     }
 
     // set the origin
-    if (origin == "center")
-        btnText.setOrigin(btnText.getLocalBounds().width / 2, btnText.getLocalBounds().height / 2);
-    else if (origin == "topLeft")
-        btnText.setOrigin(0, 0);
+    if (origin == "center") {
+        btnText.setOrigin(btnText.getLocalBounds().width / 2 + btnText.getLocalBounds().left,
+                          btnText.getLocalBounds().height / 2 + btnText.getLocalBounds().top);
+    } else if (origin == "topLeft")
+        btnText.setOrigin(btnText.getLocalBounds().left,
+                          btnText.getLocalBounds().top);
     else if (origin == "topRight")
-        btnText.setOrigin(btnText.getLocalBounds().width, 0);
+        btnText.setOrigin(btnText.getLocalBounds().width + btnText.getLocalBounds().left,
+                          btnText.getLocalBounds().top);
     else if (origin == "bottomLeft")
-        btnText.setOrigin(0, btnText.getLocalBounds().height);
+        btnText.setOrigin(btnText.getLocalBounds().left,
+                          btnText.getLocalBounds().height + btnText.getLocalBounds().top);
     else if (origin == "bottomRight")
-        btnText.setOrigin(btnText.getLocalBounds().width, btnText.getLocalBounds().height);
+        btnText.setOrigin(btnText.getLocalBounds().width + btnText.getLocalBounds().left,
+                          btnText.getLocalBounds().height + btnText.getLocalBounds().top);
 }
 
 void Button::drawBtn(sf::RenderWindow &window) {

@@ -28,7 +28,7 @@ private:
     sf::Texture texture;
     sf::Sprite backgroundSprite = {texture, sf::IntRect(0, 0, 1920, 1080)};
 
-    Button titleText = {"Pearl Shop", game->font, 240, {1920 / 2, 175}, false};
+    Button titleText = {"Pearl Shop", game->font, 210, {1920 / 2, 150}, false};
 
     // characters
     int currCharacter = 0;
@@ -57,7 +57,7 @@ private:
     Button nextHabitatBtn = {"Game States/Pearl Shop/Brown Crab.png", 0, {1000, 200}, false};
     Button prevHabitatBtn = {"Game States/Pearl Shop/Brown Crab.png", 0, {1000, 600}, false};
 
-    Button backBtn = {"Game States/Back Icon.png", 0.2, {100, 100}};
+    Button backBtn = {"Game States/Back Icon.png", 0.2, {150, 150}};
 };
 
 

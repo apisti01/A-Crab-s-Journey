@@ -27,14 +27,14 @@ private:
     sf::Sprite background{backgroundTexture, sf::IntRect{0, 0, 1920, 1080}};
 
     // text buttons
-    Button titleTextBtn = {"A Crab's Journey", game->font, 240, {1920 / 2, 175}, false};
+    Button titleTextBtn = {"A Crab's Journey", game->font, 240, {1920 / 2, 200}, false};
     Button newGameTextBtn = {"New Game", game->font, 150, {1920 / 2, 400}};
     Button loadGameTextBtn = {"Load Game", game->font, 150, {1920 / 2, 550}};
     Button pearlShopTextBtn = {"Pearl Shop", game->font, 150, {1920 / 2, 700}};
     Button backToSurfaceTextBtn = {"Back to Surface", game->font, 150, {1920 / 2, 850}};
     // icon Buttons
-    Button creditsBtn = {"Game States/Main Menu/Credits Texture.png", 0.3, {175, 175}};
-    Button settingsBtn = {"Game States/Main Menu/Settings Texture.png", 0.3, {1920 - 175, 175}};
+    Button creditsBtn = {"Game States/Main Menu/Credits Texture.png", 0.3, {150, 200}};
+    Button settingsBtn = {"Game States/Main Menu/Settings Texture.png", 0.3, {1920 - 150, 200}};
 };
 
 

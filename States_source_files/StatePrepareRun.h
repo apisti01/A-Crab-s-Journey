@@ -28,7 +28,7 @@ private:
 
     Button startRunTextBtn = {"Start Game", game->font, 180, sf::Vector2f{1920 / 2, 1080 / 2}};
 
-    Button backBtn = {"Game States/Back Icon.png", 0.2, {100, 100}};
+    Button backBtn = {"Game States/Back Icon.png", 0.2, {150, 150}};
 
     int selectedCharacter = 0;
     int selectedMap = 0;

@@ -40,6 +40,7 @@ StateBestiary::StateBestiary(Game *game) : State(game) {
 
 void StateBestiary::update(int deltaTime, bool clicked, sf::RenderWindow &window) {
     titleText.updateBtn(window);
+    backBtn.updateBtn(window);
 
     // update the textures
     for (int y = 0; y < rows; y++) {
@@ -82,6 +83,9 @@ void StateBestiary::eventHandling(sf::Event event, sf::RenderWindow &window) {
                 }
             }
         }
+
+        if (backBtn.box.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
+            game->changeState(StateType::Play);
     }
 }
 
@@ -134,6 +138,7 @@ void StateBestiary::draw(sf::RenderWindow &window) {
     // draw the background and the title text
     window.draw(background);
     titleText.drawTextBtn(window);
+    backBtn.drawBtn(window);
 
     // draw the enemies
     auto enemies = Game::getInstance()->bestiary.beasts;
@@ -145,7 +150,7 @@ void StateBestiary::draw(sf::RenderWindow &window) {
                 enemiesUnknowns[y * cols + x].drawBtn(window);
         }
     }
-    // and the current one
+    // and the selected one
     currEnemyBtn.drawBtn(window);
 
     // draw the stats upgrades

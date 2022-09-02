@@ -32,6 +32,7 @@ StateDisplayMap::StateDisplayMap(Game *game) : State(game) {
 
 void StateDisplayMap::update(int deltaTime, bool clicked, sf::RenderWindow &window) {
     mapText.updateBtn(window);
+
     levelText.updateBtn(window);
 
     backBtn.updateBtn(window);
@@ -68,9 +69,8 @@ void StateDisplayMap::draw(sf::RenderWindow &window) {
     mapText.drawTextBtn(window);
 
     // draw the rooms
-    for (int i = 0; i < size(rooms); i++) {
+    for (int i = 0; i < size(rooms); i++)
         window.draw(rooms[i]);
-    }
 
     // and the level text
     levelText.drawTextBtn(window);
