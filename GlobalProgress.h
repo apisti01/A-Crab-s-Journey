@@ -19,6 +19,7 @@ struct Habitat {
     bool unlocked;
     std::string name;
     int price;
+    float multiplier;
 };
 
 class GlobalProgress {

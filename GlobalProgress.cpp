@@ -80,7 +80,7 @@ void GlobalProgress::readFile() {
         std::istringstream ss(line);
 
         // load the attributes
-        ss >> habitat.unlocked >> habitat.name >> habitat.price;
+        ss >> habitat.unlocked >> habitat.name >> habitat.price >> habitat.multiplier;
 
         // add the beast to the list
         habitats.push_back(habitat);
@@ -96,69 +96,37 @@ void GlobalProgress::unlockCharacter(int currCharacter) {
     // subtract the pearls needed for the purchase
     pearls -= characters[currCharacter].price;
     characters[currCharacter].unlocked = true;
+    updateTxtFile();
 }
 
 void GlobalProgress::unlockMap(int currMap) {
     // subtract the pearls needed for the purchase
     pearls -= habitats[currMap].price;
     habitats[currMap].unlocked = true;
+    updateTxtFile();
 }
 
 void GlobalProgress::updateTxtFile() {
-    // load the file
-    std::ifstream rfile("Global Progress.txt");
-    std::ofstream wfile("New Global Progress.txt");
-    std::string line;
+    std::ofstream file("Global Progress.txt");
 
-    // scroll till the current character line
-    if (rfile.is_open() && wfile.is_open()) {
-        // check characters
-        for (int i = 0; i < size(characters); i++) {
-            std::getline(rfile, line);
-            // if a character has been purchased
-            if (characters[i].unlocked && line.find("0") == 0)
-                line.replace(line.find("0"), 1, "1");
+    // load all characters with their attributes
+    for (auto &character: characters)
+        file << character.unlocked << " " << character.name << " " << character.health << " " <<
+             character.speed << " " << character.armor << " " << character.strength << " " <<
+             character.healthUpgrades << " " << character.speedUpgrades << " " << character.armorUpgrades << " " <<
+             character.strengthUpgrades << " " << character.price << std::endl;
+    file << std::endl;
 
-            wfile << line << std::endl;
-        }
+    // load all habitats with their attributes
+    for (auto &habitat: habitats)
+        file << habitat.unlocked << " " << habitat.name << " " << habitat.price << " " << habitat.multiplier << std::endl;
+    file << std::endl;
 
-        // empty line
-        std::getline(rfile, line);
-        wfile << line << std::endl;
+    // load the number of pearls
+    file << pearls << std::endl << std::endl;
 
-        // check for habitats
-        for (int i = 0; i < size(habitats); i++) {
-            std::getline(rfile, line);
-            // if a habitat has been purchased
-            if (habitats[i].unlocked && line.find("0") == 0)
-                line.replace(line.find("0"), 1, "1");
+    // and the settings values
+    file << language << " " << difficulty << " " << effectsVolume << " " << musicVolume;
 
-            wfile << line << std::endl;
-        }
-
-        // empty line
-        std::getline(rfile, line);
-        wfile << line << std::endl;
-
-        // update pearls
-        std::getline(rfile, line);
-        line = std::to_string(pearls);
-        wfile << line << std::endl;
-
-        // empty line
-        std::getline(rfile, line);
-        wfile << line << std::endl;
-
-        // settings line
-        std::getline(rfile, line);
-        wfile << line << std::endl;
-    } else {
-        std::cout << "Files could not be opened" << std::endl;
-    }
-
-    rfile.close();
-    wfile.close();
-
-    remove("Global Progress.txt");
-    rename("New Global Progress.txt", "Global Progress.txt");
+    file.close();
 }
