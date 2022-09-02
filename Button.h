@@ -9,6 +9,7 @@
 
 class Button {
 public:
+    Button();
     Button(std::string texturePath, float scl, sf::Vector2f position, bool clickable = true);
     Button(std::string string, sf::Font &font, int characterSize, sf::Vector2f position, bool clickable = true, std::string origin = "center");
     ~Button() = default;

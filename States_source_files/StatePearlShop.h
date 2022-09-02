@@ -23,18 +23,19 @@ public:
 
 private:
     void reloadCharactersTextures();
-
     void loadStats();
 
     sf::Texture texture;
     sf::Sprite backgroundSprite = {texture, sf::IntRect(0, 0, 1920, 1080)};
+
+    Button titleText = {"Pearl Shop", game->font, 240, {1920 / 2, 175}, false};
 
     // characters
     int currCharacter = 0;
     std::vector<sf::Texture> crabsTextures;
     Button currCharacterBtn = {"Game States/Pearl Shop/Brown Crab.png", 0.21, {630, 510}, false};
     Button currCharacterLocked = {"Game States/Pearl Shop/Locked Character.png", 0.21, {630, 510}, false};
-    Button currCharacterCoin = {"Game States/Coin.png", 0.15, {630, 510}, false};
+    Button currCharacterCoin = {"Game States/Pearl.png", 0.15, {630, 510}, false};
     Button currCharacterPrice = {to_string(game->globalProgress.characters[currCharacter].price), game->font, 150, {630, 510}, false};
 
     Button nextCharacterBtn = {"Game States/Pearl Shop/Fiddler Crab.png", 0.15, {1050, 510}, false};
@@ -43,13 +44,12 @@ private:
     Button prevCharacterBtn = {"Game States/Pearl Shop/Asian Great Paddle.png", 0.15, {210, 510}, false};
     Button prevCharacterLocked = {"Game States/Pearl Shop/Locked Character.png", 0.15, {210, 510}, false};
 
-    // upgrade bars
+    // upgrade bars and stats icons
     sf::Texture upgradeUnit;
     std::vector<sf::Sprite> upgradesBars;
     Button healthIcon = {"GameCharacter/Player/Stats Icons/Health.png", 0.05, {90, 840}, false};
     Button speedIcon = {"GameCharacter/Player/Stats Icons/Speed.png", 0.05, {690, 840}, false};
     Button armorIcon = {"GameCharacter/Player/Stats Icons/Armor.png", 0.05, {90, 960}, false};
-
     Button strengthIcon = {"GameCharacter/Player/Stats Icons/Strength.png", 0.05, {690, 960}, false};
 
     // habitats

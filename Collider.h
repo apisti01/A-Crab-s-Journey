@@ -7,7 +7,6 @@
 
 #include <cmath>
 
-
 class Collider {
 public:
     Collider() {};

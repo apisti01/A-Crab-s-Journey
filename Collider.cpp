@@ -6,10 +6,8 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
 #include <bitset>
-#include <list>
 
 #include "Collider.h"
-
 
 Collider::Collider(float posX, float posY, float width, float height, float angle) :
 posX(posX), posY(posY), prevPosX(posX), prevPosY(posY), width(width), height(height), angle(angle), isColliding(false) {

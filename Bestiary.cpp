@@ -71,8 +71,8 @@ void Bestiary::update(Enemy *enemy) {}
 
 void Bestiary::updateTxtFile() {
     // load the file
-    std::ifstream rfile("Enemy Data.txt");
-    std::ofstream wfile("New Enemy Data.txt");
+    std::ifstream rfile("Enemy_source_files/Enemy Data.txt");
+    std::ofstream wfile("Enemy_source_files/New Enemy Data.txt");
     std::string line;
 
     // scroll till the current character line
@@ -93,6 +93,6 @@ void Bestiary::updateTxtFile() {
     rfile.close();
     wfile.close();
 
-    remove("Enemy Data.txt");
-    rename("New Enemy Data.txt", "Enemy Data.txt");
+    remove("Enemy_source_files/Enemy Data.txt");
+    rename("Enemy_source_files/New Enemy Data.txt", "Enemy_source_files/Enemy Data.txt");
 }

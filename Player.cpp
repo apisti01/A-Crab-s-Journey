@@ -4,8 +4,6 @@
 
 #include "Player.h"
 
-#include <utility>
-
 Player::Player(int characterIndex, std::string name, CrabSpecie crabSpecie, const sf::Texture& texture, Collider collider, std::unique_ptr<Weapon> weapon,
                float hp, float maxHp, float speed, float maxSpeed, float armor, float maxArmor, float strength,
                float maxStrength) :
@@ -27,7 +25,9 @@ void Player::update(int deltaTime, FloorMap *floor, bool clicked) {
     // check for room's cage status
     checkCageStatus(floor);
 
-    attack(floor, clicked);
+    // player can attack only if room is in cage mode
+    if (floor->roomList[floor->currentRoomIndex]->getCage())
+        attack(floor, clicked);
 
     // update the animation
     sprite.update(fps, animationBehaviour, deltaTime);

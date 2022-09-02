@@ -47,8 +47,8 @@ std::unique_ptr<Enemy> EnemyFactory::selectRandomEnemy(Bestiary* bestiary, std::
         enemyTexture.loadFromFile("GameCharacter/Enemy/" + enemy.type + "/" + enemy.name + "/Texture.png");
 
         // create the enemy collider
-        Collider enemyCollider(float(1920) / 2, float(1080) / 2, enemyTexture.getSize().x * 0.6,
-                               enemyTexture.getSize().y * 0.6);
+        Collider enemyCollider(float(1920) / 2, float(1080) / 2, enemyTexture.getSize().x * 0.06,
+                               enemyTexture.getSize().y * 0.06);
 
         // create the enemy pointer
         std::unique_ptr<Enemy> enemyPtr;

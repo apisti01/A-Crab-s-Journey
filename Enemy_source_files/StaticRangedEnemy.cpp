@@ -14,13 +14,13 @@ StaticRangedEnemy::StaticRangedEnemy(std::string name, const sf::Texture &textur
 }
 
 sf::Vector2f StaticRangedEnemy::chase(const Player *hero, float &deltaAngle, int deltaTime, bool &triggered) {
-    // the enemy is facing the player
+    // the enemy1 is facing the player
     deltaAngle = atan2f(hero->getPosY() - this->getPosY(), hero->getPosX() - this->getPosX()) - getAngle();
 
     // always attack the player
     triggered = true;
 
-    // a static enemy does not move
+    // a static enemy1 does not move
     return sf::Vector2f { 0.f, 0.f };
 }
 

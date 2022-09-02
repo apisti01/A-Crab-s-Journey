@@ -26,6 +26,8 @@ StatePearlShop::StatePearlShop(Game *game) : State(game) {
 }
 
 void StatePearlShop::update(int deltaTime, bool clicked, sf::RenderWindow &window) {
+    titleText.updateBtn(window);
+
     backBtn.updateBtn(window);
 
     currCharacterPrice.updateBtn(window);
@@ -84,7 +86,7 @@ void StatePearlShop::loadStats() {
         upgradesBars.push_back(upgradeBar);
     }
 
-    // health upgrades
+    // speed upgrades
     for (i = 0; i < characters[currCharacter].speed; i++) {
         upgradeBar.setTexture(upgradeUnit);
         upgradeBar.setOrigin(upgradeUnit.getSize().x / 2, upgradeUnit.getSize().y / 2);
@@ -93,7 +95,7 @@ void StatePearlShop::loadStats() {
         upgradesBars.push_back(upgradeBar);
     }
 
-    // health upgrades
+    // armor upgrades
     for (i = 0; i < characters[currCharacter].armor; i++) {
         upgradeBar.setTexture(upgradeUnit);
         upgradeBar.setOrigin(upgradeUnit.getSize().x / 2, upgradeUnit.getSize().y / 2);
@@ -102,7 +104,7 @@ void StatePearlShop::loadStats() {
         upgradesBars.push_back(upgradeBar);
     }
 
-    // health upgrades
+    // strength upgrades
     for (i = 0; i < characters[currCharacter].strength; i++) {
         upgradeBar.setTexture(upgradeUnit);
         upgradeBar.setOrigin(upgradeUnit.getSize().x / 2, upgradeUnit.getSize().y / 2);
@@ -114,6 +116,8 @@ void StatePearlShop::loadStats() {
 
 void StatePearlShop::draw(sf::RenderWindow &window) {
     window.draw(backgroundSprite);
+
+    titleText.drawTextBtn(window);
 
     // draw the characters
     auto characters = Game::getInstance()->globalProgress.characters;
