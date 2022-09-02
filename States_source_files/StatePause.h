@@ -32,5 +32,4 @@ private:
     TextButton settingsTextBtn = {"Settings", game->font, 150, {1920 / 2, 800}, true};
 };
 
-
 #endif //ACRABSJOURNEY_STATEPAUSE_H

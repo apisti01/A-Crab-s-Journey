@@ -92,7 +92,6 @@ void Bestiary::update(Enemy *enemy) {
 
 
 void Bestiary::updateTxtFile() {
-
     std::ofstream file("Enemy_source_files/Enemy Data.txt");
 
     // load all enemies with their attributes
@@ -108,5 +107,4 @@ void Bestiary::updateTxtFile() {
     }
 
     file.close();
-
 }

@@ -61,7 +61,7 @@ void FloorMap::generateFloor(std::string mapType, Bestiary &bestiary) {
             roomList[i]->generateEnemies(&bestiary, mapType, level);
 
         // close the doors that don't connect with other rooms
-        roomList[i]->closeDoors();
+        roomList[i]->loadDoors();
     }
 
     // set the shop room

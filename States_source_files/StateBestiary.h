@@ -52,5 +52,4 @@ private:
     SpriteButton backBtn = {"Game States/Back Icon.png", 0.2, {150, 150}, true};
 };
 
-
 #endif //ACRABSJOURNEY_STATEBESTIARY_H

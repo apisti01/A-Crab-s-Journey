@@ -42,7 +42,13 @@ public:
 
     // getter and setter for special room's attributes
     bool getCage() const { return isCage; }
-    void setCage(bool isCage) { Room::isCage = isCage; }
+    void setCage(bool isCage) {
+        Room::isCage = isCage;
+        if (isCage)
+            closeDoors();
+        else
+            openDoors();
+    }
 
     bool getVisited() const { return isVisited; }
     void setVisited(bool isVisited) { Room::isVisited = isVisited; }
@@ -88,7 +94,10 @@ public:
 
     void generateEnemies(Bestiary* bestiary, std::string mapType, int level);
 
+    void loadDoors();
+
     void closeDoors();
+    void openDoors();
 
     sf::Vector2i pickFreeGridSpot();
 

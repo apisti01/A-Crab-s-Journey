@@ -60,7 +60,7 @@ public:
     sf::Font font;
 
     // unit
-    float u = 60;
+    float u = 120;
 
 private:
     // private constructor to only have one instance of the class (Singleton)
