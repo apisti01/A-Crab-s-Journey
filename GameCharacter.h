@@ -28,7 +28,7 @@ public:
     virtual ~GameCharacter() = default;
 
     // getter and setter for character position
-    void setPosition(float x, float y) {
+    virtual void setPosition(float x, float y) {
         collider.setPosX(x);
         collider.setPosY(y);
         sprite.setPosition(sf::Vector2f(x, y));

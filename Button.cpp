@@ -46,10 +46,10 @@ void Button::updateBtn(sf::RenderWindow &window) {
         btnText.setOrigin(btnText.getLocalBounds().width, btnText.getLocalBounds().height);
 }
 
-void Button::drawBtn(sf::RenderWindow &window) {
+void Button::drawBtn(sf::RenderWindow &window) const {
     window.draw(box);
 }
 
-void Button::drawTextBtn(sf::RenderWindow &window) {
+void Button::drawTextBtn(sf::RenderWindow &window) const {
     window.draw(btnText);
 }

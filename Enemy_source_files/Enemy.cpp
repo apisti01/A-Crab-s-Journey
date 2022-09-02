@@ -5,11 +5,11 @@
 #include "Enemy.h"
 #include "../FloorMap.h"
 
-Enemy::Enemy(std::string name, const sf::Texture& texture, Collider collider, std::unique_ptr<Weapon> weapon,
+Enemy::Enemy(int id, std::string name, const sf::Texture& texture, Collider collider, std::unique_ptr<Weapon> weapon,
              float hp, float maxHp, float speed, float maxSpeed, float armor, float maxArmor, float strength,
              float maxStrength, float XpReward, int coinsDropped, int pearlsDropped, int attackTimer) :
              GameCharacter(std::move(name), texture, std::move(collider), std::move(weapon), hp, maxHp, speed, maxSpeed, armor,
-                           maxArmor, strength, maxStrength, sf::Vector2u(1, 1), 1),
+                           maxArmor, strength, maxStrength, sf::Vector2u(1, 1), 1), id(id),
                            XpReward(XpReward), coinsDropped(coinsDropped), pearlsDropped(pearlsDropped), clock(0),
                            attackTimer(attackTimer * pow(10, 6)) {
 }

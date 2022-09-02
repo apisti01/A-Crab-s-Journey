@@ -10,7 +10,7 @@
 
 struct Beast {
     int id;
-    bool discovered;
+    bool discovered, analized;
     std::string name, type;
     float health, armor, strength, speed;
     std::vector<std::string> habitats;
@@ -33,6 +33,7 @@ public:
 private:
     void createFile();
     void readFile();
+    void loadFile();
 };
 
 

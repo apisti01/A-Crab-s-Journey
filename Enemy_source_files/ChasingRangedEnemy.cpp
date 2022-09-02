@@ -5,12 +5,12 @@
 #include "ChasingRangedEnemy.h"
 #include "../Player.h"
 
-ChasingRangedEnemy::ChasingRangedEnemy(std::string name, const sf::Texture &texture, Collider collider,
+ChasingRangedEnemy::ChasingRangedEnemy(int id, std::string name, const sf::Texture &texture, Collider collider,
                                        std::unique_ptr<Weapon> weapon, float hp, float maxHp, float speed,
                                        float maxSpeed, float armor, float maxArmor, float strength, float maxStrength,
                                        float XpReward, int coinsDropped, int pearlsDropped, int attackTimer,
                                        float triggerRange) :
-                                       Enemy(std::move(name), texture, std::move(collider),
+                                       Enemy(id, std::move(name), texture, std::move(collider),
                                              std::move(weapon), hp, maxHp, speed, maxSpeed, armor, maxArmor,
                                              strength, maxStrength, XpReward, coinsDropped, pearlsDropped, attackTimer),
                                              triggerRange(triggerRange) {

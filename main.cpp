@@ -14,10 +14,12 @@ int main() {
     // load window
     sf::RenderWindow window(sf::VideoMode(), "A Crab's Journey", sf::Style::Fullscreen);
 
+    /*
     // load and set Game's Icon
     sf::Image icon;
     icon.loadFromFile("Icon.png");
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+     */
 
     // creation of the event
     sf::Event event;
