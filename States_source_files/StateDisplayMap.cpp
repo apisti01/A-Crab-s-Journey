@@ -1,9 +1,7 @@
 //
 // Created by longo on 24/07/2022.
 //
-#include <iostream>
 
-#include "../Game.h"
 #include "StateDisplayMap.h"
 
 StateDisplayMap::StateDisplayMap(Game *game) : State(game) {
@@ -31,11 +29,9 @@ StateDisplayMap::StateDisplayMap(Game *game) : State(game) {
 }
 
 void StateDisplayMap::update(int deltaTime, bool clicked, sf::RenderWindow &window) {
-    mapText.updateBtn(window);
-
-    levelText.updateBtn(window);
-
-    backBtn.updateBtn(window);
+    mapText.update(window);
+    levelText.update(window);
+    backBtn.update(window);
 }
 
 void StateDisplayMap::eventHandling(sf::Event event, sf::RenderWindow &window) {
@@ -58,7 +54,7 @@ void StateDisplayMap::eventHandling(sf::Event event, sf::RenderWindow &window) {
     }
 
     else if (event.type == sf::Event::MouseButtonReleased) {
-        if (backBtn.box.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
+        if (backBtn.rect.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
             game->changeState(StateType::Play);
     }
 }
@@ -66,14 +62,14 @@ void StateDisplayMap::eventHandling(sf::Event event, sf::RenderWindow &window) {
 void StateDisplayMap::draw(sf::RenderWindow &window) {
     // draw the background
     window.draw(background);
-    mapText.drawTextBtn(window);
+    mapText.draw(window);
 
     // draw the rooms
     for (int i = 0; i < size(rooms); i++)
         window.draw(rooms[i]);
 
     // and the level text
-    levelText.drawTextBtn(window);
+    levelText.draw(window);
 
-    backBtn.drawBtn(window);
+    backBtn.draw(window);
 }

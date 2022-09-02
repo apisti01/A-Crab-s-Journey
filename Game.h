@@ -35,7 +35,9 @@ public:
     }
 
     // delegate to draw all
-    void draw(sf::RenderWindow &window) { currentState->draw(window); }
+    void draw(sf::RenderWindow &window) {
+        currentState->draw(window);
+    }
 
     // restart the clock
     void restartClock() { clock.restart();}
@@ -58,7 +60,7 @@ public:
     sf::Font font;
 
     // unit
-    float lenUnit = 120;
+    float u = 60;
 
 private:
     // private constructor to only have one instance of the class (Singleton)

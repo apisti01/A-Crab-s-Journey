@@ -6,8 +6,7 @@
 #define ACRABSJOURNEY_STATEDISPLAYMAP_H
 
 #include "State.h"
-#include "../FloorMap.h"
-#include "../Button.h"
+#include "../Game.h"
 
 class StateDisplayMap : public State {
 public:
@@ -29,11 +28,10 @@ private:
 
     sf::Texture backgroundTexture, roomTexture;
 
-    Button mapText = {"Map", game->font, 210, {1920 / 2, 150}, false};
-    Button levelText = {"Floor: " + to_string(game->map->getLevel()), game->font, 180, {150, 1080 - 150}, false,
-                       "bottomLeft"};
+    TextButton mapText = {"Map", game->font, 210, {1920 / 2, 150}};
+    TextButton levelText = {"Floor: " + to_string(game->map->getLevel()), game->font, 180, {150, 1080 - 150}, false, "bottomLeft"};
 
-    Button backBtn = {"Game States/Back Icon.png", 0.2, {150, 150}};
+    SpriteButton backBtn = {"Game States/Back Icon.png", 0.2, {150, 150}, true};
 };
 
 

@@ -9,22 +9,11 @@
 
 class Button {
 public:
-    Button();
-    Button(std::string texturePath, float scl, sf::Vector2f position, bool clickable = true);
-    Button(std::string string, sf::Font &font, int characterSize, sf::Vector2f position, bool clickable = true, std::string origin = "center");
+    Button() = default;
     ~Button() = default;
 
-    void updateBtn(sf::RenderWindow &window);
-
-    void drawBtn(sf::RenderWindow &window) const;
-    void drawTextBtn(sf::RenderWindow &window) const;
-
-    sf::RectangleShape box;
-    sf::Texture texture;
-    sf::Text btnText;
-
-    std::string origin;
-    bool clickable;
+    virtual void update(sf::RenderWindow &window) = 0;
+    virtual void draw(sf::RenderWindow &window) = 0;
 };
 
 

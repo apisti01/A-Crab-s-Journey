@@ -4,8 +4,6 @@
 
 #include "StateBestiary.h"
 
-#include <iostream>
-
 StateBestiary::StateBestiary(Game *game) : State(game) {
     backgroundTexture.loadFromFile("Game States/Bestiary/Bestiary.png");
 
@@ -22,11 +20,11 @@ StateBestiary::StateBestiary(Game *game) : State(game) {
     enemyUnknownTexture.loadFromFile("GameCharacter/Enemy/Unknown Enemy.png");
     for (int y = 0; y < rows; y++) {
         for (int x = 0; x < cols; x++) {
-            Button enemy = {"GameCharacter/Enemy/AggressiveMelee/SeaTurtle/Texture.png", 0.09,
+            SpriteButton enemy = {"GameCharacter/Enemy/AggressiveMelee/SeaTurtle/Texture.png", 0.09,
                             {210.0f + x * 240, 390.0f + y * 240}, false};
             enemiesBtns.push_back(enemy);
 
-            Button enemyUnknown = {"GameCharacter/Enemy/Unknown Enemy.png", 0.09,
+            SpriteButton enemyUnknown = {"GameCharacter/Enemy/Unknown Enemy.png", 0.09,
                                    {210.0f + x * 240, 390.0f + y * 240}, false};
             enemiesUnknowns.push_back(enemyUnknown);
         }
@@ -39,15 +37,15 @@ StateBestiary::StateBestiary(Game *game) : State(game) {
 }
 
 void StateBestiary::update(int deltaTime, bool clicked, sf::RenderWindow &window) {
-    titleText.updateBtn(window);
-    backBtn.updateBtn(window);
+    titleText.update(window);
+    backBtn.update(window);
 
     // update the textures
     for (int y = 0; y < rows; y++) {
         for (int x = 0; x < cols; x++) {
             if ((currPage * rows * cols) + (y * cols) + x < size(enemiesTextures)) {
-                enemiesBtns[y * cols + x].box.setTexture(&enemiesTextures[(currPage * rows * cols) + (y * cols) + x]);
-                enemiesUnknowns[y * cols + x].box.setTexture(&enemyUnknownTexture);
+                enemiesBtns[y * cols + x].rect.setTexture(&enemiesTextures[(currPage * rows * cols) + (y * cols) + x]);
+                enemiesUnknowns[y * cols + x].rect.setTexture(&enemyUnknownTexture);
             }
         }
     }
@@ -76,7 +74,7 @@ void StateBestiary::eventHandling(sf::Event event, sf::RenderWindow &window) {
     else if (event.type == sf::Event::MouseButtonPressed) {
         for (int y = 0; y < rows; y++) {
             for (int x = 0; x < cols; x++) {
-                if (enemiesBtns[y * cols + x].box.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))) &&
+                if (enemiesBtns[y * cols + x].rect.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))) &&
                     (currPage * rows * cols) + (y * cols) + x < size(enemiesTextures)) {
                     currEnemy = (currPage * rows * cols) + (y * cols) + x;
                     loadStats();
@@ -84,14 +82,14 @@ void StateBestiary::eventHandling(sf::Event event, sf::RenderWindow &window) {
             }
         }
 
-        if (backBtn.box.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
+        if (backBtn.rect.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
             game->changeState(StateType::Play);
     }
 }
 
 void StateBestiary::loadStats() {
     // load the current enemy1 texture on the right box
-    currEnemyBtn.box.setTexture(&enemiesTextures[currEnemy]);
+    currEnemyBtn.rect.setTexture(&enemiesTextures[currEnemy]);
 
     // and all his stats
     auto enemy = Game::getInstance()->bestiary.beasts[currEnemy];
@@ -137,29 +135,29 @@ void StateBestiary::loadStats() {
 void StateBestiary::draw(sf::RenderWindow &window) {
     // draw the background and the title text
     window.draw(background);
-    titleText.drawTextBtn(window);
-    backBtn.drawBtn(window);
+    titleText.draw(window);
+    backBtn.draw(window);
 
     // draw the enemies
     auto enemies = Game::getInstance()->bestiary.beasts;
     for (int y = 0; y < rows; y++) {
         for (int x = 0; x < cols; x++) {
-            enemiesBtns[y * cols + x].drawBtn(window);
+            enemiesBtns[y * cols + x].draw(window);
             if ((currPage * rows * cols) + (y * cols) + x < size(enemies) &&
                 !enemies[(currPage * rows * cols) + (y * cols) + x].discovered)
-                enemiesUnknowns[y * cols + x].drawBtn(window);
+                enemiesUnknowns[y * cols + x].draw(window);
         }
     }
     // and the selected one
-    currEnemyBtn.drawBtn(window);
+    currEnemyBtn.draw(window);
 
     // draw the stats upgrades
     for (int i = 0; i < size(upgradesBars); i++)
         window.draw(upgradesBars[i]);
 
     // draw the stats icons
-    healthIcon.drawBtn(window);
-    speedIcon.drawBtn(window);
-    armorIcon.drawBtn(window);
-    strengthIcon.drawBtn(window);
+    healthIcon.draw(window);
+    speedIcon.draw(window);
+    armorIcon.draw(window);
+    strengthIcon.draw(window);
 }

@@ -6,7 +6,7 @@
 #define ACRABSJOURNEY_STATESETTINGS_H
 
 #include "State.h"
-#include "../Button.h"
+#include "../Game.h"
 
 class StateSettings : public State {
 public:
@@ -24,12 +24,12 @@ private:
     sf::Texture texture;
     sf::Sprite backgroundSprite = {texture, sf::IntRect(0, 0, 1920, 1080)};
 
-    Button settingsText = {"Settings", game->font, 210, {1920 / 2, 150}, false};
-    Button difficultyText = {"Difficulty", game->font, 150, {1920 / 4, 450}, false};
-    Button languageText = {"Language", game->font, 150, {1920 / 4, 600}, false};
-    Button soundText = {"Sound", game->font, 150, {1920 / 4, 750}, false};
+    TextButton settingsText = {"Settings", game->font, 210, {1920 / 2, 150}};
+    TextButton difficultyText = {"Difficulty", game->font, 150, {1920 / 4, 450}};
+    TextButton languageText = {"Language", game->font, 150, {1920 / 4, 600}};
+    TextButton soundText = {"Sound", game->font, 150, {1920 / 4, 750}};
 
-    Button backBtn = {"Game States/Back Icon.png", 0.2, {150, 150}};
+    SpriteButton backBtn = {"Game States/Back Icon.png", 0.2, {150, 150}, true};
 };
 
 #endif //ACRABSJOURNEY_STATESETTINGS_H

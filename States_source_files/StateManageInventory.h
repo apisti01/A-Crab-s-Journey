@@ -6,10 +6,12 @@
 #define ACRABSJOURNEY_STATEMANAGEINVENTORY_H
 
 #include "State.h"
+#include "../Game.h"
 
 class StateManageInventory : public State {
 public:
-    explicit StateManageInventory(Game* game);
+    explicit StateManageInventory(Game *game);
+
     ~StateManageInventory() override = default;
 
     void eventHandling(sf::Event event, sf::RenderWindow &window) override;
@@ -21,7 +23,7 @@ public:
 private:
     // background
     sf::Texture backgroundTexture;
-    sf::Sprite background { backgroundTexture, sf::IntRect {0, 0, 1920, 1080} };
+    sf::Sprite background{backgroundTexture, sf::IntRect{0, 0, 1920, 1080}};
 };
 
 

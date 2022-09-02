@@ -2,7 +2,6 @@
 // Created by apisti01 on 21/07/22.
 //
 
-#include "../Game.h"
 #include "StatePlay.h"
 
 StatePlay::StatePlay(Game *game) : State(game) {}
@@ -43,6 +42,6 @@ void StatePlay::update(int deltaTime, bool clicked, sf::RenderWindow &window) {
 void StatePlay::draw(sf::RenderWindow &window) {
     game->map->draw(window);
 
-    mapIcon.drawBtn(window);
-    bestiaryIcon.drawBtn(window);
+    mapIcon.draw(window);
+    bestiaryIcon.draw(window);
 }

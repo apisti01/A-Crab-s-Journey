@@ -6,7 +6,7 @@
 #define MAIN_CPP_STATEPLAY_H
 
 #include "State.h"
-#include "../Button.h"
+#include "../Game.h"
 
 class StatePlay : public State {
 public:
@@ -21,8 +21,8 @@ public:
     void draw(sf::RenderWindow &window) override;
 
 private:
-    Button mapIcon = {"Game States/Play/Map Icon.png", 0.3, {1920 - 675, 1080 - 100}, false};
-    Button bestiaryIcon = {"Game States/Play/Bestiary Icon.png", 0.3, {1920 - 500, 1080 - 100}, false};
+    SpriteButton mapIcon = {"Game States/Play/Map Icon.png", 0.3, {1920 - 675, 1080 - 100}, false};
+    SpriteButton bestiaryIcon = {"Game States/Play/Bestiary Icon.png", 0.3, {1920 - 500, 1080 - 100}, false};
 };
 
 #endif //MAIN_CPP_STATEPLAY_H
