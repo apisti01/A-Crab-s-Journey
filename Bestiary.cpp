@@ -73,7 +73,7 @@ void Bestiary::update(Room* room) {
         if (iter != beasts.end()){
             if (!iter->discovered){
                 iter->discovered = true;
-                loadFile();
+                updateTxtFile();
             }
         }
     }
@@ -85,38 +85,28 @@ void Bestiary::update(Enemy *enemy) {
     if (iter != beasts.end()){
         if (!iter->analized){
             iter->analized = true;
-            loadFile();
+            updateTxtFile();
         }
     }
-
 }
 
 
 void Bestiary::updateTxtFile() {
-    // load the file
-    std::ifstream rfile("Enemy_source_files/Enemy Data.txt");
-    std::ofstream wfile("Enemy_source_files/New Enemy Data.txt");
-    std::string line;
 
-    // scroll till the current character line
-    if (rfile.is_open() && wfile.is_open()) {
-        // check enemies
-        for (int i = 0; i < size(beasts); i++) {
-            std::getline(rfile, line);
-            // if a character has been purchased
-            if (beasts[i].discovered && line.find("0") == 0)
-                line.replace(line.find("0"), 1, "1");
+    std::ofstream file("Enemy_source_files/Enemy Data.txt");
 
-            // TODO add analized
-            wfile << line << std::endl;
-        }
-    } else {
-        std::cout << "Files could not be opened" << std::endl;
+    // load all enemies with their attributes
+    for (auto &beast : beasts) {
+        file << beast.id << " " << beast.discovered << " " << beast.analized << " " << beast.name << " " << beast.type
+             << " " << beast.health << " " << beast.speed << " " << beast.armor << " " << beast.strength << " "
+             << beast.triggerRange << " " << beast.attackTimer;
+
+        for (auto &habitat : beast.habitats)
+            file << " " << habitat;
+
+        file << std::endl;
     }
 
-    rfile.close();
-    wfile.close();
+    file.close();
 
-    remove("Enemy_source_files/Enemy Data.txt");
-    rename("Enemy_source_files/New Enemy Data.txt", "Enemy_source_files/Enemy Data.txt");
 }
