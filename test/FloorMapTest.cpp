@@ -9,6 +9,8 @@
 
 class FloorMapTest : public ::testing::Test {
 protected:
+    FloorMapTest() {}
+
     void SetUp() override {
         Test::SetUp();
     }

@@ -44,7 +44,7 @@ public:
     std::shared_ptr<Player> player = nullptr;
 
     // pointer to the map
-    std::unique_ptr<FloorMap> map = nullptr;
+    std::unique_ptr<FloorMap> map;
 
     // Bestiary with the knowledge of all the enemy in the game
     Bestiary bestiary;

@@ -18,8 +18,7 @@ void StatePrepareRun::eventHandling(sf::Event event, sf::RenderWindow &window) {
         // new game
         if (startRunTextBtn.btnText.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
             // create new floor
-            game->map = std::make_unique<FloorMap>(selectedCharacter, game->globalProgress.habitats[selectedMap].name,
-                                                   1, game->bestiary);
+            game->map = std::make_unique<FloorMap>(selectedCharacter, game->globalProgress.habitats[selectedMap].name,1);
             game->changeState(StateType::Play);
         }
 

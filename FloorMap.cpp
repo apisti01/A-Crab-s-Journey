@@ -5,7 +5,7 @@
 #include "FloorMap.h"
 #include "Game.h"
 
-FloorMap::FloorMap(int characterIndex, const std::string& mapType, int level, Bestiary &bestiary) :
+FloorMap::FloorMap(int characterIndex, const std::string &mapType, int level) :
                     mapType(mapType), level(level), roomWidth(1920), roomHeight(1080) {
     // there's a 40% chance that this floor has a shop room
     float chance = rand() / (RAND_MAX + 1.0);
@@ -13,7 +13,7 @@ FloorMap::FloorMap(int characterIndex, const std::string& mapType, int level, Be
         hasShop = true;
 
     // then generates the floor
-    generateFloor(mapType, bestiary);
+    generateFloor(mapType);
 
     // subscribe to the observers
     subscribeObserver(&(Game::getInstance()->bestiary));
@@ -27,7 +27,7 @@ FloorMap::~FloorMap() {
     unsubscribeObserver(&(Game::getInstance()->bestiary));
 }
 
-void FloorMap::generateFloor(std::string mapType, Bestiary &bestiary) {
+void FloorMap::generateFloor(std::string mapType) {
     // add first room in the middle of the grid (position 0, 0)
     roomList.push_back(std::make_unique<Room>(mapType, 0, 0, roomWidth, roomHeight));
 
@@ -58,7 +58,7 @@ void FloorMap::generateFloor(std::string mapType, Bestiary &bestiary) {
 
         // if the room is not the start room, generate enemies
         if (!roomList[i]->getStartRoom())
-            roomList[i]->generateEnemies(&bestiary, mapType, level);
+            roomList[i]->generateEnemies(mapType, level);
 
         // close the doors that don't connect with other rooms
         roomList[i]->closeDoors();
@@ -281,7 +281,7 @@ void FloorMap::setupPlayer(int characterIndex) {
     characterTexture.loadFromFile("GameCharacter/Player/" + character.name + "/Animations/Texture.png");
 
     // Ranged weapon
-    std::unique_ptr<Weapon> rangedWeapon = std::make_unique<RangedWeapon>(RangedWeaponType::Rock);
+    std::unique_ptr<Weapon> rangedWeapon = std::make_unique<RangedWeapon>(RangedWeaponType::Rock,"carlo", 20);
     // give him a melee weapon
     // std::unique_ptr<Weapon> weapon = std::make_unique<MeleeWeapon>(10, "player", ItemRarity::Common, 50);
 
@@ -302,9 +302,9 @@ void FloorMap::setupPlayer(int characterIndex) {
 
     // create the player
     player = make_unique<Player>(characterIndex, "Crab", characterSpecie, std::move(characterTexture), collider,
-                                 std::move(rangedWeapon), character.health, character.health, character.speed,
-                                 character.speed, character.armor, character.armor, character.strength,
-                                 character.strength);
+                                 std::move(rangedWeapon), 10000, character.health, character.speed,
+                                 character.speed, 100000, character.armor, 100000,
+                                 character.strength); // FIXME to reset normal
 
     // and set his position at the center of the map
     player->setPosition(roomWidth / 2, roomHeight / 2);
