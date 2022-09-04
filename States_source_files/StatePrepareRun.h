@@ -32,6 +32,9 @@ private:
 
     int selectedCharacter = 0;
     int selectedMap = 0;
+
+    //  create the player and prepare it for the game
+    void setupPlayer(int characterIndex);
 };
 
 

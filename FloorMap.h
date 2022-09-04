@@ -22,6 +22,10 @@ public:
     int getLevel() const { return level; }
     void setLevel(int level) { FloorMap::level = level; }
 
+    // getters for height and width
+    int getRoomWidth() const{ return roomWidth;}
+    int getRoomHeight() const{ return roomHeight;}
+
     // getter and setter for number of rooms
     int getNumRooms() const { return numRooms; }
     void setNumRooms(int numRooms) { FloorMap::numRooms = numRooms; }
@@ -34,7 +38,7 @@ public:
     std::vector<std::unique_ptr<Room>> roomList {};
     int currentRoomIndex, startRoomIndex, endRoomIndex, shopRoomIndex = -1;
 
-    std::unique_ptr<Player> player;
+    std::shared_ptr<Player> player;
 
     void update(int deltaTime, bool attack);
 
@@ -85,9 +89,6 @@ private:
 
     // set shop room
     void setShopRoom();
-
-    //  create the player and prepare it for the game
-    void setupPlayer(int characterIndex);
 
     // list of the observers subscribed
     std::list<Observer*> observers {};

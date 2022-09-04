@@ -18,8 +18,7 @@ FloorMap::FloorMap(int characterIndex, const std::string &mapType, int level) :
     // subscribe to the observers
     subscribeObserver(&(Game::getInstance()->bestiary));
 
-    // create and setup player
-    setupPlayer(characterIndex);
+    player = Game::getInstance()->player;
 }
 
 FloorMap::~FloorMap() {
@@ -274,41 +273,6 @@ void FloorMap::setShopRoom() {
     }
 }
 
-void FloorMap::setupPlayer(int characterIndex) {
-    auto character = Game::getInstance()->globalProgress.characters[characterIndex];
-    // load brown crab's texture for movement animation
-    sf::Texture characterTexture;
-    characterTexture.loadFromFile("GameCharacter/Player/" + character.name + "/Animations/Texture.png");
-
-    // Ranged weapon
-    std::unique_ptr<Weapon> rangedWeapon = std::make_unique<RangedWeapon>(RangedWeaponType::Rock,"carlo", 20);
-    // give him a melee weapon
-    // std::unique_ptr<Weapon> weapon = std::make_unique<MeleeWeapon>(10, "player", ItemRarity::Common, 50);
-
-    // and a collider
-    Collider collider(float(roomWidth) / 2, float(roomHeight) / 2,
-                      characterTexture.getSize().x / 6 * 0.4 * 0.6,
-                      characterTexture.getSize().y / 3 * 0.4 * 0.8);
-
-    CrabSpecie characterSpecie;
-    if (character.name == "BrownCrab")
-        characterSpecie = CrabSpecie::BrownCrab;
-    else if (character.name == "FiddlerCrab")
-        characterSpecie = CrabSpecie::FiddlerCrab;
-    else if (character.name == "TriangleTannerCrab")
-        characterSpecie = CrabSpecie::TriangleTannerCrab;
-    else if (character.name == "AsianGreatPaddle")
-        characterSpecie = CrabSpecie::AsianGreatPaddle;
-
-    // create the player
-    player = make_unique<Player>(characterIndex, "Crab", characterSpecie, std::move(characterTexture), collider,
-                                 std::move(rangedWeapon), 10000, character.health, character.speed,
-                                 character.speed, 100000, character.armor, 100000,
-                                 character.strength); // FIXME to reset normal
-
-    // and set his position at the center of the map
-    player->setPosition(roomWidth / 2, roomHeight / 2);
-}
 
 // tells if player is near the shop
 bool FloorMap::isPlayerNearShop() {
