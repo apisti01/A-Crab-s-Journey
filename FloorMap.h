@@ -15,12 +15,16 @@ class Observer;
 class FloorMap {
 public:
     // constructor
-    explicit FloorMap(int characterIndex, const std::string& mapType, int level, Bestiary &bestiary);
+    explicit FloorMap(int characterIndex, const std::string &mapType, int level);
     ~FloorMap();
 
     // getter and setter for level attribute
     int getLevel() const { return level; }
     void setLevel(int level) { FloorMap::level = level; }
+
+    // getters for height and width
+    int getRoomWidth() const{ return roomWidth;}
+    int getRoomHeight() const{ return roomHeight;}
 
     // getter and setter for number of rooms
     int getNumRooms() const { return numRooms; }
@@ -34,7 +38,7 @@ public:
     std::vector<std::unique_ptr<Room>> roomList {};
     int currentRoomIndex, startRoomIndex, endRoomIndex, shopRoomIndex = -1;
 
-    std::unique_ptr<Player> player;
+    std::shared_ptr<Player> player;
 
     void update(int deltaTime, bool attack);
 
@@ -68,7 +72,7 @@ private:
     float shopChance = 0.5;
 
     // function for randomic floor generation
-    void generateFloor(std::string mapType, Bestiary &bestiary);
+    void generateFloor(std::string mapType);
     // returns the index of a room with at least one free side
     int pickRoom();
     // given a room index, returns the index of a free side
@@ -85,9 +89,6 @@ private:
 
     // set shop room
     void setShopRoom();
-
-    //  create the player and prepare it for the game
-    void setupPlayer(int characterIndex);
 
     // list of the observers subscribed
     std::list<Observer*> observers {};

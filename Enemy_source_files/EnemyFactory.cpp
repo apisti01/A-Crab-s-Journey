@@ -2,6 +2,7 @@
 // Created by apisti01 on 04/08/22.
 //
 
+#include "../Game.h"
 #include "EnemyFactory.h"
 #include "../MeleeWeapon.h"
 #include "../RangedWeapon.h"
@@ -12,7 +13,7 @@
 
 #include <cstdlib>
 
-std::list<std::unique_ptr<Enemy>> EnemyFactory::fillRoomWithEnemies(Bestiary* bestiary, Room *room, std::string mapType, int level) {
+list<unique_ptr<Enemy>> EnemyFactory::fillRoomWithEnemies(Room *room, std::string mapType, int level) {
     std::list<std::unique_ptr<Enemy>> enemyList{};
 
     // if it's not the boss room
@@ -23,7 +24,7 @@ std::list<std::unique_ptr<Enemy>> EnemyFactory::fillRoomWithEnemies(Bestiary* be
         // prepare every enemy
         for (int i = 0; i < numberOfEnemies; ++i) {
             // creation
-            auto enemy = selectRandomEnemy(bestiary, mapType, level);
+            auto enemy = selectRandomEnemy(mapType, level);
             // setting position
             placeEnemy(enemy.get(), room);
             //adding to the list
@@ -36,9 +37,9 @@ std::list<std::unique_ptr<Enemy>> EnemyFactory::fillRoomWithEnemies(Bestiary* be
     return enemyList;
 }
 
-std::unique_ptr<Enemy> EnemyFactory::selectRandomEnemy(Bestiary* bestiary, std::string mapType, int level) {
+unique_ptr<Enemy> EnemyFactory::selectRandomEnemy(const std::string& mapType, int level) {
     // pick a random enemy from all the bestiary
-    auto enemy = bestiary->beasts[rand() % size(bestiary->beasts)];
+    auto enemy = Game::getInstance()->bestiary.beasts[rand() % size(Game::getInstance()->bestiary.beasts)];
 
     // if this enemy is
     if (std::count(enemy.habitats.begin(), enemy.habitats.end(), mapType)) {
@@ -103,7 +104,7 @@ std::unique_ptr<Enemy> EnemyFactory::selectRandomEnemy(Bestiary* bestiary, std::
 
         return enemyPtr;
     } else {
-        return selectRandomEnemy(bestiary, mapType, level);
+        return selectRandomEnemy(mapType, level);
     }
 }
 

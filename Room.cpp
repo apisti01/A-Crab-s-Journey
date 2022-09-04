@@ -150,8 +150,8 @@ void Room::loadDoors() {
     }
 }
 
-void Room::generateEnemies(Bestiary* bestiary, std::string mapType, int level) {
-    enemyList = EnemyFactory::fillRoomWithEnemies(bestiary, this, mapType, level);
+void Room::generateEnemies(std::string mapType, int level) {
+    enemyList = EnemyFactory::fillRoomWithEnemies(this, mapType, level);
 }
 
 void Room::updateEnemies(int deltaTime, FloorMap *floor) {

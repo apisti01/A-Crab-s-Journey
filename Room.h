@@ -92,7 +92,7 @@ public:
 
     void generateObstacles();
 
-    void generateEnemies(Bestiary* bestiary, std::string mapType, int level);
+    void generateEnemies(std::string mapType, int level);
 
     void loadDoors();
 

@@ -28,8 +28,12 @@ void StatePlay::eventHandling(sf::Event event, sf::RenderWindow &window) {
                     game->changeState(StateType::Shop);
 
                 // if player has completed the floor
-                else if (game->map->floorCompleted())
-                    game->map = std::make_unique<FloorMap>(game->player->characterIndex, game->map->mapType, game->map->getLevel() + 1, game->bestiary);
+                else if (game->map->floorCompleted()) {
+                    auto tmp = std::make_unique<FloorMap>(game->player->characterIndex, game->map->mapType,
+                                                           game->map->getLevel() + 1);
+                    if(tmp)
+                        game->map = std::move(tmp);
+                }
                 break;
         }
     }

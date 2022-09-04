@@ -9,11 +9,13 @@
 
 class FloorMapTest : public ::testing::Test {
 protected:
+    FloorMapTest() {}
+
     void SetUp() override {
         Test::SetUp();
     }
 
-    FloorMap floorMap {1, 1920, 1080};
+    FloorMap floorMap{1, 1920, 1080};
 };
 
 TEST_F(FloorMapTest, DefaultConstructor) {
