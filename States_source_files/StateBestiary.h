@@ -42,8 +42,8 @@ private:
     SpriteButton currEnemyBtn = {"GameCharacter/Enemy/AggressiveMelee/SeaTurtle/Texture.png", 0.21, {1110, 630}};
 
     // upgrade bars and stats icons
-    sf::Texture upgradeUnit;
-    std::vector<sf::Sprite> upgradesBars;
+    sf::Texture upgradeUnitTexture, upgradeHalfUnitTexture;
+    std::vector<SpriteButton> units;
     SpriteButton healthIcon = {"GameCharacter/Player/Stats Icons/Health.png", 0.05, {1410, 450}};
     SpriteButton speedIcon = {"GameCharacter/Player/Stats Icons/Speed.png", 0.05, {1410, 570}};
     SpriteButton armorIcon = {"GameCharacter/Player/Stats Icons/Armor.png", 0.05, {1410, 690}};
@@ -51,6 +51,5 @@ private:
 
     SpriteButton backBtn = {"Game States/Back Icon.png", 0.2, {150, 150}, true};
 };
-
 
 #endif //ACRABSJOURNEY_STATEBESTIARY_H

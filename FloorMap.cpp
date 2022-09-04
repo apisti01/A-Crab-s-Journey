@@ -60,7 +60,7 @@ void FloorMap::generateFloor(std::string mapType) {
             roomList[i]->generateEnemies(mapType, level);
 
         // close the doors that don't connect with other rooms
-        roomList[i]->closeDoors();
+        roomList[i]->loadDoors();
     }
 
     // set the shop room
@@ -250,6 +250,7 @@ int FloorMap::visitAdjacentRooms(int index, int prev, int dist) {
         // and new longest path is set
         setLongestPathLength(dist);
     }
+
     return 0;
 }
 
@@ -273,8 +274,6 @@ void FloorMap::setShopRoom() {
     }
 }
 
-
-// tells if player is near the shop
 bool FloorMap::isPlayerNearShop() {
     // shop position in the room
     sf::Vector2f shopPos {float(roomWidth), 0};
@@ -303,10 +302,8 @@ void FloorMap::update(int deltaTime, bool attack) {
     // and the player: check if it's still alive
     player->update(deltaTime, this, attack);
     // if not change state to main menu
-    if (player->getHp() <= 0) {
-        // TODO: it has to be the Game Over State
-        Game::getInstance()->changeState(StateType::MainMenu);
-    }
+    if (player->getHp() <= 0)
+        Game::getInstance()->changeState(StateType::GameOver);
 }
 
 

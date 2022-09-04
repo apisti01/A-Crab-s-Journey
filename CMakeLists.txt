@@ -34,7 +34,7 @@ set(STATES_SOURCE_FILES States_source_files/State.cpp States_source_files/State.
         States_source_files/StateSettings.cpp States_source_files/StateSettings.h
         States_source_files/StateManageInventory.cpp States_source_files/StateManageInventory.h
         States_source_files/StateBestiary.cpp States_source_files/StateBestiary.h
-        States_source_files/StatePrepareRun.cpp States_source_files/StatePrepareRun.h)
+        States_source_files/StatePrepareRun.cpp States_source_files/StatePrepareRun.h States_source_files/StateGameOver.cpp States_source_files/StateGameOver.h)
 
 # group the source files in the directory dedicated to the enemies
 set(ENEMY_SOURCE_FILES Enemy_source_files/Enemy.cpp Enemy_source_files/Enemy.h Enemy_source_files/StaticRangedEnemy.cpp

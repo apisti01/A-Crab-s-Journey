@@ -106,5 +106,6 @@ void Bestiary::updateTxtFile() {
 
         file << std::endl;
     }
+
     file.close();
 }

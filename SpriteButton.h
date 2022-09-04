@@ -10,6 +10,7 @@
 class SpriteButton : public Button {
 public:
     SpriteButton(std::string texturePath, float scl, sf::Vector2f position, bool clickable = false, std::string origin = "center");
+    SpriteButton(sf::Texture &texture, float scl, sf::Vector2f position, bool clickable = false, std::string origin = "center");
 
     void update(sf::RenderWindow &window) override;
     void draw(sf::RenderWindow &window) override;

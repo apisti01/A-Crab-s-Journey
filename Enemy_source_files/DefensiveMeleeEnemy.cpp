@@ -58,4 +58,3 @@ void DefensiveMeleeEnemy::attack(FloorMap *floor, bool triggered) {
 void DefensiveMeleeEnemy::dropItems() {
     // TODO random drop of items
 }
-

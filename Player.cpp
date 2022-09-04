@@ -53,8 +53,7 @@ sf::Vector2f Player::getKeyboardInput(int deltaTime, FloorMap *floor) {
         deltaPos.y = deltaPos.y / norm;
     }
     deltaPos.x = deltaPos.x * speed * Game::getInstance()->u * static_cast<float>(deltaTime) / pow(10, 6);
-    deltaPos.y = deltaPos.y * speed * Game::getInstance()->u
-            * static_cast<float>(deltaTime) / pow(10, 6);
+    deltaPos.y = deltaPos.y * speed * Game::getInstance()->u * static_cast<float>(deltaTime) / pow(10, 6);
 
     return deltaPos;
 }
@@ -64,9 +63,7 @@ float Player::getMouseInput(int deltaTime) {
     auto coordinates = sf::Mouse::getPosition();
 
     // coordinates relative to the position of the player
-    sf::Vector2f relativeCoordinates {
-            float(coordinates.x) - sprite.getPosition().x, float(coordinates.y) - sprite.getPosition().y
-    };
+    sf::Vector2f relativeCoordinates {float(coordinates.x) - sprite.getPosition().x, float(coordinates.y) - sprite.getPosition().y};
 
     // angle in radians of the position of the mouse relative to the player
     float facingAngle = atan2f(relativeCoordinates.y, relativeCoordinates.x);
@@ -113,7 +110,8 @@ void Player::checkCageStatus(FloorMap *floor) {
         collider.getPosY() > 120 && collider.getPosY() < 1080 - 120 &&
         size(floor->roomList[floor->currentRoomIndex]->enemyList) != 0 &&
         !floor->roomList[floor->currentRoomIndex]->getCage()) {
-        // TODO: add obstacles to the doors
+
+        // add obstacles to the doors
         floor->roomList[floor->currentRoomIndex]->setCage(true);
         // update the observers
         floor->notifyObserver(floor->roomList[floor->currentRoomIndex].get());

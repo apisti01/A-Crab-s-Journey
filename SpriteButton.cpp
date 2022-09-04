@@ -13,6 +13,15 @@ SpriteButton::SpriteButton(std::string texturePath, float scl, sf::Vector2f posi
     rect.setSize(sf::Vector2f(texture.getSize().x, texture.getSize().y));
 }
 
+SpriteButton::SpriteButton(sf::Texture &texture, float scl, sf::Vector2f position, bool clickable, std::string origin) {
+    this->texture = texture;
+    rect.setTexture(&texture);
+    rect.setPosition(position);
+    rect.setScale(scl, scl);
+    rect.setOrigin(texture.getSize().x / 2, texture.getSize().y / 2);
+    rect.setSize(sf::Vector2f(texture.getSize().x, texture.getSize().y));
+}
+
 void SpriteButton::update(sf::RenderWindow &window) {
     if (clickable) {
         if (rect.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))

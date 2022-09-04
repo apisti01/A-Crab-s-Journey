@@ -122,7 +122,7 @@ sf::Vector2i Room::pickFreeGridSpot() {
     }
 }
 
-void Room::closeDoors() {
+void Room::loadDoors() {
     sf::Texture obstacleTexture;
 
     // TODO: random generation have to use a list of data
@@ -186,6 +186,54 @@ void Room::updateBullets(int deltaTime, FloorMap *floor) {
         } else
             ++bullet;
     }
+}
+
+void Room::closeDoors() {
+    sf::Texture obstacleTexture;
+    std::string obstacleTypes[] = {"algae 1", "algae 2", "bottle 1", "bottle 2", "flipflop", "rock 1", "rock 2"};
+
+    // if the door is open
+    if (doors[0] != -1) {
+        // create an obstacle and put it there to close it
+        obstacleTexture.loadFromFile("Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
+        Collider collider(120 * 8, height - 60, 120, 120);
+        obstacleList.emplace_back(obstacleTexture, collider, 120 * 8, 60, 120, 120);
+    }
+
+    // if the door is open
+    if (doors[1] != -1) {
+        // create an obstacle and put it there to close it
+        obstacleTexture.loadFromFile("Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
+        Collider collider(120 * 8, height - 60, 120, 120);
+        obstacleList.emplace_back(obstacleTexture, collider, width - 60, 120 * 4.5, 120, 120);
+    }
+
+    // if the door is open
+    if (doors[2] != -1) {
+        // create an obstacle and put it there to close it
+        obstacleTexture.loadFromFile("Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
+        Collider collider(120 * 8, height - 60, 120, 120);
+        obstacleList.emplace_back(obstacleTexture, collider, 120 * 8, height - 60, 120, 120);
+    }
+
+    // if the door is open
+    if (doors[3] != -1) {
+        // create an obstacle and put it there to close it
+        obstacleTexture.loadFromFile("Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
+        Collider collider(120 * 8, height - 60, 120, 120);
+        obstacleList.emplace_back(obstacleTexture, collider, 60, 120 * 4.5, 120, 120);
+    }
+}
+
+void Room::openDoors() {
+    int roomToOpen = 0;
+    for (int i = 0; i < size(doors); i++) {
+        if (doors[i] != -1)
+            roomToOpen++;
+    }
+
+    for (int i = 0; i < roomToOpen; i++)
+        obstacleList.pop_back();
 }
 
 void Room::draw(sf::RenderWindow &window) {
