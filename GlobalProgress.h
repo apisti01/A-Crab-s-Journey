@@ -11,7 +11,7 @@ struct Character {
     bool unlocked;
     std::string name;
     float health, speed, armor, strength;
-    int healthUpgrades, speedUpgrades, armorUpgrades, strengthUpgrades;
+    float healthUpgrades, speedUpgrades, armorUpgrades, strengthUpgrades;
     int price;
 };
 

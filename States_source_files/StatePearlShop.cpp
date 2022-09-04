@@ -20,7 +20,8 @@ StatePearlShop::StatePearlShop(Game *game) : State(game) {
     crabsTextures[3].loadFromFile("Game States/Pearl Shop/Asian Great Paddle.png");
 
     // load the upgrade unit texture
-    upgradeUnitTexture.loadFromFile("Game States/Pearl Shop/Upgrade Unit.png");
+    statsUnitTexture.loadFromFile("Game States/Pearl Shop/Stats Unit.png");
+    statsHalfUnitTexture.loadFromFile("Game States/Pearl Shop/Stats Half Unit.png");
 
     loadStats();
 }
@@ -31,13 +32,13 @@ void StatePearlShop::update(int deltaTime, bool clicked, sf::RenderWindow &windo
     pearlsText.update(window);
     backBtn.update(window);
 
-    healthPrice.text.setString(to_string(25 * (game->globalProgress.characters[currCharacter].healthUpgrades + 1)));
+    healthPrice.text.setString(to_string(int(25 * (game->globalProgress.characters[currCharacter].healthUpgrades + 1))));
     healthPrice.update(window);
-    speedPrice.text.setString(to_string(25 * (game->globalProgress.characters[currCharacter].speedUpgrades + 1)));
+    speedPrice.text.setString(to_string(int(25 * (game->globalProgress.characters[currCharacter].speedUpgrades + 1))));
     speedPrice.update(window);
-    armorPrice.text.setString(to_string(25 * (game->globalProgress.characters[currCharacter].armorUpgrades + 1)));
+    armorPrice.text.setString(to_string(int(25 * (game->globalProgress.characters[currCharacter].armorUpgrades + 1))));
     armorPrice.update(window);
-    strengthPrice.text.setString(to_string(25 * (game->globalProgress.characters[currCharacter].strengthUpgrades + 1)));
+    strengthPrice.text.setString(to_string(int(25 * (game->globalProgress.characters[currCharacter].strengthUpgrades + 1))));
     strengthPrice.update(window);
 
     currCharacterPrice.update(window);
@@ -74,32 +75,32 @@ void StatePearlShop::eventHandling(sf::Event event, sf::RenderWindow &window) {
                  game->globalProgress.pearls >= 25 * (game->globalProgress.characters[currCharacter].healthUpgrades + 1)) {
             game->globalProgress.pearls -= 25 * (game->globalProgress.characters[currCharacter].healthUpgrades + 1);
             game->globalProgress.characters[currCharacter].healthUpgrades++;
-            game->globalProgress.updateTxtFile();
             loadStats();
+            game->globalProgress.updateTxtFile();
         }
         else if (speedUp.rect.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))) &&
                  game->globalProgress.characters[currCharacter].unlocked && game->globalProgress.characters[currCharacter].speedUpgrades < 4 &&
                  game->globalProgress.pearls >= 25 * (game->globalProgress.characters[currCharacter].speedUpgrades + 1)) {
             game->globalProgress.pearls -= 25 * (game->globalProgress.characters[currCharacter].speedUpgrades + 1);
             game->globalProgress.characters[currCharacter].speedUpgrades++;
-            game->globalProgress.updateTxtFile();
             loadStats();
+            game->globalProgress.updateTxtFile();
         }
         else if (armorUp.rect.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))) &&
                  game->globalProgress.characters[currCharacter].unlocked && game->globalProgress.characters[currCharacter].armorUpgrades < 4 &&
                  game->globalProgress.pearls >= 25 * (game->globalProgress.characters[currCharacter].armorUpgrades + 1)) {
             game->globalProgress.pearls -= 25 * (game->globalProgress.characters[currCharacter].armorUpgrades + 1);
             game->globalProgress.characters[currCharacter].armorUpgrades++;
-            game->globalProgress.updateTxtFile();
             loadStats();
+            game->globalProgress.updateTxtFile();
         }
         else if (strengthUp.rect.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))) &&
                  game->globalProgress.characters[currCharacter].unlocked && game->globalProgress.characters[currCharacter].strengthUpgrades < 4 &&
                  game->globalProgress.pearls >= 25 * (game->globalProgress.characters[currCharacter].strengthUpgrades + 1)) {
             game->globalProgress.pearls -= 25 * (game->globalProgress.characters[currCharacter].strengthUpgrades + 1);
             game->globalProgress.characters[currCharacter].strengthUpgrades++;
-            game->globalProgress.updateTxtFile();
             loadStats();
+            game->globalProgress.updateTxtFile();
         }
 
         else if (backBtn.rect.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
@@ -114,53 +115,42 @@ void StatePearlShop::reloadCharactersTextures() {
 }
 
 void StatePearlShop::loadStats() {
-    auto characters = Game::getInstance()->globalProgress.characters;
+    auto character = Game::getInstance()->globalProgress.characters[currCharacter];
+
+    units = {};
 
     int i;
-    upgradesUnits = {};
-
-    sf::Sprite upgradeUnit;
     // health upgrades
-    for (i = 0; i < characters[currCharacter].health + characters[currCharacter].healthUpgrades / 2; i++) {
-        upgradeUnit.setTexture(upgradeUnitTexture);
-        upgradeUnit.setOrigin(upgradeUnitTexture.getSize().x / 2, upgradeUnitTexture.getSize().y / 2);
-        upgradeUnit.setPosition(90 + 60 * i, 840);
-        upgradeUnit.setScale(0.03, 0.03);
-        upgradesUnits.push_back(upgradeUnit);
-    }
+    for (i = 0; i < floor(character.health + character.healthUpgrades / 2); i++)
+        units.push_back({statsUnitTexture, 0.025, {140.0f + 55 * i, 840}});
+    if (fmod(character.health + character.healthUpgrades / 2, 1) != 0)
+        units.push_back({statsHalfUnitTexture, 0.025, {140.0f + 55 * i - 12.5f, 840}});
 
     // speed upgrades
-    for (i = 0; i < characters[currCharacter].speed + characters[currCharacter].speedUpgrades / 2; i++) {
-        upgradeUnit.setTexture(upgradeUnitTexture);
-        upgradeUnit.setOrigin(upgradeUnitTexture.getSize().x / 2, upgradeUnitTexture.getSize().y / 2);
-        upgradeUnit.setPosition(690 + 60 * i, 840);
-        upgradeUnit.setScale(0.03, 0.03);
-        upgradesUnits.push_back(upgradeUnit);
-    }
+    for (i = 0; i < floor(character.speed + character.speedUpgrades / 2); i++)
+        units.push_back({statsUnitTexture, 0.025, {740.0f + 55 * i, 840}});
+    if (fmod(character.speed + character.speedUpgrades / 2, 1) != 0)
+        units.push_back({statsHalfUnitTexture, 0.025, {740.0f + 55 * i - 12.5f, 840}});
 
     // armor upgrades
-    for (i = 0; i < characters[currCharacter].armor + characters[currCharacter].armorUpgrades / 2; i++) {
-        upgradeUnit.setTexture(upgradeUnitTexture);
-        upgradeUnit.setOrigin(upgradeUnitTexture.getSize().x / 2, upgradeUnitTexture.getSize().y / 2);
-        upgradeUnit.setPosition(90 + 60 * i, 960);
-        upgradeUnit.setScale(0.03, 0.03);
-        upgradesUnits.push_back(upgradeUnit);
-    }
+    for (i = 0; i < floor(character.armor + character.armorUpgrades / 2); i++)
+        units.push_back({statsUnitTexture, 0.025, {140.0f + 55 * i, 960}});
+    if (fmod(character.armor + character.armorUpgrades / 2, 1) != 0)
+        units.push_back({statsHalfUnitTexture, 0.025, {140.0f + 55 * i - 12.5f, 960}});
 
     // strength upgrades
-    for (i = 0; i < characters[currCharacter].strength + characters[currCharacter].strengthUpgrades / 2; i++) {
-        upgradeUnit.setTexture(upgradeUnitTexture);
-        upgradeUnit.setOrigin(upgradeUnitTexture.getSize().x / 2, upgradeUnitTexture.getSize().y / 2);
-        upgradeUnit.setPosition(690 + 60 * i, 960);
-        upgradeUnit.setScale(0.03, 0.03);
-        upgradesUnits.push_back(upgradeUnit);
-    }
+    for (i = 0; i < floor(character.strength + character.strengthUpgrades / 2); i++)
+        units.push_back({statsUnitTexture, 0.025, {740.0f + 55 * i, 960}});
+    if (fmod(character.strength + character.strengthUpgrades / 2, 1) != 0)
+        units.push_back({statsHalfUnitTexture, 0.025, {740.0f + 55 * i - 12.5f, 960}});
 }
 
 void StatePearlShop::draw(sf::RenderWindow &window) {
+    // draw the background and the title
     window.draw(backgroundSprite);
-
     titleText.draw(window);
+
+    // draw the pearl icon and write the number of pearls owned
     pearlsText.draw(window);
     pearlsIcon.draw(window);
 
@@ -178,36 +168,49 @@ void StatePearlShop::draw(sf::RenderWindow &window) {
     if (!characters[(currCharacter - 1 + size(characters)) % size(characters)].unlocked)
         prevCharacterLocked.draw(window);
 
-    // draw the habitats
-    currHabitatBtn.draw(window);
-    nextHabitatBtn.draw(window);
-    prevHabitatBtn.draw(window);
+    // if mouse is on the current character and it's a locked character
+    if (currCharacterBtn.rect.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))) &&
+        !game->globalProgress.characters[currCharacter].unlocked) {
+        currCharacterPearl.draw(window);
 
+        // if you can afford the price the text color is white, otherwise is red
+        if (game->globalProgress.pearls >= game->globalProgress.characters[currCharacter].price)
+            currCharacterPrice.text.setFillColor(sf::Color(255, 255, 255));
+        else
+            currCharacterPrice.text.setFillColor(sf::Color(243, 29, 44));
+
+        currCharacterPrice.draw(window);
+    }
+
+    // draw the stats bars
     healthBar.draw(window);
     speedBar.draw(window);
     armorBar.draw(window);
     strengthBar.draw(window);
 
-    // draw the stats upgrades
-    for (int i = 0; i < size(upgradesUnits); i++)
-        window.draw(upgradesUnits[i]);
-
-    // draw the stats icons
+    for (int i = 0; i < size(units); i++)
+        units[i].draw(window);
+    
     healthIcon.draw(window);
     speedIcon.draw(window);
     armorIcon.draw(window);
     strengthIcon.draw(window);
 
-    if (game->globalProgress.characters[currCharacter].healthUpgrades < 4)
+    if (game->globalProgress.characters[currCharacter].unlocked &&
+        game->globalProgress.characters[currCharacter].healthUpgrades < 4)
         healthUp.draw(window);
-    if (game->globalProgress.characters[currCharacter].speedUpgrades < 4)
+    if (game->globalProgress.characters[currCharacter].unlocked &&
+        game->globalProgress.characters[currCharacter].speedUpgrades < 4)
         speedUp.draw(window);
-    if (game->globalProgress.characters[currCharacter].armorUpgrades < 4)
+    if (game->globalProgress.characters[currCharacter].unlocked &&
+        game->globalProgress.characters[currCharacter].armorUpgrades < 4)
         armorUp.draw(window);
-    if (game->globalProgress.characters[currCharacter].strengthUpgrades < 4)
+    if (game->globalProgress.characters[currCharacter].unlocked &&
+        game->globalProgress.characters[currCharacter].strengthUpgrades < 4)
         strengthUp.draw(window);
 
     if (healthUp.rect.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))) &&
+        game->globalProgress.characters[currCharacter].unlocked &&
         game->globalProgress.characters[currCharacter].healthUpgrades < 4) {
         healthPearl.draw(window);
         if (game->globalProgress.pearls >= 25 * (game->globalProgress.characters[currCharacter].healthUpgrades + 1))
@@ -218,6 +221,7 @@ void StatePearlShop::draw(sf::RenderWindow &window) {
     }
 
     if (speedUp.rect.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))) &&
+        game->globalProgress.characters[currCharacter].unlocked &&
         game->globalProgress.characters[currCharacter].speedUpgrades < 4) {
         speedPearl.draw(window);
         if (game->globalProgress.pearls >= 25 * (game->globalProgress.characters[currCharacter].speedUpgrades + 1))
@@ -228,6 +232,7 @@ void StatePearlShop::draw(sf::RenderWindow &window) {
     }
 
     if (armorUp.rect.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))) &&
+        game->globalProgress.characters[currCharacter].unlocked &&
         game->globalProgress.characters[currCharacter].armorUpgrades < 4) {
         armorPearl.draw(window);
         if (game->globalProgress.pearls >= 25 * (game->globalProgress.characters[currCharacter].armorUpgrades + 1))
@@ -238,6 +243,7 @@ void StatePearlShop::draw(sf::RenderWindow &window) {
     }
 
     if (strengthUp.rect.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))) &&
+        game->globalProgress.characters[currCharacter].unlocked &&
         game->globalProgress.characters[currCharacter].strengthUpgrades < 4) {
         strengthPearl.draw(window);
         if (game->globalProgress.pearls >= 25 * (game->globalProgress.characters[currCharacter].strengthUpgrades + 1))
@@ -247,19 +253,10 @@ void StatePearlShop::draw(sf::RenderWindow &window) {
         strengthPrice.draw(window);
     }
 
-    // if mouse is on the current character and it's a locked character
-    if (currCharacterBtn.rect.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))) &&
-        !game->globalProgress.characters[currCharacter].unlocked) {
-        currCharacterCoin.draw(window);
-
-        // if you can afford the price the text color is white, otherwise is red
-        if (game->globalProgress.pearls >= game->globalProgress.characters[currCharacter].price)
-            currCharacterPrice.text.setFillColor(sf::Color(255, 255, 255));
-        else
-            currCharacterPrice.text.setFillColor(sf::Color(243, 29, 44));
-
-        currCharacterPrice.draw(window);
-    }
+    // draw the habitats
+    currHabitatBtn.draw(window);
+    nextHabitatBtn.draw(window);
+    prevHabitatBtn.draw(window);
 
     backBtn.draw(window);
 }

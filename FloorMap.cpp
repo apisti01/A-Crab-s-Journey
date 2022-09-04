@@ -302,9 +302,15 @@ void FloorMap::setupPlayer(int characterIndex) {
 
     // create the player
     player = make_unique<Player>(characterIndex, "Crab", characterSpecie, std::move(characterTexture), collider,
-                                 std::move(rangedWeapon), character.health, character.health, character.speed,
-                                 character.speed, character.armor, character.armor, character.strength,
-                                 character.strength);
+                                 std::move(rangedWeapon),
+                                 character.health + character.healthUpgrades / 2,
+                                 character.health + character.healthUpgrades / 2,
+                                 character.speed + character.speedUpgrades / 2,
+                                 character.speed + character.speedUpgrades / 2,
+                                 character.armor + character.armorUpgrades / 2,
+                                 character.armor + character.armorUpgrades / 2,
+                                 character.strength + character.strengthUpgrades / 2,
+                                 character.strength + character.strengthUpgrades / 2);
 
     // and set his position at the center of the map
     player->setPosition(roomWidth / 2, roomHeight / 2);
@@ -341,7 +347,7 @@ void FloorMap::update(int deltaTime, bool attack) {
     // if not change state to main menu
     if (player->getHp() <= 0) {
         // TODO: it has to be the Game Over State
-        Game::getInstance()->changeState(StateType::MainMenu);
+        Game::getInstance()->changeState(StateType::GameOver);
     }
 }
 

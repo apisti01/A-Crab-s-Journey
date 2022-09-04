@@ -37,7 +37,7 @@ private:
     std::vector<sf::Texture> crabsTextures;
     SpriteButton currCharacterBtn = {"Game States/Pearl Shop/Brown Crab.png", 0.21, {630, 510}};
     SpriteButton currCharacterLocked = {"Game States/Pearl Shop/Locked Character.png", 0.21, {630, 510}};
-    SpriteButton currCharacterCoin = {"Game States/Pearl.png", 0.15, {630, 510}};
+    SpriteButton currCharacterPearl = {"Game States/Pearl.png", 0.15, {630, 510}};
     TextButton currCharacterPrice = {to_string(game->globalProgress.characters[currCharacter].price), game->font, 120, {630, 510}};
 
     SpriteButton nextCharacterBtn = {"Game States/Pearl Shop/Fiddler Crab.png", 0.15, {1050, 510}};
@@ -47,32 +47,32 @@ private:
     SpriteButton prevCharacterLocked = {"Game States/Pearl Shop/Locked Character.png", 0.15, {210, 510}};
 
     // upgrade bars and stats icons
-    sf::Texture upgradeUnitTexture;
-    std::vector<sf::Sprite> upgradesUnits;
+    sf::Texture statsUnitTexture, statsHalfUnitTexture;
+    std::vector<SpriteButton> units;
 
     SpriteButton healthBar = {"Game States/Pearl Shop/Upgrade Bar.png", 1, {350, 840}};
     SpriteButton healthIcon = {"GameCharacter/Player/Stats Icons/Health.png", 0.05, {90, 840}};
     SpriteButton healthUp = {"Game States/Pearl Shop/Upgrade Up.png", 0.035, {560, 840}};
     SpriteButton healthPearl = {"Game States/Pearl.png", 0.05, {90, 840}};
-    TextButton healthPrice = {to_string(25), game->font, 40, {90, 840}};
+    TextButton healthPrice = {to_string(25), game->font, 50, {90, 840}};
 
     SpriteButton speedBar = {"Game States/Pearl Shop/Upgrade Bar.png", 1, {950, 840}};
     SpriteButton speedIcon = {"GameCharacter/Player/Stats Icons/Speed.png", 0.05, {690, 840}};
     SpriteButton speedUp = {"Game States/Pearl Shop/Upgrade Up.png", 0.035, {1160, 840}};
     SpriteButton speedPearl = {"Game States/Pearl.png", 0.05, {690, 840}};
-    TextButton speedPrice = {to_string(25), game->font, 40, {690, 840}};
+    TextButton speedPrice = {to_string(25), game->font, 50, {690, 840}};
 
     SpriteButton armorBar = {"Game States/Pearl Shop/Upgrade Bar.png", 1, {350, 960}};
     SpriteButton armorIcon = {"GameCharacter/Player/Stats Icons/Armor.png", 0.05, {90, 960}};
     SpriteButton armorUp = {"Game States/Pearl Shop/Upgrade Up.png", 0.035, {560, 960}};
     SpriteButton armorPearl = {"Game States/Pearl.png", 0.05, {90, 960}};
-    TextButton armorPrice = {to_string(25), game->font, 40, {90, 960}};
+    TextButton armorPrice = {to_string(25), game->font, 50, {90, 960}};
 
     SpriteButton strengthBar = {"Game States/Pearl Shop/Upgrade Bar.png", 1, {950, 960}};
     SpriteButton strengthIcon = {"GameCharacter/Player/Stats Icons/Strength.png", 0.05, {690, 960}};
     SpriteButton strengthUp = {"Game States/Pearl Shop/Upgrade Up.png", 0.035, {1160, 960}};
     SpriteButton strengthPearl = {"Game States/Pearl.png", 0.05, {690, 960}};
-    TextButton strengthPrice = {to_string(25), game->font, 40, {690, 960}};
+    TextButton strengthPrice = {to_string(25), game->font, 50, {690, 960}};
 
     // habitats
     SpriteButton currHabitatBtn = {"Game States/Pearl Shop/Brown Crab.png", 0, {1000, 450}};

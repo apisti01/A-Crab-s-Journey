@@ -13,6 +13,7 @@
 #include "States_source_files/StateShop.h"
 #include "States_source_files/StatePause.h"
 #include "States_source_files/StateBestiary.h"
+#include "States_source_files/StateGameOver.h"
 #include "States_source_files/StateSettings.h"
 
 #include <iostream>
@@ -68,6 +69,9 @@ void Game::changeState(StateType type) {
                 break;
             case StateType::Pause:
                 tmp = std::make_unique<StatePause>(this);
+                break;
+            case StateType::GameOver:
+                tmp = std::make_unique<StateGameOver>(this);
                 break;
             case StateType::Settings:
                 tmp = std::make_unique<StateSettings>(this);
