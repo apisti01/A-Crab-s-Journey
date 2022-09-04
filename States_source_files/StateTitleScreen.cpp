@@ -4,16 +4,17 @@
 
 #include "StateTitleScreen.h"
 
-#include <iostream>
-
 StateTitleScreen::StateTitleScreen(Game* game): State(game) {
     backgroundTexture.loadFromFile("Game States/Main Menu/Main Menu Blank.png");
 }
 
 void StateTitleScreen::update(int deltaTime, bool clicked, sf::RenderWindow &window) {
+    titleText.update(window);
+    pressBtnText.update(window);
+
     timer += deltaTime / pow(10, 6);
     int opacity = 192 + 64 * sinf(4 * timer);
-    pressBtnText.btnText.setFillColor(sf::Color(255, 255, 255, opacity));
+    pressBtnText.text.setFillColor(sf::Color(255, 255, 255, opacity));
 }
 
 void StateTitleScreen::eventHandling(sf::Event event, sf::RenderWindow &window) {
@@ -25,9 +26,6 @@ void StateTitleScreen::eventHandling(sf::Event event, sf::RenderWindow &window) 
 void StateTitleScreen::draw(sf::RenderWindow &window) {
     window.draw(background);
 
-    titleText.btnText.setOrigin(titleText.btnText.getLocalBounds().width / 2, titleText.btnText.getLocalBounds().height / 2);
-    titleText.drawTextBtn(window);
-
-    pressBtnText.btnText.setOrigin(pressBtnText.btnText.getLocalBounds().width / 2, pressBtnText.btnText.getLocalBounds().height / 2);
-    pressBtnText.drawTextBtn(window);
+    titleText.draw(window);
+    pressBtnText.draw(window);
 }

@@ -9,21 +9,21 @@ StatePrepareRun::StatePrepareRun(Game *game) : State(game) {
 }
 
 void StatePrepareRun::update(int deltaTime, bool clicked, sf::RenderWindow &window) {
-    startRunTextBtn.updateBtn(window);
-    backBtn.updateBtn(window);
+    startRunTextBtn.update(window);
+    backBtn.update(window);
 }
 
 void StatePrepareRun::eventHandling(sf::Event event, sf::RenderWindow &window) {
     if (event.type == sf::Event::MouseButtonReleased) {
         // new game
-        if (startRunTextBtn.btnText.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
+        if (startRunTextBtn.text.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
             // create new floor
             setupPlayer(selectedCharacter);
             game->map = std::make_unique<FloorMap>(selectedCharacter, game->globalProgress.habitats[selectedMap].name,1);
             game->changeState(StateType::Play);
         }
 
-        else if (backBtn.box.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
+        else if (backBtn.rect.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
             game->changeState(StateType::MainMenu);
     }
 
@@ -35,10 +35,8 @@ void StatePrepareRun::draw(sf::RenderWindow &window) {
     // draw background
     window.draw(background);
 
-    startRunTextBtn.drawTextBtn(window);
-
-    backBtn.drawBtn(window);
-
+    startRunTextBtn.draw(window);
+    backBtn.draw(window);
 }
 
 

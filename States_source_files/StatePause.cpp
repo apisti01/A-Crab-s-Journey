@@ -9,10 +9,10 @@ StatePause::StatePause(Game *game) : State(game) {
 }
 
 void StatePause::update(int deltaTime, bool clicked, sf::RenderWindow &window) {
-    pauseTextBtn.updateBtn(window);
-    resumeTextBtn.updateBtn(window);
-    exitTextBtn.updateBtn(window);
-    settingsTextBtn.updateBtn(window);
+    pauseTextBtn.update(window);
+    resumeTextBtn.update(window);
+    exitTextBtn.update(window);
+    settingsTextBtn.update(window);
 }
 
 void StatePause::eventHandling(sf::Event event, sf::RenderWindow &window) {
@@ -20,13 +20,13 @@ void StatePause::eventHandling(sf::Event event, sf::RenderWindow &window) {
         game->changeState(StateType::Play);
 
     else if (event.type == sf::Event::MouseButtonReleased) {
-        if (resumeTextBtn.btnText.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
+        if (resumeTextBtn.text.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
             game->changeState(StateType::Play);
 
-        else if (exitTextBtn.btnText.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
+        else if (exitTextBtn.text.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
             game->changeState(StateType::MainMenu);
 
-        else if (settingsTextBtn.btnText.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
+        else if (settingsTextBtn.text.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
             game->changeState(StateType::Settings);
     }
 }
@@ -36,8 +36,8 @@ void StatePause::draw(sf::RenderWindow &window) {
     window.draw(background);
 
     // and all the buttons
-    pauseTextBtn.drawTextBtn(window);
-    resumeTextBtn.drawTextBtn(window);
-    exitTextBtn.drawTextBtn(window);
-    settingsTextBtn.drawTextBtn(window);
+    pauseTextBtn.draw(window);
+    resumeTextBtn.draw(window);
+    exitTextBtn.draw(window);
+    settingsTextBtn.draw(window);
 }

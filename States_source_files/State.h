@@ -6,6 +6,8 @@
 #define MAIN_CPP_STATE_H
 
 #include <SFML/Graphics.hpp>
+#include "../TextButton.h"
+#include "../SpriteButton.h"
 
 class Game;
 

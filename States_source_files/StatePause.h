@@ -5,9 +5,8 @@
 #ifndef ACRABSJOURNEY_STATEPAUSE_H
 #define ACRABSJOURNEY_STATEPAUSE_H
 
-#include "../Game.h"
-#include "../Button.h"
 #include "State.h"
+#include "../Game.h"
 
 class StatePause : public State {
 public:
@@ -27,10 +26,10 @@ private:
     sf::Sprite background{backgroundTexture, sf::IntRect{0, 0, 1920, 1080}};
 
     // buttons
-    Button pauseTextBtn = {"Pause", game->font, 240, {1920 / 2, 175}, false};
-    Button resumeTextBtn = {"Resume", game->font, 150, {1920 / 2, 450}};
-    Button exitTextBtn = {"Exit", game->font, 150, {1920 / 2, 600}};
-    Button settingsTextBtn = {"Settings", game->font, 150, {1920 / 2, 750}};
+    TextButton pauseTextBtn = {"Pause", game->font, 210, {1920 / 2, 150}};
+    TextButton resumeTextBtn = {"Resume", game->font, 150, {1920 / 2, 400}, true};
+    TextButton exitTextBtn = {"Exit", game->font, 150, {1920 / 2, 600}, true};
+    TextButton settingsTextBtn = {"Settings", game->font, 150, {1920 / 2, 800}, true};
 };
 
 

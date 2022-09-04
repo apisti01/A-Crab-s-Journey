@@ -41,8 +41,8 @@ sf::Vector2f AggressiveMeleeEnemy::chase(const Player *hero, float &deltaAngle, 
         triggered = false;
 
     // the actual movement
-    movement.x = movement.x * speed * Game::getInstance()->lenUnit * static_cast<float>(deltaTime) / pow(10, 6);
-    movement.y = movement.y * speed * Game::getInstance()->lenUnit * static_cast<float>(deltaTime) / pow(10, 6);
+    movement.x = movement.x * speed * Game::getInstance()->u * static_cast<float>(deltaTime) / pow(10, 6);
+    movement.y = movement.y * speed * Game::getInstance()->u * static_cast<float>(deltaTime) / pow(10, 6);
 
     return movement;
 }

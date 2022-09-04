@@ -7,11 +7,11 @@
 
 #include "State.h"
 #include "../Game.h"
-#include "../Button.h"
 
 class StateBestiary : public State {
 public:
-    explicit StateBestiary(Game* game);
+    explicit StateBestiary(Game *game);
+
     ~StateBestiary() override = default;
 
     void eventHandling(sf::Event event, sf::RenderWindow &window) override;
@@ -28,26 +28,28 @@ private:
     void loadStats();
 
     sf::Texture backgroundTexture;
-    sf::Sprite background { backgroundTexture, sf::IntRect {0, 0, 1920, 1080} };
+    sf::Sprite background{backgroundTexture, sf::IntRect{0, 0, 1920, 1080}};
 
-    Button titleText = {"Bestiary", game->font, 240, {1920 / 2, 175}, false};
+    TextButton titleText = {"Bestiary", game->font, 210, {1920 / 2, 150}};
 
     // enemies
     int currEnemy = 0;
     std::vector<sf::Texture> enemiesTextures;
     sf::Texture enemyUnknownTexture;
-    std::vector<Button> enemiesBtns;
-    std::vector<Button> enemiesUnknowns;
+    std::vector<SpriteButton> enemiesBtns;
+    std::vector<SpriteButton> enemiesUnknowns;
 
-    Button currEnemyBtn = {"GameCharacter/Enemy/AggressiveMelee/SeaTurtle/Texture.png", 0.21, {1110, 630}, false};
+    SpriteButton currEnemyBtn = {"GameCharacter/Enemy/AggressiveMelee/SeaTurtle/Texture.png", 0.21, {1110, 630}};
 
     // upgrade bars and stats icons
     sf::Texture upgradeUnit;
     std::vector<sf::Sprite> upgradesBars;
-    Button healthIcon = {"GameCharacter/Player/Stats Icons/Health.png", 0.05, {1410, 450}, false};
-    Button speedIcon = {"GameCharacter/Player/Stats Icons/Speed.png", 0.05, {1410, 570}, false};
-    Button armorIcon = {"GameCharacter/Player/Stats Icons/Armor.png", 0.05, {1410, 690}, false};
-    Button strengthIcon = {"GameCharacter/Player/Stats Icons/Strength.png", 0.05, {1410, 810}, false};
+    SpriteButton healthIcon = {"GameCharacter/Player/Stats Icons/Health.png", 0.05, {1410, 450}};
+    SpriteButton speedIcon = {"GameCharacter/Player/Stats Icons/Speed.png", 0.05, {1410, 570}};
+    SpriteButton armorIcon = {"GameCharacter/Player/Stats Icons/Armor.png", 0.05, {1410, 690}};
+    SpriteButton strengthIcon = {"GameCharacter/Player/Stats Icons/Strength.png", 0.05, {1410, 810}};
+
+    SpriteButton backBtn = {"Game States/Back Icon.png", 0.2, {150, 150}, true};
 };
 
 
