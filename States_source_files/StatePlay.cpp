@@ -33,6 +33,7 @@ void StatePlay::eventHandling(sf::Event event, sf::RenderWindow &window) {
                                                            game->map->getLevel() + 1);
                     if(tmp)
                         game->map = std::move(tmp);
+                    game->player->setPosition(game->map->getRoomWidth() / 2, game->map->getRoomHeight() / 2);
                 }
                 break;
         }
