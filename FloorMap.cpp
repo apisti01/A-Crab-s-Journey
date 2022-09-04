@@ -250,6 +250,7 @@ int FloorMap::visitAdjacentRooms(int index, int prev, int dist) {
         // and new longest path is set
         setLongestPathLength(dist);
     }
+
     return 0;
 }
 
@@ -273,8 +274,6 @@ void FloorMap::setShopRoom() {
     }
 }
 
-
-// tells if player is near the shop
 bool FloorMap::isPlayerNearShop() {
     // shop position in the room
     sf::Vector2f shopPos {float(roomWidth), 0};

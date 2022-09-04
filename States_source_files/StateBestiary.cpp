@@ -31,7 +31,8 @@ StateBestiary::StateBestiary(Game *game) : State(game) {
     }
 
     // load the upgrade unit texture
-    upgradeUnit.loadFromFile("Game States/Pearl Shop/Upgrade Unit.png");
+    upgradeUnitTexture.loadFromFile("Game States/Pearl Shop/Upgrade Unit.png");
+    upgradeHalfUnitTexture.loadFromFile("Game States/Pearl Shop/Upgrade Half Unit.png");
 
     loadStats();
 }
@@ -58,7 +59,7 @@ void StateBestiary::eventHandling(sf::Event event, sf::RenderWindow &window) {
             case sf::Keyboard::Escape:
                 game->changeState(StateType::Play);
                 break;
-            case sf::Keyboard::M: {
+            case sf::Keyboard::M:
                 game->changeState(StateType::DisplayMap);
                 break;
             case sf::Keyboard::I:
@@ -67,7 +68,6 @@ void StateBestiary::eventHandling(sf::Event event, sf::RenderWindow &window) {
             case sf::Keyboard::P:
                 game->changeState(StateType::Pause);
                 break;
-            }
         }
     }
 
@@ -91,45 +91,32 @@ void StateBestiary::loadStats() {
     // load the current enemy1 texture on the right box
     currEnemyBtn.rect.setTexture(&enemiesTextures[currEnemy]);
 
-    // and all his stats
     auto enemy = Game::getInstance()->bestiary.beasts[currEnemy];
-    upgradesBars = {};
-    sf::Sprite upgradeBar;
-    // health upgrades
-    for (int i = 1; i <= enemy.health; i++) {
-        upgradeBar.setTexture(upgradeUnit);
-        upgradeBar.setOrigin(upgradeUnit.getSize().x / 2, upgradeUnit.getSize().y / 2);
-        upgradeBar.setPosition(1410 + 40 * i, 450);
-        upgradeBar.setScale(0.02, 0.03);
-        upgradesBars.push_back(upgradeBar);
-    }
+    units = {};
+    int i;
+    // health stats
+    for (i = 0; i < floor(enemy.health); i++)
+        units.push_back({upgradeUnitTexture, 0.025, {1410.0f + 55 * i, 450}});
+    if (fmod(enemy.health, 1) != 0)
+        units.push_back({upgradeHalfUnitTexture, 0.025, {1410.0f + 55 * i - 12.5f, 450}});
 
-    // speed upgrades
-    for (int i = 1; i <= enemy.speed; i++) {
-        upgradeBar.setTexture(upgradeUnit);
-        upgradeBar.setOrigin(upgradeUnit.getSize().x / 2, upgradeUnit.getSize().y / 2);
-        upgradeBar.setPosition(1410 + 40 * i, 570);
-        upgradeBar.setScale(0.02, 0.03);
-        upgradesBars.push_back(upgradeBar);
-    }
+    // speed stats
+    for (i = 0; i < floor(enemy.speed); i++)
+        units.push_back({upgradeUnitTexture, 0.025, {1410.0f + 55 * i, 570}});
+    if (fmod(enemy.speed, 1) != 0)
+        units.push_back({upgradeHalfUnitTexture, 0.025, {1410.0f + 55 * i - 12.5f, 570}});
 
-    // armor upgrades
-    for (int i = 1; i <= enemy.armor; i++) {
-        upgradeBar.setTexture(upgradeUnit);
-        upgradeBar.setOrigin(upgradeUnit.getSize().x / 2, upgradeUnit.getSize().y / 2);
-        upgradeBar.setPosition(1410 + 40 * i, 690);
-        upgradeBar.setScale(0.02, 0.03);
-        upgradesBars.push_back(upgradeBar);
-    }
+    // armor stats
+    for (i = 0; i < floor(enemy.armor); i++)
+        units.push_back({upgradeUnitTexture, 0.025, {1410.0f + 55 * i, 690}});
+    if (fmod(enemy.armor, 1) != 0)
+        units.push_back({upgradeHalfUnitTexture, 0.025, {1410.0f + 55 * i - 12.5f, 690}});
 
-    // strength upgrades
-    for (int i = 1; i <= enemy.strength; i++) {
-        upgradeBar.setTexture(upgradeUnit);
-        upgradeBar.setOrigin(upgradeUnit.getSize().x / 2, upgradeUnit.getSize().y / 2);
-        upgradeBar.setPosition(1410 + 40 * i, 810);
-        upgradeBar.setScale(0.02, 0.03);
-        upgradesBars.push_back(upgradeBar);
-    }
+    // strength stats
+    for (i = 0; i < floor(enemy.strength); i++)
+        units.push_back({upgradeUnitTexture, 0.025, {1410.0f + 55 * i, 810}});
+    if (fmod(enemy.strength, 1) != 0)
+        units.push_back({upgradeHalfUnitTexture, 0.025, {1410.0f + 55 * i - 12.5f, 810}});
 }
 
 void StateBestiary::draw(sf::RenderWindow &window) {
@@ -152,8 +139,8 @@ void StateBestiary::draw(sf::RenderWindow &window) {
     currEnemyBtn.draw(window);
 
     // draw the stats upgrades
-    for (int i = 0; i < size(upgradesBars); i++)
-        window.draw(upgradesBars[i]);
+    for (int i = 0; i < size(units); i++)
+        units[i].draw(window);
 
     // draw the stats icons
     healthIcon.draw(window);

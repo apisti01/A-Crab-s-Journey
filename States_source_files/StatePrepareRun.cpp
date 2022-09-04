@@ -68,9 +68,9 @@ void StatePrepareRun::setupPlayer(int characterIndex) {
 
     // create the player
     game->player = make_shared<Player>(characterIndex, "Crab", characterSpecie, std::move(characterTexture), collider,
-                                 std::move(rangedWeapon), 10000, character.health, character.speed,
-                                 character.speed, 100000, character.armor, 100000,
-                                 character.strength); // FIXME to reset normal
+                                 std::move(rangedWeapon), character.health, character.health, character.speed,
+                                 character.speed, character.armor, character.armor, character.strength,
+                                 character.strength);
 
     // and set his position at the center of the map
     game->player->setPosition(1920 / 2, 1080 / 2);
