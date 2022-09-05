@@ -51,6 +51,7 @@ void Bestiary::readFile() {
             // load the attributes
             ss >> beast.id >> beast.discovered >> beast.analized >> beast.name >> beast.type >> beast.health >> beast.speed
                >> beast.armor >> beast.strength >> beast.triggerRange >> beast.attackTimer;
+
             // and the habitats in which the enemy can be found
             int i = 0;
             while (ss >> habitat) {
@@ -67,11 +68,12 @@ void Bestiary::readFile() {
 }
 
 void Bestiary::update(Room* room) {
-    for (auto &enemy : room->enemyList) {
-        auto iter = find_if(beasts.begin(),beasts.end(), [&enemy](const Beast &beast){return enemy->getId() == beast.id;});
+    for (auto &enemy: room->enemyList) {
+        auto iter = find_if(beasts.begin(), beasts.end(),
+                            [&enemy](const Beast &beast) { return enemy->getId() == beast.id; });
 
-        if (iter != beasts.end()){
-            if (!iter->discovered){
+        if (iter != beasts.end()) {
+            if (!iter->discovered) {
                 iter->discovered = true;
                 updateTxtFile();
             }
@@ -80,10 +82,11 @@ void Bestiary::update(Room* room) {
 }
 
 void Bestiary::update(Enemy *enemy) {
-    auto iter = find_if(beasts.begin(),beasts.end(), [&enemy](const Beast &beast){return enemy->getId() == beast.id;});
+    auto iter = find_if(beasts.begin(), beasts.end(),
+                        [&enemy](const Beast &beast) { return enemy->getId() == beast.id; });
 
-    if (iter != beasts.end()){
-        if (!iter->analized){
+    if (iter != beasts.end()) {
+        if (!iter->analized) {
             iter->analized = true;
             updateTxtFile();
         }

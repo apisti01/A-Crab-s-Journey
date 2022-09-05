@@ -23,6 +23,10 @@ public:
 private:
     SpriteButton mapIcon = {"Game States/Play/Map Icon.png", 0.3, {1920 - 675, 1080 - 100}, false};
     SpriteButton bestiaryIcon = {"Game States/Play/Bestiary Icon.png", 0.3, {1920 - 500, 1080 - 100}, false};
+
+    TextButton nextFloor = {"Press E to go to the next floor", game->font, 120, {1920 / 2, 1080 / 2}};
+
+    int sec = 0;
 };
 
 #endif //MAIN_CPP_STATEPLAY_H

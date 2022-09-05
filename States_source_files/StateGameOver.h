@@ -26,11 +26,11 @@ private:
     sf::Sprite background{backgroundTexture, sf::IntRect{0, 0, 1920, 1080}};
 
     // text buttons
-    TextButton titleText = {"A Crab's Journey", game->font, 240, {1920 / 2, 150}};
+    TextButton titleText = {"Game Over", game->font, 240, {1920 / 2, 175}};
     TextButton returnTextBtn = {"Return to Main Menu", game->font, 180, {1920 / 2, 1080 - 150}, true};
 
-    SpriteButton pearlsIcon = {"Game States/Pearl.png", 0.05, {1920 / 2 - 100, 400}};
-    TextButton pearlsGained = {"0", game->font, 180, {1920 / 2 + 100, 400}};
+    SpriteButton pearlsIcon = {"Game States/Pearl.png", 0.05, {1920 / 2 - 100, 450}};
+    TextButton pearlsGained = {"0", game->font, 180, {1920 / 2 + 100, 450}};
 
     int p = 27;
     int s = 2;

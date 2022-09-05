@@ -31,7 +31,7 @@ void StateGameOver::update(int deltaTime, bool clicked, sf::RenderWindow &window
     // display the pearls gained with the run
     float a = -p / powf(s, 2);
     float b = 2 * p / s;
-    pearlsGained.text.setString(to_string(int(ceil(a * powf(t, 2) + (b * t)))));
+    pearlsGained.text.setString(to_string(int(round(a * powf(t, 2) + (b * t)))));
     pearlsGained.update(window);
     pearlsIcon.update(window);
 }

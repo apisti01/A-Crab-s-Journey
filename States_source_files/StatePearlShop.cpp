@@ -28,10 +28,18 @@ StatePearlShop::StatePearlShop(Game *game) : State(game) {
 
 void StatePearlShop::update(int deltaTime, bool clicked, sf::RenderWindow &window) {
     titleText.update(window);
+
+    // pearls info position
     pearlsText.text.setString(to_string(game->globalProgress.pearls));
     pearlsText.update(window);
+    int pearlsInfoWidth = pearlsText.text.getGlobalBounds().width + pearlsIcon.rect.getGlobalBounds().width - 50;
+    pearlsText.text.setPosition(1920 / 2 - pearlsInfoWidth / 2, pearlsText.text.getPosition().y);
+    pearlsIcon.rect.setPosition(1920 / 2 + pearlsInfoWidth / 2, pearlsIcon.rect.getPosition().y);
+
+    // go back button
     backBtn.update(window);
 
+    // upgrades prices
     healthPrice.text.setString(to_string(int(25 * (game->globalProgress.characters[currCharacter].healthUpgrades + 1))));
     healthPrice.update(window);
     speedPrice.text.setString(to_string(int(25 * (game->globalProgress.characters[currCharacter].speedUpgrades + 1))));
@@ -41,13 +49,31 @@ void StatePearlShop::update(int deltaTime, bool clicked, sf::RenderWindow &windo
     strengthPrice.text.setString(to_string(int(25 * (game->globalProgress.characters[currCharacter].strengthUpgrades + 1))));
     strengthPrice.update(window);
 
+    // characters price
     currCharacterPrice.update(window);
     currCharacterPrice.text.setString(to_string(game->globalProgress.characters[currCharacter].price));
 }
 
 void StatePearlShop::eventHandling(sf::Event event, sf::RenderWindow &window) {
-    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
-        game->changeState(StateType::MainMenu);
+    if (event.type == sf::Event::KeyPressed){
+        switch (event.key.code) {
+            case sf::Keyboard::Escape:
+                game->changeState(StateType::MainMenu);
+                break;
+            case sf::Keyboard::Right:
+            case sf::Keyboard::D:
+                currCharacter = (currCharacter + 1) % size(crabsTextures);
+                reloadCharactersTextures();
+                loadStats();
+                break;
+            case sf::Keyboard::Left:
+            case sf::Keyboard::A:
+                currCharacter = (currCharacter - 1 + size(crabsTextures)) % size(crabsTextures);
+                reloadCharactersTextures();
+                loadStats();
+                break;
+        }
+    }
 
     else if (event.type == sf::Event::MouseButtonReleased) {
         // scroll characters from right to left
@@ -122,27 +148,27 @@ void StatePearlShop::loadStats() {
     int i;
     // health upgrades
     for (i = 0; i < floor(character.health + character.healthUpgrades / 2); i++)
-        units.push_back({statsUnitTexture, 0.025, {140.0f + 55 * i, 840}});
+        units.push_back({statsUnitTexture, 0.025, {140.0f + 55 * i, 870}});
     if (fmod(character.health + character.healthUpgrades / 2, 1) != 0)
-        units.push_back({statsHalfUnitTexture, 0.025, {140.0f + 55 * i - 12.5f, 840}});
+        units.push_back({statsHalfUnitTexture, 0.025, {140.0f + 55 * i - 12.5f, 870}});
 
     // speed upgrades
     for (i = 0; i < floor(character.speed + character.speedUpgrades / 2); i++)
-        units.push_back({statsUnitTexture, 0.025, {740.0f + 55 * i, 840}});
+        units.push_back({statsUnitTexture, 0.025, {740.0f + 55 * i, 870}});
     if (fmod(character.speed + character.speedUpgrades / 2, 1) != 0)
-        units.push_back({statsHalfUnitTexture, 0.025, {740.0f + 55 * i - 12.5f, 840}});
+        units.push_back({statsHalfUnitTexture, 0.025, {740.0f + 55 * i - 12.5f, 870}});
 
     // armor upgrades
     for (i = 0; i < floor(character.armor + character.armorUpgrades / 2); i++)
-        units.push_back({statsUnitTexture, 0.025, {140.0f + 55 * i, 960}});
+        units.push_back({statsUnitTexture, 0.025, {140.0f + 55 * i, 990}});
     if (fmod(character.armor + character.armorUpgrades / 2, 1) != 0)
-        units.push_back({statsHalfUnitTexture, 0.025, {140.0f + 55 * i - 12.5f, 960}});
+        units.push_back({statsHalfUnitTexture, 0.025, {140.0f + 55 * i - 12.5f, 990}});
 
     // strength upgrades
     for (i = 0; i < floor(character.strength + character.strengthUpgrades / 2); i++)
-        units.push_back({statsUnitTexture, 0.025, {740.0f + 55 * i, 960}});
+        units.push_back({statsUnitTexture, 0.025, {740.0f + 55 * i, 990}});
     if (fmod(character.strength + character.strengthUpgrades / 2, 1) != 0)
-        units.push_back({statsHalfUnitTexture, 0.025, {740.0f + 55 * i - 12.5f, 960}});
+        units.push_back({statsHalfUnitTexture, 0.025, {740.0f + 55 * i - 12.5f, 990}});
 }
 
 void StatePearlShop::draw(sf::RenderWindow &window) {

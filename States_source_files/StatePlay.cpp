@@ -41,6 +41,11 @@ void StatePlay::eventHandling(sf::Event event, sf::RenderWindow &window) {
 
 void StatePlay::update(int deltaTime, bool clicked, sf::RenderWindow &window) {
     game->map->update(deltaTime, clicked);
+    nextFloor.update(window);
+
+    sec += deltaTime / powf(10, 6);
+    int opacity = 192 + 64 * sinf(4 * sec);
+    nextFloor.text.setFillColor(sf::Color(255, 255, 255, opacity));
 }
 
 void StatePlay::draw(sf::RenderWindow &window) {
@@ -48,4 +53,7 @@ void StatePlay::draw(sf::RenderWindow &window) {
 
     mapIcon.draw(window);
     bestiaryIcon.draw(window);
+
+    if (game->map->floorCompleted())
+        nextFloor.draw(window);
 }
