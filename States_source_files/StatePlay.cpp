@@ -31,7 +31,7 @@ void StatePlay::eventHandling(sf::Event event, sf::RenderWindow &window) {
                 else if (game->map->floorCompleted()) {
                     auto tmp = std::make_unique<FloorMap>(game->player->characterIndex, game->map->mapType,
                                                            game->map->getLevel() + 1);
-                    if(tmp)
+                    if (tmp)
                         game->map = std::move(tmp);
                     game->player->setPosition(game->map->getRoomWidth() / 2, game->map->getRoomHeight() / 2);
                 }

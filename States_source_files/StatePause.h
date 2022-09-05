@@ -26,10 +26,10 @@ private:
     sf::Sprite background{backgroundTexture, sf::IntRect{0, 0, 1920, 1080}};
 
     // buttons
-    TextButton pauseTextBtn = {"Pause", game->font, 210, {1920 / 2, 150}};
-    TextButton resumeTextBtn = {"Resume", game->font, 150, {1920 / 2, 400}, true};
+    TextButton pauseTextBtn = {"Pause", game->font, 210, {1920 / 2, 175}};
+    TextButton resumeTextBtn = {"Resume", game->font, 150, {1920 / 2, 425}, true};
     TextButton exitTextBtn = {"Exit", game->font, 150, {1920 / 2, 600}, true};
-    TextButton settingsTextBtn = {"Settings", game->font, 150, {1920 / 2, 800}, true};
+    TextButton settingsTextBtn = {"Settings", game->font, 150, {1920 / 2, 775}, true};
 };
 
 #endif //ACRABSJOURNEY_STATEPAUSE_H
