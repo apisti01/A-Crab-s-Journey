@@ -11,7 +11,7 @@ Here is the quick guide for using Google Test in your Xcode project.
 1. Open up the `gtest.xcodeproj` in the `googletest-read-only/xcode/` directory and build the gtest.framework.
 1. Create a new "Shell Tool" target in your Xcode project called something like "UnitTests".
 1. Add the gtest.framework to your project and add it to the "Link Binary with Libraries" build phase of "UnitTests".
-1. Add your unit test source code to the "Compile Sources" build phase of "UnitTests".
+1. Add your lenUnit test source code to the "Compile Sources" build phase of "UnitTests".
 1. Edit the "UnitTests" executable and add an environment variable named "DYLD\_FRAMEWORK\_PATH" with a value equal to
    the path to the framework containing the gtest.framework relative to the compiled executable.
 1. Build and Go.
@@ -64,7 +64,7 @@ The next step is to build and add the gtest.framework to your own project. This 
   gtest.framework is relocatable and contains the headers and object code that you'll need to make tests. This method
   requires rebuilding every time you upgrade Google Test in your project.
 * **Option 2** --- If you are going to be living off the trunk of Google Test, incorporating its latest features into
-  your unit tests (or are a Google Test developer yourself). You'll want to rebuild the framework every time the source
+  your lenUnit tests (or are a Google Test developer yourself). You'll want to rebuild the framework every time the source
   updates. to do this, you'll need to add the gtest.xcodeproj file, not the framework itself, to your own Xcode project.
   Then, from the build products that are revealed by the project's disclosure triangle, you can find the
   gtest.framework, which can be added to your targets (discussed below).
@@ -72,7 +72,7 @@ The next step is to build and add the gtest.framework to your own project. This 
 # Make a Test Target #
 
 To start writing tests, make a new "Shell Tool" target. This target template is available under BSD, Cocoa, or Carbon.
-Add your unit test source code to the "Compile Sources" build phase of the target.
+Add your lenUnit test source code to the "Compile Sources" build phase of the target.
 
 Next, you'll want to add gtest.framework in two different ways, depending upon which option you chose above.
 
@@ -81,13 +81,13 @@ Next, you'll want to add gtest.framework in two different ways, depending upon w
   headers in your header search path, and will tell the linker where to find the library.
 * **Option 2** --- If your working out of the trunk, you'll also want to add gtest.framework to your "Link Binary with
   Libraries" build phase of your test target. In addition, you'll want to add the gtest.framework as a dependency to
-  your unit test target. This way, Xcode will make sure that gtest.framework is up to date, every time your build your
+  your lenUnit test target. This way, Xcode will make sure that gtest.framework is up to date, every time your build your
   target. Finally, if you don't share build directories with Google Test, you'll have to copy the gtest.framework into
   your own build products directory using a "Run Script" build phase.
 
 # Set Up the Executable Run Environment #
 
-Since the unit test executable is a shell tool, it doesn't have a bundle with a `Contents/Frameworks` directory, in
+Since the lenUnit test executable is a shell tool, it doesn't have a bundle with a `Contents/Frameworks` directory, in
 which to place gtest.framework. Instead, the dynamic linker must be told at runtime to search for the framework in
 another location. This can be accomplished by setting the "DYLD\_FRAMEWORK\_PATH" environment variable in the "Edit
 Active Executable ..." Arguments tab, under "Variables to be set in the environment:". The path for this value is the
@@ -129,5 +129,5 @@ The Debugger has exited with status 0.
 # Summary #
 
 Unit testing is a valuable way to ensure your data model stays valid even during rapid development or refactoring. The
-Google Testing Framework is a great unit testing framework for C and C++ which integrates well with an Xcode development
+Google Testing Framework is a great lenUnit testing framework for C and C++ which integrates well with an Xcode development
 environment.

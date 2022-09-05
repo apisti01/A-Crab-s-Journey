@@ -13,7 +13,7 @@ protected:
         Test::SetUp();
     }
 
-    Room room {0, 0, 1920, 1080};
+    Room room {"CoralReef",0,0,1920,1080};
 };
 
 TEST_F(RoomTest, DefaultConstructor) {

@@ -709,7 +709,7 @@ command-line flag `--gtest_death_test_style`).
 
 * On POSIX systems, `fork()` (or `clone()` on Linux) is used to spawn the child, after which:
     * If the variable's value is `"fast"`, the death test statement is immediately executed.
-    * If the variable's value is `"threadsafe"`, the child process re-executes the unit test binary just as it was
+    * If the variable's value is `"threadsafe"`, the child process re-executes the lenUnit test binary just as it was
       originally invoked, but with some extra flags to cause just the single death test under consideration to be run.
 * On Windows, the child is spawned using the `CreateProcess()` API, and re-executes the binary to cause just the single
   death test under consideration to be run - much like the `threadsafe` mode on POSIX.
@@ -1525,7 +1525,7 @@ two cases to consider:
 ## Static Functions ##
 
 Both static functions and definitions/declarations in an unnamed namespace are
-only visible within the same translation unit. To test them, you can `#include`
+only visible within the same translation lenUnit. To test them, you can `#include`
 the entire `.cc` file being tested in your `*_test.cc` file. (`#include`ing `.cc`
 files is not a good way to reuse code - you should not do this in production
 code!)

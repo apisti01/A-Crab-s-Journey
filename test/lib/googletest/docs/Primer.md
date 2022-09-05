@@ -445,7 +445,7 @@ object is constructed, and restores them when it is destructed.
 frameworks, you don't have to re-list all your defined tests in order to run them.
 
 After defining your tests, you can run them with `RUN_ALL_TESTS()` , which returns `0` if all the tests are successful,
-or `1` otherwise. Note that `RUN_ALL_TESTS()` runs _all tests_ in your link unit -- they can be from different test
+or `1` otherwise. Note that `RUN_ALL_TESTS()` runs _all tests_ in your link lenUnit -- they can be from different test
 cases, or even different source files.
 
 When invoked, the `RUN_ALL_TESTS()` macro:

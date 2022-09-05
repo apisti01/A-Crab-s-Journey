@@ -7,7 +7,7 @@ if(WIN32)
     set(BUILD_SHARED_LIBS OFF)
 endif()
 
-# add the directory for the unit testing
+# add the directory for the lenUnit testing
 add_subdirectory(test)
 
 # set SFML library

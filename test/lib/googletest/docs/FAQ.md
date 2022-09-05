@@ -824,9 +824,9 @@ lets you repeat your tests with different parameters, without defining it more t
 
 ## How do I test a file that defines main()? ##
 
-To test a `foo.cc` file, you need to compile and link it into your unit test
+To test a `foo.cc` file, you need to compile and link it into your lenUnit test
 program. However, when the file contains a definition for the `main()`
-function, it will clash with the `main()` of your unit test, and will result in
+function, it will clash with the `main()` of your lenUnit test, and will result in
 a build error.
 
 The right solution is to split it into three files:
@@ -838,7 +838,7 @@ The right solution is to split it into three files:
 Then `foo.cc` can be easily tested.
 
 If you are adding tests to an existing file and don't want an intrusive change
-like this, there is a hack: just include the entire `foo.cc` file in your unit
+like this, there is a hack: just include the entire `foo.cc` file in your lenUnit
 test. For example:
 
 ``` cpp
@@ -847,7 +847,7 @@ test. For example:
 // The headers section
 ...
 
-// Renames main() in foo.cc to make room for the unit test main()
+// Renames main() in foo.cc to make room for the lenUnit test main()
 #define main FooMain
 
 #include "a/b/foo.cc"
