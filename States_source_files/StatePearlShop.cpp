@@ -19,7 +19,7 @@ StatePearlShop::StatePearlShop(Game *game) : State(game) {
     crabsTextures.emplace_back();
     crabsTextures[3].loadFromFile("Game States/Pearl Shop/Asian Great Paddle.png");
 
-    // load the upgrade unit texture
+    // load the upgrade lenUnit texture
     statsUnitTexture.loadFromFile("Game States/Pearl Shop/Stats Unit.png");
     statsHalfUnitTexture.loadFromFile("Game States/Pearl Shop/Stats Half Unit.png");
 

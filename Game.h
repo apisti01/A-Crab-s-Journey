@@ -51,6 +51,8 @@ public:
     // Bestiary with the knowledge of all the enemy in the game
     Bestiary bestiary;
 
+    // class that keeps track of the progress in the game,
+    // used to prepare the single runs and to keep track of the upgrades bought
     GlobalProgress globalProgress;
 
     // the clock to get delta time to move and update the game
@@ -59,14 +61,12 @@ public:
     // font used in game
     sf::Font font;
 
-    // unit
-    float u = 120;
+    // length unit
+    float lenUnit = 120;
 
 private:
     // private constructor to only have one instance of the class (Singleton)
     Game();
-
-    // TODO all the increments and things to progress in the game
 
     // game instance
     static Game* gameInstance;

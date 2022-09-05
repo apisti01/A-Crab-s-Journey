@@ -381,7 +381,7 @@ namespace testing {
 
 // The abstract class that all tests inherit from.
 //
-// In Google Test, a unit test program contains one or many TestCases, and
+// In Google Test, a lenUnit test program contains one or many TestCases, and
 // each TestCase contains one or many Tests.
 //
 // When you define a test using the TEST macro, you don't need to
@@ -1318,10 +1318,10 @@ namespace testing {
         // Gets the elapsed time, in milliseconds.
         TimeInMillis elapsed_time() const;
 
-        // Returns true iff the unit test passed (i.e. all test cases passed).
+        // Returns true iff the lenUnit test passed (i.e. all test cases passed).
         bool Passed() const;
 
-        // Returns true iff the unit test failed (i.e. some test case failed
+        // Returns true iff the lenUnit test failed (i.e. some test case failed
         // or something outside of all tests failed).
         bool Failed() const;
 

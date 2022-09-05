@@ -72,7 +72,7 @@ namespace testing {
 // Declares the flags.
 //
 // We don't want the users to modify this flag in the code, but want
-// Google Test's own unit tests to be able to access it. Therefore we
+// Google Test's own lenUnit tests to be able to access it. Therefore we
 // declare it here as opposed to in gtest.h.
     GTEST_DECLARE_bool_(death_test_use_fork);
 
@@ -569,10 +569,10 @@ namespace testing {
             // Gets the elapsed time, in milliseconds.
             TimeInMillis elapsed_time() const { return elapsed_time_; }
 
-            // Returns true iff the unit test passed (i.e. all test cases passed).
+            // Returns true iff the lenUnit test passed (i.e. all test cases passed).
             bool Passed() const { return !Failed(); }
 
-            // Returns true iff the unit test failed (i.e. some test case failed
+            // Returns true iff the lenUnit test failed (i.e. some test case failed
             // or something outside of all tests failed).
             bool Failed() const {
                 return failed_test_case_count() > 0 || ad_hoc_test_result()->Failed();
@@ -641,7 +641,7 @@ namespace testing {
                                   Test::SetUpTestCaseFunc set_up_tc,
                                   Test::TearDownTestCaseFunc tear_down_tc);
 
-            // Adds a TestInfo to the unit test.
+            // Adds a TestInfo to the lenUnit test.
             //
             // Arguments:
             //

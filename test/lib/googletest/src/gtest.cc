@@ -2650,7 +2650,7 @@ static std::string* FormatSehExceptionMessage(DWORD exception_code,
 
         TestEventListener *repeater = UnitTest::GetInstance()->listeners().repeater();
 
-        // Notifies the unit test event listeners that a test is about to start.
+        // Notifies the lenUnit test event listeners that a test is about to start.
         repeater->OnTestStart(*this);
 
         const TimeInMillis start = internal::GetTimeInMillis();
@@ -2677,7 +2677,7 @@ static std::string* FormatSehExceptionMessage(DWORD exception_code,
 
         result_.set_elapsed_time(internal::GetTimeInMillis() - start);
 
-        // Notifies the unit test event listener that a test has just finished.
+        // Notifies the lenUnit test event listener that a test has just finished.
         repeater->OnTestEnd(*this);
 
         // Tells UnitTest to stop associating assertion results to this
@@ -3519,7 +3519,7 @@ void TestEventRepeater::Name(const Type& parameter) { \
             }
         }
 
-// Called after the unit test ends.
+// Called after the lenUnit test ends.
         void XmlUnitTestResultPrinter::OnTestIterationEnd(const UnitTest &unit_test,
                                                           int /*iteration*/) {
             FILE *xmlout = NULL;
@@ -4499,10 +4499,10 @@ void TestEventRepeater::Name(const Type& parameter) { \
         return impl()->elapsed_time();
     }
 
-// Returns true iff the unit test passed (i.e. all test cases passed).
+// Returns true iff the lenUnit test passed (i.e. all test cases passed).
     bool UnitTest::Passed() const { return impl()->Passed(); }
 
-// Returns true iff the unit test failed (i.e. some test case failed
+// Returns true iff the lenUnit test failed (i.e. some test case failed
 // or something outside of all tests failed).
     bool UnitTest::Failed() const { return impl()->Failed(); }
 
@@ -5076,7 +5076,7 @@ void TestEventRepeater::Name(const Type& parameter) { \
                     ShuffleTests();
                 }
 
-                // Tells the unit test event listeners that the tests are about to start.
+                // Tells the lenUnit test event listeners that the tests are about to start.
                 repeater->OnTestIterationStart(*parent_, i);
 
                 // Runs each test case if there is at least one test to run.
@@ -5104,7 +5104,7 @@ void TestEventRepeater::Name(const Type& parameter) { \
 
                 elapsed_time_ = GetTimeInMillis() - start;
 
-                // Tells the unit test event listener that the tests have just finished.
+                // Tells the lenUnit test event listener that the tests have just finished.
                 repeater->OnTestIterationEnd(*parent_, i);
 
                 // Gets the result and clears it.

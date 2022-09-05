@@ -3,7 +3,7 @@ If you're like us, you'd like to look at some Google Test sample code. The
 variety of Google Test features.
 
 * [Sample #1](../samples/sample1_unittest.cc) shows the basic steps of using Google Test to test C++ functions.
-* [Sample #2](../samples/sample2_unittest.cc) shows a more complex unit test for a class with multiple member functions.
+* [Sample #2](../samples/sample2_unittest.cc) shows a more complex lenUnit test for a class with multiple member functions.
 * [Sample #3](../samples/sample3_unittest.cc) uses a test fixture.
 * [Sample #4](../samples/sample4_unittest.cc) is another basic example of using Google Test.
 * [Sample #5](../samples/sample5_unittest.cc) teaches how to reuse a test fixture in multiple test cases by deriving

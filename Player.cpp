@@ -52,8 +52,8 @@ sf::Vector2f Player::getKeyboardInput(int deltaTime, FloorMap *floor) {
         deltaPos.x = deltaPos.x / norm;
         deltaPos.y = deltaPos.y / norm;
     }
-    deltaPos.x = deltaPos.x * speed * Game::getInstance()->u * static_cast<float>(deltaTime) / pow(10, 6);
-    deltaPos.y = deltaPos.y * speed * Game::getInstance()->u * static_cast<float>(deltaTime) / pow(10, 6);
+    deltaPos.x = deltaPos.x * speed * Game::getInstance()->lenUnit * static_cast<float>(deltaTime) / pow(10, 6);
+    deltaPos.y = deltaPos.y * speed * Game::getInstance()->lenUnit * static_cast<float>(deltaTime) / pow(10, 6);
 
     return deltaPos;
 }

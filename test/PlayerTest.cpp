@@ -20,7 +20,7 @@ protected:
     }
 
     Collider collider;
-    Player player {"", CrabSpecie::BrownCrab, sf::Texture(), collider, nullptr};
+    Player player {0,"test", CrabSpecie::BrownCrab, sf::Texture(),collider, nullptr, 10,10,10,10,10,10,10,10};
 };
 
 TEST_F(PlayerTest, DefaultConstructor) {
@@ -55,7 +55,7 @@ TEST_F(PlayerTest, BasicInteractions) {
 
 TEST_F(PlayerTest, Weapon) {
     // create new melee weapon
-    std::unique_ptr<Weapon> weapon1 = std::make_unique<MeleeWeapon>(10, "carlo");
+    std::unique_ptr<Weapon> weapon1 = std::make_unique<MeleeWeapon>(MeleeWeaponType::NaturalWeapon, "test");
 
     // insert the new weapon, tmp should be null cause player did not have any weapon before
     auto tmp = player.changeWeapon(std::move(weapon1));
@@ -66,7 +66,7 @@ TEST_F(PlayerTest, Weapon) {
     ASSERT_TRUE(player.getWeapon());
 
     // create a new ranged weapon
-    std::unique_ptr<Weapon> weapon2 = std::make_unique<RangedWeapon>(& sf::Texture());
+    std::unique_ptr<Weapon> weapon2 = std::make_unique<RangedWeapon>(RangedWeaponType::NaturalWeapon,"test");
 
     // put the new weapon on, tmp takes the old melee weapon
     tmp = player.changeWeapon(std::move(weapon2));

@@ -30,7 +30,7 @@ StateBestiary::StateBestiary(Game *game) : State(game) {
         }
     }
 
-    // load the upgrade unit texture
+    // load the upgrade lenUnit texture
     upgradeUnitTexture.loadFromFile("Game States/Pearl Shop/Upgrade Unit.png");
     upgradeHalfUnitTexture.loadFromFile("Game States/Pearl Shop/Upgrade Half Unit.png");
 
