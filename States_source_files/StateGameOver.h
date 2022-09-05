@@ -32,7 +32,7 @@ private:
     SpriteButton pearlsIcon = {"Game States/Pearl.png", 0.05, {1920 / 2 - 100, 450}};
     TextButton pearlsGained = {"0", game->font, 180, {1920 / 2 + 100, 450}};
 
-    int p = 46;
+    int p = 42;
     float s = 2 * log10f(p + 1);
     float t = 0;
 };

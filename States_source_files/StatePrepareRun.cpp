@@ -80,6 +80,7 @@ void StatePrepareRun::eventHandling(sf::Event event, sf::RenderWindow &window) {
 }
 
 void StatePrepareRun::draw(sf::RenderWindow &window) {
+    // draw background
     window.draw(background);
 
     currMap.draw(window);
@@ -97,6 +98,7 @@ void StatePrepareRun::draw(sf::RenderWindow &window) {
 
     backBtn.draw(window);
 }
+
 
 void StatePrepareRun::setupPlayer(int characterIndex) {
     auto character = Game::getInstance()->globalProgress.characters[characterIndex];
@@ -125,10 +127,16 @@ void StatePrepareRun::setupPlayer(int characterIndex) {
         characterSpecie = CrabSpecie::AsianGreatPaddle;
 
     // create the player
-    game->player = make_shared<Player>(characterIndex, character.name, characterSpecie, std::move(characterTexture), collider,
-                                 std::move(rangedWeapon), character.health, character.health, character.speed,
-                                 character.speed, character.armor, character.armor, character.strength,
-                                 character.strength);
+    game->player = make_shared<Player>(characterIndex, character.name, characterSpecie, std::move(characterTexture),
+                                       collider, std::move(rangedWeapon),
+                                       character.health + character.healthUpgrades / 2,
+                                       character.health + character.healthUpgrades / 2,
+                                       character.speed + character.speedUpgrades / 2,
+                                       character.speed + character.speedUpgrades / 2,
+                                       character.armor + character.armorUpgrades / 2,
+                                       character.armor + character.armorUpgrades / 2,
+                                       character.strength + character.strengthUpgrades / 2,
+                                       character.strength + character.strengthUpgrades / 2);
 
     // and set his position at the center of the map
     game->player->setPosition(1920 / 2, 1080 / 2);
