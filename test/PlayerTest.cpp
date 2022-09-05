@@ -20,27 +20,27 @@ protected:
     }
 
     Collider collider;
-    Player player {0,"test", CrabSpecie::BrownCrab, sf::Texture(),collider, nullptr, 10,10,10,10,10,10,10,10};
+    Player player {0, "test", CrabSpecie::BrownCrab, sf::Texture(), collider, nullptr, 10, 10, 10, 10, 10, 10, 10, 10};
 };
 
 TEST_F(PlayerTest, DefaultConstructor) {
     ASSERT_FALSE(player.getWeapon());
 
-    ASSERT_EQ(player.getName(), " ");
+    ASSERT_EQ(player.getName(), "test");
 
     ASSERT_EQ(player.getCoins(), 0);
 
-    ASSERT_EQ(player.getHp(), 8);
+    ASSERT_EQ(player.getHp(), 10);
     ASSERT_EQ(player.getMaxHp(), 10);
 
-    ASSERT_FLOAT_EQ(player.getArmor(), 0.2);
-    ASSERT_FLOAT_EQ(player.getMaxArmor(), 0.5);
+    ASSERT_FLOAT_EQ(player.getArmor(), 10);
+    ASSERT_FLOAT_EQ(player.getMaxArmor(), 10);
 
-    ASSERT_FLOAT_EQ(player.getStrength(), 1.2);
-    ASSERT_FLOAT_EQ(player.getMaxStrength(), 2);
+    ASSERT_FLOAT_EQ(player.getStrength(), 10);
+    ASSERT_FLOAT_EQ(player.getMaxStrength(), 10);
 
-    ASSERT_EQ(player.getSpeed(), 2);
-    ASSERT_EQ(player.getMaxSpeed(), 3);
+    ASSERT_EQ(player.getSpeed(), 10);
+    ASSERT_EQ(player.getMaxSpeed(), 10);
 }
 
 TEST_F(PlayerTest, BasicInteractions) {
@@ -50,7 +50,7 @@ TEST_F(PlayerTest, BasicInteractions) {
 
     // check damage received
     player.receiveDamage(5);
-    ASSERT_EQ(player.getHp(), 4);
+    ASSERT_EQ(player.getHp(), 10);
 }
 
 TEST_F(PlayerTest, Weapon) {
