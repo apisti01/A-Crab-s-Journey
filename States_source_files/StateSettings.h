@@ -29,7 +29,7 @@ private:
     TextButton languageText = {"Language", game->font, 150, {1920 / 4, 600}};
     TextButton soundText = {"Sound", game->font, 150, {1920 / 4, 750}};
 
-    SpriteButton backBtn = {"Game States/Back Icon.png", 0.2, {150, 150}, true};
+    SpriteButton backBtn = {"Assets/GameStates/Back Icon.png", 0.2, {150, 150}, true};
 };
 
 #endif //ACRABSJOURNEY_STATESETTINGS_H

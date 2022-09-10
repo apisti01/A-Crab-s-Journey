@@ -5,7 +5,7 @@
 #include "StateSettings.h"
 
 StateSettings::StateSettings(Game *game) : State(game) {
-    texture.loadFromFile("Game States/Pause Screen/Pause Screen Blank.png");
+    texture.loadFromFile("Assets/GameStates/PauseScreen/Background.png");
 }
 
 void StateSettings::update(int deltaTime, bool clicked, sf::RenderWindow &window) {

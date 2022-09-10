@@ -5,7 +5,7 @@
 #include "StateManageInventory.h"
 
 StateManageInventory::StateManageInventory(Game *game) : State(game) {
-    backgroundTexture.loadFromFile("Game States/Inventory/Inventory.png");
+    backgroundTexture.loadFromFile("Assets/GameStates/Inventory/Background.png");
 }
 
 void StateManageInventory::eventHandling(sf::Event event, sf::RenderWindow &window) {

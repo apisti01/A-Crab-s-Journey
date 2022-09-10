@@ -32,8 +32,8 @@ private:
     TextButton pearlShopTextBtn = {"Pearl Shop", game->font, 150, {1920 / 2, 750}, true};
     TextButton backToSurfaceTextBtn = {"Back to Surface", game->font, 150, {1920 / 2, 900}, true};
     // icon Buttons
-    SpriteButton creditsBtn = {"Game States/Main Menu/Credits Texture.png", 0.05, {150, 250}, true};
-    SpriteButton settingsBtn = {"Game States/Main Menu/Settings Texture.png", 0.05, {1920 - 150, 250}, true};
+    SpriteButton creditsBtn = {"Assets/GameStates/MainMenu/Credits Texture.png", 0.05, {150, 250}, true};
+    SpriteButton settingsBtn = {"Assets/GameStates/MainMenu/Settings Texture.png", 0.05, {1920 - 150, 250}, true};
 };
 
 

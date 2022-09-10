@@ -5,34 +5,34 @@
 #include "StateBestiary.h"
 
 StateBestiary::StateBestiary(Game *game) : State(game) {
-    backgroundTexture.loadFromFile("Game States/Bestiary/Bestiary.png");
+    backgroundTexture.loadFromFile("Assets/GameStates/Bestiary/Background.png");
 
     auto enemies = Game::getInstance()->bestiary.beasts;
     for (int i = 0; i < size(enemies); i++) {
         // load the enemies textures
         enemiesTextures.emplace_back();
         enemiesTextures[i].loadFromFile(
-                "GameCharacter/Enemy/" + enemies[i].type + "/" + enemies[i].name + "/Texture.png");
+                "Assets/GameCharacter/Enemy/" + enemies[i].type + "/" + enemies[i].name + "/Texture.png");
     }
 
     // load the enemy unknown texture
     int posX, posY;
-    enemyUnknownTexture.loadFromFile("GameCharacter/Enemy/Unknown Enemy.png");
+    enemyUnknownTexture.loadFromFile("Assets/GameCharacter/Enemy/Unknown Enemy.png");
     for (int y = 0; y < rows; y++) {
         for (int x = 0; x < cols; x++) {
-            SpriteButton enemy = {"GameCharacter/Enemy/AggressiveMelee/SeaTurtle/Texture.png", 0.09,
+            SpriteButton enemy = {"Assets/GameCharacter/Enemy/AggressiveMelee/SeaTurtle/Texture.png", 0.09,
                             {210.0f + x * 240, 390.0f + y * 240}, false};
             enemiesBtns.push_back(enemy);
 
-            SpriteButton enemyUnknown = {"GameCharacter/Enemy/Unknown Enemy.png", 0.09,
+            SpriteButton enemyUnknown = {"Assets/GameCharacter/Enemy/Unknown Enemy.png", 0.09,
                                    {210.0f + x * 240, 390.0f + y * 240}, false};
             enemiesUnknowns.push_back(enemyUnknown);
         }
     }
 
     // load the upgrade lenUnit texture
-    upgradeUnitTexture.loadFromFile("Game States/Pearl Shop/Upgrade Unit.png");
-    upgradeHalfUnitTexture.loadFromFile("Game States/Pearl Shop/Upgrade Half Unit.png");
+    upgradeUnitTexture.loadFromFile("Assets/GameStates/PearlShop/Upgrade Unit.png");
+    upgradeHalfUnitTexture.loadFromFile("Assets/GameStates/PearlShop/Upgrade Half Unit.png");
 
     loadStats();
 }

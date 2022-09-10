@@ -5,7 +5,7 @@
 #include "StateTitleScreen.h"
 
 StateTitleScreen::StateTitleScreen(Game* game): State(game) {
-    backgroundTexture.loadFromFile("Game States/Main Menu/Main Menu Blank.png");
+    backgroundTexture.loadFromFile("Assets/GameStates/MainMenu/Background.png");
 }
 
 void StateTitleScreen::update(int deltaTime, bool clicked, sf::RenderWindow &window) {

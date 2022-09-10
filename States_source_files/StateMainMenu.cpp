@@ -5,7 +5,7 @@
 #include "StateMainMenu.h"
 
 StateMainMenu::StateMainMenu(Game *game) : State(game) {
-    backgroundTexture.loadFromFile("Game States/Main Menu/Main Menu Blank.png");
+    backgroundTexture.loadFromFile("Assets/GameStates/MainMenu/Background.png");
 }
 
 void StateMainMenu::update(int deltaTime, bool clicked, sf::RenderWindow &window) {

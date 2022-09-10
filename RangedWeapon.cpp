@@ -12,7 +12,7 @@ RangedWeapon::RangedWeapon(RangedWeaponType type, std::string name, float damage
     switch (type) {
         case RangedWeaponType::NaturalWeapon:
         case RangedWeaponType::Rock:
-            bulletTexture.loadFromFile("others/bullet_rock.png"); // FIXME to complete
+            bulletTexture.loadFromFile("Assets/Object/Weapon/RangedWeapon/Natural/Bullet Texture.png"); // FIXME to complete
             break;
     }
 }

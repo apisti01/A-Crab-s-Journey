@@ -4,24 +4,19 @@
 
 #include "StatePearlShop.h"
 
-#include <iostream>
-
 StatePearlShop::StatePearlShop(Game *game) : State(game) {
-    texture.loadFromFile("Game States/Pearl Shop/Pearl Shop.png");
+    texture.loadFromFile("Assets/GameStates/PearlShop/Background.png");
 
     // load the characters textures
-    crabsTextures.emplace_back();
-    crabsTextures[0].loadFromFile("Game States/Pearl Shop/Brown Crab.png");
-    crabsTextures.emplace_back();
-    crabsTextures[1].loadFromFile("Game States/Pearl Shop/Fiddler Crab.png");
-    crabsTextures.emplace_back();
-    crabsTextures[2].loadFromFile("Game States/Pearl Shop/Triangle Tanner Crab.png");
-    crabsTextures.emplace_back();
-    crabsTextures[3].loadFromFile("Game States/Pearl Shop/Asian Great Paddle.png");
+    auto characters = Game::getInstance()->globalProgress.characters;
+    for (int i = 0; i < size(characters); i++) {
+        crabsTextures.emplace_back();
+        crabsTextures[i].loadFromFile("Assets/GameStates/PearlShop/" + characters[i].name + ".png");
+    }
 
     // load the upgrade lenUnit texture
-    statsUnitTexture.loadFromFile("Game States/Pearl Shop/Stats Unit.png");
-    statsHalfUnitTexture.loadFromFile("Game States/Pearl Shop/Stats Half Unit.png");
+    statsUnitTexture.loadFromFile("Assets/GameStates/PearlShop/Stats Unit.png");
+    statsHalfUnitTexture.loadFromFile("Assets/GameStates/PearlShop/Stats Half Unit.png");
 
     loadStats();
 }

@@ -2,8 +2,6 @@
 // Created by apisti01 on 10/07/22.
 //
 
-#include <iostream>
-
 #include "AnimatedSprite.h"
 
 AnimatedSprite::AnimatedSprite(const sf::Texture& texture, sf::Vector2u imageCount, float scl) : scl(scl) {

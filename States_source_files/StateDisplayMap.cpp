@@ -5,8 +5,8 @@
 #include "StateDisplayMap.h"
 
 StateDisplayMap::StateDisplayMap(Game *game) : State(game) {
-    backgroundTexture.loadFromFile("Game States/DisplayMap/" + game->map->mapType + "/Background Texture.png");
-    roomTexture.loadFromFile("Game States/DisplayMap/Room Texture.png");
+    backgroundTexture.loadFromFile("Assets/GameStates/DisplayMap/" + game->map->mapType + "/Background Texture.png");
+    roomTexture.loadFromFile("Assets/GameStates/DisplayMap/Room Texture.png");
 
     sf::Sprite room;
     sf::Vector2f pos;

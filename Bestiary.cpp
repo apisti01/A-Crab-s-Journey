@@ -14,7 +14,7 @@ Bestiary::Bestiary() {
     // initialize by load from file
     std::ifstream file;
 
-    file.open("Enemy_source_files/Enemy Data.txt");
+    file.open("Data/Enemies.txt");
 
     // if file is not found it has to be created
     if (!file.is_open())
@@ -27,7 +27,7 @@ Bestiary::Bestiary() {
 }
 
 void Bestiary::createFile() {
-    std::ofstream file("Enemy_source_files/Enemy Data.txt");
+    std::ofstream file("Data/Enemies.txt");
 
     // enemies
     file << "00 0 0 Squid ChasingRanged 6 4 3 4 360 1 CoralReef" << std::endl;
@@ -39,7 +39,7 @@ void Bestiary::createFile() {
 }
 
 void Bestiary::readFile() {
-    std::ifstream file("Enemy_source_files/Enemy Data.txt");
+    std::ifstream file("Data/Enemies.txt");
     std::string habitat, line;
     Beast beast;
 
@@ -96,7 +96,7 @@ void Bestiary::update(Enemy *enemy) {
 
 void Bestiary::updateTxtFile() {
     // create a new file that substitute the old one
-    std::ofstream file("Enemy_source_files/Enemy Data.txt");
+    std::ofstream file("Data/Enemies.txt");
 
     // load all enemies with their attributes
     for (auto &beast : beasts) {

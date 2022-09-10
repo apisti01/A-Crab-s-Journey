@@ -5,27 +5,27 @@
 #include "StatePrepareRun.h"
 
 StatePrepareRun::StatePrepareRun(Game *game) : State(game) {
-    backgroundTexture.loadFromFile("Game States/Main Menu/Main Menu Blank.png");
+    backgroundTexture.loadFromFile("Assets/GameStates/MainMenu/Background.png");
 
     sf::Texture texture;
     // load the characters textures
     /*
     auto characters = game->globalProgress.characters;
     for (int i = 0; i < size(characters); i++) {
-        texture.loadFromFile("Game States/Prepare Run/" + characters[i].name + ".png");
+        texture.loadFromFile("GameStates/PrepareRun/" + characters[i].name + ".png");
         charactersTextures.push_back(texture);
     }*/
-    texture.loadFromFile("Game States/Prepare Run/BrownCrab.png");
+    texture.loadFromFile("Assets/GameStates/PrepareRun/BrownCrab.png");
     charactersTextures.push_back(texture);
 
     // and the maps textures
     /*
     auto habitats = game->globalProgress.habitats;
     for (int i = 0; i < size(habitats); i++) {
-        texture.loadFromFile("Game States/Prepare Run/" + habitats[i].name + ".png");
+        texture.loadFromFile("GameStates/PrepareRun/" + habitats[i].name + ".png");
         mapsTextures.push_back(texture);
     }*/
-    texture.loadFromFile("Game States/Prepare Run/CoralReef.png");
+    texture.loadFromFile("Assets/GameStates/PrepareRun/CoralReef.png");
     mapsTextures.push_back(texture);
 }
 
@@ -104,7 +104,7 @@ void StatePrepareRun::setupPlayer(int characterIndex) {
     auto character = Game::getInstance()->globalProgress.characters[characterIndex];
     // load brown crab's texture for movement animation
     sf::Texture characterTexture;
-    characterTexture.loadFromFile("GameCharacter/Player/" + character.name + "/Animations/Texture.png");
+    characterTexture.loadFromFile("Assets/GameCharacter/Player/" + character.name + "/Animations/Texture.png");
 
     // Ranged weapon
     std::unique_ptr<Weapon> rangedWeapon = std::make_unique<RangedWeapon>(RangedWeaponType::Rock, "Rock", 20);

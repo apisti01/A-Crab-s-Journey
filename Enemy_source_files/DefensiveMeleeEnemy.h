@@ -7,9 +7,6 @@
 
 #include "Enemy.h"
 
-/*
- * stays still in place until the player moves too close, then it chases and attacks him until the end of its range, then it returns to its original position
- */
 class DefensiveMeleeEnemy : public Enemy {
 public:
     DefensiveMeleeEnemy(int id, std::string name, const sf::Texture &texture, Collider collider, std::unique_ptr<Weapon> weapon,

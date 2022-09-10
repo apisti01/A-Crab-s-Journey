@@ -3,24 +3,20 @@ project(ACrabsJourney)
 
 set(CMAKE_CXX_STANDARD 20)
 
-if(WIN32)
+if (WIN32)
     set(BUILD_SHARED_LIBS OFF)
 endif()
-
-# add the directory for the lenUnit testing
-add_subdirectory(test)
 
 # set SFML library
 if(WIN32)
     # for Windows
-    include(FetchContent)
-    FetchContent_Declare(SFML
-        GIT_REPOSITORY "https://github.com/SFML/SFML.git"
-        GIT_TAG 2.5.1)
-    FetchContent_MakeAvailable(SFML)
+    set(SFML_STATIC_LIBRARIES TRUE)
+    set(SFML_DIR SFML/lib/cmake/SFML)
+    find_package(SFML COMPONENTS system window graphics audio REQUIRED)
+    include_directories(SFML/include)
 else()
     # for other OS
-    set(SFML_STATIC_LIBRARIES, TRUE)
+    set(SFML_STATIC_LIBRARIES TRUE)
     find_package(SFML 2.5 COMPONENTS system window graphics audio REQUIRED)
 endif()
 
@@ -34,7 +30,8 @@ set(STATES_SOURCE_FILES States_source_files/State.cpp States_source_files/State.
         States_source_files/StateSettings.cpp States_source_files/StateSettings.h
         States_source_files/StateManageInventory.cpp States_source_files/StateManageInventory.h
         States_source_files/StateBestiary.cpp States_source_files/StateBestiary.h
-        States_source_files/StatePrepareRun.cpp States_source_files/StatePrepareRun.h States_source_files/StateGameOver.cpp States_source_files/StateGameOver.h)
+        States_source_files/StatePrepareRun.cpp States_source_files/StatePrepareRun.h
+        States_source_files/StateGameOver.cpp States_source_files/StateGameOver.h)
 
 # group the source files in the directory dedicated to the enemies
 set(ENEMY_SOURCE_FILES Enemy_source_files/Enemy.cpp Enemy_source_files/Enemy.h Enemy_source_files/StaticRangedEnemy.cpp
@@ -44,15 +41,17 @@ set(ENEMY_SOURCE_FILES Enemy_source_files/Enemy.cpp Enemy_source_files/Enemy.h E
         Enemy_source_files/ChasingRangedEnemy.h Enemy_source_files/EnemyFactory.cpp Enemy_source_files/EnemyFactory.h)
 
 # core library
-add_library(core ${STATES_SOURCE_FILES} ${ENEMY_SOURCE_FILES} AnimatedSprite.cpp AnimatedSprite.h Bullet.cpp Bullet.h
+add_library(core STATIC ${STATES_SOURCE_FILES} ${ENEMY_SOURCE_FILES} AnimatedSprite.cpp AnimatedSprite.h Bullet.cpp Bullet.h
         Consumable.cpp Consumable.h FloorMap.cpp FloorMap.h GameCharacter.cpp GameCharacter.h Item.cpp Item.h
         MeleeWeapon.cpp MeleeWeapon.h Obstacle.cpp Obstacle.h Player.cpp Player.h RangedWeapon.cpp RangedWeapon.h
         Room.cpp Room.h Weapon.cpp Weapon.h Wearable.cpp Wearable.h Game.cpp Game.h Collider.cpp Collider.h Observer.cpp
         Observer.h Bestiary.cpp Bestiary.h GlobalProgress.cpp GlobalProgress.h Button.cpp Button.h SpriteButton.cpp
         SpriteButton.h TextButton.cpp TextButton.h)
 
-target_link_libraries(core PUBLIC sfml-graphics sfml-audio)
+target_link_libraries(core PUBLIC sfml-system sfml-window sfml-graphics sfml-audio)
+set(CMAKE_EXE_LINKER_FLAGS "-static")
 
 # executable file
-add_executable(ACrabsJourney main.cpp)
-target_link_libraries(ACrabsJourney PRIVATE core)
+set(APP_ICON "Assets/Icon.rc")
+add_executable(ACrabsJourney main.cpp ${APP_ICON})
+target_link_libraries(ACrabsJourney PUBLIC core)

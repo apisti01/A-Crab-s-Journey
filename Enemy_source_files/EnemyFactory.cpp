@@ -45,7 +45,7 @@ unique_ptr<Enemy> EnemyFactory::selectRandomEnemy(const std::string& mapType, in
     if (std::count(enemy.habitats.begin(), enemy.habitats.end(), mapType)) {
         // the sprite of the enemy instead has to be created, loaded and passed here
         sf::Texture enemyTexture;
-        enemyTexture.loadFromFile("GameCharacter/Enemy/" + enemy.type + "/" + enemy.name + "/Texture.png");
+        enemyTexture.loadFromFile("Assets/GameCharacter/Enemy/" + enemy.type + "/" + enemy.name + "/Texture.png");
 
         // create the enemy collider
         Collider enemyCollider(float(1920) / 2, float(1080) / 2, enemyTexture.getSize().x * 0.06,

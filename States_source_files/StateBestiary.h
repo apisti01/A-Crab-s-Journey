@@ -39,17 +39,18 @@ private:
     std::vector<SpriteButton> enemiesBtns;
     std::vector<SpriteButton> enemiesUnknowns;
 
-    SpriteButton currEnemyBtn = {"GameCharacter/Enemy/AggressiveMelee/SeaTurtle/Texture.png", 0.21, {1110, 630}};
+    SpriteButton currEnemyBtn = {"Assets/GameCharacter/Enemy/AggressiveMelee/SeaTurtle/Texture.png", 0.21, {1110, 630}};
 
     // upgrade bars and stats icons
     sf::Texture upgradeUnitTexture, upgradeHalfUnitTexture;
     std::vector<SpriteButton> units;
-    SpriteButton healthIcon = {"GameCharacter/Player/Stats Icons/Health.png", 0.05, {1410, 450}};
-    SpriteButton speedIcon = {"GameCharacter/Player/Stats Icons/Speed.png", 0.05, {1410, 570}};
-    SpriteButton armorIcon = {"GameCharacter/Player/Stats Icons/Armor.png", 0.05, {1410, 690}};
-    SpriteButton strengthIcon = {"GameCharacter/Player/Stats Icons/Strength.png", 0.05, {1410, 810}};
+    SpriteButton healthIcon = {"Assets/GameCharacter/Player/Stats Icons/Health.png", 0.05, {1410, 450}};
+    SpriteButton speedIcon = {"Assets/GameCharacter/Player/Stats Icons/Speed.png", 0.05, {1410, 570}};
+    SpriteButton armorIcon = {"Assets/GameCharacter/Player/Stats Icons/Armor.png", 0.05, {1410, 690}};
+    SpriteButton strengthIcon = {"Assets/GameCharacter/Player/Stats Icons/Strength.png", 0.05, {1410, 810}};
 
-    SpriteButton backBtn = {"Game States/Back Icon.png", 0.2, {150, 150}, true};
+    SpriteButton backBtn = {"Assets/GameStates/Back Icon.png", 0.2, {150, 150}, true};
 };
+
 
 #endif //ACRABSJOURNEY_STATEBESTIARY_H

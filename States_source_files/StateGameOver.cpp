@@ -5,7 +5,7 @@
 #include "StateGameOver.h"
 
 StateGameOver::StateGameOver(Game *game) : State(game) {
-    backgroundTexture.loadFromFile("Game States/Main Menu/Main Menu Blank.png");
+    backgroundTexture.loadFromFile("Assets/GameStates/MainMenu/Background.png");
 }
 
 void StateGameOver::eventHandling(sf::Event event, sf::RenderWindow &window) {

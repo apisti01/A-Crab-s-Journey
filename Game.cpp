@@ -29,11 +29,29 @@ Game* Game::getInstance() {
 Game::Game() : currentState(make_unique<StateTitleScreen>(this)), bestiary(Bestiary()), globalProgress(GlobalProgress()) {
     // load font
     sf::Font Rancho;
-    if (!Rancho.loadFromFile("Font/Rancho/Rancho.ttf")) {
+    if (!Rancho.loadFromFile("Assets/Font/Rancho/Rancho.ttf")) {
         cout << "font non caricato" << endl;
         system("pause");
     }
     font = Rancho;
+}
+
+void Game::getMeasures(sf::RenderWindow &window) {
+    float aspectRatio = float(window.getSize().x) / float(window.getSize().y);
+
+    if (is_equal(aspectRatio, 16.0 / 9.0) ||
+        is_equal(aspectRatio, 16.0 / 10.0) ||
+        is_equal(aspectRatio, 4.0 / 3.0))
+        lenUnit = floor(window.getSize().x / 16.0);
+    else if (is_equal(aspectRatio, 5.0 / 4.0))
+        lenUnit = floor(window.getSize().x / 15.0);
+    else if (is_equal(aspectRatio, 21.0 / 9.0))
+        lenUnit = floor(window.getSize().x / 21.0);
+
+    cout << lenUnit << endl;
+
+    width = window.getSize().x;
+    height = window.getSize().y;
 }
 
 void Game::changeState(StateType type) {
@@ -83,4 +101,8 @@ void Game::changeState(StateType type) {
 
     // the current state became the one just created, deleting the old one
     currentState = std::move(tmp);
+}
+
+bool Game::is_equal(float a, float b) {
+    return fabs(a - b) <= 0.01;
 }

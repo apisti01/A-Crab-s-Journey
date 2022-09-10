@@ -27,9 +27,9 @@ private:
 
     // text buttons
     TextButton titleText = {"Game Over", game->font, 240, {1920 / 2, 175}};
-    TextButton returnTextBtn = {"Return to Main Menu", game->font, 180, {1920 / 2, 1080 - 150}, true};
+    TextButton returnTextBtn = {"Return to MainMenu", game->font, 180, {1920 / 2, 1080 - 150}, true};
 
-    SpriteButton pearlsIcon = {"Game States/Pearl.png", 0.05, {1920 / 2 - 100, 450}};
+    SpriteButton pearlsIcon = {"Assets/GameStates/Pearl.png", 0.05, {1920 / 2 - 100, 450}};
     TextButton pearlsGained = {"0", game->font, 180, {1920 / 2 + 100, 450}};
 
     int p = 42;

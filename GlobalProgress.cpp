@@ -13,7 +13,7 @@ GlobalProgress::GlobalProgress() {
     // initialize by load from file
     std::ifstream file;
 
-    file.open("Global Progress.txt");
+    file.open("Data/Global Progress.txt");
 
     // if file is not found it has to be created
     if (!file.is_open())
@@ -26,7 +26,7 @@ GlobalProgress::GlobalProgress() {
 }
 
 void GlobalProgress::createFile() {
-    std::ofstream file("Global Progress.txt");
+    std::ofstream file("Data/Global Progress.txt");
 
     // characters
     file << "1 BrownCrab 5 3 1 3 0 0 0 0 0" << std::endl;
@@ -55,7 +55,7 @@ void GlobalProgress::createFile() {
 }
 
 void GlobalProgress::readFile() {
-    std::ifstream file("Global Progress.txt");
+    std::ifstream file("Data/Global Progress.txt");
     std::string line;
     Character character;
     Habitat habitat;
@@ -107,7 +107,7 @@ void GlobalProgress::unlockMap(int currMap) {
 }
 
 void GlobalProgress::updateTxtFile() {
-    std::ofstream file("Global Progress.txt");
+    std::ofstream file("Data/Global Progress.txt");
 
     // load all characters with their attributes
     for (auto &character: characters)

@@ -13,13 +13,7 @@ int main() {
 
     // load window
     sf::RenderWindow window(sf::VideoMode(), "A Crab's Journey", sf::Style::Fullscreen);
-
-    /*
-    // load and set Game's Icon
-    sf::Image icon;
-    icon.loadFromFile("Icon.png");
-    window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
-     */
+    cout << window.getSize().x << " x " << window.getSize().y << endl;
 
     // creation of the event
     sf::Event event;
@@ -27,7 +21,10 @@ int main() {
     // create the game
     auto game = Game::getInstance();
 
-    bool clicked = false;
+    // determine the aspect ratio of the screen the game is been playing on
+    game->getMeasures(window);
+
+    bool clicked;
 
     // Game loop
     while (window.isOpen()) {

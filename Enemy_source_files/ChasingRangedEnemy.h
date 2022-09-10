@@ -7,10 +7,6 @@
 
 #include "Enemy.h"
 
-/*
- * if the player comes too close the enemy will chase him and attack him from distance, when the player will escape from the range of the enemy
- * it will stop and remain in the place it is
- */
 class ChasingRangedEnemy : public Enemy{
 public:
     ChasingRangedEnemy(int id, std::string name, const sf::Texture& texture, Collider collider, std::unique_ptr<Weapon> weapon,

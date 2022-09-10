@@ -6,9 +6,7 @@
 #define MAIN_CPP_AGGRESSIVEMELEEENEMY_H
 
 #include "Enemy.h"
-/*
- * search for the player, chase him and attack him at will
- */
+
 class AggressiveMeleeEnemy : public Enemy{
 public:
     AggressiveMeleeEnemy(int id, std::string name, const sf::Texture& texture, Collider collider, std::unique_ptr<Weapon> weapon,

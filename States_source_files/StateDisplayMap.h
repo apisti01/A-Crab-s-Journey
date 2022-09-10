@@ -31,7 +31,7 @@ private:
     TextButton mapText = {"Map", game->font, 210, {1920 / 2, 150}};
     TextButton levelText = {"Floor: " + to_string(game->map->getLevel()), game->font, 120, {150, 1080 - 150}, false, "bottomLeft"};
 
-    SpriteButton backBtn = {"Game States/Back Icon.png", 0.2, {150, 150}, true};
+    SpriteButton backBtn = {"Assets/GameStates/Back Icon.png", 0.2, {150, 150}, true};
 };
 
 #endif //ACRABSJOURNEY_STATEDISPLAYMAP_H

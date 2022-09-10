@@ -5,7 +5,7 @@
 #include "StatePause.h"
 
 StatePause::StatePause(Game *game) : State(game) {
-    backgroundTexture.loadFromFile("Game States/Pause Screen/Pause Screen Blank.png");
+    backgroundTexture.loadFromFile("Assets/GameStates/PauseScreen/Background.png");
 }
 
 void StatePause::update(int deltaTime, bool clicked, sf::RenderWindow &window) {

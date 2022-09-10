@@ -6,6 +6,8 @@
 #define MAIN_CPP_GAME_H
 
 #include <memory>
+#include <cfloat>
+#include <cassert>
 
 #include "Player.h"
 #include "FloorMap.h"
@@ -39,8 +41,11 @@ public:
         currentState->draw(window);
     }
 
-    // restart the clock
-    void restartClock() { clock.restart();}
+    void restartClock() {
+        clock.restart();
+    }
+
+    void getMeasures(sf::RenderWindow &window);
 
     // pointer to the player, shared with the map
     std::shared_ptr<Player> player = nullptr;
@@ -61,8 +66,8 @@ public:
     // font used in game
     sf::Font font;
 
-    // length unit
-    float lenUnit = 120;
+    // screen and game measures
+    int width, height, lenUnit;
 
 private:
     // private constructor to only have one instance of the class (Singleton)
@@ -70,6 +75,8 @@ private:
 
     // game instance
     static Game* gameInstance;
+
+    bool is_equal(float a, float b);
 
     // Current state of the game
     std::unique_ptr<State> currentState;

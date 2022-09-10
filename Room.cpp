@@ -12,7 +12,7 @@ Room::Room(std::string mapType, int posX, int posY, int width, int height) : pos
     doors = {-1, -1, -1, -1};
 
     // load coral reef texture as room background
-    backgroundTexture.loadFromFile("Map/" + mapType + "/Background Texture.png");
+    backgroundTexture.loadFromFile("Assets/Map/" + mapType + "/Background Texture.png");
 };
 
 void Room::generateWalls() {
@@ -53,7 +53,7 @@ void Room::generateObstacles() {
 
         // prepare collider and texture
         Collider collider(pos.x, pos.y, 120, 120);
-        obstacleTexture.loadFromFile("Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
+        obstacleTexture.loadFromFile("Assets/Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
 
         // add the obstacle just created to the list
         obstacleList.push_back(*new Obstacle(obstacleTexture, collider, pos.x, pos.y, 120, 120));
@@ -129,22 +129,22 @@ void Room::loadDoors() {
     std::string obstacleTypes[] = {"algae 1", "algae 2", "bottle 1", "bottle 2", "flipflop", "rock 1", "rock 2"};
 
     if (doors[0] == -1) {
-        obstacleTexture.loadFromFile("Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
+        obstacleTexture.loadFromFile("Assets/Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
         Collider collider(120 * 8, 60, 120, 120);
         obstacleList.emplace_back(obstacleTexture, collider, 120 * 8, 60, 120, 120);
     }
     if (doors[1] == -1) {
-        obstacleTexture.loadFromFile("Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
+        obstacleTexture.loadFromFile("Assets/Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
         Collider collider(width - 60, 120 * 4.5, 120, 120);
         obstacleList.emplace_back(obstacleTexture, collider, width - 60, 120 * 4.5, 120, 120);
     }
     if (doors[2] == -1) {
-        obstacleTexture.loadFromFile("Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
+        obstacleTexture.loadFromFile("Assets/Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
         Collider collider(120 * 8, height - 60, 120, 120);
         obstacleList.emplace_back(obstacleTexture, collider, 120 * 8, height - 60, 120, 120);
     }
     if (doors[3] == -1) {
-        obstacleTexture.loadFromFile("Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
+        obstacleTexture.loadFromFile("Assets/Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
         Collider collider(60, 120 * 4.5, 120, 120);
         obstacleList.emplace_back(obstacleTexture, collider, 60, 120 * 4.5, 120, 120);
     }
@@ -195,7 +195,7 @@ void Room::closeDoors() {
     // if the door is open
     if (doors[0] != -1) {
         // create an obstacle and put it there to close it
-        obstacleTexture.loadFromFile("Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
+        obstacleTexture.loadFromFile("Assets/Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
         Collider collider(120 * 8, height - 60, 120, 120);
         obstacleList.emplace_back(obstacleTexture, collider, 120 * 8, 60, 120, 120);
     }
@@ -203,7 +203,7 @@ void Room::closeDoors() {
     // if the door is open
     if (doors[1] != -1) {
         // create an obstacle and put it there to close it
-        obstacleTexture.loadFromFile("Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
+        obstacleTexture.loadFromFile("Assets/Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
         Collider collider(120 * 8, height - 60, 120, 120);
         obstacleList.emplace_back(obstacleTexture, collider, width - 60, 120 * 4.5, 120, 120);
     }
@@ -211,7 +211,7 @@ void Room::closeDoors() {
     // if the door is open
     if (doors[2] != -1) {
         // create an obstacle and put it there to close it
-        obstacleTexture.loadFromFile("Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
+        obstacleTexture.loadFromFile("Assets/Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
         Collider collider(120 * 8, height - 60, 120, 120);
         obstacleList.emplace_back(obstacleTexture, collider, 120 * 8, height - 60, 120, 120);
     }
@@ -219,7 +219,7 @@ void Room::closeDoors() {
     // if the door is open
     if (doors[3] != -1) {
         // create an obstacle and put it there to close it
-        obstacleTexture.loadFromFile("Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
+        obstacleTexture.loadFromFile("Assets/Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
         Collider collider(120 * 8, height - 60, 120, 120);
         obstacleList.emplace_back(obstacleTexture, collider, 60, 120 * 4.5, 120, 120);
     }

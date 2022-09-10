@@ -5,7 +5,7 @@
 #include "StateShop.h"
 
 StateShop::StateShop(Game *game) : State(game) {
-    texture.loadFromFile("Game States/Shop/Shop.png");
+    texture.loadFromFile("Assets/GameStates/Shop/Background.png");
     backgroundSprite = { texture, sf::IntRect(0, 0, 1920, 1080) };
 }
 
