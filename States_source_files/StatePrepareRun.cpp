@@ -5,8 +5,6 @@
 #include "StatePrepareRun.h"
 
 StatePrepareRun::StatePrepareRun(Game *game) : State(game) {
-    backgroundTexture.loadFromFile("Assets/GameStates/MainMenu/Background.png");
-
     sf::Texture texture;
     // load the characters textures
     /*
@@ -81,7 +79,7 @@ void StatePrepareRun::eventHandling(sf::Event event, sf::RenderWindow &window) {
 
 void StatePrepareRun::draw(sf::RenderWindow &window) {
     // draw background
-    window.draw(background);
+    background.draw(window);
 
     currMap.draw(window);
     nextMapBtn.draw(window);
@@ -112,9 +110,7 @@ void StatePrepareRun::setupPlayer(int characterIndex) {
     // std::unique_ptr<Weapon> weapon = std::make_unique<MeleeWeapon>(10, "player", ItemRarity::Common, 50);
 
     // and a collider
-    Collider collider(float(1920) / 2, float(1080) / 2,
-                      characterTexture.getSize().x / 6 * 0.4 * 0.6,
-                      characterTexture.getSize().y / 3 * 0.4 * 0.8);
+    Collider collider({.50f, .50f}, {1.0f, 1.0f});
 
     CrabSpecie characterSpecie;
     if (character.name == "BrownCrab")
@@ -136,8 +132,9 @@ void StatePrepareRun::setupPlayer(int characterIndex) {
                                        character.armor + character.armorUpgrades / 2,
                                        character.armor + character.armorUpgrades / 2,
                                        character.strength + character.strengthUpgrades / 2,
-                                       character.strength + character.strengthUpgrades / 2);
+                                       character.strength + character.strengthUpgrades / 2,
+                                       1.0f);
 
     // and set his position at the center of the map
-    game->player->setPosition(1920 / 2, 1080 / 2);
+    game->player->setPosition({game->getWidth() / 2, game->getHeight() / 2});
 }

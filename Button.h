@@ -7,6 +7,8 @@
 
 #include <SFML/Graphics.hpp>
 
+class Game;
+
 class Button {
 public:
     Button() = default;

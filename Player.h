@@ -28,11 +28,11 @@ public:
     // Constructor and Destructor
     Player(int characterIndex, std::string name, CrabSpecie crabSpecie, const sf::Texture &texture, Collider collider,
            std::unique_ptr<Weapon> weapon, float hp, float maxHp, float speed, float maxSpeed, float armor,
-           float maxArmor, float strength, float maxStrength);
+           float maxArmor, float strength, float maxStrength, float units);
 
     ~Player() override = default;
 
-    void update(int deltaTime, FloorMap *floor, bool clicked) override;
+    void update(int deltaTime, FloorMap *floor, bool clicked, sf::RenderWindow &window) override;
 
     void attack(FloorMap *floor, bool clicked) override;
 
@@ -56,7 +56,7 @@ private:
     sf::Vector2f getKeyboardInput(int deltaTime, FloorMap *floor);
 
     // change angle of the player based on mouse movement
-    float getMouseInput(int deltaTime);
+    float getMouseInput(int deltaTime, sf::RenderWindow &window);
 
     // change room if a door is walked
     void changeRoom(FloorMap *floor);

@@ -8,14 +8,13 @@
 #include "FloorMap.h"
 #include "Weapon.h"
 
-
 GameCharacter::GameCharacter(std::string name, const sf::Texture &texture, Collider collider,
                              std::unique_ptr<Weapon> weapon, float hp, float maxHp, float speed, float maxSpeed,
                              float armor, float maxArmor, float strength, float maxStrength,
-                             sf::Vector2u imageCount, float spriteScale)
-        : name(std::move(name)), sprite(texture, imageCount, spriteScale), collider(std::move(collider)),
+                             sf::Vector2u imageCount, float units)
+        : name(std::move(name)), sprite(texture, imageCount, units), collider(std::move(collider)),
           weapon(std::move(weapon)), hp(hp), maxHp(maxHp), speed(speed), maxSpeed(maxSpeed), armor(armor),
-          maxArmor(maxArmor), strength(strength), maxStrength(maxStrength), spriteScale(spriteScale) {
+          maxArmor(maxArmor), strength(strength), maxStrength(maxStrength) {
 }
 
 void GameCharacter::receiveDamage(float damage) {
@@ -28,22 +27,21 @@ void GameCharacter::receiveDamage(float damage) {
 }
 
 void GameCharacter::updateColliderAndSprite(sf::Vector2f deltaPos, float deltaAngle, FloorMap *floor) {
-    collider.setPrevPosX(collider.getPosX());
-    collider.setPrevPosY(collider.getPosY());
+    collider.setPrevPosition(collider.getPosition());
 
     // update the collider with the just calculated values
     collider.move(deltaPos.x, deltaPos.y);
     collider.setAngle(collider.getAngle() + deltaAngle);
 
     // put it in a position in which does not overlap with other colliders
-    separatingAxisTheorem(floor);
+    checkCollisions(floor);
 
     // update the sprite
-    sprite.setPosition(sf::Vector2f { collider.getPosX(), collider.getPosY() });
+    sprite.setPosition(collider.getPosition());
     sprite.setAngle(collider.getAngle());
 }
 
-void GameCharacter::separatingAxisTheorem(FloorMap *floor) {
+void GameCharacter::checkCollisions(FloorMap *floor) {
     // suppose the collider is not overlapping with any other
     collider.isColliding = false;
 

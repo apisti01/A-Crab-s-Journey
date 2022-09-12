@@ -9,11 +9,11 @@ ChasingRangedEnemy::ChasingRangedEnemy(int id, std::string name, const sf::Textu
                                        std::unique_ptr<Weapon> weapon, float hp, float maxHp, float speed,
                                        float maxSpeed, float armor, float maxArmor, float strength, float maxStrength,
                                        float XpReward, int coinsDropped, int pearlsDropped, int attackTimer,
-                                       float triggerRange) :
+                                       float triggerRange, float units) :
                                        Enemy(id, std::move(name), texture, std::move(collider),
                                              std::move(weapon), hp, maxHp, speed, maxSpeed, armor, maxArmor,
-                                             strength, maxStrength, XpReward, coinsDropped, pearlsDropped, attackTimer),
-                                             triggerRange(triggerRange) {
+                                             strength, maxStrength, XpReward, coinsDropped, pearlsDropped, attackTimer,
+                                             units), triggerRange(triggerRange) {
 }
 
 sf::Vector2f ChasingRangedEnemy::chase(const Player *hero, float &deltaAngle, int deltaTime, bool &triggered) {
@@ -42,8 +42,8 @@ sf::Vector2f ChasingRangedEnemy::chase(const Player *hero, float &deltaAngle, in
         triggered = false;
 
         // it moves to come near the player
-        movement.x = movement.x * speed * Game::getInstance()->lenUnit * static_cast<float>(deltaTime) / pow(10, 6);
-        movement.y = movement.y * speed * Game::getInstance()->lenUnit * static_cast<float>(deltaTime) / pow(10, 6);
+        movement.x = movement.x * speed * Game::getInstance()->getUnit() * static_cast<float>(deltaTime) / pow(10, 6);
+        movement.y = movement.y * speed * Game::getInstance()->getUnit() * static_cast<float>(deltaTime) / pow(10, 6);
     }
     // if the enemy is near enough
     else {

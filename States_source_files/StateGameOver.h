@@ -22,15 +22,14 @@ public:
 
 private:
     // background
-    sf::Texture backgroundTexture;
-    sf::Sprite background{backgroundTexture, sf::IntRect{0, 0, 1920, 1080}};
+    SpriteButton background = {"Assets/GameStates/MainMenu/Background.png", 1, {.50f, .50f}};
 
     // text buttons
-    TextButton titleText = {"Game Over", game->font, 240, {1920 / 2, 175}};
-    TextButton returnTextBtn = {"Return to MainMenu", game->font, 180, {1920 / 2, 1080 - 150}, true};
+    TextButton titleText = {"Game Over", 240, {.50f, .16f}};
+    TextButton returnTextBtn = {"Return to MainMenu", 180, {.50f, .86f}, true};
 
-    SpriteButton pearlsIcon = {"Assets/GameStates/Pearl.png", 0.05, {1920 / 2 - 100, 450}};
-    TextButton pearlsGained = {"0", game->font, 180, {1920 / 2 + 100, 450}};
+    SpriteButton pearlsIcon = {"Assets/GameStates/Pearl.png", 0.05, {.45f, .42f}};
+    TextButton pearlsGained = {"0", 180, {.55f, .42f}};
 
     int p = 42;
     float s = 2 * log10f(p + 1);

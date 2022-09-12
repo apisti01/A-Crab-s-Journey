@@ -4,35 +4,58 @@
 
 #include "Room.h"
 #include "FloorMap.h"
-#include "GameCharacter.h"
 #include "Enemy_source_files/EnemyFactory.h"
 
-Room::Room(std::string mapType, int posX, int posY, int width, int height) : posX(posX), posY(posY), width(width), height(height) {
+Room::Room(std::string mapType, sf::Vector2i pos, sf::Vector2i dimensions) : mapType(mapType), pos(pos), dimensions(dimensions) {
     // doors are all initially closed
     doors = {-1, -1, -1, -1};
 
-    // load coral reef texture as room background
-    backgroundTexture.loadFromFile("Assets/Map/" + mapType + "/Background Texture.png");
+    grid = sf::Vector2i{int(round(dimensions.x / Game::getInstance()->getUnit())), int(round(dimensions.y / Game::getInstance()->getUnit()))};
 };
 
 void Room::generateWalls() {
     // walls
-    for (int i = 0; i < 16; i++) {
-        if (i != 7 && i != 8) {
-            walls.emplace_back(*new Collider(i * 120 + 60, 60, 120, 120));
-            walls.emplace_back(*new Collider(i * 120 + 60, height - 60, 120, 120));
+    if (grid.x % 2 == 0) {
+        for (int i = 0; i < grid.x; i++) {
+            if (i != grid.x / 2 - 1 && i != grid.x / 2) {
+                walls.emplace_back(*new Collider({(i + .5f) / grid.x, .5f / grid.y}, {1.f, 1.f}));
+                walls.emplace_back(*new Collider({(i + .5f) / grid.x, 1 - .5f / grid.y}, {1.f, 1.f}));
+            }
         }
-    }
-    for (int i = 1; i < 8; i++) {
-        if (i != 3 && i != 4 && i != 5) {
-            walls.emplace_back(*new Collider(60, i * 120 + 60, 120, 120));
-            walls.emplace_back(*new Collider(width - 60, i * 120 + 60, 120, 120));
+    } else {
+        for (int i = 0; i < grid.x; i++) {
+            if (i != floor(grid.x / 2) - 1 && i != floor(grid.x / 2) && floor(grid.x / 2) + 1) {
+                walls.emplace_back(*new Collider({(i + .5f) / grid.x, .5f / grid.y}, {1.f, 1.f}));
+                walls.emplace_back(*new Collider({(i + .5f) / grid.x, 1 - .5f / grid.y}, {1.f, 1.f}));
+            }
         }
+
+        walls.emplace_back(*new Collider({(floor(grid.x / 2.f) - .75f) / grid.x, .5f / grid.y}, {.5f, 1.f}));
+        walls.emplace_back(*new Collider({(floor(grid.x / 2.f) + 1.75f) / grid.x, .5f / grid.y}, {.5f, 1.f}));
+        walls.emplace_back(*new Collider({(floor(grid.x / 2.f) - .75f) / grid.x, 1 - .5f / grid.y}, {.5f, 1.f}));
+        walls.emplace_back(*new Collider({(floor(grid.x / 2.f) + 1.75f) / grid.x, 1 - .5f / grid.y}, {.5f, 1.f}));
     }
-    walls.emplace_back(*new Collider(60, 3.25 * 120, 120, 60));
-    walls.emplace_back(*new Collider(width - 60, 3.25 * 120, 120, 60));
-    walls.emplace_back(*new Collider(60, 5.75 * 120, 120, 60));
-    walls.emplace_back(*new Collider(width - 60, 5.75 * 120, 120, 60));
+
+    if (grid.y % 2 == 0) {
+        for (int i = 1; i < grid.y - 1; i++) {
+            if (i != grid.y / 2 - 1 && i != grid.y / 2) {
+                walls.emplace_back(*new Collider({.5f / grid.x, (i + .5f) / grid.y}, {1.f, 1.f}));
+                walls.emplace_back(*new Collider({1 - .5f / grid.x, (i + .5f) / grid.y}, {1.f, 1.f}));
+            }
+        }
+    } else {
+        for (int i = 1; i < grid.y - 1; i++) {
+            if (i != floor(grid.y / 2) - 1 && i != floor(grid.y / 2) && i != floor(grid.y / 2) + 1) {
+                walls.emplace_back(*new Collider({.5f / grid.x, (i + .5f) / grid.y}, {1.f, 1.f}));
+                walls.emplace_back(*new Collider({1 - .5f / grid.x, (i + .5f) / grid.y}, {1.f, 1.f}));
+            }
+        }
+
+        walls.emplace_back(*new Collider({.5f / grid.x, (floor(grid.y / 2.f) - .75f) / grid.y}, {1.f, .5f}));
+        walls.emplace_back(*new Collider({.5f / grid.x, (floor(grid.y / 2.f) + 1.75f) / grid.y}, {1.f, .5f}));
+        walls.emplace_back(*new Collider({1 - .5f / grid.x, (floor(grid.y / 2.f) - .75f) / grid.y}, {1.f, .5f}));
+        walls.emplace_back(*new Collider({1 - .5f / grid.x, (floor(grid.y / 2.f) + 1.75f) / grid.y}, {1.f, .5f}));
+    }
 }
 
 void Room::generateObstacles() {
@@ -49,74 +72,122 @@ void Room::generateObstacles() {
     // for every obstacle
     for (int i = 0; i < numObstacles; i++) {
         // get one free spot on room grid coordinates
-        sf::Vector2i pos = pickFreeGridSpot();
 
         // prepare collider and texture
-        Collider collider(pos.x, pos.y, 120, 120);
+        Collider collider(pickFreeGridSpot(), {1.f, 1.f});
         obstacleTexture.loadFromFile("Assets/Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
 
         // add the obstacle just created to the list
-        obstacleList.push_back(*new Obstacle(obstacleTexture, collider, pos.x, pos.y, 120, 120));
+        obstacleList.emplace_back(obstacleTexture, collider);
     }
 }
 
 void Room::setupGrid() {
     // all cells start with false
-    for (int i = 0; i < 14; i++) {
-        for (int j = 0; j < 7; j++) {
-            roomGrid[i][j] = false;
+    for (int i = 1; i < grid.x - 1; i++) {
+        roomGrid.push_back({});
+        for (int j = 1; j < grid.y - 1; j++) {
+            roomGrid[i - 1].push_back(false);
         }
     }
 
     // obstacles can't be in front of open doors:
     // upper door
     if (doors[0] != -1) {
-        for (int i = 5; i <= 8; i++) {
-            for (int j = 0; j <= 1; j++) {
-                roomGrid[i][j] = true;
+        if (grid.x % 2 == 0) {
+            for (int i = (grid.x - 2) / 2 - 2; i < (grid.x - 2) / 2 + 2; i++) {
+                for (int j = 0; j <= 1; j++)
+                    roomGrid[i][j] = true;
+            }
+        } else {
+            for (int i = floor((grid.x - 2) / 2) - 1; i <= floor((grid.x - 2) / 2) + 1; i++) {
+                for (int j = 0; j <= 1; j++)
+                    roomGrid[i][j] = true;
             }
         }
     }
+
     // right door
     if (doors[1] != -1) {
-        for (int i = 12; i <= 13; i++) {
-            for (int j = 2; j <= 4; j++)
-                roomGrid[i][j] = true;
-        }
-    }
-    // bottom door
-    if (doors[2] != -1) {
-        for (int i = 5; i <= 8; i++) {
-            for (int j = 5; j <= 6; j++) {
-                roomGrid[i][j] = true;
+        if (grid.y % 2 == 0) {
+            for (int i = grid.x - 4; i <= grid.x - 3; i++) {
+                for (int j = (grid.y - 2) / 2 - 2; j < (grid.y - 2) / 2 + 2; j++)
+                    roomGrid[i][j] = true;
+            }
+        } else {
+            for (int i = grid.x - 4; i <= grid.x - 3; i++) {
+                for (int j = floor((grid.y - 2) / 2) - 1; j <= floor((grid.y - 2) / 2) + 1; j++)
+                    roomGrid[i][j] = true;
             }
         }
     }
+
+    // bottom door
+    if (doors[2] != -1) {
+        if (grid.x % 2 == 0) {
+            for (int i = (grid.x - 2) / 2 - 2; i < (grid.x - 2) / 2 + 2; i++) {
+                for (int j = grid.y - 4; j <= grid.y - 3; j++) {
+                    roomGrid[i][j] = true;
+                }
+            }
+        } else {
+            for (int i = floor((grid.x - 2) / 2) - 1; i <= floor((grid.x - 2) / 2) + 1; i++) {
+                for (int j = grid.y - 4; j <= grid.y - 3; j++) {
+                    roomGrid[i][j] = true;
+                }
+            }
+        }
+    }
+
     // left door
     if (doors[3] != -1) {
-        for (int i = 0; i <= 1; i++) {
-            for (int j = 2; j <= 4; j++)
-                roomGrid[i][j] = true;
+        if (grid.y % 2 == 0) {
+            for (int i = 0; i <= 1; i++) {
+                for (int j = (grid.y - 2) / 2 - 2; j < (grid.y - 2) / 2 + 2; j++)
+                    roomGrid[i][j] = true;
+            }
+        } else {
+            for (int i = 0; i <= 1; i++) {
+                for (int j = floor((grid.y - 2) / 2) - 1; j <= floor((grid.y - 2) / 2) + 1; j++)
+                    roomGrid[i][j] = true;
+            }
         }
     }
 
     // if the room is the start one
     if (isStartRoom) {
+        int startX, endX, startY, endY;
+        if (grid.x % 2 == 0) {
+            startX = (grid.x - 2) / 2 - 1;
+            endX = (grid.x - 2) / 2 + 1;
+        } else {
+            startX = floor((grid.x - 2) / 2) - 1;
+            endX = floor((grid.x - 2) / 2) + 2;
+        }
+
+        if (grid.y % 2 == 0) {
+            startY = (grid.y - 2) / 2 - 1;
+            endY = (grid.y - 2) / 2 + 1;
+        } else {
+            startY = floor((grid.y - 2) / 2) - 1;
+            endY = floor((grid.y - 2) / 2) + 2;
+        }
+
         // obstacles can't be in the center
-        for (int i = 6; i <= 7; i++) {
-            for (int j = 2; j <= 4; j++)
+        for (int i = startX; i < endX; i++) {
+            for (int j = startY; j < endY; j++)
                 roomGrid[i][j] = true;
         }
     }
 }
 
-sf::Vector2i Room::pickFreeGridSpot() {
-    int posx = rand() % 14;
-    int posy = rand() % 7;
+sf::Vector2f Room::pickFreeGridSpot() {
+    int posx = rand() % (grid.x - 2);
+    int posy = rand() % (grid.y - 2);
 
     if (!roomGrid[posx][posy]) {
         roomGrid[posx][posy] = true;
-        return sf::Vector2i { (posx + 1) * 120 + 60, (posy + 1) * 120 + 60 };
+        return sf::Vector2f{(1.5f + posx) / grid.x, (1.5f + posy) / grid.y};
     } else {
         return pickFreeGridSpot();
     }
@@ -130,23 +201,23 @@ void Room::loadDoors() {
 
     if (doors[0] == -1) {
         obstacleTexture.loadFromFile("Assets/Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
-        Collider collider(120 * 8, 60, 120, 120);
-        obstacleList.emplace_back(obstacleTexture, collider, 120 * 8, 60, 120, 120);
+        Collider collider({.5f, .5f / grid.y}, {1.f, 1.f});
+        obstacleList.emplace_back(obstacleTexture, collider);
     }
     if (doors[1] == -1) {
         obstacleTexture.loadFromFile("Assets/Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
-        Collider collider(width - 60, 120 * 4.5, 120, 120);
-        obstacleList.emplace_back(obstacleTexture, collider, width - 60, 120 * 4.5, 120, 120);
+        Collider collider({1.f - .5f / grid.x, .5f}, {1.f, 1.f});
+        obstacleList.emplace_back(obstacleTexture, collider);
     }
     if (doors[2] == -1) {
         obstacleTexture.loadFromFile("Assets/Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
-        Collider collider(120 * 8, height - 60, 120, 120);
-        obstacleList.emplace_back(obstacleTexture, collider, 120 * 8, height - 60, 120, 120);
+        Collider collider({.5f, 1 - .5f / grid.y}, {1.f, 1.f});
+        obstacleList.emplace_back(obstacleTexture, collider);
     }
     if (doors[3] == -1) {
         obstacleTexture.loadFromFile("Assets/Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
-        Collider collider(60, 120 * 4.5, 120, 120);
-        obstacleList.emplace_back(obstacleTexture, collider, 60, 120 * 4.5, 120, 120);
+        Collider collider({.5f / grid.x, .5f}, {1.f, 1.f});
+        obstacleList.emplace_back(obstacleTexture, collider);
     }
 }
 
@@ -154,10 +225,10 @@ void Room::generateEnemies(std::string mapType, int level) {
     enemyList = EnemyFactory::fillRoomWithEnemies(this, mapType, level);
 }
 
-void Room::updateEnemies(int deltaTime, FloorMap *floor) {
+void Room::updateEnemies(int deltaTime, FloorMap *floor, sf::RenderWindow &window) {
     // update enemy in the room
     for (auto &enemy : enemyList)
-        enemy->update(deltaTime, floor, true);
+        enemy->update(deltaTime, floor, true, window);
 
     // check life of the enemies, if <= 0 erase them from the list
     auto enemy = enemyList.begin();
@@ -192,36 +263,26 @@ void Room::closeDoors() {
     sf::Texture obstacleTexture;
     std::string obstacleTypes[] = {"algae 1", "algae 2", "bottle 1", "bottle 2", "flipflop", "rock 1", "rock 2"};
 
-    // if the door is open
+    // for every door: if it's open, create an obstacle and put it there to close it
     if (doors[0] != -1) {
-        // create an obstacle and put it there to close it
         obstacleTexture.loadFromFile("Assets/Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
-        Collider collider(120 * 8, height - 60, 120, 120);
-        obstacleList.emplace_back(obstacleTexture, collider, 120 * 8, 60, 120, 120);
+        Collider collider({.5f, .5f / grid.y}, {1.f, 1.f});
+        obstacleList.emplace_back(obstacleTexture, collider);
     }
-
-    // if the door is open
     if (doors[1] != -1) {
-        // create an obstacle and put it there to close it
         obstacleTexture.loadFromFile("Assets/Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
-        Collider collider(120 * 8, height - 60, 120, 120);
-        obstacleList.emplace_back(obstacleTexture, collider, width - 60, 120 * 4.5, 120, 120);
+        Collider collider({1.f - .5f / grid.x, .5f}, {1.f, 1.f});
+        obstacleList.emplace_back(obstacleTexture, collider);
     }
-
-    // if the door is open
     if (doors[2] != -1) {
-        // create an obstacle and put it there to close it
         obstacleTexture.loadFromFile("Assets/Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
-        Collider collider(120 * 8, height - 60, 120, 120);
-        obstacleList.emplace_back(obstacleTexture, collider, 120 * 8, height - 60, 120, 120);
+        Collider collider({.5f, 1 - .5f / grid.y}, {1.f, 1.f});
+        obstacleList.emplace_back(obstacleTexture, collider);
     }
-
-    // if the door is open
     if (doors[3] != -1) {
-        // create an obstacle and put it there to close it
         obstacleTexture.loadFromFile("Assets/Obstacle/" + obstacleTypes[rand() % size(obstacleTypes)] + ".png");
-        Collider collider(120 * 8, height - 60, 120, 120);
-        obstacleList.emplace_back(obstacleTexture, collider, 60, 120 * 4.5, 120, 120);
+        Collider collider({.5f / grid.x, .5f}, {1.f, 1.f});
+        obstacleList.emplace_back(obstacleTexture, collider);
     }
 }
 
@@ -238,7 +299,7 @@ void Room::openDoors() {
 
 void Room::draw(sf::RenderWindow &window) {
     // draw background
-    window.draw(background);
+    background.draw(window);
 
     // draw walls
     for (int i = 0; i < size(walls); i++)

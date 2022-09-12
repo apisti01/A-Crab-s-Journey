@@ -5,8 +5,6 @@
 #include "StateBestiary.h"
 
 StateBestiary::StateBestiary(Game *game) : State(game) {
-    backgroundTexture.loadFromFile("Assets/GameStates/Bestiary/Background.png");
-
     auto enemies = Game::getInstance()->bestiary.beasts;
     for (int i = 0; i < size(enemies); i++) {
         // load the enemies textures
@@ -21,11 +19,11 @@ StateBestiary::StateBestiary(Game *game) : State(game) {
     for (int y = 0; y < rows; y++) {
         for (int x = 0; x < cols; x++) {
             SpriteButton enemy = {"Assets/GameCharacter/Enemy/AggressiveMelee/SeaTurtle/Texture.png", 0.09,
-                            {210.0f + x * 240, 390.0f + y * 240}, false};
+                            {.11f + x * .125f, .36f + y * .22f}, false};
             enemiesBtns.push_back(enemy);
 
             SpriteButton enemyUnknown = {"Assets/GameCharacter/Enemy/Unknown Enemy.png", 0.09,
-                                   {210.0f + x * 240, 390.0f + y * 240}, false};
+                                   {.11f + x * .125f, .36f + y * .22f}, false};
             enemiesUnknowns.push_back(enemyUnknown);
         }
     }
@@ -96,32 +94,32 @@ void StateBestiary::loadStats() {
     int i;
     // health stats
     for (i = 0; i < floor(enemy.health); i++)
-        units.push_back({upgradeUnitTexture, 0.025, {1410.0f + 55 * i, 450}});
+        units.push_back({upgradeUnitTexture, 0.025, {.73f + .028f * i, .41f}});
     if (fmod(enemy.health, 1) != 0)
-        units.push_back({upgradeHalfUnitTexture, 0.025, {1410.0f + 55 * i - 12.5f, 450}});
+        units.push_back({upgradeHalfUnitTexture, 0.025, {.73f + .028f * i - .007f, .41f}});
 
     // speed stats
     for (i = 0; i < floor(enemy.speed); i++)
-        units.push_back({upgradeUnitTexture, 0.025, {1410.0f + 55 * i, 570}});
+        units.push_back({upgradeUnitTexture, 0.025, {.73f + .028f * i, .52f}});
     if (fmod(enemy.speed, 1) != 0)
-        units.push_back({upgradeHalfUnitTexture, 0.025, {1410.0f + 55 * i - 12.5f, 570}});
+        units.push_back({upgradeHalfUnitTexture, 0.025, {.73f + .028f * i - .007f, .52f}});
 
     // armor stats
     for (i = 0; i < floor(enemy.armor); i++)
-        units.push_back({upgradeUnitTexture, 0.025, {1410.0f + 55 * i, 690}});
+        units.push_back({upgradeUnitTexture, 0.025, {.73f + .028f * i, .64f}});
     if (fmod(enemy.armor, 1) != 0)
-        units.push_back({upgradeHalfUnitTexture, 0.025, {1410.0f + 55 * i - 12.5f, 690}});
+        units.push_back({upgradeHalfUnitTexture, 0.025, {.73f + .028f * i - .007f, .64f}});
 
     // strength stats
     for (i = 0; i < floor(enemy.strength); i++)
-        units.push_back({upgradeUnitTexture, 0.025, {1410.0f + 55 * i, 810}});
+        units.push_back({upgradeUnitTexture, 0.025, {.73f + .028f * i, .75f}});
     if (fmod(enemy.strength, 1) != 0)
-        units.push_back({upgradeHalfUnitTexture, 0.025, {1410.0f + 55 * i - 12.5f, 810}});
+        units.push_back({upgradeHalfUnitTexture, 0.025, {.73f + .028f * i - .007f, .75f}});
 }
 
 void StateBestiary::draw(sf::RenderWindow &window) {
     // draw the background and the title text
-    window.draw(background);
+    background.draw(window);
     titleText.draw(window);
     backBtn.draw(window);
 

@@ -3,21 +3,22 @@
 //
 
 #include "SpriteButton.h"
+#include "Game.h"
 
 SpriteButton::SpriteButton(std::string texturePath, float scl, sf::Vector2f position, bool clickable, std::string origin) : clickable(clickable), origin(origin) {
     texture.loadFromFile(texturePath);
     rect.setTexture(&texture);
-    rect.setPosition(position);
-    rect.setScale(scl, scl);
+    rect.setPosition({position.x * Game::getInstance()->getWidth(), position.y * Game::getInstance()->getHeight()});
+    rect.setScale(scl * Game::getInstance()->getRatio(), scl * Game::getInstance()->getRatio());
     rect.setOrigin(texture.getSize().x / 2, texture.getSize().y / 2);
     rect.setSize(sf::Vector2f(texture.getSize().x, texture.getSize().y));
 }
 
-SpriteButton::SpriteButton(sf::Texture &texture, float scl, sf::Vector2f position, bool clickable, std::string origin) {
+SpriteButton::SpriteButton(sf::Texture &texture, float scl, sf::Vector2f position, bool clickable, std::string origin)  : clickable(clickable), origin(origin) {
     this->texture = texture;
     rect.setTexture(&texture);
-    rect.setPosition(position);
-    rect.setScale(scl, scl);
+    rect.setPosition({position.x * Game::getInstance()->getWidth(), position.y * Game::getInstance()->getHeight()});
+    rect.setScale(scl * Game::getInstance()->getRatio(), scl * Game::getInstance()->getRatio());
     rect.setOrigin(texture.getSize().x / 2, texture.getSize().y / 2);
     rect.setSize(sf::Vector2f(texture.getSize().x, texture.getSize().y));
 }

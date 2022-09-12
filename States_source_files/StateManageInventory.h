@@ -22,8 +22,7 @@ public:
 
 private:
     // background
-    sf::Texture backgroundTexture;
-    sf::Sprite background{backgroundTexture, sf::IntRect{0, 0, 1920, 1080}};
+    SpriteButton background = {"Assets/GameStates/Inventory/Background.png", 1, {.50f, .50f}};
 };
 
 

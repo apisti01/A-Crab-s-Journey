@@ -3,12 +3,13 @@
 //
 
 #include "TextButton.h"
+#include "Game.h"
 
-TextButton::TextButton(std::string string, sf::Font &font, int characterSize, sf::Vector2f position, bool clickable, std::string origin) : clickable(clickable), origin(origin) {
+TextButton::TextButton(std::string string, int characterSize, sf::Vector2f position, bool clickable, std::string origin) : clickable(clickable), origin(origin) {
     text.setString(string);
-    text.setCharacterSize(characterSize);
-    text.setPosition(position);
-    text.setFont(font);
+    text.setCharacterSize(characterSize * Game::getInstance()->getRatio());
+    text.setPosition({position.x * Game::getInstance()->getWidth(), position.y * Game::getInstance()->getHeight()});
+    text.setFont(Game::getInstance()->font);
 }
 
 void TextButton::update(sf::RenderWindow &window) {

@@ -16,6 +16,7 @@ class FloorMap {
 public:
     // constructor
     explicit FloorMap(int characterIndex, const std::string &mapType, int level);
+
     ~FloorMap();
 
     // getter and setter for level attribute
@@ -23,8 +24,8 @@ public:
     void setLevel(int level) { FloorMap::level = level; }
 
     // getters for height and width
-    int getRoomWidth() const{ return roomWidth;}
-    int getRoomHeight() const{ return roomHeight;}
+    int getRoomWidth() const { return roomWidth; }
+    int getRoomHeight() const { return roomHeight; }
 
     // getter and setter for number of rooms
     int getNumRooms() const { return numRooms; }
@@ -35,16 +36,17 @@ public:
     void setLongestPathLength(int longestPathLength) { FloorMap::longestPathLength = longestPathLength; }
 
     // list of all rooms on floor
-    std::vector<std::unique_ptr<Room>> roomList {};
+    std::vector<std::unique_ptr<Room>> roomList{};
     int currentRoomIndex, startRoomIndex, endRoomIndex, shopRoomIndex = -1;
 
     std::shared_ptr<Player> player;
 
-    void update(int deltaTime, bool attack);
+    void update(int deltaTime, bool attack, sf::RenderWindow &window);
 
     void draw(sf::RenderWindow &window);
 
     bool isPlayerNearShop();
+
     bool floorCompleted();
 
     // functions for the observers ( bestiary and achievements)
@@ -73,17 +75,22 @@ private:
 
     // function for randomic floor generation
     void generateFloor(std::string mapType);
+
     // returns the index of a room with at least one free side
     int pickRoom();
+
     // given a room index, returns the index of a free side
     int pickFreeSide(int roomIndex);
+
     // randomic generation of a room (enemies, obstacles ecc.)
     void generateRoom(int roomIndex, int sideIndex, int newRoomIndex);
 
     // finds two furthest rooms in the floor
     void setStartAndEndRooms();
+
     // returns the index of one random terminal room (rooms with only one connection)
     int TerminalRoomIndex();
+
     // given an index of a room, visits all adjacent rooms and return number of rooms in the longest path
     int visitAdjacentRooms(int index, int prev = -1, int dist = 1);
 
@@ -91,7 +98,7 @@ private:
     void setShopRoom();
 
     // list of the observers subscribed
-    std::list<Observer*> observers {};
+    std::list<Observer *> observers{};
 };
 
 #endif //ACRABSJOURNEY_FLOORMAP_H

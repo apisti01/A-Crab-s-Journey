@@ -21,10 +21,10 @@ public:
     void draw(sf::RenderWindow &window) override;
 
 private:
-    SpriteButton mapIcon = {"Assets/GameStates/Play/Map Icon.png", 0.3, {1920 - 675, 1080 - 100}, false};
-    SpriteButton bestiaryIcon = {"Assets/GameStates/Play/Bestiary Icon.png", 0.3, {1920 - 500, 1080 - 100}, false};
+    SpriteButton mapIcon = {"Assets/GameStates/Play/Map Icon.png", 0.3, {.65f, .91f}, false};
+    SpriteButton bestiaryIcon = {"Assets/GameStates/Play/Bestiary Icon.png", 0.3, {.74f, .91f}, false};
 
-    TextButton nextFloor = {"Press E to go to the next floor", game->font, 90, {1920 / 2, 1080 / 2}};
+    TextButton nextFloor = {"Press E to go to the next floor", 90, {.50f, .50f}};
 
     float sec = 0;
 };

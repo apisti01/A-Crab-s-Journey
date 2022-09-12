@@ -23,17 +23,26 @@ public:
     // constructor and virtual destructor
     GameCharacter(std::string name, const sf::Texture &texture, Collider collider, std::unique_ptr<Weapon> weapon,
                   float hp, float maxHp, float speed, float maxSpeed, float armor, float maxArmor, float strength,
-                  float maxStrength, sf::Vector2u imageCount, float spriteScale);
+                  float maxStrength, sf::Vector2u imageCount, float units);
     virtual ~GameCharacter() = default;
 
     // getter and setter for character position
-    virtual void setPosition(float x, float y) {
-        collider.setPosX(x);
-        collider.setPosY(y);
-        sprite.setPosition(sf::Vector2f(x, y));
+    virtual void setPosition(sf::Vector2f pos) {
+        collider.setPosition(pos);
+        sprite.setPosition(pos);
     }
+    sf::Vector2f getPosition() const { return collider.getPosition(); }
     float getPosX() const { return collider.getPosX(); }
+    void setPosX(float posX) {
+        collider.setPosX(posX);
+        sprite.setPosition({posX, sprite.getPosition().y});
+    }
     float getPosY() const { return collider.getPosY(); }
+    void setPosY(float posY) {
+        collider.setPosY(posY);
+        sprite.setPosition({sprite.getPosition().x, posY});
+    }
+
     float getAngle() const { return collider.getAngle(); }
 
     // Getter and Setters for statistics
@@ -64,9 +73,6 @@ public:
     float getMaxStrength() const { return maxStrength; }
     void setMaxStrength(float maxStrength) { GameCharacter::maxStrength = maxStrength; }
 
-    float getSpriteScale() const { return spriteScale; }
-    void setSpriteScale(float spriteScale) { GameCharacter::spriteScale = spriteScale; }
-
     // getter of weapon address
     Weapon* getWeapon() { return weapon.get(); }
 
@@ -74,7 +80,7 @@ public:
     void receiveDamage(float damage);
 
     // update game character
-    virtual void update(int deltaTime, FloorMap *floor, bool clicked) = 0;
+    virtual void update(int deltaTime, FloorMap *floor, bool clicked, sf::RenderWindow &window) = 0;
 
     // if weapon is ranged create bullet, if melee find the first in range enemy and gives it damages
     virtual void attack(FloorMap *floor, bool clicked) = 0;
@@ -103,14 +109,13 @@ protected:
 
     // SFML Texture and Animated sprite
     AnimatedSprite sprite;
-    float spriteScale;
     int fps = 10;
 
     // update collider and sprite position and rotation values
     void updateColliderAndSprite(sf::Vector2f deltaPos, float deltaAngle, FloorMap *floor);
 
     // check if the new position is valid
-    void separatingAxisTheorem(FloorMap *floor);
+    void checkCollisions(FloorMap *floor);
 
     // select movement animation based on movement direction and facing angle
     void selectAnimation();

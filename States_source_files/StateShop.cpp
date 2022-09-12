@@ -4,10 +4,7 @@
 
 #include "StateShop.h"
 
-StateShop::StateShop(Game *game) : State(game) {
-    texture.loadFromFile("Assets/GameStates/Shop/Background.png");
-    backgroundSprite = { texture, sf::IntRect(0, 0, 1920, 1080) };
-}
+StateShop::StateShop(Game *game) : State(game) {}
 
 void StateShop::eventHandling(sf::Event event, sf::RenderWindow &window) {
     if (event.type == sf::Event::KeyPressed) {
@@ -17,5 +14,5 @@ void StateShop::eventHandling(sf::Event event, sf::RenderWindow &window) {
 }
 
 void StateShop::draw(sf::RenderWindow &window) {
-    window.draw(backgroundSprite);
+    background.draw(window);
 }

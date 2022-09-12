@@ -12,7 +12,7 @@ public:
     DefensiveMeleeEnemy(int id, std::string name, const sf::Texture &texture, Collider collider, std::unique_ptr<Weapon> weapon,
                         float hp, float maxHp, float speed, float maxSpeed, float armor, float maxArmor, float strength,
                         float maxStrength, float XpReward, int coinsDropped, int pearlsDropped, int attackTimer,
-                        float triggerRange);
+                        float triggerRange, float units);
 
     ~DefensiveMeleeEnemy() override = default;
 
@@ -23,20 +23,17 @@ public:
     void dropItems() override;
 
     // this function is overridden to permit to save the original position of the character in its attributes
-    void setPosition(float x, float y) override{
-        collider.setPosX(x);
-        collider.setPosY(y);
-        sprite.setPosition(sf::Vector2f(x, y));
-        origPosX = x;
-        origPosY = y;
+    void setPosition(sf::Vector2f pos) override {
+        collider.setPosition(pos);
+        sprite.setPosition(pos);
+        origPos = pos;
     }
 
 private:
     // range which, if the player is inside, the enemy is triggered and tries to chase and attack him
     float triggerRange;
 
-    float origPosX;
-    float origPosY;
+    sf::Vector2f origPos;
 };
 
 

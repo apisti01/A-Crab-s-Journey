@@ -4,9 +4,7 @@
 
 #include "StateSettings.h"
 
-StateSettings::StateSettings(Game *game) : State(game) {
-    texture.loadFromFile("Assets/GameStates/PauseScreen/Background.png");
-}
+StateSettings::StateSettings(Game *game) : State(game) {}
 
 void StateSettings::update(int deltaTime, bool clicked, sf::RenderWindow &window) {
     settingsText.update(window);
@@ -28,7 +26,7 @@ void StateSettings::eventHandling(sf::Event event, sf::RenderWindow &window) {
 }
 
 void StateSettings::draw(sf::RenderWindow &window) {
-    window.draw(backgroundSprite);
+    background.draw(window);
 
     settingsText.draw(window);
     difficultyText.draw(window);

@@ -24,8 +24,8 @@ void Bullet::draw(sf::RenderWindow &window) {
 
 void Bullet::update(int deltaTime) {
     // move the bullet
-    pos.x += cosf(direction) * speed * float(deltaTime) / pow(10, 6) * 120;
-    pos.y += sinf(direction) * speed * float(deltaTime) / pow(10, 6) * 120;
+    pos.x += cosf(direction) * speed * Game::getInstance()->getUnit() * float(deltaTime) / pow(10, 6);
+    pos.y += sinf(direction) * speed * Game::getInstance()->getUnit() * float(deltaTime) / pow(10, 6);
 }
 
 bool Bullet::checkCollisions(FloorMap *floor) {

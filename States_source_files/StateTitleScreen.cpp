@@ -4,9 +4,7 @@
 
 #include "StateTitleScreen.h"
 
-StateTitleScreen::StateTitleScreen(Game* game): State(game) {
-    backgroundTexture.loadFromFile("Assets/GameStates/MainMenu/Background.png");
-}
+StateTitleScreen::StateTitleScreen(Game* game): State(game) {}
 
 void StateTitleScreen::update(int deltaTime, bool clicked, sf::RenderWindow &window) {
     titleText.update(window);
@@ -24,7 +22,7 @@ void StateTitleScreen::eventHandling(sf::Event event, sf::RenderWindow &window) 
 }
 
 void StateTitleScreen::draw(sf::RenderWindow &window) {
-    window.draw(background);
+    background.draw(window);
 
     titleText.draw(window);
     pressBtnText.draw(window);

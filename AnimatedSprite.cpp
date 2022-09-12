@@ -3,8 +3,9 @@
 //
 
 #include "AnimatedSprite.h"
+#include "Game.h"
 
-AnimatedSprite::AnimatedSprite(const sf::Texture& texture, sf::Vector2u imageCount, float scl) : scl(scl) {
+AnimatedSprite::AnimatedSprite(const sf::Texture& texture, sf::Vector2u imageCount, float units) {
     frames = int(imageCount.x - 1);
 
     rectangle = sf::IntRect(0, 0, int(texture.getSize().x / imageCount.x), int(texture.getSize().y / imageCount.y));
@@ -17,7 +18,8 @@ AnimatedSprite::AnimatedSprite(const sf::Texture& texture, sf::Vector2u imageCou
     sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
 
     // rescale it
-    sprite.setScale(scl, scl);
+    spriteScale = units * Game::getInstance()->getUnit() / (characterTexture.getSize().x / imageCount.x);
+    sprite.setScale(spriteScale, spriteScale);
 }
 
 void AnimatedSprite::update(int frequency, int row, int deltaTime) {

@@ -11,7 +11,7 @@
 #include "Enemy_source_files/Enemy.h"
 #include "Bullet.h"
 #include "Bestiary.h"
-
+#include "SpriteButton.h"
 
 enum class MapType {
     CoralReef,
@@ -25,7 +25,7 @@ enum class MapType {
 class Room {
 public:
     // constructor and destructor
-    explicit Room(std::string mapType, int posX, int posY, int width, int height);
+    explicit Room(std::string mapType, sf::Vector2i pos, sf::Vector2i dimensions);
     ~Room() = default;
     Room(const Room& room) = delete;
     Room& operator = (const Room & room) = delete;
@@ -34,11 +34,20 @@ public:
     std::vector<int> doors;
 
     // getter and setter for position attributes
-    int getPosX() const { return posX; }
-    void setPosX(int posx) { posX = posx; }
+    sf::Vector2i getPos() const { return pos; }
+    void setPos(sf::Vector2i pos) { Room::pos = pos; }
+    int getPosX() const { return pos.x; }
+    void setPosX(int posX) { pos.x = posX; }
+    int getPosY() const { return pos.y; }
+    void setPosY(int posY) { pos.y = posY;}
 
-    int getPosY() const { return posY; }
-    void setPosY(int posy) { posY = posy;}
+    sf::Vector2i getDimensions() const { return dimensions; }
+    void setDimensions(sf::Vector2i dimensions) { Room::dimensions = dimensions; }
+    int getWidth() const { return dimensions.x; }
+    void setWidth(int width) { Room::dimensions.x = width; }
+    int getHeight() const { return dimensions.y; }
+    void setHeight(int height) { Room::dimensions.y = height; }
+
 
     // getter and setter for special room's attributes
     bool getCage() const { return isCage; }
@@ -65,13 +74,7 @@ public:
     int getXpReward() const { return XpReward; }
     void setXpReward(int xpReward) { XpReward = xpReward; }
 
-    int getWidth() const { return width; }
-    void setWidth(int width) { Room::width = width; }
-
-    int getHeight() const { return height; }
-    void setHeight(int height) { Room::height = height; }
-
-    void updateEnemies(int deltaTime, FloorMap *floor);
+    void updateEnemies(int deltaTime, FloorMap *floor, sf::RenderWindow &window);
     void updateBullets(int deltaTime, FloorMap *floor);
 
     void draw(sf::RenderWindow &window);
@@ -99,20 +102,20 @@ public:
     void closeDoors();
     void openDoors();
 
-    sf::Vector2i pickFreeGridSpot();
+    sf::Vector2f pickFreeGridSpot();
 
 private:
     // grid position attributes
-    int posX{}, posY{};
-
-    // texture and sprite
-    sf::Texture backgroundTexture;
-    sf::Sprite background { backgroundTexture, sf::IntRect{ 0, 0, 1920, 1080 } };
+    sf::Vector2i pos;
+    std::string mapType;
 
     // room measures
-    int width{}, height{};
-    int wallDepth {0};
-    bool roomGrid[14][7]{};
+    sf::Vector2i dimensions;
+    sf::Vector2i grid;
+
+    // texture and sprite
+    SpriteButton background = {"Assets/Map/" + mapType + "/Background Texture.png", 1, {.50f, .50f}};
+    std::vector<std::vector<bool>> roomGrid;
 
     void setupGrid();
 

@@ -23,15 +23,16 @@ public:
 private:
     float unit;
 
-    sf::Sprite background = {backgroundTexture, sf::IntRect(0, 0, 1920, 1080)};
+    SpriteButton background = {"Assets/GameStates/DisplayMap/" + game->map->mapType + "/Background Texture.png", 1, {.50f, .50f}};
+
     std::vector<sf::Sprite> rooms;
 
     sf::Texture backgroundTexture, roomTexture;
 
-    TextButton mapText = {"Map", game->font, 210, {1920 / 2, 150}};
-    TextButton levelText = {"Floor: " + to_string(game->map->getLevel()), game->font, 120, {150, 1080 - 150}, false, "bottomLeft"};
+    TextButton mapText = {"Map", 210, {.50f, .14f}};
+    TextButton levelText = {"Floor: " + to_string(game->map->getLevel()), 120, {.08f, .86f}, false, "bottomLeft"};
 
-    SpriteButton backBtn = {"Assets/GameStates/Back Icon.png", 0.2, {150, 150}, true};
+    SpriteButton backBtn = {"Assets/GameStates/Back Icon.png", 0.2, {.08f, .14f}, true};
 };
 
 #endif //ACRABSJOURNEY_STATEDISPLAYMAP_H

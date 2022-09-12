@@ -4,9 +4,7 @@
 
 #include "StatePause.h"
 
-StatePause::StatePause(Game *game) : State(game) {
-    backgroundTexture.loadFromFile("Assets/GameStates/PauseScreen/Background.png");
-}
+StatePause::StatePause(Game *game) : State(game) {}
 
 void StatePause::update(int deltaTime, bool clicked, sf::RenderWindow &window) {
     pauseTextBtn.update(window);
@@ -33,7 +31,7 @@ void StatePause::eventHandling(sf::Event event, sf::RenderWindow &window) {
 
 void StatePause::draw(sf::RenderWindow &window) {
     // draw the background
-    window.draw(background);
+    background.draw(window);
 
     // and all the buttons
     pauseTextBtn.draw(window);

@@ -5,30 +5,35 @@
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 #include <cmath>
-#include <bitset>
 
 #include "Collider.h"
+#include "Game.h"
 
-Collider::Collider(float posX, float posY, float width, float height, float angle) :
-posX(posX), posY(posY), prevPosX(posX), prevPosY(posY), width(width), height(height), angle(angle), isColliding(false) {
-    colliderBox = sf::RectangleShape(sf::Vector2f(width, height));
-    colliderBox.setOrigin(width / 2, height / 2);
+Collider::Collider(sf::Vector2f pos, sf::Vector2f dimensions, float angle) : angle(angle), isColliding(false) {
+    this->pos = {pos.x * Game::getInstance()->getWidth(), pos.y * Game::getInstance()->getHeight()};
+    this->dimensions = {dimensions.x * Game::getInstance()->getUnit(), dimensions.y * Game::getInstance()->getUnit()};
+
+    colliderBox = sf::RectangleShape(sf::Vector2f(this->dimensions.x, this->dimensions.y));
+    colliderBox.setOrigin(this->dimensions.x / 2, this->dimensions.y / 2);
     colliderBox.setOutlineThickness(3);
     colliderBox.setFillColor(sf::Color::Transparent);
 
-    // define all four vertexes
-    vertexes = {
-            { width / 2, -height / 2 },
-            { width / 2, height / 2 },
-            { -width / 2, height / 2 },
-            { -width / 2, -height / 2 }
-    };
+    // define vertexes
+    loadVertexes();
+}
 
-    // rotate all vertexes by the angle
+void Collider::loadVertexes() {
+    vertexes = {};
+
+    vertexes.emplace_back(dimensions.x / 2, -dimensions.y / 2);
+    vertexes.emplace_back(dimensions.x / 2, dimensions.y / 2);
+    vertexes.emplace_back(-dimensions.x / 2, dimensions.y / 2);
+    vertexes.emplace_back(-dimensions.x / 2, -dimensions.y / 2);
+
     sf::Vector2f temp {};
     for (int i = 0; i < size(vertexes); i++) {
-        temp.x = posX + vertexes[i].x * cosf(angle) - vertexes[i].y * sinf(angle);
-        temp.y = posY + vertexes[i].x * sinf(angle) + vertexes[i].y * cosf(angle);
+        temp.x = pos.x + vertexes[i].x * cosf(angle) - vertexes[i].y * sinf(angle);
+        temp.y = pos.y + vertexes[i].x * sinf(angle) + vertexes[i].y * cosf(angle);
         vertexes[i].x = temp.x;
         vertexes[i].y = temp.y;
     }
@@ -42,7 +47,7 @@ posX(posX), posY(posY), prevPosX(posX), prevPosY(posY), width(width), height(hei
         pt.setFillColor(sf::Color::Blue);
         vertexPoints.emplace_back(pt);
     }
-};
+}
 
 bool Collider::isCollidingWith(Collider other) {
     // assuming that it's colliding
@@ -146,7 +151,7 @@ bool Collider::isCollidingWith(Collider other) {
     isColliding = true;
 
     // check the right direction
-    if (minOverlappingAxis.x * (other.posX - posX) + minOverlappingAxis.y * (other.posY - posY) <= 0)
+    if (minOverlappingAxis.x * (other.pos.x - pos.x) + minOverlappingAxis.y * (other.pos.y - pos.y) <= 0)
         minOverlappingAxis = {-minOverlappingAxis.x, -minOverlappingAxis.y};
 
     // move the first collider back in position according to the overlapping value and axis
@@ -157,34 +162,11 @@ bool Collider::isCollidingWith(Collider other) {
 }
 
 void Collider::move(float dx, float dy) {
-    posX = posX + dx;
-    posY = posY + dy;
+    pos.x += dx;
+    pos.y += dy;
 
-    // define all four vertexes
-    vertexes = {
-            { width / 2, -height / 2 },
-            { width / 2, height / 2 },
-            { -width / 2, height / 2 },
-            { -width / 2, -height / 2 }
-    };
-
-    sf::Vector2f temp {};
-    for (int i = 0; i < size(vertexes); i++) {
-        temp.x = posX + vertexes[i].x * cosf(angle) - vertexes[i].y * sinf(angle);
-        temp.y = posY + vertexes[i].x * sinf(angle) + vertexes[i].y * cosf(angle);
-        vertexes[i].x = temp.x;
-        vertexes[i].y = temp.y;
-    }
-
-    vertexPoints = {};
-    for (int i = 0; i < size(vertexes); i++) {
-        sf::CircleShape pt;
-        pt.setRadius(3);
-        pt.setOrigin(3, 3);
-        pt.setPosition(vertexes[i].x, vertexes[i].y);
-        pt.setFillColor(sf::Color::Blue);
-        vertexPoints.emplace_back(pt);
-    }
+    // recalculate all four vertexes
+    loadVertexes();
 }
 
 void Collider::draw(sf::RenderWindow &window) {
@@ -192,24 +174,24 @@ void Collider::draw(sf::RenderWindow &window) {
         colliderBox.setOutlineColor(sf::Color::Red);
     else
         colliderBox.setOutlineColor(sf::Color::Green);
-    colliderBox.setPosition(posX, posY);
+    colliderBox.setPosition(pos.x, pos.y);
     colliderBox.setRotation(angle * 180 / M_PI);
 
-    // window.draw(colliderBox);
+    window.draw(colliderBox);
 
     // draw the vertexes
-    // for (int i = 0; i < size(vertexPoints); i++)
-        // window.draw(vertexPoints[i]);
+    for (int i = 0; i < size(vertexPoints); i++)
+        window.draw(vertexPoints[i]);
 }
 
 bool Collider::isEqual(Collider other) {
     // TODO: make it a collider operator ==
     if (
-        this->posX == other.posX &&
-        this->posY == other.posY &&
-        this->angle == other.angle &&
-        this->width == other.width &&
-        this->height == other.height
+        round(this->pos.x) == round(other.pos.x) &&
+        round(this->pos.y) == round(other.pos.y) &&
+        round(this->angle) == round(other.angle) &&
+        round(this->dimensions.x) == round(other.dimensions.x) &&
+        round(this->dimensions.y) == round(other.dimensions.y)
     )
         return true;
     else

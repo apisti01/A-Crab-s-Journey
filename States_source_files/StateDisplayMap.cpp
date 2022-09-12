@@ -61,7 +61,7 @@ void StateDisplayMap::eventHandling(sf::Event event, sf::RenderWindow &window) {
 
 void StateDisplayMap::draw(sf::RenderWindow &window) {
     // draw the background
-    window.draw(background);
+    background.draw(window);
     mapText.draw(window);
 
     // draw the rooms

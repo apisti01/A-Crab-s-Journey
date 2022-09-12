@@ -20,8 +20,7 @@ public:
     void draw(sf::RenderWindow &window) override;
 
 private:
-    sf::Sprite backgroundSprite;
-    sf::Texture texture;
+    SpriteButton background = {"Assets/GameStates/Shop/Background.png", 1, {.50f, .50f}};
 };
 
 

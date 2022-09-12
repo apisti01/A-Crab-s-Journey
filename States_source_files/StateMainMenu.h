@@ -22,18 +22,17 @@ public:
 
 private:
     // background
-    sf::Texture backgroundTexture;
-    sf::Sprite background{backgroundTexture, sf::IntRect{0, 0, 1920, 1080}};
+    SpriteButton background = {"Assets/GameStates/MainMenu/Background.png", 1, {.50f, .50f}};
 
     // text buttons
-    TextButton titleTextBtn = {"A Crab's Journey", game->font, 240, {1920 / 2, 250}};
-    TextButton newGameTextBtn = {"New Game", game->font, 150, {1920 / 2, 450}, true};
-    TextButton loadGameTextBtn = {"Load Game", game->font, 150, {1920 / 2, 600}, true};
-    TextButton pearlShopTextBtn = {"Pearl Shop", game->font, 150, {1920 / 2, 750}, true};
-    TextButton backToSurfaceTextBtn = {"Back to Surface", game->font, 150, {1920 / 2, 900}, true};
+    TextButton titleTextBtn = {"A Crab's Journey", 240, {.50f, .24f}};
+    TextButton newGameTextBtn = {"New Game", 150, {.50f, .43f}, true};
+    TextButton loadGameTextBtn = {"Load Game", 150, {.50f, .57f}, true};
+    TextButton pearlShopTextBtn = {"Pearl Shop", 150, {.50f, .71f}, true};
+    TextButton backToSurfaceTextBtn = {"Back to Surface", 150, {.50f, .85f}, true};
     // icon Buttons
-    SpriteButton creditsBtn = {"Assets/GameStates/MainMenu/Credits Texture.png", 0.05, {150, 250}, true};
-    SpriteButton settingsBtn = {"Assets/GameStates/MainMenu/Settings Texture.png", 0.05, {1920 - 150, 250}, true};
+    SpriteButton creditsBtn = {"Assets/GameStates/MainMenu/Credits Texture.png", 0.05f, {.08f, .25f}, true};
+    SpriteButton settingsBtn = {"Assets/GameStates/MainMenu/Settings Texture.png", 0.05f, {.92f, .25f}, true};
 };
 
 

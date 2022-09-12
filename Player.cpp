@@ -6,15 +6,15 @@
 
 Player::Player(int characterIndex, std::string name, CrabSpecie crabSpecie, const sf::Texture& texture, Collider collider, std::unique_ptr<Weapon> weapon,
                float hp, float maxHp, float speed, float maxSpeed, float armor, float maxArmor, float strength,
-               float maxStrength) :
+               float maxStrength, float units) :
         GameCharacter(std::move(name), texture, std::move(collider), std::move(weapon), hp, maxHp, speed, maxSpeed, armor,
-                      maxArmor, strength, maxStrength, sf::Vector2u(6, 3), 0.4), characterIndex(characterIndex), crabSpecie(crabSpecie) {
+                      maxArmor, strength, maxStrength, sf::Vector2u(6, 3), units), characterIndex(characterIndex), crabSpecie(crabSpecie) {
 }
 
-void Player::update(int deltaTime, FloorMap *floor, bool clicked) {
+void Player::update(int deltaTime, FloorMap *floor, bool clicked, sf::RenderWindow &window) {
     // get keyboard and mouse inputs to move and rotate the player
     sf::Vector2f deltaPos = getKeyboardInput(deltaTime, floor);
-    float deltaAngle = getMouseInput(deltaTime);
+    float deltaAngle = getMouseInput(deltaTime, window);
 
     updateColliderAndSprite(deltaPos, deltaAngle, floor);
 
@@ -52,15 +52,15 @@ sf::Vector2f Player::getKeyboardInput(int deltaTime, FloorMap *floor) {
         deltaPos.x = deltaPos.x / norm;
         deltaPos.y = deltaPos.y / norm;
     }
-    deltaPos.x = deltaPos.x * speed * Game::getInstance()->lenUnit * static_cast<float>(deltaTime) / pow(10, 6);
-    deltaPos.y = deltaPos.y * speed * Game::getInstance()->lenUnit * static_cast<float>(deltaTime) / pow(10, 6);
+    deltaPos.x = deltaPos.x * speed * Game::getInstance()->getUnit() * float(deltaTime) / pow(10, 6);
+    deltaPos.y = deltaPos.y * speed * Game::getInstance()->getUnit() * float(deltaTime) / pow(10, 6);
 
     return deltaPos;
 }
 
-float Player::getMouseInput(int deltaTime) {
+float Player::getMouseInput(int deltaTime, sf::RenderWindow &window) {
     // coordinates of the mouse when pressed
-    auto coordinates = sf::Mouse::getPosition();
+    auto coordinates = sf::Mouse::getPosition(window);
 
     // coordinates relative to the position of the player
     sf::Vector2f relativeCoordinates {float(coordinates.x) - sprite.getPosition().x, float(coordinates.y) - sprite.getPosition().y};
@@ -74,34 +74,31 @@ float Player::getMouseInput(int deltaTime) {
 void Player::changeRoom(FloorMap* floor) {
     // move across map through doors
     // right door
-    if (sprite.getPosition().x > floor->roomList[floor->currentRoomIndex]->getWidth() &&
+    if (collider.getPosX() > floor->roomList[floor->currentRoomIndex]->getWidth() &&
         floor->roomList[floor->currentRoomIndex]->doors[1] != -1) {
         floor->currentRoomIndex = floor->roomList[floor->currentRoomIndex]->doors[1];
-        sprite.setPosition({5, sprite.getPosition().y});
+        collider.setPosX(5.f);
     }
     // left door
-    if (sprite.getPosition().x < 0 && floor->roomList[floor->currentRoomIndex]->doors[3] != -1) {
+    if (collider.getPosX() < 0 && floor->roomList[floor->currentRoomIndex]->doors[3] != -1) {
         floor->currentRoomIndex = floor->roomList[floor->currentRoomIndex]->doors[3];
-        sprite.setPosition(
-                {static_cast<float>(floor->roomList[floor->currentRoomIndex]->getWidth() - 5), sprite.getPosition().y});
+        collider.setPosX(floor->roomList[floor->currentRoomIndex]->getWidth() - 5.f);
     }
     // bottom door
-    if (sprite.getPosition().y > floor->roomList[floor->currentRoomIndex]->getHeight() &&
+    if (collider.getPosY() > floor->roomList[floor->currentRoomIndex]->getHeight() &&
         floor->roomList[floor->currentRoomIndex]->doors[2] != -1) {
         floor->currentRoomIndex = floor->roomList[floor->currentRoomIndex]->doors[2];
-        sprite.setPosition({sprite.getPosition().x, 5});
+        collider.setPosY(5.f);
     }
     // upper door
-    if (sprite.getPosition().y < 0 && floor->roomList[floor->currentRoomIndex]->doors[0] != -1) {
+    if (collider.getPosY() < 0 && floor->roomList[floor->currentRoomIndex]->doors[0] != -1) {
         floor->currentRoomIndex = floor->roomList[floor->currentRoomIndex]->doors[0];
-        sprite.setPosition({sprite.getPosition().x,
-                            static_cast<float>(floor->roomList[floor->currentRoomIndex]->getHeight() - 5)});
+        collider.setPosY(floor->roomList[floor->currentRoomIndex]->getHeight() - 5.f);
     }
 
     floor->roomList[floor->currentRoomIndex]->setVisited(true);
 
-    collider.setPosX(sprite.getPosition().x);
-    collider.setPosY(sprite.getPosition().y);
+    sprite.setPosition(collider.getPosition());
 }
 
 void Player::checkCageStatus(FloorMap *floor) {

@@ -9,12 +9,11 @@ DefensiveMeleeEnemy::DefensiveMeleeEnemy(int id, std::string name, const sf::Tex
                                          std::unique_ptr<Weapon> weapon, float hp, float maxHp, float speed,
                                          float maxSpeed, float armor, float maxArmor, float strength, float maxStrength,
                                          float XpReward, int coinsDropped, int pearlsDropped, int attackTimer,
-                                         float triggerRange) :
+                                         float triggerRange, float units) :
                                          Enemy(id, std::move(name), texture, std::move(collider), std::move(weapon), hp,
                                                maxHp, speed, maxSpeed, armor, maxArmor, strength, maxStrength, XpReward,
-                                               coinsDropped, pearlsDropped, attackTimer), triggerRange(triggerRange) {
-    origPosX = getPosX();
-    origPosY = getPosY();
+                                               coinsDropped, pearlsDropped, attackTimer, units), triggerRange(triggerRange) {
+    origPos = getPosition();
 }
 
 sf::Vector2f DefensiveMeleeEnemy::chase(const Player *hero, float &deltaAngle, int deltaTime, bool &triggered) {
@@ -29,7 +28,7 @@ sf::Vector2f DefensiveMeleeEnemy::chase(const Player *hero, float &deltaAngle, i
         deltaPos = {hero->getPosX() - getPosX(), hero->getPosY() - getPosY()};
         triggered = true;
     } else {
-        deltaPos = {origPosX - getPosX(), origPosY - getPosY()};
+        deltaPos = {origPos.x - getPosX(), origPos.y - getPosY()};
         triggered = false;
     }
 
@@ -44,8 +43,8 @@ sf::Vector2f DefensiveMeleeEnemy::chase(const Player *hero, float &deltaAngle, i
     }
 
     // the actual movement
-    deltaPos.x = deltaPos.x * speed * Game::getInstance()->lenUnit * static_cast<float>(deltaTime) / pow(10, 6);
-    deltaPos.y = deltaPos.y * speed * Game::getInstance()->lenUnit * static_cast<float>(deltaTime) / pow(10, 6);
+    deltaPos.x = deltaPos.x * speed * Game::getInstance()->getUnit() * static_cast<float>(deltaTime) / pow(10, 6);
+    deltaPos.y = deltaPos.y * speed * Game::getInstance()->getUnit() * static_cast<float>(deltaTime) / pow(10, 6);
 
     return deltaPos;
 }

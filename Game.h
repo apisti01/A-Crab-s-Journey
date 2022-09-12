@@ -6,8 +6,6 @@
 #define MAIN_CPP_GAME_H
 
 #include <memory>
-#include <cfloat>
-#include <cassert>
 
 #include "Player.h"
 #include "FloorMap.h"
@@ -21,31 +19,35 @@ public:
     ~Game() = default;
 
     // getting one instance of the game, if it already exists it give the address of the one in use
-    static Game* getInstance();
+    static Game* getInstance(sf::Vector2u windowSize = {});
+
+    void prepareFirstState();
 
     // function that handle event and changes states
-    void eventHandling(sf::Event event, sf::RenderWindow &window) {
-        currentState->eventHandling(event, window);
-    }
+    void eventHandling(sf::Event event, sf::RenderWindow &window) { currentState->eventHandling(event, window); }
 
     // changing the current state, creating a new one and deleting the old
     void changeState(StateType type);
 
     // update the game on the different states it is
-    void update(int deltaTime, bool clicked, sf::RenderWindow &window) {
-        currentState->update(deltaTime, clicked, window);
-    }
+    void update(int deltaTime, bool clicked, sf::RenderWindow &window) { currentState->update(deltaTime, clicked, window); }
 
     // delegate to draw all
-    void draw(sf::RenderWindow &window) {
-        currentState->draw(window);
-    }
+    void draw(sf::RenderWindow &window) { currentState->draw(window); }
 
-    void restartClock() {
-        clock.restart();
-    }
+    void restartClock() { clock.restart(); }
 
-    void getMeasures(sf::RenderWindow &window);
+    float getWidth() const { return width; }
+    void setWidth(int width) { Game::width = width; }
+
+    float getHeight() const { return height; }
+    void setHeight(int height) { Game::height = height; }
+
+    float getUnit() const { return unit; }
+    void setUnit(int unit) { Game::unit = unit; }
+
+    float getRatio() const { return ratio; }
+    void setRatio(float ratio) { Game::ratio = ratio; }
 
     // pointer to the player, shared with the map
     std::shared_ptr<Player> player = nullptr;
@@ -66,20 +68,23 @@ public:
     // font used in game
     sf::Font font;
 
-    // screen and game measures
-    int width, height, lenUnit;
-
 private:
+    // screen and game measures
+    int width, height, unit;
+    float ratio;
+
     // private constructor to only have one instance of the class (Singleton)
-    Game();
+    Game(sf::Vector2u windowSize);
 
     // game instance
     static Game* gameInstance;
 
-    bool is_equal(float a, float b);
-
-    // Current state of the game
+    // current state of the game
     std::unique_ptr<State> currentState;
+
+    void getMeasures(sf::Vector2u windowSize);
+
+    bool is_equal(float a, float b) { return fabs(a - b) <= 0.01; }
 };
 
 

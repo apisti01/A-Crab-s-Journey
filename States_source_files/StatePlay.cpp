@@ -33,7 +33,7 @@ void StatePlay::eventHandling(sf::Event event, sf::RenderWindow &window) {
                                                            game->map->getLevel() + 1);
                     if (tmp)
                         game->map = std::move(tmp);
-                    game->player->setPosition(game->map->getRoomWidth() / 2, game->map->getRoomHeight() / 2);
+                    game->player->setPosition({game->map->getRoomWidth() / 2.f, game->map->getRoomHeight() / 2.f});
                 }
                 break;
         }
@@ -41,7 +41,7 @@ void StatePlay::eventHandling(sf::Event event, sf::RenderWindow &window) {
 }
 
 void StatePlay::update(int deltaTime, bool clicked, sf::RenderWindow &window) {
-    game->map->update(deltaTime, clicked);
+    game->map->update(deltaTime, clicked, window);
     nextFloor.update(window);
 
     sec += deltaTime / powf(10, 6);

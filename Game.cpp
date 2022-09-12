@@ -20,38 +20,46 @@
 
 Game* Game::gameInstance = nullptr;
 
-Game* Game::getInstance() {
+Game* Game::getInstance(sf::Vector2u windowSize) {
     if (gameInstance == nullptr)
-        gameInstance = new Game();
+        gameInstance = new Game(windowSize);
+
     return gameInstance;
 }
 
-Game::Game() : currentState(make_unique<StateTitleScreen>(this)), bestiary(Bestiary()), globalProgress(GlobalProgress()) {
-    // load font
+Game::Game(sf::Vector2u windowSize) : bestiary(Bestiary()), globalProgress(GlobalProgress()) {
+    // load game font: https://fonts.google.com/specimen/Rancho?query=rancho
     sf::Font Rancho;
     if (!Rancho.loadFromFile("Assets/Font/Rancho/Rancho.ttf")) {
         cout << "font non caricato" << endl;
         system("pause");
     }
     font = Rancho;
+
+    getMeasures(windowSize);
 }
 
-void Game::getMeasures(sf::RenderWindow &window) {
-    float aspectRatio = float(window.getSize().x) / float(window.getSize().y);
+void Game::prepareFirstState() {
+    currentState = make_unique<StateTitleScreen>(this);
+}
 
+void Game::getMeasures(sf::Vector2u windowSize) {
+    float aspectRatio = float(windowSize.x) / float(windowSize.y);
+
+    // calculate the game unit based on the screen resolution
     if (is_equal(aspectRatio, 16.0 / 9.0) ||
         is_equal(aspectRatio, 16.0 / 10.0) ||
         is_equal(aspectRatio, 4.0 / 3.0))
-        lenUnit = floor(window.getSize().x / 16.0);
+        unit = floor(windowSize.x / 16.0);
     else if (is_equal(aspectRatio, 5.0 / 4.0))
-        lenUnit = floor(window.getSize().x / 15.0);
+        unit = floor(windowSize.x / 15.0);
     else if (is_equal(aspectRatio, 21.0 / 9.0))
-        lenUnit = floor(window.getSize().x / 21.0);
+        unit = floor(windowSize.x / 21.0);
 
-    cout << lenUnit << endl;
-
-    width = window.getSize().x;
-    height = window.getSize().y;
+    // saves window dimensions
+    width = windowSize.x;
+    height = windowSize.y;
+    ratio = max(windowSize.x / 1920.0f, windowSize.y / 1080.0f);
 }
 
 void Game::changeState(StateType type) {
@@ -101,8 +109,4 @@ void Game::changeState(StateType type) {
 
     // the current state became the one just created, deleting the old one
     currentState = std::move(tmp);
-}
-
-bool Game::is_equal(float a, float b) {
-    return fabs(a - b) <= 0.01;
 }

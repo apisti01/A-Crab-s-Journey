@@ -9,7 +9,7 @@
 
 class TextButton : public Button {
 public:
-    TextButton(std::string string, sf::Font &font, int characterSize, sf::Vector2f position, bool clickable = false, std::string origin = "center");
+    TextButton(std::string string, int characterSize, sf::Vector2f position, bool clickable = false, std::string origin = "center");
 
     void update(sf::RenderWindow &window) override;
     void draw(sf::RenderWindow &window) override;

@@ -4,9 +4,7 @@
 
 #include "StateGameOver.h"
 
-StateGameOver::StateGameOver(Game *game) : State(game) {
-    backgroundTexture.loadFromFile("Assets/GameStates/MainMenu/Background.png");
-}
+StateGameOver::StateGameOver(Game *game) : State(game) {}
 
 void StateGameOver::eventHandling(sf::Event event, sf::RenderWindow &window) {
     if (event.type == sf::Event::MouseButtonReleased) {
@@ -39,7 +37,7 @@ void StateGameOver::update(int deltaTime, bool clicked, sf::RenderWindow &window
 }
 
 void StateGameOver::draw(sf::RenderWindow &window) {
-    window.draw(background);
+    background.draw(window);
 
     titleText.draw(window);
 

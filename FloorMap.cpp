@@ -3,14 +3,15 @@
 //
 
 #include "FloorMap.h"
-#include "Game.h"
 
-FloorMap::FloorMap(int characterIndex, const std::string &mapType, int level) :
-                    mapType(mapType), level(level), roomWidth(1920), roomHeight(1080) {
+FloorMap::FloorMap(int characterIndex, const std::string &mapType, int level) : mapType(mapType), level(level) {
     // there's a 40% chance that this floor has a shop room
     float chance = rand() / (RAND_MAX + 1.0);
     if (chance <= shopChance)
         hasShop = true;
+
+    roomWidth = Game::getInstance()->getWidth();
+    roomHeight = Game::getInstance()->getHeight();
 
     // then generates the floor
     generateFloor(mapType);
@@ -28,7 +29,7 @@ FloorMap::~FloorMap() {
 
 void FloorMap::generateFloor(std::string mapType) {
     // add first room in the middle of the grid (position 0, 0)
-    roomList.push_back(std::make_unique<Room>(mapType, 0, 0, roomWidth, roomHeight));
+    roomList.push_back(std::make_unique<Room>(mapType, sf::Vector2i{0, 0}, sf::Vector2i{roomWidth, roomHeight}));
 
     // calculate number of rooms in the floor
     numRooms = round(10 - exp(1.8 - level / 4));
@@ -65,7 +66,7 @@ void FloorMap::generateFloor(std::string mapType) {
 
     // set the shop room
     setShopRoom();
-};
+}
 
 int FloorMap::pickRoom() {
     bool availableRoomFounded = false;
@@ -161,7 +162,7 @@ void FloorMap::generateRoom(int roomIndex, int sideIndex, int newRoomIndex) {
     else if (otherSideY > maxY)
         maxY = otherSideY;
 
-    roomList.push_back(std::make_unique<Room>(mapType, otherSideX, otherSideY, roomWidth, roomHeight));
+    roomList.push_back(std::make_unique<Room>(mapType, sf::Vector2i{otherSideX, otherSideY}, sf::Vector2i{roomWidth, roomHeight}));
 
     // assign adjacent room index to start and new room
     roomList[roomIndex]->doors[sideIndex] = newRoomIndex;
@@ -293,14 +294,14 @@ bool FloorMap::floorCompleted() {
         return false;
 }
 
-void FloorMap::update(int deltaTime, bool attack) {
+void FloorMap::update(int deltaTime, bool attack, sf::RenderWindow &window) {
     // update the current room
     if (roomList[currentRoomIndex]->getCage())
-        roomList[currentRoomIndex]->updateEnemies(deltaTime, this);
+        roomList[currentRoomIndex]->updateEnemies(deltaTime, this, window);
     roomList[currentRoomIndex]->updateBullets(deltaTime, this);
 
     // and the player: check if it's still alive
-    player->update(deltaTime, this, attack);
+    player->update(deltaTime, this, attack, window);
     // if not change state to main menu
     if (player->getHp() <= 0)
         Game::getInstance()->changeState(StateType::GameOver);

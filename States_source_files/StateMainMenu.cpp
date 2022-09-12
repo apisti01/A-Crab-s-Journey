@@ -4,9 +4,7 @@
 
 #include "StateMainMenu.h"
 
-StateMainMenu::StateMainMenu(Game *game) : State(game) {
-    backgroundTexture.loadFromFile("Assets/GameStates/MainMenu/Background.png");
-}
+StateMainMenu::StateMainMenu(Game *game) : State(game) {}
 
 void StateMainMenu::update(int deltaTime, bool clicked, sf::RenderWindow &window) {
     // update the buttons
@@ -58,7 +56,7 @@ void StateMainMenu::eventHandling(sf::Event event, sf::RenderWindow &window) {
 
 void StateMainMenu::draw(sf::RenderWindow &window) {
     // draw background
-    window.draw(background);
+    background.draw(window);
 
     // and all the buttons
     titleTextBtn.draw(window);

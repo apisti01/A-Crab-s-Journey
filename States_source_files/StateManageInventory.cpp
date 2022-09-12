@@ -4,9 +4,7 @@
 
 #include "StateManageInventory.h"
 
-StateManageInventory::StateManageInventory(Game *game) : State(game) {
-    backgroundTexture.loadFromFile("Assets/GameStates/Inventory/Background.png");
-}
+StateManageInventory::StateManageInventory(Game *game) : State(game) {}
 
 void StateManageInventory::eventHandling(sf::Event event, sf::RenderWindow &window) {
     if (event.type == sf::Event::KeyPressed) {
@@ -27,9 +25,8 @@ void StateManageInventory::eventHandling(sf::Event event, sf::RenderWindow &wind
             }
         }
     }
-
 }
 
 void StateManageInventory::draw(sf::RenderWindow &window) {
-    window.draw(background);
+    background.draw(window);
 }

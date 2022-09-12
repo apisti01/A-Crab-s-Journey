@@ -5,8 +5,6 @@
 #include "StatePearlShop.h"
 
 StatePearlShop::StatePearlShop(Game *game) : State(game) {
-    texture.loadFromFile("Assets/GameStates/PearlShop/Background.png");
-
     // load the characters textures
     auto characters = Game::getInstance()->globalProgress.characters;
     for (int i = 0; i < size(characters); i++) {
@@ -27,9 +25,9 @@ void StatePearlShop::update(int deltaTime, bool clicked, sf::RenderWindow &windo
     // pearls info position
     pearlsText.text.setString(to_string(game->globalProgress.pearls));
     pearlsText.update(window);
-    int pearlsInfoWidth = pearlsText.text.getGlobalBounds().width + pearlsIcon.rect.getGlobalBounds().width - 50;
-    pearlsText.text.setPosition(1920 / 2 - pearlsInfoWidth / 2, pearlsText.text.getPosition().y);
-    pearlsIcon.rect.setPosition(1920 / 2 + pearlsInfoWidth / 2, pearlsIcon.rect.getPosition().y);
+    float pearlsInfoWidth = pearlsText.text.getGlobalBounds().width + pearlsIcon.rect.getGlobalBounds().width - 50;
+    pearlsText.text.setPosition((.50f - pearlsInfoWidth / game->getWidth() / 2) * game->getWidth(), pearlsText.text.getPosition().y);
+    pearlsIcon.rect.setPosition((.50f + pearlsInfoWidth / game->getWidth() / 2) * game->getWidth(), pearlsIcon.rect.getPosition().y);
 
     // go back button
     backBtn.update(window);
@@ -143,32 +141,32 @@ void StatePearlShop::loadStats() {
     int i;
     // health upgrades
     for (i = 0; i < floor(character.health + character.healthUpgrades / 2); i++)
-        units.push_back({statsUnitTexture, 0.025, {140.0f + 55 * i, 870}});
+        units.push_back({statsUnitTexture, 0.025, {0.07f + .028f * i, .81f}});
     if (fmod(character.health + character.healthUpgrades / 2, 1) != 0)
-        units.push_back({statsHalfUnitTexture, 0.025, {140.0f + 55 * i - 12.5f, 870}});
+        units.push_back({statsHalfUnitTexture, 0.025, {0.07f + .028f * i - .007f, .81f}});
 
     // speed upgrades
     for (i = 0; i < floor(character.speed + character.speedUpgrades / 2); i++)
-        units.push_back({statsUnitTexture, 0.025, {740.0f + 55 * i, 870}});
+        units.push_back({statsUnitTexture, 0.025, {.39f + .028f * i, .81f}});
     if (fmod(character.speed + character.speedUpgrades / 2, 1) != 0)
-        units.push_back({statsHalfUnitTexture, 0.025, {740.0f + 55 * i - 12.5f, 870}});
+        units.push_back({statsHalfUnitTexture, 0.025, {.39f + .028f * i - .007f, .81f}});
 
     // armor upgrades
     for (i = 0; i < floor(character.armor + character.armorUpgrades / 2); i++)
-        units.push_back({statsUnitTexture, 0.025, {140.0f + 55 * i, 990}});
+        units.push_back({statsUnitTexture, 0.025, {0.07f + .028f * i, .92f}});
     if (fmod(character.armor + character.armorUpgrades / 2, 1) != 0)
-        units.push_back({statsHalfUnitTexture, 0.025, {140.0f + 55 * i - 12.5f, 990}});
+        units.push_back({statsHalfUnitTexture, 0.025, {0.07f + .028f * i - .007f, .92f}});
 
     // strength upgrades
     for (i = 0; i < floor(character.strength + character.strengthUpgrades / 2); i++)
-        units.push_back({statsUnitTexture, 0.025, {740.0f + 55 * i, 990}});
+        units.push_back({statsUnitTexture, 0.025, {.39f + .028f * i, .92f}});
     if (fmod(character.strength + character.strengthUpgrades / 2, 1) != 0)
-        units.push_back({statsHalfUnitTexture, 0.025, {740.0f + 55 * i - 12.5f, 990}});
+        units.push_back({statsHalfUnitTexture, 0.025, {.39f + .028f * i - .007f, .92f}});
 }
 
 void StatePearlShop::draw(sf::RenderWindow &window) {
     // draw the background and the title
-    window.draw(backgroundSprite);
+    background.draw(window);
     titleText.draw(window);
 
     // draw the pearl icon and write the number of pearls owned

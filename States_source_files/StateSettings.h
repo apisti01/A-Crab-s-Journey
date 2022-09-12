@@ -21,15 +21,14 @@ public:
     void draw(sf::RenderWindow &window) override;
 
 private:
-    sf::Texture texture;
-    sf::Sprite backgroundSprite = {texture, sf::IntRect(0, 0, 1920, 1080)};
+    SpriteButton background = {"Assets/GameStates/PauseScreen/Background.png", 1, {.50f, .50f}};
 
-    TextButton settingsText = {"Settings", game->font, 210, {1920 / 2, 150}};
-    TextButton difficultyText = {"Difficulty", game->font, 150, {1920 / 4, 450}};
-    TextButton languageText = {"Language", game->font, 150, {1920 / 4, 600}};
-    TextButton soundText = {"Sound", game->font, 150, {1920 / 4, 750}};
+    TextButton settingsText = {"Settings", 210, {.50f, .14f}};
+    TextButton difficultyText = {"Difficulty", 150, {.25f, .42f}};
+    TextButton languageText = {"Language", 150, {.25f, .55f}};
+    TextButton soundText = {"Sound", 150, {.25f, .69f}};
 
-    SpriteButton backBtn = {"Assets/GameStates/Back Icon.png", 0.2, {150, 150}, true};
+    SpriteButton backBtn = {"Assets/GameStates/Back Icon.png", 0.2, {.08f, .14f}, true};
 };
 
 #endif //ACRABSJOURNEY_STATESETTINGS_H

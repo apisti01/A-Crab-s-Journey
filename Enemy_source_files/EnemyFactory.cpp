@@ -48,8 +48,7 @@ unique_ptr<Enemy> EnemyFactory::selectRandomEnemy(const std::string& mapType, in
         enemyTexture.loadFromFile("Assets/GameCharacter/Enemy/" + enemy.type + "/" + enemy.name + "/Texture.png");
 
         // create the enemy collider
-        Collider enemyCollider(float(1920) / 2, float(1080) / 2, enemyTexture.getSize().x * 0.06,
-                               enemyTexture.getSize().y * 0.06);
+        Collider enemyCollider({.50f, .50f}, {1.0f, 1.0f});
 
         // create the enemy pointer
         std::unique_ptr<Enemy> enemyPtr;
@@ -62,7 +61,7 @@ unique_ptr<Enemy> EnemyFactory::selectRandomEnemy(const std::string& mapType, in
                                                               std::move(meleeWeapon), enemy.health, enemy.health,
                                                               enemy.speed, enemy.speed, enemy.armor, enemy.armor,
                                                               enemy.strength, enemy.strength, 10, 10, 10,
-                                                              enemy.attackTimer, enemy.triggerRange);
+                                                              enemy.attackTimer, enemy.triggerRange, 1.0f);
             enemyPtr = std::move(ame);
         }
 
@@ -74,7 +73,7 @@ unique_ptr<Enemy> EnemyFactory::selectRandomEnemy(const std::string& mapType, in
                                                             std::move(rangedWeapon), enemy.health, enemy.health,
                                                             enemy.speed, enemy.speed, enemy.armor, enemy.armor,
                                                             enemy.strength, enemy.strength, 10, 10, 10,
-                                                            enemy.attackTimer, enemy.triggerRange);
+                                                            enemy.attackTimer, enemy.triggerRange, 1.0f);
             enemyPtr = std::move(cre);
         }
 
@@ -86,7 +85,7 @@ unique_ptr<Enemy> EnemyFactory::selectRandomEnemy(const std::string& mapType, in
                                                              std::move(meleeWeapon), enemy.health, enemy.health,
                                                              enemy.speed, enemy.speed, enemy.armor, enemy.armor,
                                                              enemy.strength, enemy.strength, 10, 10, 10,
-                                                             enemy.attackTimer, enemy.triggerRange);
+                                                             enemy.attackTimer, enemy.triggerRange, 1.0f);
             enemyPtr = std::move(dme);
         }
 
@@ -98,7 +97,7 @@ unique_ptr<Enemy> EnemyFactory::selectRandomEnemy(const std::string& mapType, in
                                                            std::move(rangedWeapon), enemy.health, enemy.health,
                                                            enemy.speed, enemy.speed, enemy.armor, enemy.armor,
                                                            enemy.strength, enemy.strength, 10, 10, 10,
-                                                           enemy.attackTimer);
+                                                           enemy.attackTimer, 1.0f);
             enemyPtr = std::move(sre);
         }
 
@@ -109,9 +108,8 @@ unique_ptr<Enemy> EnemyFactory::selectRandomEnemy(const std::string& mapType, in
 }
 
 void EnemyFactory::placeEnemy(Enemy *enemy, Room *room) {
-    // get one free spot on room grid coordinates
-    sf::Vector2i pos = room->pickFreeGridSpot();
-
-    // and place the enemy there
-    enemy->setPosition(pos.x, pos.y);
+    sf::Vector2f pos = room->pickFreeGridSpot();
+    pos = {pos.x * Game::getInstance()->getWidth(), pos.y * Game::getInstance()->getHeight()};
+    // place the enemy in a free spot on room grid coordinates
+    enemy->setPosition(pos);
 }

@@ -10,7 +10,6 @@
 
 class StateTitleScreen : public State {
 public:
-    // Constructor and Destructor
     explicit StateTitleScreen(Game *game);
 
     ~StateTitleScreen() override = default;
@@ -23,11 +22,10 @@ public:
 
 private:
     // background
-    sf::Texture backgroundTexture;
-    sf::Sprite background{backgroundTexture, sf::IntRect(0, 0, 1920, 1080)};
+    SpriteButton background = {"Assets/GameStates/MainMenu/Background.png", 1, {.50f, .50f}};
 
-    TextButton titleText = {"A Crab's Journey", game->font, 280, {1920 / 2, 500}};
-    TextButton pressBtnText = {"Press any key to continue", game->font, 90, {1920 / 2, 700}};
+    TextButton titleText = {"A Crab's Journey", 280, {.50f, .46f}};
+    TextButton pressBtnText = {"Press any key to continue", 90, {.50f, .65f}};
 
     float timer = 0;
 };

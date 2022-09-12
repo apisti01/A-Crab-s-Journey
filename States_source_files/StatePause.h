@@ -22,14 +22,13 @@ public:
 
 private:
     // background
-    sf::Texture backgroundTexture;
-    sf::Sprite background{backgroundTexture, sf::IntRect{0, 0, 1920, 1080}};
+    SpriteButton background = {"Assets/GameStates/PauseScreen/Background.png", 1, {.50f, .50f}};
 
     // buttons
-    TextButton pauseTextBtn = {"Pause", game->font, 210, {1920 / 2, 175}};
-    TextButton resumeTextBtn = {"Resume", game->font, 150, {1920 / 2, 425}, true};
-    TextButton exitTextBtn = {"Exit", game->font, 150, {1920 / 2, 600}, true};
-    TextButton settingsTextBtn = {"Settings", game->font, 150, {1920 / 2, 775}, true};
+    TextButton pauseTextBtn = {"Pause", 210, {.50f, .16f}};
+    TextButton resumeTextBtn = {"Resume", 150, {.50f, .39f}, true};
+    TextButton exitTextBtn = {"Exit", 150, {.50f, .56f}, true};
+    TextButton settingsTextBtn = {"Settings", 150, {.50f, .72f}, true};
 };
 
 

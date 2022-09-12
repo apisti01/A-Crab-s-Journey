@@ -14,10 +14,10 @@ public:
     // Constructor and Destructor
     Enemy(int id, std::string name, const sf::Texture& texture, Collider collider, std::unique_ptr<Weapon> weapon,
           float hp, float maxHp, float speed, float maxSpeed, float armor, float maxArmor, float strength,
-          float maxStrength, float XpReward, int coinsDropped, int pearlsDropped, int attackTimer);
+          float maxStrength, float XpReward, int coinsDropped, int pearlsDropped, int attackTimer, float units);
     ~Enemy() override = default;
 
-    void update(int deltaTime, FloorMap *floor, bool triggered) override;
+    void update(int deltaTime, FloorMap *floor, bool triggered, sf::RenderWindow &window) override;
 
     // movement and facing of the enemy1, return the movement
     virtual sf::Vector2f chase(const Player *hero, float &deltaAngle, int deltaTime, bool &triggered) = 0;

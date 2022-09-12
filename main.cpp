@@ -11,18 +11,19 @@ int main() {
     // initialize the randomic number generator
     srand(time(nullptr));
 
-    // load window
+    // load window in fullscreen mode
     sf::RenderWindow window(sf::VideoMode(), "A Crab's Journey", sf::Style::Fullscreen);
-    cout << window.getSize().x << " x " << window.getSize().y << endl;
+
+    // load window in windowed mode
+    // sf::RenderWindow window(sf::VideoMode(1366, 768), "A Crab's Journey");
+    // sf::RenderWindow window(sf::VideoMode(1440, 900), "A Crab's Journey");
 
     // creation of the event
     sf::Event event;
 
     // create the game
-    auto game = Game::getInstance();
-
-    // determine the aspect ratio of the screen the game is been playing on
-    game->getMeasures(window);
+    auto game = Game::getInstance({window.getSize().x, window.getSize().y});
+    game->prepareFirstState();
 
     bool clicked;
 
