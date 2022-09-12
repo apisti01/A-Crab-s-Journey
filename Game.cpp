@@ -16,8 +16,6 @@
 #include "States_source_files/StateGameOver.h"
 #include "States_source_files/StateSettings.h"
 
-#include <iostream>
-
 Game* Game::gameInstance = nullptr;
 
 Game* Game::getInstance(sf::Vector2u windowSize) {
@@ -66,7 +64,6 @@ void Game::changeState(StateType type) {
     std::unique_ptr<State> tmp;
 
     try {
-        // FIXME to complete
         // based on the enum it creates a new instance of a derived state class
         switch (type) {
             case StateType::MainMenu:

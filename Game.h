@@ -13,6 +13,8 @@
 #include "GlobalProgress.h"
 #include "States_source_files/State.h"
 
+#include <iostream>
+
 class Game {
 public:
     // Destructor

@@ -10,6 +10,6 @@
 0 PosidoniaMeadow 400 1.5
 0 IceFloe 600 2
 
-101
+353
 
 0 Normal 10 10

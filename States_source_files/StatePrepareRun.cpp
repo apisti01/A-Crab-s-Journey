@@ -133,7 +133,7 @@ void StatePrepareRun::setupPlayer(int characterIndex) {
                                        character.armor + character.armorUpgrades / 2,
                                        character.strength + character.strengthUpgrades / 2,
                                        character.strength + character.strengthUpgrades / 2,
-                                       1.0f);
+                                       1.5f);
 
     // and set his position at the center of the map
     game->player->setPosition({game->getWidth() / 2, game->getHeight() / 2});

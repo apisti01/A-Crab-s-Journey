@@ -303,8 +303,10 @@ void FloorMap::update(int deltaTime, bool attack, sf::RenderWindow &window) {
     // and the player: check if it's still alive
     player->update(deltaTime, this, attack, window);
     // if not change state to main menu
-    if (player->getHp() <= 0)
+    if (player->getHp() <= 0) {
+        player->~Player();
         Game::getInstance()->changeState(StateType::GameOver);
+    }
 }
 
 

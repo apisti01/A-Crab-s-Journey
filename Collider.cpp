@@ -177,11 +177,11 @@ void Collider::draw(sf::RenderWindow &window) {
     colliderBox.setPosition(pos.x, pos.y);
     colliderBox.setRotation(angle * 180 / M_PI);
 
-    window.draw(colliderBox);
+    // window.draw(colliderBox);
 
     // draw the vertexes
-    for (int i = 0; i < size(vertexPoints); i++)
-        window.draw(vertexPoints[i]);
+    // for (int i = 0; i < size(vertexPoints); i++)
+        // window.draw(vertexPoints[i]);
 }
 
 bool Collider::isEqual(Collider other) {

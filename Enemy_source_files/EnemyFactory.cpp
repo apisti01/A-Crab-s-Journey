@@ -61,7 +61,7 @@ unique_ptr<Enemy> EnemyFactory::selectRandomEnemy(const std::string& mapType, in
                                                               std::move(meleeWeapon), enemy.health, enemy.health,
                                                               enemy.speed, enemy.speed, enemy.armor, enemy.armor,
                                                               enemy.strength, enemy.strength, 10, 10, 10,
-                                                              enemy.attackTimer, enemy.triggerRange, 1.0f);
+                                                              enemy.attackTimer, enemy.triggerRange, 1.5f);
             enemyPtr = std::move(ame);
         }
 
@@ -73,7 +73,7 @@ unique_ptr<Enemy> EnemyFactory::selectRandomEnemy(const std::string& mapType, in
                                                             std::move(rangedWeapon), enemy.health, enemy.health,
                                                             enemy.speed, enemy.speed, enemy.armor, enemy.armor,
                                                             enemy.strength, enemy.strength, 10, 10, 10,
-                                                            enemy.attackTimer, enemy.triggerRange, 1.0f);
+                                                            enemy.attackTimer, enemy.triggerRange, 1.5f);
             enemyPtr = std::move(cre);
         }
 
@@ -85,7 +85,7 @@ unique_ptr<Enemy> EnemyFactory::selectRandomEnemy(const std::string& mapType, in
                                                              std::move(meleeWeapon), enemy.health, enemy.health,
                                                              enemy.speed, enemy.speed, enemy.armor, enemy.armor,
                                                              enemy.strength, enemy.strength, 10, 10, 10,
-                                                             enemy.attackTimer, enemy.triggerRange, 1.0f);
+                                                             enemy.attackTimer, enemy.triggerRange, 1.5f);
             enemyPtr = std::move(dme);
         }
 
@@ -97,7 +97,7 @@ unique_ptr<Enemy> EnemyFactory::selectRandomEnemy(const std::string& mapType, in
                                                            std::move(rangedWeapon), enemy.health, enemy.health,
                                                            enemy.speed, enemy.speed, enemy.armor, enemy.armor,
                                                            enemy.strength, enemy.strength, 10, 10, 10,
-                                                           enemy.attackTimer, 1.0f);
+                                                           enemy.attackTimer, 1.25f);
             enemyPtr = std::move(sre);
         }
 

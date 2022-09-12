@@ -17,6 +17,7 @@ int main() {
     // load window in windowed mode
     // sf::RenderWindow window(sf::VideoMode(1366, 768), "A Crab's Journey");
     // sf::RenderWindow window(sf::VideoMode(1440, 900), "A Crab's Journey");
+    // sf::RenderWindow window(sf::VideoMode(1280, 1024), "A Crab's Journey");
 
     // creation of the event
     sf::Event event;
