@@ -27,6 +27,8 @@ private:
     TextButton titleText = {"A Crab's Journey", 280, {.50f, .46f}};
     TextButton pressBtnText = {"Press any key to continue", 90, {.50f, .65f}};
 
+    TextButton copyright = {"", 30, {.85f, .95f}};
+
     float timer = 0;
 };
 

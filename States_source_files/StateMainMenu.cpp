@@ -9,10 +9,27 @@ StateMainMenu::StateMainMenu(Game *game) : State(game) {}
 void StateMainMenu::update(int deltaTime, bool clicked, sf::RenderWindow &window) {
     // update the buttons
     titleTextBtn.update(window);
+
+    newGameTextBtn.hovered = false;
+    if (newGameTextBtn.text.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
+        newGameTextBtn.hovered = true;
     newGameTextBtn.update(window);
+
+    loadGameTextBtn.hovered = false;
+    if (loadGameTextBtn.text.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
+        loadGameTextBtn.hovered = true;
     loadGameTextBtn.update(window);
+
+    pearlShopTextBtn.hovered = false;
+    if (pearlShopTextBtn.text.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
+        pearlShopTextBtn.hovered = true;
     pearlShopTextBtn.update(window);
+
+    backToSurfaceTextBtn.hovered = false;
+    if (backToSurfaceTextBtn.text.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
+        backToSurfaceTextBtn.hovered = true;
     backToSurfaceTextBtn.update(window);
+
     creditsBtn.update(window);
     settingsBtn.update(window);
 }

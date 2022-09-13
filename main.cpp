@@ -5,7 +5,6 @@
 #include <iostream>
 
 #include "FloorMap.h"
-#include "Game.h"
 
 int main() {
     // initialize the randomic number generator
@@ -25,6 +24,9 @@ int main() {
     // create the game
     auto game = Game::getInstance({window.getSize().x, window.getSize().y});
     game->prepareFirstState();
+
+    TextButton versionText = {"v0.5.30", 30, {.5f, .95f}};
+    versionText.text.setFillColor(sf::Color(255, 255, 255, 192));
 
     bool clicked;
 
@@ -53,6 +55,9 @@ int main() {
         // game update and draw
         game->update(deltaTime, clicked, window);
         game->draw(window);
+
+        versionText.update(window);
+        versionText.draw(window);
 
         // Bring to screen and display the new frame just drawn
         window.display();

@@ -16,8 +16,12 @@ public:
 
     sf::Text text;
 
+    float characterSize, minCharacterSize, maxCharacterSize;
+
     std::string origin;
-    bool clickable;
+    bool clickable, hovered;
+
+    float timer = 0;
 };
 
 

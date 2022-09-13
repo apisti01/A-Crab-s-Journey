@@ -25,14 +25,14 @@ private:
     SpriteButton background = {"Assets/GameStates/MainMenu/Background.png", 1, {.50f, .50f}};
 
     // text buttons
-    TextButton titleTextBtn = {"A Crab's Journey", 240, {.50f, .24f}};
-    TextButton newGameTextBtn = {"New Game", 150, {.50f, .43f}, true};
-    TextButton loadGameTextBtn = {"Load Game", 150, {.50f, .57f}, true};
-    TextButton pearlShopTextBtn = {"Pearl Shop", 150, {.50f, .71f}, true};
-    TextButton backToSurfaceTextBtn = {"Back to Surface", 150, {.50f, .85f}, true};
+    TextButton titleTextBtn = {"A Crab's Journey", 240, {.50f, .22f}};
+    TextButton newGameTextBtn = {"New Game", 120, {.50f, .41f}, true};
+    TextButton loadGameTextBtn = {"Load Game", 120, {.50f, .55f}, true};
+    TextButton pearlShopTextBtn = {"Pearl Shop", 120, {.50f, .69f}, true};
+    TextButton backToSurfaceTextBtn = {"Back to Surface", 120, {.50f, .83f}, true};
     // icon Buttons
-    SpriteButton creditsBtn = {"Assets/GameStates/MainMenu/Credits Texture.png", 0.05f, {.08f, .25f}, true};
-    SpriteButton settingsBtn = {"Assets/GameStates/MainMenu/Settings Texture.png", 0.05f, {.92f, .25f}, true};
+    SpriteButton creditsBtn = {"Assets/GameStates/MainMenu/Credits Texture.png", 0.05f, {.08f, .22}, true};
+    SpriteButton settingsBtn = {"Assets/GameStates/MainMenu/Settings Texture.png", 0.05f, {.92f, .22}, true};
 };
 
 
