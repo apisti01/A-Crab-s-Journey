@@ -1,5 +1,5 @@
 VS_VERSION_INFO VERSIONINFO
-PRODUCTVERSION 0,5,30
+PRODUCTVERSION 0,5,50
 {
     BLOCK "StringFileInfo"
     {
@@ -7,11 +7,11 @@ PRODUCTVERSION 0,5,30
         {
             VALUE "CompanyName",        "I'Team"
             VALUE "FileDescription",    "A Crab's Journey\0"
-            VALUE "FileVersion",        "0.5.30\0"
+            VALUE "FileVersion",        "0.5.50\0"
             VALUE "LegalCopyright",     "© 2022 I'Team All Rights Reserved\0"
             VALUE "OriginalFilename",   "A Crab's Journey\0"
             VALUE "ProductName",        "A Crab's Journey\0"
-            VALUE "ProductVersion",     "0.5.30\0"
+            VALUE "ProductVersion",     "0.5.50\0"
         }
     }
 }

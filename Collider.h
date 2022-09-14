@@ -45,7 +45,7 @@ public:
 
     void draw(sf::RenderWindow &window);
 
-    bool isEqual(Collider other);
+    bool isEqual(const Collider& other) const;
 
     bool isCollidingWith(Collider other);
 

@@ -20,7 +20,7 @@ class RangedWeapon : public Weapon {
 public:
     // Constructor and Destructor
     explicit RangedWeapon(RangedWeaponType type, std::string name = " ", float damage = 1, float speed = 5,
-                          float range = 10, bool isTracking = false, bool isShattering = false,
+                          sf::Vector2f dimensions = {.25f, .25f}, bool isTracking = false, bool isShattering = false,
                           ItemRarity rarity = ItemRarity::Common, int price = 50);
     ~RangedWeapon() override = default;
 
@@ -29,7 +29,8 @@ public:
 
 private:
     // list of bullets' attributes
-    float damage, speed, range;
+    float damage, speed;
+    sf::Vector2f dimensions;
 
     // special bullets features
     bool isTracking, isShattering;

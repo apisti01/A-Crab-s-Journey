@@ -180,11 +180,11 @@ void Collider::draw(sf::RenderWindow &window) {
     // window.draw(colliderBox);
 
     // draw the vertexes
-    // for (int i = 0; i < size(vertexPoints); i++)
-        // window.draw(vertexPoints[i]);
+    // for (auto &vertexPoint : vertexPoints)
+        // window.draw(vertexPoint);
 }
 
-bool Collider::isEqual(Collider other) {
+bool Collider::isEqual(const Collider& other) const {
     // TODO: make it a collider operator ==
     if (
         round(this->pos.x) == round(other.pos.x) &&

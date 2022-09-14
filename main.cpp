@@ -25,7 +25,7 @@ int main() {
     auto game = Game::getInstance({window.getSize().x, window.getSize().y});
     game->prepareFirstState();
 
-    TextButton versionText = {"v0.5.30", 30, {.5f, .95f}};
+    TextButton versionText = {"v0.5.50", 30, {.5f, .95f}};
     versionText.text.setFillColor(sf::Color(255, 255, 255, 192));
 
     bool clicked;

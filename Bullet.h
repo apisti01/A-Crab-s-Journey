@@ -14,16 +14,12 @@ class FloorMap;
 class Bullet {
 public:
     // Constructor and Destructor
-    Bullet(float damage, float speed, float range, sf::Texture* texture, sf::Vector2f pos, float direction,
-           bool isTracking, bool isShattering, GameCharacter* shooter);
+    Bullet(Collider* collider, sf::Texture* texture, float damage, float speed, bool isTracking, bool isShattering, GameCharacter* shooter);
     ~Bullet() = default;
 
     // getters and setters
     float getDamage() const { return damage; }
     void setDamage(float damage) { Bullet::damage = damage; }
-
-    float getRange() const { return range; }
-    void setRange(float range) { Bullet::range = range; }
 
     float getSpeed() const { return speed; }
     void setSpeed(float speed) { Bullet::speed = speed; }
@@ -35,23 +31,23 @@ public:
     void draw(sf::RenderWindow& window);
 
 private:
-    float damage;
-    float range;
-    float speed;
+    float damage, speed;
 
     // directions chosen when launched
-    sf::Vector2f pos;
+    sf::Vector2f pos, dimensions;
     float direction;
 
     // Special ability
-    bool isTracking;
-    bool isShattering;
+    bool isTracking, isShattering;
 
     GameCharacter* shooter;
+
+    Collider collider;
 
     // SFML Sprite
     sf::Texture texture;
     sf::Sprite sprite;
+    float spriteScale;
 };
 
 
