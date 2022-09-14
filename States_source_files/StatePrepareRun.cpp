@@ -105,7 +105,7 @@ void StatePrepareRun::setupPlayer(int characterIndex) {
     characterTexture.loadFromFile("Assets/GameCharacter/Player/" + character.name + "/Animations/Texture.png");
 
     // Ranged weapon
-    std::unique_ptr<Weapon> rangedWeapon = std::make_unique<RangedWeapon>(RangedWeaponType::Rock, "Rock", 20);
+    std::unique_ptr<Weapon> rangedWeapon = std::make_unique<RangedWeapon>(RangedWeaponType::Rock, "Rock");
     // give him a melee weapon
     // std::unique_ptr<Weapon> weapon = std::make_unique<MeleeWeapon>(10, "player", ItemRarity::Common, 50);
 

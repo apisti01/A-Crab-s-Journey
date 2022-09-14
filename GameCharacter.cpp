@@ -18,7 +18,7 @@ GameCharacter::GameCharacter(std::string name, const sf::Texture &texture, Colli
 }
 
 void GameCharacter::receiveDamage(float damage) {
-    hp -= damage * (10 - armor);
+    hp -= damage * (10 - armor) / 10;
 
     // if health points are negative
     if (hp <= 0) {

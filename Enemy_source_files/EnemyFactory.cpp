@@ -79,7 +79,7 @@ unique_ptr<Enemy> EnemyFactory::selectRandomEnemy(const std::string& mapType, in
 
         else if (enemy.type == "DefensiveMelee") {
             // create a weapon
-            auto meleeWeapon = make_unique<RangedWeapon>(RangedWeaponType::NaturalWeapon, "Natural Weapon");
+            auto meleeWeapon = make_unique<MeleeWeapon>(MeleeWeaponType::NaturalWeapon, "Natural Weapon");
             // create the enemy
             auto dme = std::make_unique<DefensiveMeleeEnemy>(enemy.id, enemy.name, enemyTexture, enemyCollider,
                                                              std::move(meleeWeapon), enemy.health, enemy.health,
