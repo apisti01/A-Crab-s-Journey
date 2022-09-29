@@ -5,7 +5,10 @@
 #include "StateTitleScreen.h"
 #include <string>
 
-StateTitleScreen::StateTitleScreen(Game* game): State(game) {}
+StateTitleScreen::StateTitleScreen(Game* game): State(game) {
+    background.rect.setSize({game->getWidth(), game->getHeight()});
+    background.rect.setOrigin({game->getWidth() / 2, game->getHeight() / 2});
+}
 
 void StateTitleScreen::update(int deltaTime, bool clicked, sf::RenderWindow &window) {
     titleText.update(window);

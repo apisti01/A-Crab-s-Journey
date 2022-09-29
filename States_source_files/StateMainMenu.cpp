@@ -4,7 +4,10 @@
 
 #include "StateMainMenu.h"
 
-StateMainMenu::StateMainMenu(Game *game) : State(game) {}
+StateMainMenu::StateMainMenu(Game *game) : State(game) {
+    background.rect.setSize({game->getWidth(), game->getHeight()});
+    background.rect.setOrigin({game->getWidth() / 2, game->getHeight() / 2});
+}
 
 void StateMainMenu::update(int deltaTime, bool clicked, sf::RenderWindow &window) {
     // update the buttons

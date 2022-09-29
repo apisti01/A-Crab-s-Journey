@@ -7,18 +7,6 @@ if (WIN32)
     set(BUILD_SHARED_LIBS OFF)
 endif()
 
-# set SFML library
-if(WIN32)
-    # for Windows
-    set(SFML_STATIC_LIBRARIES TRUE)
-    set(SFML_DIR SFML/lib/cmake/SFML)
-    find_package(SFML COMPONENTS system window graphics audio REQUIRED)
-    include_directories(SFML/include)
-else()
-    # for other OS
-    set(SFML_STATIC_LIBRARIES TRUE)
-    find_package(SFML 2.5 COMPONENTS system window graphics audio REQUIRED)
-endif()
 
 # group the source files in the directory dedicated to the Game's states
 set(STATES_SOURCE_FILES States_source_files/State.cpp States_source_files/State.h
@@ -48,8 +36,20 @@ add_library(core STATIC ${STATES_SOURCE_FILES} ${ENEMY_SOURCE_FILES} AnimatedSpr
         Observer.h Bestiary.cpp Bestiary.h GlobalProgress.cpp GlobalProgress.h Button.cpp Button.h SpriteButton.cpp
         SpriteButton.h TextButton.cpp TextButton.h)
 
-target_link_libraries(core PUBLIC sfml-system sfml-window sfml-graphics sfml-audio)
-set(CMAKE_EXE_LINKER_FLAGS "-static")
+# set SFML library
+if(WIN32)
+    set(SFML_STATIC_LIBRARIES TRUE)
+    set(SFML_DIR SFML/lib/cmake/SFML)
+    find_package(SFML COMPONENTS system window graphics audio REQUIRED)
+    include_directories(SFML/include)
+    target_link_libraries(core PUBLIC sfml-system sfml-window sfml-graphics sfml-audio)
+    set(CMAKE_EXE_LINKER_FLAGS "-static")
+else()
+    include_directories(/usr/local/include)
+    find_package(SFML 2.5 COMPONENTS system window graphics audio REQUIRED)
+    include_directories(${SFML_INCLUDE_DIRS})
+    target_link_libraries(core sfml-system sfml-window sfml-graphics sfml-audio sfml-network)
+endif()
 
 # executable file
 set(APP_ICON "Assets/Icon.rc")

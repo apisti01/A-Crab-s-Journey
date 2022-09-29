@@ -15,14 +15,13 @@ void MeleeWeapon::useWeapon(FloorMap *floor, GameCharacter *attacker) {
     if (checkEnemy(floor->player.get(), attacker))
         floor->player->receiveDamage(hit);
 
-
     // check if the enemies are on the hit area
-    for( auto & enemy : floor->roomList[floor->currentRoomIndex]->enemyList)
+    for(auto &enemy : floor->roomList[floor->currentRoomIndex]->enemyList)
         if (checkEnemy(enemy.get(), attacker))
             enemy->receiveDamage(hit);
 }
 
-bool MeleeWeapon::checkEnemy(const GameCharacter *victim, const GameCharacter *attacker) const{
+bool MeleeWeapon::checkEnemy(const GameCharacter *victim, const GameCharacter *attacker) const {
     // for every vertex of attacked
     for (int i = 0; i < 4; i++) {
         std::string x = std::bitset<2>(i).to_string();

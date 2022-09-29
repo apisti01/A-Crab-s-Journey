@@ -41,6 +41,7 @@ int main() {
             switch (event.type) {
                 case sf::Event::Closed:
                     window.close();
+                    break;
                 case sf::Event::MouseButtonPressed:
                     if (event.mouseButton.button == sf::Mouse::Left)
                         clicked = true;
